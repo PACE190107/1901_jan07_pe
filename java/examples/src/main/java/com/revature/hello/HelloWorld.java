@@ -25,4 +25,8 @@ public class HelloWorld {
 		 *  java doc
 		 */
 	}
+	
+	public static void main() {
+		System.out.println("overloaded main method");
+	}
 }
