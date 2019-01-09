@@ -82,7 +82,7 @@ public class StringsExample {
 	void performanceCheck(){
 		String s1 = "";
 		long startTime1 = System.nanoTime();
-		for (int i=0; i< 100; i++) {
+		for (int i=0; i< 1000; i++) {
 			s1 = s1.concat("a");
 		}
 		long endTime1 = System.nanoTime();
@@ -90,7 +90,7 @@ public class StringsExample {
 		
 		StringBuilder s2 = new StringBuilder();
 		long startTime2 = System.nanoTime();
-		for (int i=0; i< 100; i++) {
+		for (int i=0; i< 1000; i++) {
 			s2 = s2.append("a");
 		}
 		long endTime2 = System.nanoTime();
@@ -98,7 +98,7 @@ public class StringsExample {
 		
 		StringBuffer s3 = new StringBuffer();
 		long startTime3 = System.nanoTime();
-		for (int i=0; i< 100; i++) {
+		for (int i=0; i< 1000; i++) {
 			s2 = s2.append("a");
 		}
 		long endTime3 = System.nanoTime();
