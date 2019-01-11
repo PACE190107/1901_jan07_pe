@@ -6,6 +6,10 @@ import java.util.Iterator;
 public class IteratorExample {
 
 	public static void main(String[] args) {
+		iteratorMethod();
+	}
+
+	public static void iteratorMethod() {
 		ArrayList<Person> Employee = new ArrayList<>();
 		Person mike = new Person("Mike", 100, 19);
 		Person rob = new Person("Rob", 82, 20);
@@ -28,7 +32,6 @@ public class IteratorExample {
 		System.out.println("======using enhanced for loop======");
 		for(Person p: Employee) {
 			System.out.println(p.name);
-		}
+		}		
 	}
-
 }

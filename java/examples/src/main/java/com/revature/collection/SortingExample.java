@@ -6,6 +6,10 @@ import java.util.Collections;
 public class SortingExample {
 
 	public static void main(String[] args) {
+		sortUsingComparableAndComparator();
+	}
+
+	public static void sortUsingComparableAndComparator() {
 		ArrayList<Person> Employee = new ArrayList<>();
 		Person mike = new Person("Mike", 100, 19);
 		Person rob = new Person("Rob", 82, 20);
@@ -27,9 +31,6 @@ public class SortingExample {
 		System.out.println(Employee);
 		System.out.println("======sorted using comparator ======");
 		Collections.sort(Employee, Person.AgeComparator);
-		System.out.println(Employee);
-		
-		
+		System.out.println(Employee);		
 	}
-
 }
