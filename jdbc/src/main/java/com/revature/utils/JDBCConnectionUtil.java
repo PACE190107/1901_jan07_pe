@@ -3,12 +3,16 @@ package com.revature.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
+
 
 public class JDBCConnectionUtil {
 
+	final static Logger log = Logger.getLogger(JDBCConnectionUtil.class);
 	//JDBC - java database connectivity
 	static {
 		try {
+			log.info("JDBC driver is loaded / registered");
 			Class.forName("oracle.jdbc.OracleDriver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -16,7 +20,6 @@ public class JDBCConnectionUtil {
 	}
 	
 	public static Connection getConnection() throws SQLException {
-		
 		//use your credentials -why?
 		//you have access to my database as long as you are in this building
 		
