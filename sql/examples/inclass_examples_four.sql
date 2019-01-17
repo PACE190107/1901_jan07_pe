@@ -107,11 +107,203 @@ insert into player_details values (5, '1 main st, New York', 50000000000, '2012'
 insert into player_details values (6, '1 main st, Raleigh', 60000000000, '2014', 1);
 commit;
 
-select * from player;
-select * from teams;
-select * from player_details;
+select * from player;   --11 records player id 1 to 11
+select * from teams;    --9 records - team id 1 to 9
+select * from player_details;   --6 records - player id 1 to 5
 
 --inner join
 --aliases used typically to avoid retyping the table names
-select * from player p join player_details pd on p.id = pd.id;
+select * from player p join player_details pd on p.PLAYER_ID = pd.id;  --6
+
+--9 on the left have values & 6 on the right have values 
+select * from teams left join PLAYER_DETAILS 
+on teams.ID = PLAYER_DETAILS.TEAM_ID
+order by teams.TEAM_NAME
+;
+
+--total 6
+--left with values -6 & right with values -6 
+select * from teams right join PLAYER_DETAILS 
+on teams.id = PLAYER_DETAILS.TEAM_ID
+order by teams.TEAM_NAME
+;
+
+--full join
+--total 9
+--left with values 9 & right with values 6
+select * from teams full join PLAYER_DETAILS 
+on teams.id = PLAYER_DETAILS.TEAM_ID
+order by teams.TEAM_NAME
+;
+--player 11, teams 9, player details 6
+--number of players part of team - 4
+--number teams that have player - 5
+--number of players who has player details - 6
+select * from teams 
+    join player 
+on player.TEAM_ID = teams.ID
+    inner join PLAYER_DETAILS
+on player.PLAYER_ID = PLAYER_DETAILS.ID
+order by teams.ID;
+
+
+select count(teams.city), teams.city from teams 
+    join player 
+on player.TEAM_ID = teams.ID
+    inner join PLAYER_DETAILS
+on player.PLAYER_ID = PLAYER_DETAILS.ID
+group by teams.city
+order by teams.city
+;
+
+select count(player.POSITION), player.POSITION from player join teams 
+    on player.team_id = teams.id
+group by player.POSITION 
+order by player.POSITION;
+
+-- set operators
+create table tablea (id number(10), name varchar2(20));
+create table tableb (id number(10), name varchar2(20));
+create table tablec (id number(10), name varchar2(20));
+
+insert into tablea values(1,'a');
+insert into tablea values(2,'b');
+insert into tablea values(3,'c');
+insert into tableb values(1,'a');
+insert into tableb values(3,'c');
+insert into tableb values(4,'d');
+insert into tableb values(5,'e');
+insert into tablec values(3,'c');
+insert into tablec values(4,'d');
+insert into tablec values(5,'e');
+insert into tablec values(6,'f');
+insert into tablec values(7,'g');
+insert into tablec values(8,'h');
+
+select * from tablea union select * from tableb;    --1,2,3,4,5
+select * from tablea union select * from tablec;    --1 thru 8
+select * from tableb union select * from tablec;    --1 thru 8 except 2
+
+select * from tablea union all select * from tableb;    --1,2,3,1,3,4,5
+select * from tablea union all select * from tablec;    --1,2,3,3,4,5,6,7,8
+select * from tableb union all select * from tablec;    --1,3,4,5,3,4,5,6,7,8
+
+select * from tablea intersect select * from tableb;    --1,3
+select * from tablea intersect select * from tablec;    --3
+select * from tableb intersect select * from tablec;    --3,4,5
+
+select * from tablea minus select * from tableb;    --2
+select * from tablea minus select * from tablec;    --1,2
+select * from tableb minus select * from tablec;    --1
+select * from tableb minus select * from tablea;    --4,5
+select * from tablec minus select * from tablea;    --4,5,6,7,8
+select * from tablec minus select * from tableb;    --6,7,8
+
+--procedural languages
+
+--function
+create or replace function multiply(x number, y number) 
+return number as results number;
+begin
+    results := x * y;
+    return results;
+end;
+/
+--dual is one of the temporary tables in oracle
+select * from dual; 
+--approach 1
+select multiply(3434,98797) from dual;
+--approach 2
+declare
+    myResults number;
+begin
+    myResults := multiply(10,20);
+    DBMS_OUTPUT.PUT_LINE(myResults);
+end;
+/
+
+--stored procedure
+create or replace procedure printMe(message varchar2)
+as 
+begin
+    DBMS_OUTPUT.PUT_LINE(message);
+end;
+/
+
+exec printMe('is this going to work?');
+exec printMe('yes, this does work');
+
+create or replace procedure deleteAllRecordsFromTableA
+as 
+begin
+    delete from (select * from tablea where tablea.id > = 5);
+    --delete from tablea where tablea.id > = 5;
+end;
+/
+exec DELETEALLRECORDSFROMTABLEA;
+
+select * from tablea;
+insert into tablea values(1,'a');
+insert into tablea values(2,'b');
+insert into tablea values(3,'c');
+insert into tablea values(4,'a');
+insert into tablea values(5,'b');
+insert into tablea values(6,'c');
+insert into tablea values(7,'a');
+insert into tablea values(8,'b');
+insert into tablea values(9,'c');
+insert into tablea values(10,'c');
+insert into tablea values(11,'c');
+
+rollback;
+--approach 2
+begin
+    DELETEALLRECORDSFROMTABLEA;
+end;
+/
+
+savepoint pm_1172019418;
+
+rollback to pm_1172019418;
+--tcl -- savepoint, rollback, commit
+commit;
+rollback to pm_1172019418;
+
+--reestablish your connection to the user which has employee table
+select * from EMPLOYEE_1901;
+select concat(first_name, last_name) as fullname from employee_1901;
+select concat(substr(first_name, 1,2), last_name) as fullname from employee_1901;
+select concat(upper(substr(first_name, 1,2)), last_name) as fullname 
+from employee_1901;
+
+create or replace procedure getNames(YuviCursor out sys_refcursor)
+as
+begin
+    open YuviCursor for select concat(upper(substr(first_name, 1,2)), last_name) as fullname 
+    from employee_1901;
+end;
+/
+
+declare 
+    myvariable Sys_Refcursor;
+    fullName varchar2(40);
+begin
+    getNames(myvariable);
+    Loop
+        Fetch myvariable into fullName;
+        exit when myvariable%NOTFOUND;
+        DBMS_OUTPUT.PUT_LINE('Employee name is ' || fullName);
+    End Loop;
+end;
+/
+
+create view innerJoinExample as 
+select count(teams.city), teams.city  from teams 
+    join player 
+on player.TEAM_ID = teams.ID
+    inner join PLAYER_DETAILS
+on player.PLAYER_ID = PLAYER_DETAILS.ID
+group by teams.city
+order by teams.city
+;
 
