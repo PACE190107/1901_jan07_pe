@@ -25,17 +25,17 @@ desc Player;
 --other syntax in specific order:  insert into Player (player_id, name, position)
 --values(1,'name',position);
 alter table Player add player_id number(10) primary key;
-insert into Player values ('Peyton Manning','QB',1);
-insert into Player values ('Steph Curry','QB',2);
-insert into Player values ('Dwayne Johnson','QB',3);
-insert into Player values ('Kevin Hart','QB',4);
-insert into Player values ('Terry Crews','QB',5);
-insert into Player values ('Dennis Rodman','QB',6);
-insert into Player values ('OJ Simpson','QB',7);
-insert into Player values ('Joe Montana','QB',8);
-insert into Player values ('Dan Marino','QB',9);
-insert into Player values ('Brett Favre','QB',10);
-insert into Player values ('Bugs Bunny','QB',11);
+insert into Player values ('Peyton Manning','QB',1,1);
+insert into Player values ('Steph Curry','QB',2,2);
+insert into Player values ('Dwayne Johnson','QB',3,3);
+insert into Player values ('Kevin Hart','QB',4,4);
+insert into Player values ('Terry Crews','QB',5,5);
+insert into Player values ('Dennis Rodman','QB',6,6);
+insert into Player values ('OJ Simpson','QB',7,7);
+insert into Player values ('Joe Montana','QB',8,8);
+insert into Player values ('Dan Marino','QB',9,9);
+insert into Player values ('Brett Favre','QB',10,10);
+insert into Player values ('Bugs Bunny','QB',11,11);
 insert into Player values (null,'QB',12);
 --find number of records
 select count(*) from Player;
@@ -57,3 +57,250 @@ select count(*) from Player;
 alter table Player modify name not null;
 --can also remove constraint by altering table
 --alter table Player modify name null;
+
+create table Teams
+(
+ id number(10) primary key,
+ team_name varchar2(40) not null,
+ city varchar2(30)
+);
+desc Player;
+alter table Player add team_id number(10);
+alter table Player add foreign key (team_id) references Teams(id);
+insert into Teams values (1,'Broncos','Denver');
+insert into Teams values (2,'Packers','Green Bay');
+insert into Teams values (3,'Rockets','Houston');
+insert into Teams values (4,'Steelers','Pittsburgh');
+insert into Teams values (5,'Stampeders','Calgary');
+insert into Teams values (6,'Eagles','Philadelphia');
+insert into Teams values (7,'Fever','Indianapolis');
+insert into Teams values (8,'Wild','Minnesota');
+insert into Teams values (9,'Devils','New Jersey');
+
+select * from Teams;
+select * from Player;
+--update records in a table
+--doesn't work - more player records than team records
+--update player set team_id = player_id;
+--no team_id=11 - doesn't work
+--update player set team_id=11 where name = 'Bugs Bunny';
+update player set team_id=1 where name = 'Bugs Bunny';
+update player set team_id=8 where name = 'Peyton Manning';
+update player set team_id=2 where name = 'Steph Curry';
+update player set team_id=3 where name = 'Dwayne Johnson';
+--alias
+select * from Players p where p.id >= 5;
+
+create table player_details
+(
+ id number(10),
+ address varchar2(40),
+ salary number(30),
+ mvp varchar2(40),
+ team_id number(10) references teams(id)
+);
+
+alter table player_details modify id number(10) primary key;
+insert into player_details values (1,'1 main st., Denver',10000000000,'2013',5);
+insert into player_details values (2,'1 main st., Oakland',20000000000,'2016',4);
+insert into player_details values (3,'1 main st., SF',30000000000,'2008',2);
+insert into player_details values (4,'1 main st., Washington',40000000000,'2013',3);
+insert into player_details values (5,'1 main st., New York',50000000000,'2013',1);
+insert into player_details values (6,'1 main st., Raleigh',60000000000,'2014',1);
+
+alter table player_details add foreign key(id) references player(player_id);
+commit;
+select * from Player;  --11 records - player id 1 to 11
+select * from Teams;  --9 records - team id 1 to 9
+select * from player_details; --6 records - player id 1 to 5
+--
+select * from player p join player_details pd on p.player_id = pd.id; --6 records
+--9 on the left have values, 6 on the right have values - 9 returned, 6 w/ values and 3 w/ nulls
+select * from teams left join player_details on teams.ID = player_details.team_id
+ order by teams.team_name;
+--total 6
+--left with values - 9 & right with values - 6
+select * from teams right join player_details on teams.id = player_details.team_id
+ order by teams.team_name;
+ --full join
+ --total 9
+ -- 6 on right with values &  9 on left with values
+select * from teams full join player_details on teams.id = player_details.team_id
+ order by teams.team_name;
+ 
+ --player 11 (#players in a team = 4), teams 9, players w/ details 5, #teams w/ players 5)
+ --returns: 4 first - teams w/ matching team id in player table
+ --then returns 3:  players w/ matching player id in player details table
+ select  * from teams
+    join player
+  on player.team_id = teams.id
+    inner join player_details
+  on player.player_id = player_details.id
+  order by teams.id;
+  
+select  count(teams.city), teams.city from teams
+    join player
+  on player.team_id = teams.id
+    inner join player_details
+  on player.player_id = player_details.id
+  group by teams.city
+  order by teams.city;
+  
+select count(player.position) from player 
+    join teams 
+ on player.team_id = teams.id
+ group by player.position
+ order by player.position;
+ 
+create table tablea
+(
+ id number(10),
+ name  varchar2(20)
+);
+create table tableb
+(
+ id number(10),
+ name  varchar2(20)
+);
+create table tablec
+(
+ id number(10),
+ name  varchar2(20)
+);
+
+insert into tablea values (1, 'a');
+insert into tablea values (2, 'b');
+insert into tablea values (3, 'c');
+insert into tableb values (1, 'a');
+insert into tableb values (3, 'c');
+insert into tableb values (4, 'd');
+insert into tableb values (5, 'e');
+insert into tablec values (3,'c');
+insert into tablec values (4,'d');
+insert into tablec values (5,'e');
+insert into tablec values (6,'f');
+insert into tablec values (7,'g');
+insert into tablec values (8,'h');
+
+select * from tablea union select * from tableb;  --1 through 5
+select * from tablea union select * from tablec;  --1 through 8
+select * from tableb union select * from tablec;  --1 through 8 except 2
+
+select * from tablea union all select * from tableb;  --1,2,3,1,3,4,5
+select * from tablea union all select * from tablec;  --1,2,3,3,4,5,6,7,8
+select * from tableb union all select * from tablec;  --1,3,4,5,3,4,5,6,7,8
+
+select * from tablea intersect select * from tableb;  --1,3
+select * from tablea intersect select * from tablec;  --3
+select * from tableb intersect select * from tablec;  --3,4,5
+
+select * from tablea minus select * from tableb;  --2
+select * from tablea minus select * from tablec;  --1,2
+select * from tableb minus select * from tablec;  --1
+select * from tableb minus select * from tablea;  --4,5
+select * from tablec minus select * from tablea;  --4,5,6,7,8
+select * from tablec minus select * from tableb;  --6,7,8
+
+--procedural language
+
+--function - returns 1 value
+create or replace function multiply(x number, y number)
+return number as results number;
+begin
+    --:= is assignment operator
+    results := x * y;
+    return results;
+end;
+/
+--dual is temp table
+select * from dual;
+--approach 1
+select multiply(3434,98797) from dual;
+--approach 2 - call existing function
+declare
+    myResults number;
+begin
+    myResults := multiply(10,20);
+    DBMS_OUTPUT.put_line(myResults);
+end;
+/
+
+--using stored procedure avoids sql injection
+--stored procedure - return many values
+create or replace procedure printMe(message varchar2)
+as
+begin
+    DBMS_OUTPUT.PUT_LINE(message);
+end;
+/
+
+exec printMe('is this going to work?');
+exec printMe('yes this does work');
+
+create or replace procedure deleteRecordsFromTableA
+as
+begin
+    delete from (select * from tablea where tablea.id >= 5);
+end;
+/
+
+exec deleterecordsfromtablea;
+
+select * from tablea;
+insert into tablea values (1, 'a');
+insert into tablea values (2, 'b');
+insert into tablea values (3, 'c');
+insert into tablea values (4, 'a');
+insert into tablea values (5, 'b');
+insert into tablea values (6, 'b');
+insert into tablea values (7, 'a');
+insert into tablea values (8, 'b');
+insert into tablea values (9, 'c');
+insert into tablea values (11,'a');
+insert into tablea values (12,'b');
+rollback;
+--approach 2
+
+begin
+    deleterecordsfromtablea;
+end;
+/
+
+savepoint pm011720190418;
+rollback to pm011720190418;
+--tcl --savepoint, rollback, commit
+--cannot rollback past a commit
+
+select * from employee_1901;
+select concat (first_name, last_name) as fullname from employee_1901;
+select concat (upper(substr(first_name,1,2)), last_name) as fullname from employee_1901;
+select concat (upper(substr(first_name,1,2)), last_name) as fullname from employee_1901;
+
+create or replace procedure getNames(JoshCursor out sys_refcursor)
+as
+begin
+    open JoshCursor for select concat(upper(substr(first_name,1,2)), last_name) as fullname from employee_1901;
+end;
+/
+
+declare 
+    myvariable sys_refcursor;
+    fullName varchar2(40);
+begin
+    getNames(myvariable);
+    Loop
+        Fetch myvariable into fullName;
+        exit when myvariable%NOTFOUND;
+        DBMS_OUTPUT.put_line('Employee name is '||fullName);
+    End Loop;
+end;
+/
+
+create view innerJoinExample as
+select  count(teams.city), teams.city from teams
+    join player
+  on player.team_id = teams.id
+    inner join player_details
+  on player.player_id = player_details.id
+  group by teams.city
+  order by teams.city;
