@@ -1,0 +1,59 @@
+--create = DDL
+--create a table with no primary key and then add data
+--then can we add primary key? - no
+create table Player 
+(
+ name varchar(20),
+ position varchar2(20)
+)
+
+--insert = DML
+insert into Player values ('Peyton Manning','QB');
+--select = DQL
+select * from Player;
+--alter = DDL
+--can't do this - "table must be empty to add mandatory (NOT NULL) column"
+alter table Player add player_id number(10) primary key;
+--other disadvantage of not having primary key?
+--duplicate records - creates update anomalies
+insert into Player values ('Peyton Manning','QB');
+--clear all rows
+truncate table Player;
+--table still exists
+desc Player;
+--can add PK constraint if table is empty
+--other syntax in specific order:  insert into Player (player_id, name, position)
+--values(1,'name',position);
+alter table Player add player_id number(10) primary key;
+insert into Player values ('Peyton Manning','QB',1);
+insert into Player values ('Steph Curry','QB',2);
+insert into Player values ('Dwayne Johnson','QB',3);
+insert into Player values ('Kevin Hart','QB',4);
+insert into Player values ('Terry Crews','QB',5);
+insert into Player values ('Dennis Rodman','QB',6);
+insert into Player values ('OJ Simpson','QB',7);
+insert into Player values ('Joe Montana','QB',8);
+insert into Player values ('Dan Marino','QB',9);
+insert into Player values ('Brett Favre','QB',10);
+insert into Player values ('Bugs Bunny','QB',11);
+insert into Player values (null,'QB',12);
+--find number of records
+select count(*) from Player;
+--select specific columns
+select name, position from Player;
+select name, position from Player where NAME like 'B%';
+--values are case-sensitive - returns nothing (language not case-sensitive
+select name, position from Player where NAME like 'B%';
+select * from Player where player_id >= 7;
+select * from Player where player_id = 7;
+--can use is with null statements
+select * from Player where name is not null;
+select * from Player where name is null;
+--delete the records for which name is null
+delete from player where name is null;
+select count(*) from Player;
+--how to modify the constraints of a column in a table
+--can apply not null to a table while the table has data
+alter table Player modify name not null;
+--can also remove constraint by altering table
+--alter table Player modify name null;
