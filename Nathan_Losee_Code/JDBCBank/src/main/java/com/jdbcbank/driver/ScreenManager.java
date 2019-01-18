@@ -127,8 +127,8 @@ public class ScreenManager {
 			"[UserID*, Username*, Password*] \n" +
 			"\n" +
 			"Enter 'c username password' to create a new user account. \n" +
-			"Enter 'r username oldPassword newPassword' to change the password for an existing user account. \n" +
-			"Enter 'u username password' to login to an existing user account. \n" +
+			"Enter 'r username password' to login to an existing user account. \n" +
+			"Enter 'u username oldPassword newPassword' to change the password for an existing user account. \n" +
 			"Enter 'd username password' to delete an existing user account. \n" +
 			"Enter 'back' to return to the administrator menu. \n"
 	};
@@ -213,8 +213,9 @@ public class ScreenManager {
 				"\n" +
 				information +
 				"\n" +
-				"Enter 'u username password' to login to an existing user account. \n" +
 				"Enter 'c username password' to create a new user account. \n" +
+				"Enter 'r username password' to login to an existing user account. \n" +
+				"Enter 'u username oldPassword newPassword' to change the password for an existing user account. \n" +
 				"Enter 'd username password' to delete an existing user account. \n" +
 				"Enter 'back' to return to the administrator menu. \n";
 			break;
