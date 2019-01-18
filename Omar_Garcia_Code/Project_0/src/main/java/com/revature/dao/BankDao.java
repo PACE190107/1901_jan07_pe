@@ -1,8 +1,8 @@
-package com.revature.Project_0;
+package com.revature.dao;
 
 import com.revature.Exceptions.UsernameAlreadyExistException;
 
-public interface Bank {
+public interface BankDao {
 	
 	public void deposite(int amount);
 	public void withdraw(int amount);

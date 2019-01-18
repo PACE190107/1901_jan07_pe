@@ -1,21 +1,30 @@
 package com.revature.Project_0;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.revature.Exceptions.UsernameAlreadyExistException;
+import com.revature.dao.BankDao;
+import com.revature.dao.BankImplementation;
+import com.revature.dao.UserDaoImplementation;
+import com.revature.models.User;
+import com.revature.services.*;
 
 public class UserInterface {
 	static Scanner in = new Scanner(System.in);
-
-	private static Bank bank;
+	final static Logger log =Logger.getLogger(UserDaoImplementation.class);
+	
+	private static User currentUser;
+	private static BankService bank;
 
 	public static void main(String[] args) {
-		bank = new MyBank();
-		start();
+	start();
 	}
 
 	public static void start() {
-		// login();
+		//login();
 		register();
 	}
 
@@ -29,7 +38,19 @@ public class UserInterface {
 			username = in.nextLine();
 			System.out.println("Pleae input your password");
 			password = in.nextLine();
-			login = bank.login(username, password);
+			try {
+				User currentUser = UserService.getUserService().login(username, password);
+				if(currentUser.getFirstName() == null) {
+					System.out.println("Username/Password combination not found\nPlease try again");
+				}
+				else {
+					bank = BankService.getBankService(currentUser);
+					login = true;
+				}
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
 		} while (!login);
 
 		options();
@@ -37,28 +58,39 @@ public class UserInterface {
 	}
 
 	public static void register() {
-		String username, password, confirmation;
+		String first, last, username, password, confirmation;
 		boolean login = false;
-		boolean uniquename = false;
+		boolean uniquename = true;
 
+		System.out.println("Please input your first name");
+		first = in.nextLine();
+		System.out.println("Please input your last name");
+		last = in.nextLine();
+		
 		do {
 			System.out.println("Please input your username");
 			username = in.nextLine();
-			try {
-				bank.checkUsername(username);
-				uniquename = true;
-			} catch (UsernameAlreadyExistException e) {
-				//e.printStackTrace();
-				uniquename = false;
-			}
-			if (!uniquename) {
+			
+			if (uniquename) {
 				do {
 					System.out.println("Pleae input your password");
 					password = in.nextLine();
 					System.out.println("Pleae confirm your password");
 					confirmation = in.nextLine();
 					if (password.equals(confirmation)) {
-						login = bank.register(username, password);
+						try {
+							User currentUser = UserService.getUserService().register(first, last, username, password);
+							if(currentUser.getFirstName() == null) {
+								System.out.println("Username/Password combination not found\nPlease try again");
+							}
+							else {
+								bank = BankService.getBankService(currentUser);
+								login = true;
+							}
+						} catch (SQLException e) {
+							
+							e.printStackTrace();
+						}
 					} else {
 						System.out.println("Passwords don't match, please try again");
 					}
@@ -77,9 +109,9 @@ public class UserInterface {
 			System.out.println("Please select an option " + "\n1.) Deposite" + "\n2.) Withdraw" + "\n3.) Exit");
 			int option = in.nextInt();
 			if (option == 1) {
-				bank.deposite(100);
+				//bank.deposite(100);
 			} else if (option == 2) {
-				bank.withdraw(100);
+				//bank.withdraw(100);
 			} else if (option == 3) {
 				signout = true;
 			}

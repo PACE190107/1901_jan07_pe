@@ -1,8 +1,8 @@
-package com.revature.Project_0;
+package com.revature.dao;
 
 import com.revature.Exceptions.*;
 
-public class MyBank implements Bank{
+public class BankImplementation implements BankDao{
 
 	public void deposite(int amount) {
 		System.out.println("Deposit");
