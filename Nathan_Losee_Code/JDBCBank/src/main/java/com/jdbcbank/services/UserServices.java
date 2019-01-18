@@ -19,4 +19,7 @@ public class UserServices {
 	public static boolean deleteUser(String username, String password) throws SQLException {
 		return UserDAO.getUserDAO().deleteUser(username, password);
 	}
+	public static boolean updateUser(String username, String oldPassword, String newPassword) throws SQLException {
+		return UserDAO.getUserDAO().updateUser(username, oldPassword, newPassword);
+	}
 }

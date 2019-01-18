@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import com.jdbcbank.models.Transaction;
+import com.jdbcbank.services.AccountServices;
 import com.jdbcbank.util.ConnectionManager;
 
 public class TransactionDAO implements TransactionDAOable {
@@ -34,13 +35,15 @@ public class TransactionDAO implements TransactionDAOable {
 	
 	@Override
 	public boolean createTransaction(int accountID, String action, double amount, double balance) throws SQLException {
+		AccountServices.readAccount(accountID);
+		
 		Statement stmnt = ConnectionManager.getJDBCConnection().createStatement();
 
 		int createdTransactions = stmnt.executeUpdate(
 			"INSERT INTO transactions " +
 				"VALUES (to_timestamp('" + (Timestamp.valueOf(LocalDateTime.now())) + "','YYYY-MM-DD HH24:MI:SS.FF')," +
 				accountID + "," +
-				(amount > 0 ? "'_DEPOSIT'" : "'WITHDRAW'") + "," +
+				(amount > 0 ? "'DEPOSIT'" : "'WITHDRAW'") + "," +
 				amount + "," +
 				balance + ")");
 		stmnt.close();
@@ -52,6 +55,8 @@ public class TransactionDAO implements TransactionDAOable {
 
 	@Override
 	public Map<Timestamp, Transaction> readTransactions(int accountID) throws SQLException {
+		AccountServices.readAccount(accountID);
+		
 		Map<Timestamp, Transaction> transactions = new TreeMap<Timestamp, Transaction>();
 		findTransactions.setInt(1, accountID);
 		ResultSet foundTransactions = findTransactions.executeQuery();
@@ -71,6 +76,8 @@ public class TransactionDAO implements TransactionDAOable {
 
 	@Override
 	public boolean deleteTransactions(int accountID) throws SQLException {
+		AccountServices.readAccount(accountID);
+		
 		Statement stmnt = ConnectionManager.getJDBCConnection().createStatement();
 		
 		ResultSet rs = stmnt.executeQuery(

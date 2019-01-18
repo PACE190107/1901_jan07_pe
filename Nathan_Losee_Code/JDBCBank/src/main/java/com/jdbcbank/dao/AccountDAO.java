@@ -35,10 +35,20 @@ public class AccountDAO implements AccountDAOable {
 	}
 	
 	@Override
-	public boolean createAccount(int userID, AccountType type, Double amount) throws SQLException {
+	public boolean createAccount(int userID, String type, Double amount) throws SQLException {
+		boolean isValidType = false;
+		for (AccountType aType : AccountType.values())
+			if (type.toLowerCase().equals(aType.toString()))
+				isValidType = true;
+		if (!isValidType)
+			throw new BankErrors.InvalidTypeException();
+		
+		if (amount <= 0)
+			throw new BankErrors.InvalidAmountException();
+		
 		CallableStatement stmnt = ConnectionManager.getJDBCConnection().prepareCall("CALL insert_account(?,?,?,?)");
 		stmnt.setInt(1, userID);
-		stmnt.setString(2, type.toString());
+		stmnt.setString(2, AccountType.valueOf(type).toString());
 		stmnt.setDouble(3, amount);
 		stmnt.registerOutParameter(4, Types.INTEGER);
 		stmnt.executeUpdate();
@@ -91,8 +101,10 @@ public class AccountDAO implements AccountDAOable {
 			switch (foundAccount.getString(3)) {
 			case "checking":
 				account.setType(AccountType.checking);
+				break;
 			case "savings":
 				account.setType(AccountType.savings);
+				break;
 			}
 			account.setBalance(foundAccount.getDouble(4));
 			
@@ -105,22 +117,25 @@ public class AccountDAO implements AccountDAOable {
 	}
 
 	@Override
-	public boolean updateAccount(int accountID, double amount) throws SQLException {
+	public boolean updateAccount(int accountID, double amount, boolean isDeposit) throws SQLException {
 		Statement stmnt = ConnectionManager.getJDBCConnection().createStatement();
 		Account account = readAccount(accountID);
-		if (amount < 0 && Math.abs(amount) > account.getBalance())
+		if (!isDeposit && amount > account.getBalance())
 			throw new BankErrors.OverdraftException();
+		
+		if (amount <= 0)
+			throw new BankErrors.InvalidAmountException();
 		
 		int updatedAccounts = stmnt.executeUpdate(
 			"UPDATE bank_accounts " +
-				"SET account_balance = " + (account.getBalance() + amount) + " " +
+				"SET account_balance = " + (account.getBalance() + (isDeposit ? amount : -amount)) + " " +
 				"WHERE account_id = " + accountID);
 		
 		stmnt.close();
 		
 		if (updatedAccounts > 0) {
 			TransactionDAO.getTransactionDAO().createTransaction(accountID, (amount > 0 ? "deposit" : "withdraw"),
-				amount, account.getBalance() + amount);
+				amount, account.getBalance() + (isDeposit ? amount : -amount));
 			return true;
 		}
 		return false;

@@ -3,6 +3,8 @@ package com.jdbcbank.dao;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLSyntaxErrorException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -29,14 +31,16 @@ public class UserDAO implements UserDAOable {
 		stmnt.setString(1, username);
 		stmnt.setString(2, password);
 		stmnt.registerOutParameter(3, Types.INTEGER);
-		stmnt.executeUpdate();
 		
-		if (stmnt.getInt(3) <= 0)
-			throw new BankErrors.InvalidUsernamePasswordException();
-		
-		stmnt.close();
-		
-		return true;
+		try {
+			stmnt.executeUpdate();
+			if (stmnt.getInt(3) <= 0)
+				throw new BankErrors.ExistingUsernamePasswordException();
+			stmnt.close();
+			return true;
+		} catch (SQLIntegrityConstraintViolationException e) {
+			throw new BankErrors.ExistingUsernamePasswordException();
+		}
 	}
 
 	@Override
@@ -79,6 +83,25 @@ public class UserDAO implements UserDAOable {
 		} else
 			throw new BankErrors.InvalidUsernamePasswordException();
 	}
+	
+	@Override
+	public boolean updateUser(String username, String oldPassword, String newPassword) throws SQLException {
+		CallableStatement stmnt = ConnectionManager.getJDBCConnection().prepareCall("CALL update_user(?,?,?,?)");
+		stmnt.setString(1, username);
+		stmnt.setString(2, oldPassword);
+		stmnt.setString(3, newPassword);
+		stmnt.registerOutParameter(4, Types.INTEGER);
+		
+		try {
+			stmnt.executeUpdate();
+			if (stmnt.getInt(4) <= 0)
+				throw new BankErrors.InvalidUsernamePasswordException();
+			stmnt.close();
+			return true;
+		} catch (SQLSyntaxErrorException e) {
+			throw new BankErrors.InvalidUsernamePasswordException();
+		}
+	}
 
 	@Override
 	public boolean deleteUser(String username, String password) throws SQLException {
@@ -88,13 +111,15 @@ public class UserDAO implements UserDAOable {
 		stmnt.setString(1, username);
 		stmnt.setString(2, password);
 		stmnt.registerOutParameter(3, Types.INTEGER);
-		stmnt.executeUpdate();
 		
-		if (stmnt.getInt(3) > 0) {
+		try {
+			stmnt.executeUpdate();
+			if (stmnt.getInt(3) <= 0)
+				throw new BankErrors.InvalidUsernamePasswordException();
 			stmnt.close();
 			return true;
-		}
-		else
+		} catch (SQLSyntaxErrorException e) {
 			throw new BankErrors.InvalidUsernamePasswordException();
+		}
 	}
 }

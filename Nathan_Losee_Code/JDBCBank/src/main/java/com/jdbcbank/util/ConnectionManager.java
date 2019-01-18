@@ -25,6 +25,7 @@ public class ConnectionManager {
 	static {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
+			setJDBCConnection("BankAdmin", "bankadmin");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

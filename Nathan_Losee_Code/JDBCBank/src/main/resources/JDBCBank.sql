@@ -5,19 +5,18 @@ DROP PUBLIC SYNONYM transactions;
 DROP PUBLIC SYNONYM bank_accounts;
 DROP PUBLIC SYNONYM user_accounts;
 DROP PUBLIC SYNONYM insert_user;
+DROP PUBLIC SYNONYM update_user;
 DROP PUBLIC SYNONYM delete_user;
 DROP PUBLIC SYNONYM insert_account;
 DROP SEQUENCE user_id_seq;
 DROP SEQUENCE account_id_seq;
 
 CREATE SEQUENCE user_id_seq
-    START WITH 10000000
-    INCREMENT BY 1;
+    START WITH 10000000;
     /
     
 CREATE SEQUENCE account_id_seq
-    START WITH 10000000
-    INCREMENT BY 1;
+    START WITH 10000000;
     /
 
 CREATE TABLE user_accounts
@@ -78,6 +77,22 @@ CREATE OR REPLACE PROCEDURE insert_user
     /
 CREATE PUBLIC SYNONYM insert_user
     FOR bankadmin.insert_user;
+
+CREATE OR REPLACE PROCEDURE update_user
+    (in_username IN VARCHAR, in_old_password IN VARCHAR, in_new_password IN VARCHAR, p_success OUT INTEGER)
+    AUTHID CURRENT_USER AS
+    BEGIN
+        UPDATE user_accounts 
+            SET user_password = in_new_password
+            WHERE user_username = in_username
+            AND user_password = in_old_password;
+        p_success := SQL%ROWCOUNT;
+        EXECUTE IMMEDIATE ('ALTER USER '||in_username||' IDENTIFIED BY '||in_new_password);
+        COMMIT;
+    END;
+    /
+CREATE PUBLIC SYNONYM update_user
+    FOR bankadmin.update_user;
 
 CREATE OR REPLACE PROCEDURE delete_user
     (in_username IN VARCHAR, in_password IN VARCHAR, p_success OUT INTEGER)

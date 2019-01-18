@@ -9,7 +9,7 @@ public class Account implements Serializable {
 	private AccountType type;
 	private double balance;
 	
-	public int getAcountID() {
+	public int getAccountID() {
 		return accountID;
 	}
 	public void setAccountID(int accountID) {

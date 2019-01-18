@@ -14,7 +14,6 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 import com.jdbcbank.models.Account;
-import com.jdbcbank.models.AccountType;
 import com.jdbcbank.models.Transaction;
 import com.jdbcbank.models.User;
 import com.jdbcbank.services.AccountServices;
@@ -37,20 +36,18 @@ public class BankApplication {
 	
 	private static void runBankApplication() throws Exception {
 		while (currentScreen != -1) {
-			if (currentScreen == ScreenManager.HOME_SCREEN)
-				ConnectionManager.setJDBCConnection("BankAdmin", "bankadmin");
-			
-			log.info(ScreenManager.getScreen(currentScreen));
-			primeForInput();
 			try {
+				log.info(ScreenManager.getScreen(currentScreen));
+				primeForInput();
 				processInput();
+			} catch (BankErrors.ExistingUsernamePasswordException e) {
+				log.error("Username has already been taken. \n");
 			} catch (BankErrors.InvalidUsernamePasswordException e) {
-				if (currentScreen == ScreenManager.NEW_USER_SCREEN)
-					log.error("Username has already been taken. \n");
-				else
-					log.error("Username doesn't exist or Password was incorrect. \n");
+				log.error("Username doesn't exist or Password was incorrect. \n");
 			} catch (BankErrors.MalformedUsernamePasswordException e) {
 				log.error("The username and password must be or be between between 1 and 20 characters each. \n");
+			} catch (BankErrors.InvalidTypeException e) {
+				log.error("Account type was invalid. \n");
 			} catch (BankErrors.InvalidAccountIDException e) {
 				log.error("AccountID was invalid. \n");
 			} catch (BankErrors.OverdraftException e) {
@@ -83,7 +80,7 @@ public class BankApplication {
 		case ScreenManager.ACCOUNT_SCREEN:
 			System.out.print("Option: ");
 			break;
-		case ScreenManager.BALANCE_SCREEN:
+		case ScreenManager.VIEW_SCREEN:
 			System.out.print("");
 			break;
 		case ScreenManager.DEPOSIT_SCREEN:
@@ -163,7 +160,7 @@ public class BankApplication {
 				for (User user : users)
 					userString += user + "\n";
 				
-				ScreenManager.updateSuperScreen(userString);
+				ScreenManager.updateScreen(ScreenManager.USER_SCREEN, userString);
 				
 				currentScreen = ScreenManager.SUPER_SCREEN;
 			}
@@ -176,13 +173,8 @@ public class BankApplication {
 				currUser.setUserID(UserServices.readUser(input[0], input[1]).getUserID());
 				currUser.setUsername(input[0]);
 				currUser.setPassword(input[1]);
-				
-				List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
-				String accountString = "";
-				for (Account account : accounts)
-					accountString += account + "\n";
-				
-				ScreenManager.updateScreens(currUser.getUsername(), accountString);
+
+				ScreenManager.updateScreen(ScreenManager.ACCOUNT_SCREEN, currUser.getUsername());
 				
 				currentScreen = ScreenManager.ACCOUNT_SCREEN;
 			}
@@ -205,23 +197,53 @@ public class BankApplication {
 			switch (getInt(input[0])) {
 			case 1:
 				log.info("Viewing current account balances. \n");
-				currentScreen = ScreenManager.BALANCE_SCREEN;
+				currentScreen = ScreenManager.VIEW_SCREEN;
+				
+				List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
+				String accountString = "";
+				for (Account account : accounts)
+					accountString += account + "\n";
+				ScreenManager.updateScreen(ScreenManager.DEPOSIT_SCREEN, accountString);
 				break;
 			case 2:
 				log.info("Requesting a deposit. \n");
 				currentScreen = ScreenManager.DEPOSIT_SCREEN;
+				
+				accounts = AccountServices.readAccounts(currUser.getUserID());
+				accountString = "";
+				for (Account account : accounts)
+					accountString += account + "\n";
+				ScreenManager.updateScreen(ScreenManager.DEPOSIT_SCREEN, accountString);
 				break;
 			case 3:
 				log.info("Requesting a withdrawal. \n");
 				currentScreen = ScreenManager.WITHDRAWAL_SCREEN;
+				
+				accounts = AccountServices.readAccounts(currUser.getUserID());
+				accountString = "";
+				for (Account account : accounts)
+					accountString += account + "\n";
+				ScreenManager.updateScreen(ScreenManager.WITHDRAWAL_SCREEN, accountString);
 				break;
 			case 4:
 				log.info("Viewing account transaction history. \n");
 				currentScreen = ScreenManager.HISTORY_SCREEN;
+				
+				accounts = AccountServices.readAccounts(currUser.getUserID());
+				accountString = "";
+				for (Account account : accounts)
+					accountString += account + "\n";
+				ScreenManager.updateScreen(ScreenManager.HISTORY_SCREEN, accountString);
 				break;
 			case 5:
-				log.info("Requesting a transferal. \n");
+				log.info("Requesting a transfer. \n");
 				currentScreen = ScreenManager.TRANSFER_SCREEN;
+				
+				accounts = AccountServices.readAccounts(currUser.getUserID());
+				accountString = "";
+				for (Account account : accounts)
+					accountString += account + "\n";
+				ScreenManager.updateScreen(ScreenManager.TRANSFER_SCREEN, accountString);
 				break;
 			case 6:
 				log.info("Creating a new bank account. \n");
@@ -230,6 +252,12 @@ public class BankApplication {
 			case 7:
 				log.info("Closing an existing bank account. \n");
 				currentScreen = ScreenManager.CLOSING_SCREEN;
+				
+				accounts = AccountServices.readAccounts(currUser.getUserID());
+				accountString = "";
+				for (Account account : accounts)
+					accountString += account + "\n";
+				ScreenManager.updateScreen(ScreenManager.CLOSING_SCREEN, accountString);
 				break;
 			case 8:
 				log.info("Logging out of user account. \n");
@@ -241,7 +269,7 @@ public class BankApplication {
 			}
 			break;
 			
-		case ScreenManager.BALANCE_SCREEN:
+		case ScreenManager.VIEW_SCREEN:
 			testIfReturning(ScreenManager.ACCOUNT_SCREEN);
 			break;
 			
@@ -252,16 +280,8 @@ public class BankApplication {
 				log.info("Please input an account ID and an amount of funds separated by a space. \n");
 				break;
 			}
-			if (AccountServices.updateAccount(getInt(input[0]), getAmount(input[1], true))) {
+			if (AccountServices.updateAccount(getInt(input[0]), getAmount(input[1]), true)) {
 				log.info("Successfully deposited the specified amount into the specified account. \n");
-				
-				List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
-				String accountString = "";
-				for (Account account : accounts)
-					accountString += account + "\n";
-				
-				ScreenManager.updateScreens(currUser.getUsername(), accountString);
-				
 				currentScreen = ScreenManager.ACCOUNT_SCREEN;
 			}
 			break;
@@ -273,16 +293,8 @@ public class BankApplication {
 				log.info("Please input an account ID and an amount of funds separated by a space. \n");
 				break;
 			}
-			if (AccountServices.updateAccount(getInt(input[0]), getAmount(input[1], false))) {
+			if (AccountServices.updateAccount(getInt(input[0]), getAmount(input[1]), false)) {
 				log.info("Successfully withdrew the specified amount from the specified account. \n");
-				
-				List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
-				String accountString = "";
-				for (Account account : accounts)
-					accountString += account + "\n";
-				
-				ScreenManager.updateScreens(currUser.getUsername(), accountString);
-				
 				currentScreen = ScreenManager.ACCOUNT_SCREEN;
 			}
 			break;
@@ -295,13 +307,15 @@ public class BankApplication {
 				break;
 			}
 			if (AccountServices.readAccount(getInt(input[0])) != null) {
+				log.info("Viewing history for scpecific account. \n");
+				currentScreen = ScreenManager.VIEW_SCREEN;
+				
 				Map<Timestamp, Transaction> transactions = TransactionServices.readTransactions(
-						AccountServices.readAccount(getInt(input[0])).getAcountID());
+						AccountServices.readAccount(getInt(input[0])).getAccountID());
 				String transactionString = "";
 				for (Timestamp timestamp : transactions.keySet())
 					transactionString += timestamp + " === " + transactions.get(timestamp) + "\n";
-				log.info(transactionString);
-				currentScreen = ScreenManager.ACCOUNT_SCREEN;
+				ScreenManager.updateScreen(ScreenManager.VIEW_SCREEN, transactionString);
 			}
 			break;
 			
@@ -314,17 +328,9 @@ public class BankApplication {
 			}
 			if (AccountServices.readAccount(getInt(input[0])) != null &&
 					AccountServices.readAccount(getInt(input[1])) != null) {
-				if (AccountServices.updateAccount(getInt(input[0]), getAmount(input[2], false))) {
-					AccountServices.updateAccount(getInt(input[1]), getAmount(input[2], true));
+				if (AccountServices.updateAccount(getInt(input[0]), getAmount(input[2]), false)) {
+					AccountServices.updateAccount(getInt(input[1]), getAmount(input[2]), true);
 					log.info("Successfully transferred the specified amount between the specified accounts. \n");
-					
-					List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
-					String accountString = "";
-					for (Account account : accounts)
-						accountString += account + "\n";
-					
-					ScreenManager.updateScreens(currUser.getUsername(), accountString);
-					
 					currentScreen = ScreenManager.ACCOUNT_SCREEN;
 				} else
 					log.info("Invalid amount. \n");
@@ -338,16 +344,8 @@ public class BankApplication {
 				log.info("Please input an account type and an initial deposit amount. \n");
 				break;
 			}
-			if (AccountServices.createAccount(currUser.getUserID(), 
-					AccountType.valueOf(input[0].toLowerCase()), getAmount(input[1], true))) {
+			if (AccountServices.createAccount(currUser.getUserID(), input[0], getAmount(input[1]))) {
 				log.info("Successfully created new bank account. \n");
-				List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
-				String accountString = "";
-				for (Account account : accounts)
-					accountString += account + "\n";
-				
-				ScreenManager.updateScreens(currUser.getUsername(), accountString);
-				
 				currentScreen = ScreenManager.ACCOUNT_SCREEN;
 			}
 			break;
@@ -361,14 +359,6 @@ public class BankApplication {
 			}
 			if (AccountServices.deleteAccount(getInt(input[0]))) {
 				log.info("Bank account successfully closed. \n");
-				
-				List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
-				String accountString = "";
-				for (Account account : accounts)
-					accountString += account + "\n";
-				
-				ScreenManager.updateScreens(currUser.getUsername(), accountString);
-				
 				currentScreen = ScreenManager.ACCOUNT_SCREEN;
 			}
 			break;
@@ -397,52 +387,56 @@ public class BankApplication {
 				break;
 			}
 			switch (input[0]) {
-			case "u":
+			case "c":
+				if (UserServices.createUser(input[1], input[2])) {
+					log.info("Created user.");
+					
+					List<User> users = UserServices.readUsers();
+					String userString = "";
+					for (User user : users)
+						userString += user + "\n";
+					ScreenManager.updateScreen(ScreenManager.USER_SCREEN, userString);
+					
+				}
+				break;
+			case "r":
 				if (UserServices.readUser(input[1], input[2]) != null) {
-
+					log.info("Logging into user account. \n");
+					currentScreen = ScreenManager.ACCOUNT_SCREEN;
 					ConnectionManager.setJDBCConnection(input[1], input[2]);
 					
 					currUser = new User();
 					currUser.setUserID(UserServices.readUser(input[1], input[2]).getUserID());
 					currUser.setUsername(input[1]);
 					currUser.setPassword(input[2]);
+
+					ScreenManager.updateScreen(ScreenManager.ACCOUNT_SCREEN, currUser.getUsername());
 					
-					List<Account> accounts = AccountServices.readAccounts(currUser.getUserID());
-					String accountString = "";
-					for (Account account : accounts)
-						accountString += account + "\n";
-					
-					ScreenManager.updateScreens(currUser.getUsername(), accountString);
-					
-					log.info("Logging into user account. \n");
-					currentScreen = ScreenManager.ACCOUNT_SCREEN;
 				}
 				break;
-			case "c":
-				if (UserServices.createUser(input[1], input[2])) {
+			case "u":
+				if (UserServices.updateUser(input[1], input[2], input[3])) {
+					log.info("Updated user.");
+					
 					List<User> users = UserServices.readUsers();
 					String userString = "";
 					for (User user : users)
 						userString += user + "\n";
-					
-					ScreenManager.updateSuperScreen(userString);
-					
-					log.info("Created user.");
+					ScreenManager.updateScreen(ScreenManager.USER_SCREEN, userString);
 				}
 				break;
 			case "d":
 				if (UserServices.deleteUser(input[1], input[2])) {
+					log.info("Deleted user. \n");
+					
 					List<User> users = UserServices.readUsers();
 					String userString = "";
 					for (User user : users)
 						userString += user + "\n";
-					
-					ScreenManager.updateSuperScreen(userString);
-					
-					log.info("Deleted user. \n");
+					ScreenManager.updateScreen(ScreenManager.USER_SCREEN, userString);
 				}
 				break;
-			case "exit":
+			case "back":
 				log.info("Returning to administrator menu. \n");
 				currentScreen = ScreenManager.USER_SCREEN;
 				break;
@@ -471,17 +465,17 @@ public class BankApplication {
 		}
 		return -1;
 	}
-	private static double getAmount(String input, boolean isDeposit) throws SQLException {
+	private static double getAmount(String input) throws SQLException {
 		try {
 			input = input.trim();
 			if (input.charAt(0) == '$' || input.charAt(input.length() - 1) == '$')
 				input = input.replace("$", "");
 			double amount = Double.parseDouble(input);
-			if (input.split(".")[1].length() > 2)
+			if (input.split(".").length > 1 && input.split(".")[1].length() > 2)
 				throw new BankErrors.MalformedAmountException();
 			if (amount <= 0.0)
 				throw new BankErrors.InvalidAmountException();
-			return Double.parseDouble(input) * (isDeposit ? 1.0 : -1.0);
+			return Double.parseDouble(input);
 		} catch (NumberFormatException nfe) {
 			log.error("Could not read the input as a number. \n");
 		}
@@ -521,10 +515,9 @@ public class BankApplication {
 	}
 	
 	private static void logout() {
-		if (isSuperUser) {
-			ConnectionManager.setJDBCConnection("BankAdmin", "bankadmin");
+		ConnectionManager.setJDBCConnection("BankAdmin", "bankadmin");
+		if (isSuperUser)
 			currentScreen = ScreenManager.SUPER_SCREEN;
-		}
 		else
 			currentScreen = ScreenManager.HOME_SCREEN;
 	}
