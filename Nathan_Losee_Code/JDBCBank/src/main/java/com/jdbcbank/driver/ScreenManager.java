@@ -1,9 +1,9 @@
 package com.jdbcbank.driver;
 
 public class ScreenManager {
-	public static final byte HOME_SCREEN = 0, NEW_USER_SCREEN = 1, LOGIN_SCREEN = 2, DELETE_SCREEN = 3, ACCOUNT_SCREEN = 4,
-			VIEW_SCREEN = 5, DEPOSIT_SCREEN = 6, WITHDRAWAL_SCREEN = 7, HISTORY_SCREEN = 8,
-			TRANSFER_SCREEN = 9, CREATION_SCREEN = 10, CLOSING_SCREEN = 11,
+	public static final byte HOME_SCREEN = 0, NEW_USER_SCREEN = 1, LOGIN_SCREEN = 2, ACCOUNT_SCREEN = 3,
+			VIEW_SCREEN = 4, HISTORY_SCREEN = 5, DEPOSIT_SCREEN = 6, WITHDRAWAL_SCREEN = 7, TRANSFER_SCREEN = 8,
+			CREATION_SCREEN = 9, CLOSING_SCREEN = 10, SETTINGS_SCREEN = 11,
 			SUPER_SCREEN = 12, USER_SCREEN = 13;
 	private static String SCREEN_UPPER =
 			"\n================================================================================================================" +
@@ -13,13 +13,13 @@ public class ScreenManager {
 			"\n================================================================================================================\n";
 	
 	private static String[] screens = {
-			//0 = HOME_SCREEN
-			"\n" +
+			//HOME_SCREEN
 			"Welcome to JDBC Online Banking! \n" +
+			"\n" +
 			"Please select from the options below to get started. \n" +
-			String.format("%-40s", "1. Create a new user account") + String.format("%-40s", "3. Delete an existing user account") + "\n" +
-			String.format("%-40s", "2. Login to an existing user account") + String.format("%-40s", "4. Exit application") + "\n" +
-			"\n",
+			"1. Create a new user account \n" +
+			"2. Login to an existing user account \n" +
+			"3. Exit application \n",
 
 			//NEW_USER_SCREEN
 			"\n" +
@@ -37,28 +37,28 @@ public class ScreenManager {
 			"Enter 'back' to return to the home menu. \n" +
 			"\n",
 
-			//DELETE_SCREEN
-			"\n" +
-			"Enter the username and password of the user account you would like deleted. \n" +
-			"NOTICE: ALL BANK ACCOUNTS OF THE SELECTED USER ACCOUNT MUST BE EMPTY FOR DELETION TO SUCCEED. \n" +
-			"Enter 'back' to return to the home menu. \n" +
-			"\n" +
-			"\n",
-
 			//ACCOUNT_SCREEN
 			"Hello, [Username]! \n" +
 			"Here is the list of available options for you to choose from: \n" +
-			String.format("%-40s", "1. View account balance") + String.format("%-40s", "5. Transfer funds between accounts") + "\n" +
-			String.format("%-40s", "2. Make account deposit") + String.format("%-40s", "6. Create new account") + "\n" +
-			String.format("%-40s", "3. Make account withdrawal") + String.format("%-40s", "7. Close existing account") + "\n" +
-			String.format("%-40s", "4. View account transaction history") + String.format("%-40s", "8. Logout") + "\n",
+			String.format("%-40s", "1. View account balance/history") + String.format("%-40s", "5. Create new account") + "\n" +
+			String.format("%-40s", "2. Make account deposit") + String.format("%-40s", "6. Close existing account") + "\n" +
+			String.format("%-40s", "3. Make account withdrawal") + String.format("%-40s", "7. Manage user settings") + "\n" +
+			String.format("%-40s", "4. Make account transfer") + String.format("%-40s", "8. Logout") + "\n",
 
 			//VIEW_SCREEN
 			"\n" +
 			"\n" +
 			"[AccountID*, AccountType*, AccountBalance*] \n" +
 			"\n" +
+			"Enter a bank account ID to view its transaction history. \n" +
 			"Enter 'back' to return to the account menu." +
+			"\n",
+
+			//HISTORY_SCREEN
+			"\n" +
+			"[AccountID*, AccountType*, AccountBalance*] \n" +
+			"\n" +
+			"Enter 'back' to return to the account menu. \n" +
 			"\n" +
 			"\n",
 
@@ -80,14 +80,6 @@ public class ScreenManager {
 			"\n" +
 			"\n",
 
-			//HISTORY_SCREEN
-			"\n" +
-			"Choose a bank account you would like to view the transaction history of. \n" +
-			"[AccountID*, AccountType*, AccountBalance*] \n" +
-			"Enter 'back' to return to the account menu. \n" +
-			"\n" +
-			"\n",
-
 			//TRANSFER_SCREEN
 			"\n" +
 			"Choose a bank account to withdraw funds from, a bank account to deposit to, and enter an amount to transfer. \n" +
@@ -99,19 +91,28 @@ public class ScreenManager {
 
 			//CREATION_SCREEN
 			"\n" +
+			"[AccountID*, AccountType*, AccountBalance*] \n" +
+			"\n" +
 			"Enter the type of bank account you would like to create from the options below, then enter the initial deposit amount. \n" +
 			"Checking \n" +
 			"Savings \n" +
-			"Enter 'back' to return to the account menu. \n" +
-			"\n",
+			"Enter 'back' to return to the account menu. \n",
 
 			//CLOSING_SCREEN
 			"\n" +
+			"[AccountID*, AccountType*, AccountBalance*] \n" +
+			"\n" +
 			"Choose the bank account you would like to close. \n" +
 			"NOTICE: THE SELECTED BANK ACCOUNT MUST BE EMPTY FOR CLOSING TO SUCCEED. \n" +
-			"[AccountID*, AccountType*, AccountBalance*] \n" +
 			"Enter 'back' to return to the account menu. \n" +
+			"\n",
+
+			//SETTINGS_SCREEN
 			"\n" +
+			"Enter your username, old password, and a new password to change your password. \n" +
+			"Enter 'delete' to delete you user account. \n" +
+			"NOTICE: THE ALL BANK ACCOUNTS MUST BE EMPTY FOR DELETION TO SUCCEED. \n" +
+			"Enter 'back' to return to the account menu. \n" +
 			"\n",
 
 			//SUPER_SCREEN
@@ -143,10 +144,10 @@ public class ScreenManager {
 			screens[ACCOUNT_SCREEN] =
 				String.format("Hello, %s! \n", information) +
 				"Here is the list of available bank account options for you to choose from: \n" +
-				String.format("%-40s", "1. View account balance") + String.format("%-40s", "5. Transfer funds between accounts") + "\n" +
-				String.format("%-40s", "2. Make account deposit") + String.format("%-40s", "6. Create new account") + "\n" +
-				String.format("%-40s", "3. Make account withdrawal") + String.format("%-40s", "7. Close existing account") + "\n" +
-				String.format("%-40s", "4. View account transaction history") + String.format("%-40s", "8. Logout") + "\n";
+				String.format("%-40s", "1. View account balance/history") + String.format("%-40s", "5. Create new account") + "\n" +
+				String.format("%-40s", "2. Make account deposit") + String.format("%-40s", "6. Close existing account") + "\n" +
+				String.format("%-40s", "3. Make account withdrawal") + String.format("%-40s", "7. Manage user settings") + "\n" +
+				String.format("%-40s", "4. Make account transfer") + String.format("%-40s", "8. Logout") + "\n";
 			break;
 		case VIEW_SCREEN:
 			screens[VIEW_SCREEN] =
@@ -154,7 +155,17 @@ public class ScreenManager {
 				"\n" +
 				information +
 				"\n" +
+				"Enter a bank account ID to view its transaction history. \n" +
 				"Enter 'back' to return to the account menu." +
+				"\n";
+			break;
+		case HISTORY_SCREEN:
+			screens[HISTORY_SCREEN] =
+				"\n" +
+				"\n" +
+				information +
+				"\n" +
+				"Enter 'back' to return to the account menu. \n" +
 				"\n" +
 				"\n";
 			break;
@@ -178,16 +189,6 @@ public class ScreenManager {
 				"Enter 'back' to return to the account menu. \n" +
 				"\n";
 			break;
-		case HISTORY_SCREEN:
-			screens[HISTORY_SCREEN] =
-				"\n" +
-				"Choose a bank account you would like to view the transaction history of. \n" +
-				"\n" +
-				information +
-				"\n" +
-				"Enter 'back' to return to the account menu. \n" +
-				"\n";
-			break;
 		case TRANSFER_SCREEN:
 			screens[TRANSFER_SCREEN] =
 				"\n" +
@@ -198,13 +199,23 @@ public class ScreenManager {
 				"Enter 'back' to return to the account menu. \n" +
 				"\n";
 			break;
-		case CLOSING_SCREEN:
-			screens[CLOSING_SCREEN] =
-				"Choose the bank account you would like to close. \n" +
-				"NOTICE: THE SELECTED BANK ACCOUNT MUST BE EMPTY FOR CLOSING TO SUCCEED. \n" +
+		case CREATION_SCREEN:
+			screens[CREATION_SCREEN] =
 				"\n" +
 				information +
 				"\n" +
+				"Enter the type of bank account you would like to create from the options below, then enter the initial deposit amount. \n" +
+				"Checking \n" +
+				"Savings \n" +
+				"Enter 'back' to return to the account menu. \n";
+			break;
+		case CLOSING_SCREEN:
+			screens[CLOSING_SCREEN] =
+				"\n" +
+				information +
+				"\n" +
+				"Choose the bank account you would like to close. \n" +
+				"NOTICE: THE SELECTED BANK ACCOUNT MUST BE EMPTY FOR CLOSING TO SUCCEED. \n" +
 				"Enter 'back' to return to the account menu. \n" +
 				"\n";
 			break;

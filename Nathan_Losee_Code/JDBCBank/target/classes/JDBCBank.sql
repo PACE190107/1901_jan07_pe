@@ -67,7 +67,7 @@ CREATE OR REPLACE PROCEDURE insert_user
         EXECUTE IMMEDIATE ('CREATE USER '||in_username||' IDENTIFIED BY '||in_password);
         EXECUTE IMMEDIATE ('GRANT CREATE SESSION TO '||in_username);
         EXECUTE IMMEDIATE ('GRANT EXECUTE ON insert_account TO '||in_username);
-        EXECUTE IMMEDIATE ('GRANT INSERT,SELECT,UPDATE,DELETE ON user_accounts TO '||in_username);
+        EXECUTE IMMEDIATE ('GRANT SELECT,UPDATE,DELETE ON user_accounts TO '||in_username);
         EXECUTE IMMEDIATE ('GRANT INSERT,SELECT,UPDATE,DELETE ON bank_accounts TO '||in_username);
         EXECUTE IMMEDIATE ('GRANT INSERT,SELECT,UPDATE,DELETE ON transactions TO '||in_username);
         EXECUTE IMMEDIATE ('GRANT SELECT ON user_id_seq TO '||in_username);

@@ -21,10 +21,9 @@ public class AccountDAO implements AccountDAOable {
 	private AccountDAO() { }
 	
 	public static AccountDAO getAccountDAO() throws SQLException {
-		if (accountDAO == null) {
+		if (accountDAO == null)
 			accountDAO = new AccountDAO();
-			initializeStatements();
-		}
+		initializeStatements();
 		return accountDAO;
 	}
 	

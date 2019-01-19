@@ -20,10 +20,9 @@ public class TransactionDAO implements TransactionDAOable {
 	private TransactionDAO() { }
 	
 	public static TransactionDAO getTransactionDAO() throws SQLException {
-		if (transactionDAO == null) {
+		if (transactionDAO == null)
 			transactionDAO = new TransactionDAO();
-			initializeStatements();
-		}
+		initializeStatements();
 		return transactionDAO;
 	}
 	
