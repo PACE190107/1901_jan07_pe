@@ -297,13 +297,39 @@ begin
 end;
 /
 
-create view innerJoinExample as 
-select count(teams.city), teams.city  from teams 
-    join player 
-on player.TEAM_ID = teams.ID
-    inner join PLAYER_DETAILS
-on player.PLAYER_ID = PLAYER_DETAILS.ID
-group by teams.city
-order by teams.city
+create or replace view innerJoinExample_vw as 
+    select count(teams.city) as countteams, teams.city  as city
+    from teams join player 
+    on player.TEAM_ID = teams.ID
+        inner join PLAYER_DETAILS
+    on player.PLAYER_ID = PLAYER_DETAILS.ID
+    group by teams.city
+   -- order by teams.city
 ;
+
+create sequence playerseq 
+    minvalue 20
+    maxvalue 60000
+    start with 20
+    increment by 2;
+    
+insert into Player values ('Beast mode', 'RB', playerseq.nextval, 5);
+
+select * from player;
+
+drop sequence sequence1;
+create sequence sequence1
+    minvalue 1
+    maxvalue 100000
+    start with 1
+    increment by 2;
+
+--select sequence1.currval, sequence1.nextval, sequence1.currval, sequence1.nextval from dual; 
+select sequence1.currval from dual;
+select sequence1.nextval from dual;
+    
+
+
+
+
 
