@@ -1,5 +1,8 @@
 package com.revature.services;
 
+import java.sql.SQLException;
+
+import com.revature.dao.BankImplementation;
 import com.revature.models.User;
 
 public class BankService {
@@ -16,6 +19,15 @@ public class BankService {
 			bank = new BankService(user);
 		}
 		return bank;
+	}
+	
+	public void deposit(int amount, int account) throws SQLException {
+		BankImplementation.getBankImplementation().deposite(amount, account, user.getId());
+	}
+
+	public void getAccounts() throws SQLException {
+		BankImplementation.getBankImplementation().getAccounts(user.getId());
+		
 	}
 }
 

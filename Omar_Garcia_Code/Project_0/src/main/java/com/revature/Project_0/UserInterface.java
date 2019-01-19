@@ -2,9 +2,7 @@ package com.revature.Project_0;
 
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import org.apache.log4j.Logger;
-
 import com.revature.Exceptions.UsernameAlreadyExistException;
 import com.revature.dao.BankDao;
 import com.revature.dao.BankImplementation;
@@ -16,19 +14,27 @@ public class UserInterface {
 	static Scanner in = new Scanner(System.in);
 	final static Logger log =Logger.getLogger(UserDaoImplementation.class);
 	
-	private static User currentUser;
 	private static BankService bank;
 
 	public static void main(String[] args) {
-	start();
+	try {
+		start();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 
-	public static void start() {
-		//login();
-		register();
+	public static void start() throws SQLException {
+		boolean running = true;
+		do {
+			//in.nextInt();
+		login();
+		//register();
+		}while(running);
 	}
 
-	public static void login() {
+	public static void login() throws SQLException {
 		String username;
 		String password;
 		boolean login = false;
@@ -57,7 +63,7 @@ public class UserInterface {
 
 	}
 
-	public static void register() {
+	public static void register() throws SQLException {
 		String first, last, username, password, confirmation;
 		boolean login = false;
 		boolean uniquename = true;
@@ -103,13 +109,14 @@ public class UserInterface {
 		options();
 	}
 
-	public static void options() {
+	public static void options() throws SQLException {
 		boolean signout = false;
 		do {
 			System.out.println("Please select an option " + "\n1.) Deposite" + "\n2.) Withdraw" + "\n3.) Exit");
 			int option = in.nextInt();
 			if (option == 1) {
-				//bank.deposite(100);
+				bank.getAccounts();
+				bank.deposit(100, 3);
 			} else if (option == 2) {
 				//bank.withdraw(100);
 			} else if (option == 3) {
