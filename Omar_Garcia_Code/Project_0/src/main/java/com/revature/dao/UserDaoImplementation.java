@@ -40,7 +40,8 @@ public class UserDaoImplementation implements UserDao{
 						result.getString("U_FIRST"),
 						result.getString("U_LAST"), 
 						result.getString("U_USERNAME"), 
-						result.getString("U_PASSWORD"));
+						result.getString("U_PASSWORD"),
+						result.getInt("SUPERUSER"));
 			}
 		}
 		return new User();	

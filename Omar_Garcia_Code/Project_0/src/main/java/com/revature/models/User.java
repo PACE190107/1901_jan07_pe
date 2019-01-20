@@ -7,6 +7,7 @@ public class User {
 	private String lastName;
 	private String userName;
 	private String passWord;
+	private int superuser;
 	
 	public User() {
 		super();
@@ -27,6 +28,18 @@ public class User {
 		this.lastName = lastName;
 		this.userName = userName;
 		this.passWord = passWord;
+	}
+	
+	
+
+	public User(int id, String firstName, String lastName, String userName, String passWord, int superuser) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.userName = userName;
+		this.passWord = passWord;
+		this.superuser = superuser;
 	}
 
 	public int getId() {
@@ -69,6 +82,14 @@ public class User {
 		this.passWord = passWord;
 	}
 
+	public int isSuperuser() {
+		return superuser;
+	}
+
+	public void setSuperuser(int superuser) {
+		this.superuser = superuser;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,6 +98,7 @@ public class User {
 		result = prime * result + id;
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((passWord == null) ? 0 : passWord.hashCode());
+		result = prime * result + superuser;
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
@@ -107,6 +129,8 @@ public class User {
 				return false;
 		} else if (!passWord.equals(other.passWord))
 			return false;
+		if (superuser != other.superuser)
+			return false;
 		if (userName == null) {
 			if (other.userName != null)
 				return false;
@@ -118,8 +142,9 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
-				+ ", passWord=" + passWord + "]";
+				+ ", passWord=" + passWord + ", superuser=" + superuser + "]";
 	}
+	
 	
 	
 }
