@@ -79,15 +79,43 @@ CREATE PUBLIC SYNONYM insert_user
     FOR bankadmin.insert_user;
 
 CREATE OR REPLACE PROCEDURE update_user
-    (in_username IN VARCHAR, in_old_password IN VARCHAR, in_new_password IN VARCHAR, p_success OUT INTEGER)
+    (in_user_id IN INTEGER, in_old_credential IN VARCHAR, in_new_credential IN VARCHAR, p_success OUT INTEGER)
     AUTHID CURRENT_USER AS
+    username_store VARCHAR(20);
+    password_store VARCHAR(20);
+    new_username_exists INTEGER;
     BEGIN
-        UPDATE user_accounts 
-            SET user_password = in_new_password
-            WHERE user_username = in_username
-            AND user_password = in_old_password;
-        p_success := SQL%ROWCOUNT;
-        EXECUTE IMMEDIATE ('ALTER USER '||in_username||' IDENTIFIED BY '||in_new_password);
+        SELECT user_username, user_password INTO username_store, password_store
+            FROM user_accounts
+            WHERE user_id = in_user_id;
+        IF password_store = in_old_credential THEN
+            UPDATE user_accounts 
+                SET user_password = in_new_credential
+                WHERE user_id = in_user_id;
+            p_success := SQL%ROWCOUNT; 
+            EXECUTE IMMEDIATE ('ALTER USER '||username_store||' IDENTIFIED BY '||in_new_credential);
+        ELSIF username_store = in_old_credential THEN
+            SELECT COUNT(*) INTO new_username_exists
+                FROM user_accounts
+                WHERE user_username = in_new_credential;
+            IF new_username_exists = 0 THEN
+                UPDATE user_accounts 
+                    SET user_username = in_new_credential
+                    WHERE user_id = in_user_id;
+                p_success := SQL%ROWCOUNT;
+                EXECUTE IMMEDIATE ('DROP USER '||in_old_credential);
+                EXECUTE IMMEDIATE ('CREATE USER '||in_new_credential||' IDENTIFIED BY '||password_store);
+                EXECUTE IMMEDIATE ('GRANT CREATE SESSION TO '||in_new_credential);
+                EXECUTE IMMEDIATE ('GRANT EXECUTE ON insert_account TO '||in_new_credential);
+                EXECUTE IMMEDIATE ('GRANT SELECT,UPDATE,DELETE ON user_accounts TO '||in_new_credential);
+                EXECUTE IMMEDIATE ('GRANT INSERT,SELECT,UPDATE,DELETE ON bank_accounts TO '||in_new_credential);
+                EXECUTE IMMEDIATE ('GRANT INSERT,SELECT,UPDATE,DELETE ON transactions TO '||in_new_credential);
+                EXECUTE IMMEDIATE ('GRANT SELECT ON user_id_seq TO '||in_new_credential);
+                EXECUTE IMMEDIATE ('GRANT SELECT ON account_id_seq TO '||in_new_credential);
+            ELSE
+                p_success := 2;
+            END IF;        
+        END IF;
         COMMIT;
     END;
     /

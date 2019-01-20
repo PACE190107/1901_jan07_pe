@@ -109,9 +109,9 @@ public class ScreenManager {
 
 			//SETTINGS_SCREEN
 			"\n" +
-			"Enter your username, old password, and a new password to change your password. \n" +
+			"Enter your current username/password followed by a new username/password to change that credential. \n" +
 			"Enter 'delete' to delete you user account. \n" +
-			"NOTICE: THE ALL BANK ACCOUNTS MUST BE EMPTY FOR DELETION TO SUCCEED. \n" +
+			"NOTICE: ALL BANK ACCOUNTS MUST BE EMPTY FOR DELETION TO SUCCEED. \n" +
 			"Enter 'back' to return to the account menu. \n" +
 			"\n",
 
@@ -128,9 +128,9 @@ public class ScreenManager {
 			"[UserID*, Username*, Password*] \n" +
 			"\n" +
 			"Enter 'c username password' to create a new user account. \n" +
-			"Enter 'r username password' to login to an existing user account. \n" +
-			"Enter 'u username oldPassword newPassword' to change the password for an existing user account. \n" +
-			"Enter 'd username password' to delete an existing user account. \n" +
+			"Enter 'r userID' to login to an existing user account. \n" +
+			"Enter 'u userID oldCredential newCredential' to change the password for an existing user account. \n" +
+			"Enter 'd userID' to delete an existing user account. \n" +
 			"Enter 'back' to return to the administrator menu. \n"
 	};
 	
@@ -225,9 +225,9 @@ public class ScreenManager {
 				information +
 				"\n" +
 				"Enter 'c username password' to create a new user account. \n" +
-				"Enter 'r username password' to login to an existing user account. \n" +
-				"Enter 'u username oldPassword newPassword' to change the password for an existing user account. \n" +
-				"Enter 'd username password' to delete an existing user account. \n" +
+				"Enter 'r userID' to login to an existing user account. \n" +
+				"Enter 'u userID oldCredential newCredential' to change the password for an existing user account. \n" +
+				"Enter 'd userID' to delete an existing user account. \n" +
 				"Enter 'back' to return to the administrator menu. \n";
 			break;
 		}

@@ -35,11 +35,11 @@ public class UserDAO implements UserDAOable {
 		try {
 			stmnt.executeUpdate();
 			if (stmnt.getInt(3) <= 0)
-				throw new BankErrors.ExistingUsernamePasswordException();
+				throw new BankErrors.ExistingUsernameException();
 			stmnt.close();
 			return true;
 		} catch (SQLIntegrityConstraintViolationException e) {
-			throw new BankErrors.ExistingUsernamePasswordException();
+			throw new BankErrors.ExistingUsernameException();
 		}
 	}
 
@@ -83,19 +83,41 @@ public class UserDAO implements UserDAOable {
 		} else
 			throw new BankErrors.InvalidUsernamePasswordException();
 	}
+	@Override
+	public User readUser(int userID) throws SQLException {
+		Statement stmnt = ConnectionManager.getJDBCConnection().createStatement();
+		ResultSet foundUsers = stmnt.executeQuery(
+			"SELECT * FROM user_accounts " +
+				"WHERE user_id = " + userID);
+		
+		if (foundUsers.next()) {
+			User user = new User();
+
+			user.setUserID(foundUsers.getInt(1));
+			user.setUsername(foundUsers.getString(2));
+			user.setPassword(foundUsers.getString(3));
+
+			stmnt.close();
+			
+			return user;
+		} else
+			throw new BankErrors.InvalidUsernamePasswordException();
+	}
 	
 	@Override
-	public boolean updateUser(String username, String oldPassword, String newPassword) throws SQLException {
+	public boolean updateUser(int userID, String oldCredential, String newCredential) throws SQLException {
 		CallableStatement stmnt = ConnectionManager.getJDBCConnection().prepareCall("CALL update_user(?,?,?,?)");
-		stmnt.setString(1, username);
-		stmnt.setString(2, oldPassword);
-		stmnt.setString(3, newPassword);
+		stmnt.setInt(1, userID);
+		stmnt.setString(2, oldCredential);
+		stmnt.setString(3, newCredential);
 		stmnt.registerOutParameter(4, Types.INTEGER);
 		
 		try {
 			stmnt.executeUpdate();
 			if (stmnt.getInt(4) <= 0)
 				throw new BankErrors.InvalidUsernamePasswordException();
+			if (stmnt.getInt(4) == 2)
+				throw new BankErrors.ExistingUsernameException();
 			stmnt.close();
 			return true;
 		} catch (SQLSyntaxErrorException e) {
@@ -110,6 +132,26 @@ public class UserDAO implements UserDAOable {
 		CallableStatement stmnt = ConnectionManager.getJDBCConnection().prepareCall("CALL delete_user(?,?,?)");
 		stmnt.setString(1, username);
 		stmnt.setString(2, password);
+		stmnt.registerOutParameter(3, Types.INTEGER);
+		
+		try {
+			stmnt.executeUpdate();
+			if (stmnt.getInt(3) <= 0)
+				throw new BankErrors.InvalidUsernamePasswordException();
+			stmnt.close();
+			return true;
+		} catch (SQLSyntaxErrorException e) {
+			throw new BankErrors.InvalidUsernamePasswordException();
+		}
+	}
+	@Override
+	public boolean deleteUser(int userID) throws SQLException {
+		AccountDAO.getAccountDAO().deleteAccounts(readUser(userID).getUserID());
+		
+		User user = readUser(userID);
+		CallableStatement stmnt = ConnectionManager.getJDBCConnection().prepareCall("CALL delete_user(?,?,?)");
+		stmnt.setString(1, user.getUsername());
+		stmnt.setString(2, user.getPassword());
 		stmnt.registerOutParameter(3, Types.INTEGER);
 		
 		try {

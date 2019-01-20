@@ -16,10 +16,16 @@ public class UserServices {
 	public static User readUser(String username, String password) throws SQLException {
 		return UserDAO.getUserDAO().readUser(username, password);
 	}
+	public static User readUser(int userID) throws SQLException {
+		return UserDAO.getUserDAO().readUser(userID);
+	}
+	public static boolean updateUser(int userID, String oldCredential, String newCredential) throws SQLException {
+		return UserDAO.getUserDAO().updateUser(userID, oldCredential, newCredential);
+	}
 	public static boolean deleteUser(String username, String password) throws SQLException {
 		return UserDAO.getUserDAO().deleteUser(username, password);
 	}
-	public static boolean updateUser(String username, String oldPassword, String newPassword) throws SQLException {
-		return UserDAO.getUserDAO().updateUser(username, oldPassword, newPassword);
+	public static boolean deleteUser(int userID) throws SQLException {
+		return UserDAO.getUserDAO().deleteUser(userID);
 	}
 }

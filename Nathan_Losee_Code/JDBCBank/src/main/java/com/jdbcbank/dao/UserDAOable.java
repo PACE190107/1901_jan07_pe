@@ -9,6 +9,8 @@ public interface UserDAOable {
 	public boolean createUser(String username, String password) throws SQLException;
 	public List<User> readUsers() throws SQLException;
 	public User readUser(String username, String password) throws SQLException;
-	public boolean updateUser(String username, String oldPassword, String newPassword) throws SQLException;
+	public User readUser(int userID) throws SQLException;
+	public boolean updateUser(int userID, String oldCredential, String newCredential) throws SQLException;
 	public boolean deleteUser(String username, String password) throws SQLException;
+	public boolean deleteUser(int userID) throws SQLException;
 }

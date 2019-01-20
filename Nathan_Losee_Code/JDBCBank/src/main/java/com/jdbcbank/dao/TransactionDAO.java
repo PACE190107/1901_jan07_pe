@@ -42,7 +42,7 @@ public class TransactionDAO implements TransactionDAOable {
 			"INSERT INTO transactions " +
 				"VALUES (to_timestamp('" + (Timestamp.valueOf(LocalDateTime.now())) + "','YYYY-MM-DD HH24:MI:SS.FF')," +
 				accountID + "," +
-				(amount > 0 ? "'DEPOSIT'" : "'WITHDRAW'") + "," +
+				"'" + action.toUpperCase() + "'" + "," +
 				amount + "," +
 				balance + ")");
 		stmnt.close();

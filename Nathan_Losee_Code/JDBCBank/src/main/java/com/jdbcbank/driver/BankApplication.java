@@ -43,7 +43,7 @@ public class BankApplication {
 				log.info(validation + "\n");
 				primeForInput();
 				processInput();
-			} catch (BankErrors.ExistingUsernamePasswordException e) {
+			} catch (BankErrors.ExistingUsernameException e) {
 				validation = "Username has already been taken. \n";
 			} catch (BankErrors.InvalidUsernamePasswordException e) {
 				validation = "Username doesn't exist or Password was incorrect. \n";
@@ -96,7 +96,7 @@ public class BankApplication {
 			System.out.print("AccountID Amount: ");
 			break;
 		case ScreenManager.SETTINGS_SCREEN:
-			System.out.print("Username OldPassword NewPassword: ");
+			System.out.print("OldCredential NewCredential: ");
 			break;
 		case ScreenManager.TRANSFER_SCREEN:
 			System.out.print("AccountID_FROM AccountID_TO Amount: ");
@@ -105,9 +105,10 @@ public class BankApplication {
 			System.out.print("AccountType Amount: ");
 			break;
 		case ScreenManager.USER_SCREEN:
-			System.out.print("CommandLetter Username Password: ");
+			System.out.print("CommandLetter (UserID) (OldUsername/OldPassword) (NewUsername/NewPassword): ");
 			break;
 		}
+		System.out.print("\n");
 	}
 	private static void processInput() throws SQLException {
 		String[] input = acquireInput();
@@ -161,14 +162,6 @@ public class BankApplication {
 			}
 			if (testForSuperUser(input[0], input[1])) {
 				validation = "Successfully logged into administrator account. \n";
-				
-				List<User> users = UserServices.readUsers();
-				String userString = "";
-				for (User user : users)
-					userString += user + "\n";
-				
-				ScreenManager.updateScreen(ScreenManager.USER_SCREEN, userString);
-				
 				currentScreen = ScreenManager.SUPER_SCREEN;
 			}
 			else if (UserServices.readUser(input[0], input[1]) != null) {
@@ -378,7 +371,7 @@ public class BankApplication {
 				String accountString = "";
 				for (Account account : accounts)
 					accountString += account + "\n";
-				ScreenManager.updateScreen(ScreenManager.DEPOSIT_SCREEN, accountString);
+				ScreenManager.updateScreen(ScreenManager.CLOSING_SCREEN, accountString);
 			}
 			break;
 			
@@ -393,12 +386,20 @@ public class BankApplication {
 					break;
 				}
 			}
-			if (input.length < 3) {
-				validation = "Please input your username, old password, and a new password. \n";
+			if (input.length < 2) {
+				validation = "Please input your current username/password and a new username/password. \n";
 				break;
 			}
-			if (UserServices.updateUser(input[0], input[1], input[2]))
-				validation = "Password successfully changed. \n";
+			ConnectionManager.setJDBCConnection("BankAdmin", "bankadmin");
+			if (UserServices.updateUser(currUser.getUserID(), input[0], input[1])) {
+				validation = "Credentials successfully changed. \n";
+				if (input[0].equals(currUser.getUsername()))
+					currUser.setUsername(input[1]);
+				else
+					currUser.setPassword(input[1]);
+				ConnectionManager.setJDBCConnection(currUser.getUsername(), currUser.getPassword());
+				ScreenManager.updateScreen(ScreenManager.ACCOUNT_SCREEN, currUser.getUsername());
+			}
 			break;
 			
 		case ScreenManager.SUPER_SCREEN:
@@ -406,6 +407,12 @@ public class BankApplication {
 			case 1:
 				validation = "Viewing list of existing users. \n";
 				currentScreen = ScreenManager.USER_SCREEN;
+				
+				List<User> users = UserServices.readUsers();
+				String userString = "";
+				for (User user : users)
+					userString += user + "\n";
+				ScreenManager.updateScreen(ScreenManager.USER_SCREEN, userString);
 				break;
 			case 2:
 				isSuperUser = false;
@@ -419,11 +426,8 @@ public class BankApplication {
 			break;
 			
 		case ScreenManager.USER_SCREEN:
-			testIfReturning(ScreenManager.SUPER_SCREEN);
-			if (input.length < 3) {
-				validation = "Input a command letter followed by the username and password of the account you'd like to edit. \n";
+			if (testIfReturning(ScreenManager.SUPER_SCREEN))
 				break;
-			}
 			switch (input[0]) {
 			case "c":
 				if (input.length < 3) {
@@ -442,30 +446,25 @@ public class BankApplication {
 				}
 				break;
 			case "r":
-				if (input.length < 3) {
-					validation = "Please input a username and password with this command letter. \n";
+				if (input.length < 2) {
+					validation = "Please input a userID with this command letter. \n";
 					break;
 				}
-				if (UserServices.readUser(input[1], input[2]) != null) {
+				if ((currUser = UserServices.readUser(getInt(input[1]))) != null) {
 					validation = "Logging into user account. \n";
 					currentScreen = ScreenManager.ACCOUNT_SCREEN;
-					ConnectionManager.setJDBCConnection(input[1], input[2]);
 					
-					currUser = new User();
-					currUser.setUserID(UserServices.readUser(input[1], input[2]).getUserID());
-					currUser.setUsername(input[1]);
-					currUser.setPassword(input[2]);
-
+					ConnectionManager.setJDBCConnection(currUser.getUsername(), currUser.getPassword());
 					ScreenManager.updateScreen(ScreenManager.ACCOUNT_SCREEN, currUser.getUsername());
 					
 				}
 				break;
 			case "u":
 				if (input.length < 4) {
-					validation = "Please input a username, current password, and new password with this command letter. \n";
+					validation = "Please input a userID, current username/password, and new username/password with this command letter. \n";
 					break;
 				}
-				if (UserServices.updateUser(input[1], input[2], input[3])) {
+				if (UserServices.updateUser(getInt(input[1]), input[2], input[3])) {
 					validation = "Updated user.";
 					
 					List<User> users = UserServices.readUsers();
@@ -476,11 +475,11 @@ public class BankApplication {
 				}
 				break;
 			case "d":
-				if (input.length < 3) {
-					validation = "Please input a username and password with this command letter. \n";
+				if (input.length < 2) {
+					validation = "Please input a userID with this command letter. \n";
 					break;
 				}
-				if (UserServices.deleteUser(input[1], input[2])) {
+				if (UserServices.deleteUser(getInt(input[1]))) {
 					validation = "Deleted user. \n";
 					
 					List<User> users = UserServices.readUsers();
@@ -499,7 +498,6 @@ public class BankApplication {
 				break;
 			}
 			break;
-			
 		}
 	}
 	

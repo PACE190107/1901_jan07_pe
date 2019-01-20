@@ -47,13 +47,13 @@ public class AccountDAO implements AccountDAOable {
 		
 		CallableStatement stmnt = ConnectionManager.getJDBCConnection().prepareCall("CALL insert_account(?,?,?,?)");
 		stmnt.setInt(1, userID);
-		stmnt.setString(2, AccountType.valueOf(type).toString());
+		stmnt.setString(2, AccountType.valueOf(type.toLowerCase()).toString());
 		stmnt.setDouble(3, amount);
 		stmnt.registerOutParameter(4, Types.INTEGER);
 		stmnt.executeUpdate();
 		
 		if (stmnt.getInt(4) > 0) {
-			TransactionDAO.getTransactionDAO().createTransaction(stmnt.getInt(4), "_DEPOSIT", amount, amount);
+			TransactionDAO.getTransactionDAO().createTransaction(stmnt.getInt(4), "deposit", amount, amount);
 			stmnt.close();
 			return true;
 		}
@@ -133,7 +133,7 @@ public class AccountDAO implements AccountDAOable {
 		stmnt.close();
 		
 		if (updatedAccounts > 0) {
-			TransactionDAO.getTransactionDAO().createTransaction(accountID, (amount > 0 ? "deposit" : "withdraw"),
+			TransactionDAO.getTransactionDAO().createTransaction(accountID, (isDeposit ? "deposit" : "withdraw"),
 				amount, account.getBalance() + (isDeposit ? amount : -amount));
 			return true;
 		}

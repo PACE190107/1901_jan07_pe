@@ -21,7 +21,7 @@ public class BankErrors {
 	public static class InvalidUsernamePasswordException extends SQLException {
 		private static final long serialVersionUID = 5834183009812577348L;
 	}
-	public static class ExistingUsernamePasswordException extends SQLException {
+	public static class ExistingUsernameException extends SQLException {
 		private static final long serialVersionUID = 519042640220138945L;
 	}
 	public static class MalformedUsernamePasswordException extends SQLException {

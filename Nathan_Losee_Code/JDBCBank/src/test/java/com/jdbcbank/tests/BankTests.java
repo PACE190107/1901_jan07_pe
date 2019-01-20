@@ -76,7 +76,7 @@ public class BankTests {
 	}
 	@Test
 	public void testCreateUser_Duplicate() throws SQLException {
-		expectedException.expect(BankErrors.ExistingUsernamePasswordException.class);
+		expectedException.expect(BankErrors.ExistingUsernameException.class);
 		UserServices.createUser("twinsies", "12345");
 		UserServices.createUser("twinsies", "54321");
 	}
@@ -116,22 +116,45 @@ public class BankTests {
 	
 	// Testing updateUser
 	@Test
-	public void testUpdateUser_Normal() throws SQLException {
+	public void testUpdateUser_Password_Normal() throws SQLException {
 		UserServices.createUser("myself", "old_password");
-		assertTrue(UserServices.updateUser("myself", "old_password", "new_password"));
+		int userID = UserServices.readUser("myself", "old_password").getUserID();
+		assertTrue(UserServices.updateUser(userID, "old_password", "new_password"));
 		assertNotNull(UserServices.readUser("myself", "new_password"));
 	}
 	@Test
-	public void testUpdateUser_WrongPassword() throws SQLException {
+	public void testUpdateUser_Password_WrongPassword() throws SQLException {
 		expectedException.expect(BankErrors.InvalidUsernamePasswordException.class);
-		UserServices.createUser("myself", "wrong_password");
-		UserServices.updateUser("myself", "wrong_password", "right_password");
-		UserServices.readUser("myself", "wrong_password");
+		UserServices.createUser("myself", "right_password");
+		int userID = UserServices.readUser("myself", "right_password").getUserID();
+		UserServices.updateUser(userID, "wrong_password", "right_password");
+	}
+	@Test
+	public void testUpdateUser_Username_Normal() throws SQLException {
+		UserServices.createUser("old_username", "password");
+		int userID = UserServices.readUser("old_username", "password").getUserID();
+		assertTrue(UserServices.updateUser(userID, "old_username", "new_username"));
+		assertNotNull(UserServices.readUser("new_username", "password"));
+	}
+	@Test
+	public void testUpdateUser_Username_WrongUsername() throws SQLException {
+		expectedException.expect(BankErrors.InvalidUsernamePasswordException.class);
+		UserServices.createUser("right_username", "password");
+		int userID = UserServices.readUser("right_username", "password").getUserID();
+		UserServices.updateUser(userID, "wrong_username", "password");
+	}
+	@Test
+	public void testUpdateUser_Username_Duplicate() throws SQLException {
+		expectedException.expect(BankErrors.ExistingUsernameException.class);
+		UserServices.createUser("username1", "password");
+		UserServices.createUser("username2", "password");
+		int userID = UserServices.readUser("username1", "password").getUserID();
+		UserServices.updateUser(userID, "username1", "username2");
 	}
 	@Test
 	public void testUpdateUser_Nonexistant() throws SQLException {
 		expectedException.expect(BankErrors.InvalidUsernamePasswordException.class);
-		UserServices.updateUser("update", "shall", "fail");
+		UserServices.updateUser(00000000, "shall", "fail");
 	}
 	
 	// Testing deleteUser
