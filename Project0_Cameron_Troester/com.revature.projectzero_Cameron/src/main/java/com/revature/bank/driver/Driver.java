@@ -26,8 +26,8 @@ public class Driver {
 		Account currUser = null;
 
 		while (!exit) {
-			log.info("Welcome to the bank for low budget people");
-			log.info("\n[1]To create a new account type 'create'. \n"
+			System.out.println("Welcome to the bank for low budget people");
+			System.out.println("\n[1]To create a new account type 'create'. \n"
 					+ "[2]To log in, type 'log in'. \n"
 					+ "[3]To log off, type 'exit'.");
 			input = console.nextLine();
@@ -46,16 +46,30 @@ public class Driver {
 				while (loggedIn) {
 					loggedIn = View.loggedInMethod(currUser);
 					if (!loggedIn) {
-						exit = true;
+						new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+						System.out.println("Would you like to log back in? (yes/no)");
+						input = console.nextLine();
+						if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("y")) {
+							input = null;
+							validInput = false;
+							loggedIn = false;
+							exit = false;
+							currUser = null;
+							new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+
+						}
+						else{
+							exit = true;
+						}
+						
 					}
 				}
 			} else if (input.equalsIgnoreCase("exit")) {
 				exit = true;
-			} else {
 				log.info("Invalid input. Please try again.");
 			}
 		}
-		log.info("logged out successfully");
+		System.out.println("Thanks for choose our bank, come back soon");
 
 		console.close();
 		

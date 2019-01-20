@@ -68,7 +68,7 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [userName=" + userName + ", balance=" + balance + "]";
+		return userName + "\nAccount Info: userName = " + userName + ", balance = $" + balance;
 	}
 
 	

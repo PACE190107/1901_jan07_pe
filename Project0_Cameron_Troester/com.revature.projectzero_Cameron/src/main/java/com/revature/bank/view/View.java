@@ -21,51 +21,60 @@ public class View {
 	}
 
 	
-	public static boolean createView() {
+	public static boolean createView() throws InterruptedException, IOException {
 		ArrayList<String> accountCreate = new ArrayList<>();
 		String input = null;
-
-		log.info("Enter your prefered user name. Letters and numbers are valid,"
-				+ " but special charaters and punctuation are not allowed."
-				+ "Your user name will be used for log in.");
+		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+		System.out.println("Enter your prefered user name");
 		input = console.nextLine();
 		while (!input.matches("^[a-zA-Z0-9]*$")) {
-			log.info("Invalid input. Please enter a valid user name");
+			System.out.println("Invalid input. Please enter a valid user name");
 			input = console.nextLine();
 		}
 		accountCreate.add(input);
 
-		log.info("Enter your first name.");
+		System.out.println("Enter your first name.");
 		input = console.nextLine();
 		while (!input.matches("^[a-zA-Z]*$")) {
-			log.info("Invalid input. Please enter a valid user name");
+			System.out.println("Invalid input. Please enter a valid first name");
 			input = console.nextLine();
 		}
 		accountCreate.add(input);
 
-		log.info("Enter your last name.");
+		System.out.println("Enter your last name.");
 		input = console.nextLine();
 		while (!input.matches("^[a-zA-Z]*$")) {
-			log.info("Invalid input. Please enter a valid user name");
+			log.info("Invalid input. Please enter a valid last name");
 			input = console.nextLine();
 		}
 		accountCreate.add(input);
-		log.info(
-				"Enter your password. Letters are case sensitive, and adding numbers is recomended. No special characters "
-						+ "are allowed. Strong passwords have length greater than 14.");
+		System.out.println(
+				"Create your desired password");
 		input = console.nextLine();
 		while (!input.matches("^[a-zA-Z0-9]*$")) {
-			log.info("Invalid input. Please enter a valid user name");
+			System.out.println("Invalid input. Please enter a valid password");
 			input = console.nextLine();
 		}
 		accountCreate.add(input);
 
-		log.info("What will be your initial deposit?"
-				+ " Enter a numeric value greater than 0.01 in the format 0.00 to make deposit.");
-		while (!input.matches("^\\d+\\.\\d{0,2}$") || (Double.parseDouble(input) <= 0.01)) {
+		System.out.println("What will be your initial deposit?"
+				+ "\nIt must be greater than 5 dollars.");
+		if (!input.matches("^\\d+\\.\\d{0,2}$")) {
+			input = input + ".00";
+		}
+		while (!input.matches("^\\d+\\.\\d{0,2}$") || (Double.parseDouble(input) <= 5)) {
+			
 			input = console.nextLine();
+			if (!input.matches("^\\d+\\.\\d{0,2}$")) {
+				input = input + ".00";
+			}
+			
+			if(!input.matches("^\\d+\\.\\d{0,2}$") || Double.parseDouble(input) <= 5) {
+					System.out.println("Invalid input, please try again.");
+			}
 		}
 		accountCreate.add(input);
+		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		Account newAcc = Controller.createAccount(accountCreate.get(0), accountCreate.get(1), accountCreate.get(2),
 				accountCreate.get(3), Double.parseDouble(accountCreate.get(4)));
@@ -75,10 +84,10 @@ public class View {
 		return false;
 	}
 
-	public static Account logInView() {
+	public static Account logInView() throws InterruptedException, IOException {
 
 		Account acc;
-		log.info("Enter your User name for log in.");
+		System.out.println("Enter your User name for log in.");
 		String enteredU = console.nextLine();
 		if (Controller.logIn(enteredU)) {
 			acc = Controller.loadAccount(enteredU);
@@ -92,14 +101,19 @@ public class View {
 		String input = null;
 		boolean withdrawal = false;
 
-		log.info(
-				"To log out type \"exit\". Type \"withdrawal\" to make a withdrawal, or \"deposit\" to make a deposit.");
+		System.out.println(
+				"[1]Type \"exit\" to log out. "
+				+ "\n[2]Type \"withdrawal\" to make a withdrawal. "
+				+ "\n[3]Type \"deposit\" to make a deposit.");
 		input = console.nextLine();
-		if (input.equalsIgnoreCase("exit")) {
+		if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("1")) {
 			return false;
-		} else if (input.equalsIgnoreCase("withdrawal")) {
-			log.info("Enter a numeric value greater than 0.01 in the format 0.00 to make withdrawl.");
+		} else if (input.equalsIgnoreCase("withdrawal") || input.equalsIgnoreCase("2")) {
+			System.out.println("Enter a numeric value greater than 0.01 to withdrawal");
 			input = console.nextLine();
+			if (!input.matches("^\\d+\\.\\d{0,2}$")) {
+				input = input + ".00";
+			}
 			while (!input.matches("^\\d+\\.\\d{0,2}$") || (Double.parseDouble(input) <= 0.01)) {
 				log.info("Invalid input. Please enter a valid number to withdrawal.");
 				input = console.nextLine();
@@ -107,29 +121,32 @@ public class View {
 			withdrawal = Controller.withdrawal(Double.parseDouble(input), acc);
 			if (withdrawal) {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				log.info("Withdrawal successful. New Balance: " + df2.format(acc.getBalance()));
+				System.out.println("Withdrawal successful. New Balance: " + df2.format(acc.getBalance()));
 				return true;
 			} else {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				log.info("Withdrawal failed. Current Balance: " + df2.format(acc.getBalance()) + " amount requested: "
+				System.out.println("Withdrawal failed. Current Balance: " + df2.format(acc.getBalance()) + " amount requested: "
 						+ input);
 				return true;
 			}
-		} else if (input.equalsIgnoreCase("deposit")) {
-			log.info("Enter a numeric value greater than 0.01 in the format 0.00 to make deposit.");
+		} else if (input.equalsIgnoreCase("deposit") || input.equalsIgnoreCase("3")) {
+			System.out.println("Enter a numeric value greater than 0.01 to deposit");
 			input = console.nextLine();
+			if (!input.matches("^\\d+\\.\\d{0,2}$")) {
+				input = input + ".00";
+			}
 			while (!input.matches("^\\d+\\.\\d{0,2}$") || (Double.parseDouble(input) <= 0.01)) {
-				log.info("Invalid input. Please enter a valid number to deposit.");
+				System.out.println("Invalid input. Please enter a valid number to deposit.");
 				input = console.nextLine();
 			}
 
 			if (Controller.deposit(Double.parseDouble(input), acc)) {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				log.info("Deposit successful. New Balance: " + df2.format(acc.getBalance()));
+				System.out.println("Deposit successful. New Balance: " + df2.format(acc.getBalance()));
 				return true;
 			} else {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				log.info("Deposit failed. Current Balance: " + df2.format(acc.getBalance()) + " amount requested: "
+				System.out.println("Deposit failed. Current Balance: " + df2.format(acc.getBalance()) + " amount requested: "
 						+ input);
 				return true;
 			}

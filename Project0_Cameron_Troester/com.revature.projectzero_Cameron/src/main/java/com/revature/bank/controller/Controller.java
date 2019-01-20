@@ -1,5 +1,6 @@
 package com.revature.bank.controller;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -39,7 +40,7 @@ public class Controller {
 
 		while (!isNameAvailable) {
 			if (userNameSet.size() == setSize) {
-				log.info("That user name has already been taken. Please enter a different user name.");
+				System.out.println("That user name has already been taken. Please enter a different user name.");
 				uName = console.nextLine();
 				userNameSet.add(uName);
 			}
@@ -58,9 +59,9 @@ public class Controller {
 			accCreated = accDI.createAccount(newAcc);
 		}
 		if (accCreated > 0) {
-			log.info("New account created: " + newAcc.toString());
+			System.out.println("New account created: " + newAcc.toString());
 		} else {
-			log.info("Account failed to be created.");
+			System.out.println("Account failed to be created.");
 			return null;
 		}
 		return newAcc;
@@ -74,11 +75,11 @@ public class Controller {
 	public static boolean withdrawal(double withdrawal, Account account) {
 
 		if (withdrawal > account.getBalance()) {
-			log.info("withdrawal failed. You requested an amount greater than your account balance. Your balance: "
+			System.out.println("Withdrawal failed. You requested an amount greater than your account balance. Your balance: "
 					+ account.getBalance() + " Amount requested: " + withdrawal);
 			return false;
 		}else if(withdrawal < 0) {
-			log.info("withdrawal failed. You requested a negative number to withdrawal. Your balance: "
+			System.out.println("Withdrawal failed. You requested a negative number to withdrawal. Your balance: "
 					+ account.getBalance() + " Amount requested: " + withdrawal);
 			return false;
 		}
@@ -95,7 +96,7 @@ public class Controller {
 	public static boolean deposit(double deposit, Account account) {
 		
 		if(deposit < 0) {
-			log.info("Deposit failed; You requested a negative number to deposit. Your balance: "
+			System.out.println("Deposit failed; You requested a negative number to deposit. Your balance: "
 					+ account.getBalance() + " Amount requested: " + deposit);
 			return false;
 		}
@@ -108,22 +109,22 @@ public class Controller {
 		return true;
 	}
 
-	public static boolean logIn(String userName) {
+	public static boolean logIn(String userName) throws InterruptedException, IOException {
 		loadUsers();
 		Account acc = null;
 		while (userName == null) {
-			log.info("No user name entered. Please enter a user name.");
+			System.out.println("No user name entered. Please enter a user name.");
 			userName = console.nextLine();
 		}
 		if (userNameSet.contains(userName)) {
 			acc = validate(userName);
 			if (acc != null) {
-				log.info("logged in successfully as: " + acc.toString());
+				System.out.println("logged in successfully as: " + acc.toString());
 				return true;
 			}
 		} else {
 			while (!userNameSet.contains(userName)) {
-				log.info("User name not found. Please enter your user name again."
+				System.out.println("User name not found. Please enter your user name again."
 						+ " If you do not have an account,\n then type \"create\" to create a new account.");
 				userName = console.nextLine();
 				if (userName.equalsIgnoreCase("create")) {
@@ -132,7 +133,7 @@ public class Controller {
 				if (userNameSet.contains(userName)) {
 					acc = validate(userName);
 					if (acc != null) {
-						log.info("logged in successfully as: " + acc.toString());
+						System.out.println("logged in successfully as: " + acc.toString());
 						return true;
 					}
 				}
@@ -146,7 +147,7 @@ public class Controller {
 		Account acc = null;
 		String pswd = null;
 		
-		log.info("Enter your password.");
+		System.out.println("Enter your password.");
 		pswd = console.nextLine();
 		if(user.getUserByName(userName).getPsWord().equals(pswd)) {
 			acc = loadAccount(userName);
