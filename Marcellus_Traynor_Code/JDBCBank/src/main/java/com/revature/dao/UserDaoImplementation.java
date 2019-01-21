@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
+
+import com.revature.exceptions.GhostAccount;
+import com.revature.exceptions.InvalidCreds;
+import com.revature.exceptions.InvalidOption;
+import com.revature.exceptions.UsernameCopycat;
 import com.revature.models.User;
 import com.revature.services.AccountsService;
 import com.revature.util.JDBCConnectionUtil;
@@ -19,7 +24,7 @@ public class UserDaoImplementation implements UserDAO
 {
 	private static UserDaoImplementation userDao;
 	final static Logger log = Logger.getLogger(UserDaoImplementation.class);
-	private UserDaoImplementation() {}
+	public UserDaoImplementation() {}
 	
 	
 	public static UserDaoImplementation getUserDao()
@@ -32,7 +37,7 @@ public class UserDaoImplementation implements UserDAO
 	}
 	
 	@Override
-	public void welcome()
+	public void welcome() 
 	{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to the JDBCBanking portal!\n");
@@ -41,25 +46,32 @@ public class UserDaoImplementation implements UserDAO
 		
 		int choice;
 		
-		do
+		try
 		{
-			
-			choice = sc.nextInt();
-			
-			switch(choice)
+			do
 			{
-			case 1: login();
-					break;
-			case 2: registerUser(new User("", "", "", ""));
-					break;
-			case 3: System.out.println("Thank you for banking with JDBCBank. Goodbye :)\n");
-					sc.close();
-					System.exit(0);
-			default: System.out.println("Invalid input, try again.");
+				choice = sc.nextInt();
+				
+				switch(choice)
+				{
+				case 1: login();
+						break;
+				case 2: registerUser(new User("", "", "", ""));
+						break;
+				case 3: System.out.println("\nThank you for banking with JDBCBank. Goodbye :)");
+						sc.close();
+						System.exit(0);
+				default: throw new InvalidOption();
+				}
+				System.out.println("[1] Existing User Login\n[2] New User Registration\n[3] Exit Portal");
 			}
-			System.out.println("[1] Existing User Login\n[2] New User Registration\n[3] Exit Portal");
+			while(choice != 3);
 		}
-		while(choice != 3);
+		catch(InvalidOption e)
+		{
+			System.out.println(e.getMessage());
+			welcome();
+		}
 	}
 		
 	@Override
@@ -69,40 +81,61 @@ public class UserDaoImplementation implements UserDAO
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection()) 
 		{
-			System.out.println("Enter first name:");
-			String firstName = sc.nextLine();
-			
-			System.out.println("Enter last name:");
-			String lastName = sc.nextLine();
-			
-			System.out.println("Enter username:");
-			String userName = sc.nextLine();
-			
-			System.out.println("Enter password:");
-			String password = sc.nextLine();
-			
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setUserName(userName);
-			user.setPassword(password);
-			
-			String sql = "call register_user(?,?,?,?,?)";
-			CallableStatement cs = conn.prepareCall(sql);
-			cs.setString(1, user.getFirstName());
-			cs.setString(2, user.getLastName());
-			cs.setString(3, user.getUserName());
-			cs.setString(4, user.getPassword());
-			cs.registerOutParameter(5, Types.INTEGER);
-			cs.executeUpdate();
-			if(cs.getInt(5) > 0)
+			try
 			{
-				connectUser(user);
-				System.out.println("Thank you for registering!\n");
-				conn.close();
+				System.out.println("ENTER FIRST NAME:");
+				String firstName = sc.nextLine();
+				
+				System.out.println("ENTER LAST NAME:");
+				String lastName = sc.nextLine();
+				
+				System.out.println("ENTER USERNAME:");
+				String userName = sc.nextLine();
+				
+				String sql = "select user_name from User_Details";
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				List<String> nameList = new ArrayList<String>();
+				while(rs.next())
+				{
+					nameList.add(rs.getString("USER_NAME"));
+				}
+				
+				if(nameList.contains(userName))
+				{
+					throw new UsernameCopycat();
+				}
+				
+				System.out.println("ENTER PASSWORD:");
+				String password = sc.nextLine();
+				
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setUserName(userName);
+				user.setPassword(password);
+			
+				String sql1 = "call register_user(?,?,?,?,?)";
+				CallableStatement cs = conn.prepareCall(sql1);
+				cs.setString(1, user.getFirstName());
+				cs.setString(2, user.getLastName());
+				cs.setString(3, user.getUserName());
+				cs.setString(4, user.getPassword());
+				cs.registerOutParameter(5, Types.INTEGER);
+				cs.executeUpdate();
+				if(cs.getInt(5) > 0)
+				{
+					connectUser(user);
+					System.out.println("\nTHANK YOU FOR REGISTERING!\n");
+					conn.close();
+				}
+				else
+				{
+					throw new SQLException();
+				}
 			}
-			else
+			catch(UsernameCopycat e)
 			{
-				throw new SQLException();
+				System.out.println(e.getMessage());
 			}
 		} catch (SQLException e) 
 		{
@@ -117,10 +150,10 @@ public class UserDaoImplementation implements UserDAO
 	public void login()
 	{
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter your username:");
+		System.out.println("ENTER YOUR USERNAME:");
 		String userName = sc.nextLine();
 		
-		System.out.println("Enter your password:");
+		System.out.println("ENTER YOUR PASSWORD:");
 		String password = sc.nextLine();
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection())
@@ -128,7 +161,6 @@ public class UserDaoImplementation implements UserDAO
 			String sql = "select user_name from User_Details";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			System.out.println("result set 1");
 			List<String> nameList = new ArrayList<String>();
 			while(rs.next())
 			{
@@ -144,45 +176,30 @@ public class UserDaoImplementation implements UserDAO
 				passList.add(rs1.getString("USER_PASSWORD"));
 			}
 			
-			if(nameList.contains(userName) & passList.contains(password))
+			try
 			{
-				JDBCConnectionUtil.setConnection(userName, password);
-				User user = getUser(userName);
-				
-				if(user.getUserId() == 100)
+				if(nameList.contains(userName) & passList.contains(password))
 				{
-					superMenu();
+					JDBCConnectionUtil.setConnection(userName, password);
+					User user = getUser(userName);
+					
+					if(user.getUserId() == 100)
+					{
+						superMenu();
+					}
+					else
+					{
+						AccountsService.accountsMenu(user);
+					}
 				}
 				else
 				{
-					AccountsService.accountsMenu(user);
+					throw new InvalidCreds();
 				}
 			}
-			else
+			catch(InvalidCreds ic)
 			{
-				System.out.println("Invalid login credentials!\n\n[1] Check your Information and Try Again\n"
-						+ "[2] New User Registration\n[3] Exit Portal");
-				
-				int choice;
-				
-				do
-				{
-					choice = sc.nextInt();
-					
-					switch(choice)
-					{
-					case 1: login();
-							break;
-					case 2: registerUser(new User("", "", "", ""));
-							break;
-					case 3: System.out.println("Thank you for banking with JDBCBank. Goodbye :)\n");
-							sc.close();
-							System.exit(0);
-					default: System.out.println("Invalid input, try again.");
-					}
-				}
-				while(choice != 3);
-				
+				System.out.println(ic.getMessage());
 				conn.close();
 			}
 		} catch (SQLException e) 
@@ -190,6 +207,7 @@ public class UserDaoImplementation implements UserDAO
 			log.error("error occured in catch block in login user dao implementation method");
 			log.error(e.getMessage());
 			log.error(e.getStackTrace());
+			sc.close();
 		}
 	}
 	
@@ -289,7 +307,7 @@ public class UserDaoImplementation implements UserDAO
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection())
 		{
-			System.out.println("Welcome to the super user menu. What would you like to do?\n");
+			System.out.println("\nWELCOME TO THE SUPER USER MENU. WHAT WOULD YOU LIKE TO DO?\n");
 			System.out.println("UserID\tFirst_Name\tLast_Name\tUsername\tPassword");
 			System.out.println("******************************************************************");
 			
@@ -313,21 +331,29 @@ public class UserDaoImplementation implements UserDAO
 			do
 			{
 				choice = sc.nextInt();
-				
-				switch(choice)
+					
+				try
 				{
-				case 1: registerUser(new User("", "", "", ""));
-						break;
-				case 2: updatePassword();
-						break;
-				case 3: deleteUser();
-						break;
-				case 4: System.out.println("Have a super day, Super User. Goodbye :)");
-						sc.close();
-						System.exit(0);
-				default: System.out.println("Invalid input, try again.");		
+					switch(choice)
+					{
+					case 1: registerUser(new User("", "", "", ""));
+							break;
+					case 2: updatePassword();
+							break;
+					case 3: deleteUser();
+							break;
+					case 4: System.out.println("\nHave a super day, Super User. Goodbye :)");
+							sc.close();
+							System.exit(0);
+					default: throw new InvalidOption();	
+					}
 				}
-				System.out.println("Welcome to the super user menu. What would you like to do?\n");
+				catch(InvalidOption e)
+				{
+					System.out.println(e.getMessage());
+				}
+				
+				System.out.println("WELCOME TO THE SUPER USER MENU. WHAT WOULD YOU LIKE TO DO?\n");
 				System.out.println("UserID\tFirst_Name\tLast_Name\tUsername\tPassword");
 				System.out.println("******************************************************************");
 				
@@ -363,29 +389,49 @@ public class UserDaoImplementation implements UserDAO
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection())
 		{
+			try
+			{
+				System.out.println("ENTER THE USERID OF THE USER YOU WOULD LIKE TO UPDATE:");
+				int userID = sc.nextInt();
+				sc.nextLine();
+				
+				System.out.println("\nENTER THIS USER'S NEW PASSWORD:");
+				String newPass = sc.nextLine();
+				
+				String sql = "UPDATE User_Details SET User_Password = ? WHERE User_ID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, newPass);
+				ps.setInt(2, userID);
+				ps.executeUpdate();
+				
+				String sql1 = "SELECT * from User_details where User_ID = " + userID;
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql1);
+				
+				String sql3 = "select user_ID from User_Details";
+				Statement stmt1 = conn.createStatement();
+				ResultSet rs1 = stmt1.executeQuery(sql3);
+				List<Integer> IDList = new ArrayList<Integer>();
+				while(rs1.next())
+				{
+					IDList.add(rs1.getInt("USER_ID"));
+				}
+				
+				if(!IDList.contains(userID))
+				{
+					throw new GhostAccount();
+				}
+				
+				String sql2 = "ALTER USER " + rs.getString(4) + "IDENTIFIED BY " + rs.getString(5);
+				PreparedStatement ps1 = conn.prepareStatement(sql2);
+				ps1.execute();
 			
-			System.out.println("Enter the userID of the user you would like to update:");
-			int userID = sc.nextInt();
-			sc.nextLine();
-			
-			System.out.println("\nEnter this user's new password:");
-			String newPass = sc.nextLine();
-			
-			String sql = "UPDATE User_Details SET User_Password = ? WHERE User_ID = ?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, newPass);
-			ps.setInt(2, userID);
-			ps.executeUpdate();
-			
-			String sql1 = "SELECT * from User_details where User_ID = " + userID;
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(sql1);
-			
-			String sql2 = "ALTER USER " + rs.getString(4) + "IDENTIFIED BY " + rs.getString(5);
-			PreparedStatement ps1 = conn.prepareStatement(sql2);
-			ps1.execute();
-			
-			System.out.println("\nPassword updated successfully!");
+				System.out.println("\nPASSWORD UPDATED SUCCESSFULLY!\n");
+			}
+			catch(GhostAccount e)
+			{
+				System.out.println(e.getMessage());
+			}
 			conn.close();
 		} catch (SQLException e) 
 		{
@@ -403,29 +449,49 @@ public class UserDaoImplementation implements UserDAO
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection())
 		{
-			System.out.println("Enter the userID of the user you would like to delete:");
-			int userID = sc.nextInt();
-			sc.nextLine();
-			
-			System.out.println("Enter the username of the user you would like to delete:");
-			String userN = sc.nextLine();
-			
-			String sql = "delete from Bank_Accounts where U_id = ?";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, userID);
-			ps.executeUpdate();
-			
-			String sql1 = "delete from User_Details where User_ID = ?";
-			PreparedStatement ps1 = conn.prepareStatement(sql1);
-			ps1.setInt(1, userID);
-			ps1.executeUpdate();
-			
-			String sql2 = "drop user " + userN;
-			PreparedStatement ps2 = conn.prepareStatement(sql2);
-			ps2.execute();
-			
-			System.out.println("\nUser and all associated accounts have been successfully deleted.\n");
-			
+			try
+			{
+				System.out.println("ENTER THE USERID OF THE USER YOU WOULD LIKE TO DELETE:");
+				int userID = sc.nextInt();
+				sc.nextLine();
+				
+				System.out.println("ENTER THE USERNAME OF THE USER YOU WOULD LIKE TO DELETE:");
+				String userN = sc.nextLine();
+				
+				String sql3 = "select user_ID from User_Details";
+				Statement stmt1 = conn.createStatement();
+				ResultSet rs1 = stmt1.executeQuery(sql3);
+				List<Integer> IDList = new ArrayList<Integer>();
+				while(rs1.next())
+				{
+					IDList.add(rs1.getInt("USER_ID"));
+				}
+				
+				if(!IDList.contains(userID))
+				{
+					throw new GhostAccount();
+				}
+				
+				String sql = "delete from Bank_Accounts where U_id = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, userID);
+				ps.executeUpdate();
+				
+				String sql1 = "delete from User_Details where User_ID = ?";
+				PreparedStatement ps1 = conn.prepareStatement(sql1);
+				ps1.setInt(1, userID);
+				ps1.executeUpdate();
+				
+				String sql2 = "drop user " + userN;
+				PreparedStatement ps2 = conn.prepareStatement(sql2);
+				ps2.execute();
+				
+				System.out.println("\nUSER AND ALL ASSOCIATED ACCOUNTS HAVE BEEN SUCCESSFULLY DELETED.\n");
+			}
+			catch(GhostAccount e)
+			{
+				System.out.println(e.getMessage());
+			}
 			conn.close();
 		} catch (SQLException e) 
 		{

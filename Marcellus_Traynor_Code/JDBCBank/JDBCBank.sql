@@ -1,4 +1,4 @@
---Drop existing tables and sequences
+--Drop existing objects
 drop table bank_accounts;
 drop table user_details;
 drop sequence user_seq;
