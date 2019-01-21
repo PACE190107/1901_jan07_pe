@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Built-By: Brock Sokevitz
-Class-Path: . lib/ojdbc7-12.1.0.jar lib/log4j-1.2.17.jar
-Build-Jdk: 1.8.0_191
-Created-By: Maven Integration for Eclipse
-Main-Class: com.revature.main.mainDriver
-

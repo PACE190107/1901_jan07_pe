@@ -103,6 +103,7 @@ public class mainDriver {
 			
 				UserService.getUserService().createUserConnection(new User(username, password, 0));
 				UserService.getUserService().registerUser(new User(username, password, 0));
+				System.out.println("User has been registered.");
 			}
 	}
 	
@@ -168,9 +169,13 @@ public class mainDriver {
 			User user = UserService.getUserService().getUserDetails(username);	
 			
 			if(user.getSuperuser()>0) {
+				System.out.println("Superuser logged in.");
 				SuperuserLoggedIn.login(user);
+				System.out.println("Superuser logged out.");
 			}else {
+				System.out.println("User logged in.");
 				UserLoggedIn.login(user);
+				System.out.println("User logged out.");
 			}
 			setupDefaultConnection();
 		}		

@@ -34,6 +34,7 @@ public class UserLoggedIn {
 		while(loggedIn) {
 			try {				
 				if(input.toLowerCase().equals("view")){
+					System.out.println("Here's a list of your accounts.");
 					viewAccounts(user);
 					System.out.println(" Please enter view, create, delete, deposit, withdraw, history, or logout.");
 					input = sc.nextLine();					
@@ -42,14 +43,17 @@ public class UserLoggedIn {
 					System.out.println(" Please enter view, create, delete, deposit, withdraw, history, or logout.");
 					input = sc.nextLine();					
 				}else if(input.toLowerCase().equals("delete")){
+					viewAccounts(user);
 					deleteAccount(user);
 					System.out.println(" Please enter view, create, delete, deposit, withdraw, history, or logout.");
 					input = sc.nextLine();
 				}else if(input.toLowerCase().equals("deposit")){
+					viewAccounts(user);
 					verifyDepositAccount(user);
 					System.out.println(" Please enter view, create, delete, deposit, withdraw, history, or logout.");
 					input = sc.nextLine();
 				}else if(input.toLowerCase().equals("withdraw")){
+					viewAccounts(user);
 					verifyWithdraw(user);
 					System.out.println(" Please enter view, create, delete, deposit, withdraw, history, or logout.");
 					input = sc.nextLine();
@@ -101,6 +105,7 @@ public class UserLoggedIn {
 				}else {
 					AccountService.getAccountService().insertAccount(new Account(user.getUserID(), accountType, 0.00));
 					System.out.println("A " + accountType + " account has been created with a balance of 0.00.");
+					System.out.println("Account created.");
 					return;
 				}
 					
@@ -126,8 +131,9 @@ public class UserLoggedIn {
 					throw new InvalidAccountDeletionException();
 					
 				}else {
-					accountDeleted = TransactionService.getTransactionService().deleteAllAccountTransactions(Integer.parseInt(input))
-															&& AccountService.getAccountService().deleteAccount(Integer.parseInt(input));
+					accountDeleted = TransactionService.getTransactionService().deleteAllAccountTransactions(Integer.parseInt(input));
+					accountDeleted = AccountService.getAccountService().deleteAccount(Integer.parseInt(input));
+					System.out.println("Account deleted.");
 					return accountDeleted;
 					
 				}
@@ -159,6 +165,7 @@ public class UserLoggedIn {
 					throw new InvalidAccountIDException();
 				}else {
 					depositMade = deposit(Integer.parseInt(input), user.getUserID());
+					System.out.println("Deposit made.");
 					return;
 				}
 					
@@ -186,8 +193,8 @@ public class UserLoggedIn {
 			try {
 					double currentBalance = AccountService.getAccountService().getBalance(accountID);
 					
-					return AccountService.getAccountService().updateBalance(accountID, Double.parseDouble(input)+currentBalance)
-							&& TransactionService.getTransactionService().insertTransaction(new Transaction(accountID, userID, Double.parseDouble(input)));					
+					AccountService.getAccountService().updateBalance(accountID, Double.parseDouble(input)+currentBalance);
+					depositMade = TransactionService.getTransactionService().insertTransaction(new Transaction(accountID, userID, Double.parseDouble(input)));					
 					
 			}catch(NumberFormatException nf) {
 				System.out.println("Please enter a valid number.");
@@ -213,6 +220,7 @@ public class UserLoggedIn {
 					throw new InvalidAccountIDException();
 				}else {
 					withdrawMade = withdraw(Integer.parseInt(input), user.getUserID());
+					System.out.println("Withdraw made.");
 					return;
 				}
 					
@@ -240,8 +248,8 @@ public class UserLoggedIn {
 			try {
 					double currentBalance = AccountService.getAccountService().getBalance(accountID);
 					if(currentBalance - Double.parseDouble(input)>=0) {
-					return AccountService.getAccountService().updateBalance(accountID, currentBalance-Double.parseDouble(input))
-							&& TransactionService.getTransactionService().insertTransaction(new Transaction(accountID, userID, -Double.parseDouble(input)));			
+					AccountService.getAccountService().updateBalance(accountID, currentBalance-Double.parseDouble(input));
+					return TransactionService.getTransactionService().insertTransaction(new Transaction(accountID, userID, -Double.parseDouble(input)));			
 					}else {
 						throw new NotEnoughFundsException();
 					}
@@ -261,6 +269,8 @@ public class UserLoggedIn {
 	}
 	
 	private static void viewTransactionHistory(int userID) {
+		System.out.println("This is your transaction history accross all your accounts.");
+		System.out.println("Transaction ID, Account ID: transaction amount");
 		List<Transaction> transactionList = TransactionService.getTransactionService().getAllTransactions(userID);
 		for(Transaction transaction: transactionList) {
 			System.out.println(transaction.getTransactionID()+", "+transaction.getAccountID()+": $"+ df.format(transaction.getAmount()));

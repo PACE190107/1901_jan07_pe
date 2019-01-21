@@ -27,19 +27,23 @@ public class SuperuserLoggedIn {
 		while(loggedIn) {
 			try {				
 				if(input.toLowerCase().equals("view")){
+					System.out.println("Printing a list of all the users");
 					viewAllUsers();
 					System.out.println("Please enter view, delete, create, edit, or logout.");
 					input = sc.nextLine();
 					
 				}else if(input.toLowerCase().equals("delete")){
+					viewAllUsers();
 					deleteUser();
 					System.out.println("Please enter view, delete, create, edit, or logout.");
 					input = sc.nextLine();
 				}else if(input.toLowerCase().equals("create")){
+					viewAllUsers();
 					createUser();
 					System.out.println("Please enter view, delete, create, edit, or logout.");
 					input = sc.nextLine();
 				}else if(input.toLowerCase().equals("edit")){
+					viewAllUsers();
 					editUser();
 					System.out.println("Please enter view, delete, create, edit, or logout.");
 					input = sc.nextLine();
@@ -90,7 +94,8 @@ public class SuperuserLoggedIn {
 					UserService.getUserService().deleteUserConnection(user.getUsername());					
 					TransactionService.getTransactionService().deleteAllTransactions(userID);
 					AccountService.getAccountService().deleteAllAccounts(userID);
-					accountDeleted = UserService.getUserService().deleteUser(userID);					
+					accountDeleted = UserService.getUserService().deleteUser(userID);	
+					System.out.println("User deleted.");
 					return accountDeleted;				
 				}					
 			}catch(InvalidAccountDeletionException u) {
@@ -114,6 +119,7 @@ public class SuperuserLoggedIn {
 			String password = establishPassword();
 		
 			UserService.getUserService().registerUser(new User(username, password, 0));
+			System.out.println("Creating User.");
 			UserService.getUserService().createUserConnection(new User(username, password, 0));
 		}
 }
@@ -210,5 +216,6 @@ public class SuperuserLoggedIn {
 		UserService.getUserService().editUserDetails(oldUsername, oldPassword, user);
 		UserService.getUserService().deleteUserConnection(oldUsername);
 		UserService.getUserService().createUserConnection(user);
+		System.out.println("User successfully edited.");
 	}
 }
