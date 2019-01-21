@@ -9,6 +9,10 @@ public class User {
 	private String passWord;
 	private int superuser;
 	
+	public int getSuperuser() {
+		return superuser;
+	}
+
 	public User() {
 		super();
 	}
@@ -141,8 +145,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
-				+ ", passWord=" + passWord + ", superuser=" + superuser + "]";
+		//return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
+		//		+ ", passWord=" + passWord + ", superuser=" + superuser + "]";
+		
+		return id + ", " + firstName + ", " + lastName + ", " + userName + ", " + superuser;
 	}
 	
 	

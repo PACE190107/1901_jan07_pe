@@ -13,7 +13,7 @@ import com.revature.Exceptions.DepositFailedException;
 import com.revature.Exceptions.EmptyAccountException;
 import com.revature.Exceptions.OverDraftException;
 import com.revature.Exceptions.UsernameAlreadyExistException;
-import com.revature.Exceptions.WithDrawException;
+import com.revature.Exceptions.WithdrawException;
 import com.revature.util.JDBCConnectionUtil;
 
 public class BankImplementation implements BankDao {
@@ -46,7 +46,8 @@ public class BankImplementation implements BankDao {
 
 	}
 
-	public void withdraw(int amount, int account, int user) throws SQLException, OverDraftException, AccountNotFoundException, WithDrawException {
+	public void withdraw(int amount, int account, int user)
+			throws SQLException, OverDraftException, AccountNotFoundException, WithdrawException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "SELECT A_AMOUNT FROM ACCOUNT WHERE A_ID = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
@@ -63,7 +64,7 @@ public class BankImplementation implements BankDao {
 					ps.setInt(4, account);
 					ps.setInt(5, user);
 					if (!(ps.executeUpdate() > 0)) {
-						throw new WithDrawException();
+						throw new WithdrawException();
 					}
 				} else {
 					throw new OverDraftException();
@@ -80,26 +81,29 @@ public class BankImplementation implements BankDao {
 		}
 	}
 
-	@Override
-	public List<Integer> getAccounts(int userID) throws SQLException, EmptyAccountException {
+	public List<Integer> getAccounts(int userID, int command) throws SQLException, EmptyAccountException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
-			String sql = "select * from ACCOUNT WHERE A_UID = ?";
+			String sql = "";
+			if (command == 0) {
+				sql = "select * from ACCOUNT WHERE A_UID = ?";
+			} else if (command == 1) {
+				sql = "select * from ACCOUNT WHERE A_UID = ? AND A_AMOUNT = 0";
+			}
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, userID);
 			ResultSet results = ps.executeQuery();
 			List<Integer> account = new ArrayList<Integer>();
-			System.out.println("ID TYPE AMOUNT");
+			System.out.println("ID TYPE BALANCE");
 			while (results.next()) {
 				System.out.println(results.getInt(1) + " " + results.getString(2) + " " + results.getInt(3));
 				account.add(results.getInt(1));
 			}
-			if(account.isEmpty()) {
+			if (account.isEmpty()) {
 				throw new EmptyAccountException();
 			}
 			return account;
 		}
 	}
-	
 
 	public void createAccount(String type, int amount, int id) throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
@@ -111,10 +115,14 @@ public class BankImplementation implements BankDao {
 			cs.execute();
 		}
 	}
-	
+
 	public void deleteAccount(int accountID, int userID) throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
-			String sql = "";
+			String sql = "DELETE FROM ACCOUNT WHERE A_ID = ? AND A_UID = ? AND A_AMOUNT = 0";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, accountID);
+			ps.setInt(2, userID);
+			ps.execute();
 		}
 	}
 

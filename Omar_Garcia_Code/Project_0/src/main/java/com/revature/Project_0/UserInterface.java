@@ -3,17 +3,22 @@ package com.revature.Project_0;
 import java.sql.SQLException;
 import java.util.Scanner;
 import org.apache.log4j.Logger;
-
-import com.revature.Exceptions.*;
+import com.revature.Exceptions.AccountNotFoundException;
+import com.revature.Exceptions.DepositFailedException;
+import com.revature.Exceptions.EmptyAccountException;
+import com.revature.Exceptions.EmptyUsersException;
+import com.revature.Exceptions.OverDraftException;
+import com.revature.Exceptions.UserNotFoundException;
+import com.revature.Exceptions.WithdrawException;
 import com.revature.dao.UserDaoImplementation;
 import com.revature.models.User;
-import com.revature.services.*;
+import com.revature.services.BankService;
+import com.revature.services.UserService;
 
 public class UserInterface {
 	static Scanner in = new Scanner(System.in);
 	final static Logger log = Logger.getLogger(UserDaoImplementation.class);
 	private static String transactions = "";
-
 	private static BankService bank;
 
 	public static void main(String[] args) {
@@ -113,6 +118,9 @@ public class UserInterface {
 			System.out.println("\nPlease select an option " + "\n1.) Deposite        4.) Create Account"
 					+ "\n2.) Withdraw        5.) Delete Account" + "\n3.) View accounts   6.) View Transactions"
 					+ "\n7.)Exit");
+			if (bank.superUser() == 1) {
+				System.out.println("8.) View users  10.)Update user\n9.)Create users 11.)Delete all users");
+			}
 			int option = in.nextInt();
 			if (option == 1) {
 				deposit();
@@ -120,7 +128,7 @@ public class UserInterface {
 				withdraw();
 			} else if (option == 3) {
 				try {
-					bank.getAccounts();
+					bank.getAccounts(0);
 				} catch (EmptyAccountException e) {
 					log.warn("User currently has no accounts");
 				}
@@ -132,12 +140,74 @@ public class UserInterface {
 				System.out.println(transactions);
 			} else if (option == 7) {
 				signout = true;
+			} else if (option == 8) {
+				try {
+					UserService.getUserService().viewAllUsers();
+				} catch (EmptyUsersException e) {
+					System.out.println("No Users Found");
+				}
+			} else if (option == 9) {
+				register();
+			} else if (option == 10) {
+				updateUser();
+			} else if (option == 11) {
+				UserService.getUserService().deleteAllUsers(); // Delete all non super users
 			}
 		} while (!signout);
 	}
 
-	private static void deleteAccount() {
+	private static void updateUser() throws SQLException {
+		try {
+			UserService.getUserService().viewAllUsers();
+			System.out.println("Which User Would you like to update");
+			int selection = in.nextInt();
+			try {
+				User user = UserService.getUserService().getUser(selection);
+				boolean done = false;
+				boolean newPassword = false;
+				do {
+					System.out.println("Change 1.)First name  2.)Last name" + "\n3.) Username   4.)Password "
+							+ "\n5.) SuperUser  6.)Done");
+					selection = in.nextInt();
+					if (selection == 1) {
+						System.out.println("Please input new First name\nCurrent : " + user.getFirstName());
+						user.setFirstName(in.nextLine());
+					} else if (selection == 2) {
+						System.out.println("Please input new Last name\nCurrent : " + user.getLastName());
+						user.setLastName(in.nextLine());
+					} else if (selection == 3) {
+						System.out.println("Please input new Username\nCurrent : " + user.getUserName());
+						user.setUserName(in.nextLine());
+					} else if (selection == 4) {
+						System.out.println("Please input new  password");
+						user.setPassWord(in.nextLine());
+						newPassword = true;
+					} else if (selection == 5) {
+						System.out.println("Make user  SuperUser?\n1.) Yes\n2.) No");
+						user.setSuperuser(in.nextInt());
+					} else if (selection == 6) {
+						done = true;
+					}
+				} while (!done);
+				UserService.getUserService().updateUser(user, newPassword);
+			} catch (UserNotFoundException e) {
+				log.warn("User could not be found");
+			}
+		} catch (EmptyUsersException e1) {
+			System.out.println("No User Found");
+		}
+	}
 
+	private static void deleteAccount() throws SQLException {
+		try {
+			bank.getAccounts(1);
+			System.out.println("Which account would you like to delete?");
+			int account = in.nextInt();
+			bank.deleteAccount(account);
+		} catch (EmptyAccountException e) {
+			System.out.println("Account must have a balance of zero");
+			// e.printStackTrace();
+		}
 	}
 
 	private static void createAccount() {
@@ -171,7 +241,7 @@ public class UserInterface {
 		boolean done = false;
 		do {
 			try {
-				bank.getAccounts();
+				bank.getAccounts(0);
 				System.out.println("Which account would like to deposit into?\n0.) Exit\n");
 				int account = in.nextInt();
 				if (account == 0) {
@@ -206,7 +276,7 @@ public class UserInterface {
 		boolean done = false;
 		do {
 			try {
-				bank.getAccounts();
+				bank.getAccounts(0);
 				System.out.println("Which account would like to withdraw from?\n0.) Exit\n");
 				int account = in.nextInt();
 				if (account == 0) {
@@ -227,7 +297,7 @@ public class UserInterface {
 										done = false;
 									} catch (AccountNotFoundException e) {
 										log.warn("Account not found");
-									} catch (WithDrawException e) {
+									} catch (WithdrawException e) {
 										log.error("An error occured withdrawing");
 									}
 								} else {
