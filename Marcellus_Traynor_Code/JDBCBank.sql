@@ -1,7 +1,17 @@
---User table
+--Drop existing tables and sequences
+drop table bank_accounts;
 drop table user_details;
 drop sequence user_seq;
+drop sequence account_seq;
+drop user MTRAYNOR;
+drop PUBLIC SYNONYM User_Details;
+drop PUBLIC SYNONYM Bank_Accounts;
+drop PUBLIC SYNONYM user_seq;
+drop PUBLIC SYNONYM account_seq;
+drop PUBLIC SYNONYM register_user;
+drop PUBLIC SYNONYM create_account;
 
+--User table
 CREATE TABLE User_Details
 (
     user_id number(10) not null,
@@ -13,25 +23,26 @@ CREATE TABLE User_Details
     CONSTRAINT user_name_UNQ UNIQUE (user_name)
 );
 
+--Accounts table
+CREATE TABLE Bank_Accounts
+(
+    u_id number(10) references User_Details(user_id),
+    account_id number(10) not null,
+    account_type varchar2(20),
+    balance decimal(18,2)
+);
+
 --Generate auto-sequence for user_ID
 CREATE SEQUENCE user_seq
     START WITH 100
     INCREMENT BY 1;
     
---Encrypt passwords
---CREATE OR REPLACE FUNCTION encrypt_user(username varchar2, password varchar2)
---    return varchar2
---IS
---    extra varchar2(10) := 'S and P';
---BEGIN
---    RETURN to_char(dbms_obfuscation_toolkit.MD5
---    (
---        INPUT => UTL_I18N.string_to_raw(DATA => username || password || extra)
---    ));
---END;
---/
+--Generate auto-sequence for account_ID
+CREATE SEQUENCE account_seq
+    START WITH 100
+    INCREMENT BY 7;    
 
---Trigger to initiate sequence and encryption
+--Trigger to initiate user sequence
 CREATE OR REPLACE TRIGGER new_user
 BEFORE INSERT
     ON User_Details
@@ -41,10 +52,19 @@ BEGIN
     IF :new.user_id IS NULL THEN
         SELECT user_seq.NEXTVAL INTO :new.user_id FROM dual;
     END IF;
-    
-    --save encrypted passwords
---    SELECT encrypt_user(:new.user_name, :new.user_password) 
---    INTO :new.user_password FROM dual;
+END;
+/
+
+--Trigger to initiate account sequence
+CREATE OR REPLACE TRIGGER new_account
+BEFORE INSERT
+    ON Bank_Accounts
+FOR EACH ROW
+BEGIN
+    --increment sequence
+    IF :new.account_id IS NULL THEN
+        SELECT account_seq.NEXTVAL INTO :new.account_id FROM dual;
+    END IF;
 END;
 /
 
@@ -61,6 +81,27 @@ BEGIN
 END;
 /
 
+--Stored procedure to generate a new bank account
+CREATE OR REPLACE PROCEDURE create_account
+(
+    uID number, acctype varchar2, accbalance decimal, rows out number
+)
+AS
+BEGIN
+    INSERT INTO Bank_Accounts VALUES(uID, null, acctype, accbalance);
+    rows := sql%rowcount;
+    COMMIT;
+END;
+/
+
+--Synonyms
+CREATE PUBLIC SYNONYM User_Details FOR MTRevature.User_Details;
+CREATE PUBLIC SYNONYM Bank_Accounts FOR MTRevature.Bank_Accounts;
+CREATE PUBLIC SYNONYM user_seq FOR MTRevature.user_seq;
+CREATE PUBLIC SYNONYM account_seq FOR MTRevature.account_seq;
+CREATE PUBLIC SYNONYM register_user FOR MTRevature.register_user;
+CREATE PUBLIC SYNONYM create_account FOR MTRevature.create_account;
+
 commit;
---drop function encrypt_user;
 select * from user_details;
+select * from bank_accounts;

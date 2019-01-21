@@ -37,13 +37,28 @@ public class UserService
 		UserDaoImplementation.getUserDao().login();
 	}
 	
-	public void userMenu()
+	public void connectUser(User user)
 	{
-		UserDaoImplementation.getUserDao().userMenu();
+		UserDaoImplementation.getUserDao().connectUser(user);
 	}
 	
-//	public User getUser()
-//	{
-//		return UserDaoImplementation.getUserDao().getUser();
-//	}
+	public static User getUser(String userName)
+	{
+		return UserDaoImplementation.getUserDao().getUser(userName);
+	}
+	
+	public void superMenu()
+	{
+		UserDaoImplementation.getUserDao().superMenu();
+	}
+	
+	public void updatePassword()
+	{
+		UserDaoImplementation.getUserDao().updatePassword();
+	}
+	
+	public void deleteUser()
+	{
+		UserDaoImplementation.getUserDao().deleteUser();
+	}
 }
