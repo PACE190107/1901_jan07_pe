@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableSpaceOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TableSpaceOraclev10g" name="USERS" directorySegmentName="seg_0" id="E94FD004-A2E0-7956-6B66-7548610BCBBB">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>USERS</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<emUniformSize>0</emUniformSize>
+<extentManagement>LOCAL</extentManagement>
+</TableSpaceOraclev10g>

@@ -1,0 +1,85 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="DEE55E49-29FD-CF07-19CC-0494BCD31FBE" schemaObject="E611360E-1FA9-FE0E-BC54-93AF88AC86F3" name="CUSTOMER_ACCOUNT">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>CUSTOMER_ACCOUNT</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ACCOUNT_ID" id="898310B6-0633-0923-5003-8C24EE03399A">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>CUSTOMER_ACCOUNT</sourceObjSchema>
+<sourceObjName>ACCOUNT_ID</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D3CB5EBC-3962-35DD-9B93-F914DCE5F06A" referredColumn="120CBE2B-FED9-F33C-14E8-FC6D33367494"/>
+</associations>
+</Column>
+<Column name="CUSTOMER_ID" id="98F706CA-F985-552E-665C-EFA693086A17">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>CUSTOMER_ACCOUNT</sourceObjSchema>
+<sourceObjName>CUSTOMER_ID</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="AD575A5B-15CF-A7E3-C561-E26C2BA6C0DD" referredColumn="81079395-DBD1-1FB2-3610-7C0A084F2F19"/>
+</associations>
+</Column>
+<Column name="ACCOUNT_NAME" id="3FDEF979-9FC0-87C6-D266-E617D8EC6992">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>CUSTOMER_ACCOUNT</sourceObjSchema>
+<sourceObjName>ACCOUNT_NAME</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="BD76DB21-1A7B-A848-E76E-76F2827B41D0" name="SYS_C003948">
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="898310B6-0633-0923-5003-8C24EE03399A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DB5BA965-C14B-BBC4-FC3D-AC9E9E635F07" name="SYS_C003949">
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="98F706CA-F985-552E-665C-EFA693086A17"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

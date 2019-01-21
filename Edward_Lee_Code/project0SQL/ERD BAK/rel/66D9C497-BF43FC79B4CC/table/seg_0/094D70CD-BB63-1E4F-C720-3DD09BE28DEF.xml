@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="094D70CD-BB63-1E4F-C720-3DD09BE28DEF" schemaObject="E611360E-1FA9-FE0E-BC54-93AF88AC86F3" name="BANKING_ACCOUNT">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>BANKING_ACCOUNT</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ACCOUNT_ID" id="120CBE2B-FED9-F33C-14E8-FC6D33367494">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_ACCOUNT</sourceObjSchema>
+<sourceObjName>ACCOUNT_ID</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BALANCE" id="F45F0FB7-3052-D0F6-C192-E84A9B56394F">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_ACCOUNT</sourceObjSchema>
+<sourceObjName>BALANCE</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="INTEREST_RATE" id="CB0AD0B6-8027-7D05-9063-4BE8C02EDBAE">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_ACCOUNT</sourceObjSchema>
+<sourceObjName>INTEREST_RATE</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<ownDataTypeParameters>,4,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="6AA4595E-93C6-6B68-B8C1-8707D459E428" schemaObject="E611360E-1FA9-FE0E-BC54-93AF88AC86F3" name="BANKING_ACCOUNT_PK">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>SYS_C003944</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="120CBE2B-FED9-F33C-14E8-FC6D33367494"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

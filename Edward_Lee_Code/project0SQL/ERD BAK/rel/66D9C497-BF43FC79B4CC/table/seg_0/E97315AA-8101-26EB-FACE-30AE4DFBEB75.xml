@@ -1,0 +1,115 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E97315AA-8101-26EB-FACE-30AE4DFBEB75" schemaObject="E611360E-1FA9-FE0E-BC54-93AF88AC86F3" name="BANKING_CUSTOMER">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>BANKING_CUSTOMER</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CUSTOMER_ID" id="81079395-DBD1-1FB2-3610-7C0A084F2F19">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_CUSTOMER</sourceObjSchema>
+<sourceObjName>CUSTOMER_ID</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FIRST_NAME" id="D5F546AB-E6E1-60E2-4D74-674C89C2507B">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_CUSTOMER</sourceObjSchema>
+<sourceObjName>FIRST_NAME</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LAST_NAME" id="F10DBF96-1958-D117-BCA7-388B1A0A3246">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_CUSTOMER</sourceObjSchema>
+<sourceObjName>LAST_NAME</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USER_NAME" id="08C6AFCD-194A-7EE4-3118-A00D0CD59394">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_CUSTOMER</sourceObjSchema>
+<sourceObjName>USER_NAME</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EMAIL" id="D271F9FF-D67E-A02D-8BE9-1B975E2490C3">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>BANKING_CUSTOMER</sourceObjSchema>
+<sourceObjName>EMAIL</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0E1B5B2C-B798-2F69-E9E7-EB8EB3F7979A" schemaObject="E611360E-1FA9-FE0E-BC54-93AF88AC86F3" name="BANKING_CUSTOMER_PK">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>SYS_C003946</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="81079395-DBD1-1FB2-3610-7C0A084F2F19"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="3E9C0999-D61F-C1B3-992F-306DD9F3AC0E" schemaObject="E611360E-1FA9-FE0E-BC54-93AF88AC86F3" name="BANKING_CUSTOMER_USER_NAME_UN">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>SYS_C003947</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="08C6AFCD-194A-7EE4-3118-A00D0CD59394"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

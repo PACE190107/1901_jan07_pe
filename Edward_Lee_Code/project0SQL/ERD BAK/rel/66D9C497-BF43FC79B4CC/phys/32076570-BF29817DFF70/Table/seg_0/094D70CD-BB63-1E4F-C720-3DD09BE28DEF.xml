@@ -1,0 +1,44 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="BANKING_ACCOUNT" directorySegmentName="seg_0" id="094D70CD-BB63-1E4F-C720-3DD09BE28DEF">
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<schemaObject>E611360E-1FA9-FE0E-BC54-93AF88AC86F3</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>59942054-2EA0-EE3B-C2C1-55E68454B989</segment>
+<tableSpace>E94FD004-A2E0-7956-6B66-7548610BCBBB</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ACCOUNT_ID" id="120CBE2B-FED9-F33C-14E8-FC6D33367494">
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="INTEREST_RATE" id="CB0AD0B6-8027-7D05-9063-4BE8C02EDBAE">
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BALANCE" id="F45F0FB7-3052-D0F6-C192-E84A9B56394F">
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="BANKING_ACCOUNT_PK" id="6AA4595E-93C6-6B68-B8C1-8707D459E428">
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<schemaObject>E611360E-1FA9-FE0E-BC54-93AF88AC86F3</schemaObject>
+<segment>73D09F23-5D37-C9F0-C421-F66FBBFA3E20</segment>
+<tableSpace>E94FD004-A2E0-7956-6B66-7548610BCBBB</tableSpace>
+<indexSegment>73D09F23-5D37-C9F0-C421-F66FBBFA3E20</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="AD575A5B-15CF-A7E3-C561-E26C2BA6C0DD" containerWithKeyObject="DEE55E49-29FD-CF07-19CC-0494BCD31FBE" localFKIndex="DB5BA965-C14B-BBC4-FC3D-AC9E9E635F07" name="SYS_C003949">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjSchema>RDS1901</sourceObjSchema>
+<sourceObjName>SYS_C003949</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:38 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<referredTableLongName>RDS1901.BANKING_CUSTOMER</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>E97315AA-8101-26EB-FACE-30AE4DFBEB75</referredTableID>
+<keyObject>0E1B5B2C-B798-2F69-E9E7-EB8EB3F7979A</keyObject>
+<referredKeyID>0E1B5B2C-B798-2F69-E9E7-EB8EB3F7979A</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>CUSTOMER_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

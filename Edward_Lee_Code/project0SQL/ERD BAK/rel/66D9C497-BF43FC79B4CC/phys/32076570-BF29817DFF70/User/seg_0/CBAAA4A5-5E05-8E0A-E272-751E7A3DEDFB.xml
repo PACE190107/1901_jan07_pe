@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="RDS1901" directorySegmentName="seg_0" id="CBAAA4A5-5E05-8E0A-E272-751E7A3DEDFB">
+<sourceConnName>RevatureDB</sourceConnName>
+<sourceObjName>RDS1901</sourceObjName>
+<createdBy>Edward Lee</createdBy>
+<createdTime>2019-01-18 13:36:37 UTC</createdTime>
+<ownerDesignName>ERD BAK</ownerDesignName>
+<schemaObject>E611360E-1FA9-FE0E-BC54-93AF88AC86F3</schemaObject>
+</UserOraclev10g>
