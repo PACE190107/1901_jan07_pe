@@ -1,0 +1,5 @@
+jdbc:oracle:thin:@jdbcbank.cskfdvs8fiur.us-east-1.rds.amazonaws.com:1521:ORCLProj
+admin
+p4ssw0rd
+super
+man
