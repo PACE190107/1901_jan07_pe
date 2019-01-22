@@ -29,7 +29,8 @@ CREATE TABLE Bank_Accounts
     u_id number(10) references User_Details(user_id),
     account_id number(10) not null,
     account_type varchar2(20),
-    balance decimal(18,2)
+    balance decimal(18,2),
+    CONSTRAINT account_id_PK PRIMARY KEY (account_id)
 );
 
 --Generate auto-sequence for user_ID
