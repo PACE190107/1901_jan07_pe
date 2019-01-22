@@ -31,8 +31,8 @@ public class UserDaoImp implements UserDAO {
 		String sql = "SELECT * FROM BANK_USER";
 
 		try (Connection con = ConnectionUtil.getConnection();
-				Statement s = con.createStatement();
-				ResultSet rs = s.executeQuery(sql)) {
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(sql)) {
 
 			while (rs.next()) {
 				User user = new User();

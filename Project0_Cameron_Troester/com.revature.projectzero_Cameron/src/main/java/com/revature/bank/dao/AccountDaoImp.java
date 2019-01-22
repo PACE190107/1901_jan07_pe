@@ -19,7 +19,7 @@ public class AccountDaoImp implements AccountDAO {
 	final static Logger log = Logger.getLogger(AccountDaoImp.class);
 	private static final String SQLERROR = "Connection failed, or SQL error.";
 	private static final String USERNAME = "USER_NAME";
-	private static final String BALANCE = "BALLANCE";
+	private static final String BALANCE = "BALANCE";
 	
 	@Override
 	public List<Account> getAccounts() {
@@ -90,7 +90,7 @@ public class AccountDaoImp implements AccountDAO {
 	@Override
 	public int createAccount(Account account) {
 
-		String sql = "INSERT INTO ACCOUNT (USER_NAME, BALLANCE) VALUES (?, ?) ";
+		String sql = "INSERT INTO ACCOUNT (USER_NAME, BALANCE) VALUES (?, ?) ";
 		int accCreated = 0;
 
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
@@ -109,7 +109,7 @@ public class AccountDaoImp implements AccountDAO {
 
 		int accUpdated = 0;
 
-		String sql = "UPDATE ACCOUNT " + "SET USER_NAME = ?," + " BALLANCE = ?" +" WHERE USER_NAME = ?";
+		String sql = "UPDATE ACCOUNT " + "SET USER_NAME = ?," + " BALANCE = ?" +" WHERE USER_NAME = ?";
 
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, account.getUserName());
@@ -181,7 +181,7 @@ public class AccountDaoImp implements AccountDAO {
 
 	@Override
 	public int createAccount(Account account, Connection con) {
-		String sql = "INSERT INTO ACCOUNT (USER_NAME, BALLANCE) VALUES (?, ?) ";
+		String sql = "INSERT INTO ACCOUNT (USER_NAME, BALANCE) VALUES (?, ?) ";
 		int accCreated = 0;
 
 		try (PreparedStatement ps = con.prepareStatement(sql);) {
@@ -199,7 +199,7 @@ public class AccountDaoImp implements AccountDAO {
 	public int updateAccount(Account account, Connection con) {
 		int accUpdated = 0;
 
-		String sql = "UPDATE ACCOUNT " + "SET USER_NAME = ?," + " BALLANCE = ?" +" WHERE USER_NAME = ?";
+		String sql = "UPDATE ACCOUNT " + "SET USER_NAME = ?," + " BALANCE = ?" +" WHERE USER_NAME = ?";
 
 		try (PreparedStatement ps = con.prepareStatement(sql);) {
 			ps.setString(1, account.getUserName());

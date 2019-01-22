@@ -14,7 +14,7 @@ public class View {
 
 	private static Scanner console = new Scanner(System.in);
 	final static Logger log = Logger.getLogger(View.class);
-	private static DecimalFormat df2 = new DecimalFormat(".##");
+	private static DecimalFormat number = new DecimalFormat(".##");
 
 	private View() {
 		super();
@@ -121,11 +121,11 @@ public class View {
 			withdrawal = Controller.withdrawal(Double.parseDouble(input), acc);
 			if (withdrawal) {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Withdrawal successful. New Balance: " + df2.format(acc.getBalance()));
+				System.out.println("Withdrawal successful. New Balance: " + number.format(acc.getBalance()));
 				return true;
 			} else {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Withdrawal failed. Current Balance: " + df2.format(acc.getBalance()) + " amount requested: "
+				System.out.println("Withdrawal failed. Current Balance: " + number.format(acc.getBalance()) + " amount requested: "
 						+ input);
 				return true;
 			}
@@ -142,11 +142,11 @@ public class View {
 
 			if (Controller.deposit(Double.parseDouble(input), acc)) {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Deposit successful. New Balance: " + df2.format(acc.getBalance()));
+				System.out.println("Deposit successful. New Balance: " + number.format(acc.getBalance()));
 				return true;
 			} else {
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Deposit failed. Current Balance: " + df2.format(acc.getBalance()) + " amount requested: "
+				System.out.println("Deposit failed. Current Balance: " + number.format(acc.getBalance()) + " amount requested: "
 						+ input);
 				return true;
 			}
