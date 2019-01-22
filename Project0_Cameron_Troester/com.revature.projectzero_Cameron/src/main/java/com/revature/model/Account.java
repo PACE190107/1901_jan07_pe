@@ -1,6 +1,5 @@
 package com.revature.model;
 
-
 public class Account {
 	
 	private String userName;

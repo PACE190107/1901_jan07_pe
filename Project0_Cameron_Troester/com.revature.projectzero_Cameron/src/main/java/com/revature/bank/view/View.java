@@ -24,7 +24,7 @@ public class View {
 	public static boolean createView() throws InterruptedException, IOException {
 		ArrayList<String> accountCreate = new ArrayList<>();
 		String input = null;
-		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+		//new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 		System.out.println("Enter your prefered user name");
 		input = console.nextLine();
 		while (!input.matches("^[a-zA-Z0-9]*$")) {
@@ -74,7 +74,7 @@ public class View {
 			}
 		}
 		accountCreate.add(input);
-		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+	//	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 		Account newAcc = Controller.createAccount(accountCreate.get(0), accountCreate.get(1), accountCreate.get(2),
 				accountCreate.get(3), Double.parseDouble(accountCreate.get(4)));
@@ -102,11 +102,11 @@ public class View {
 		boolean withdrawal = false;
 
 		System.out.println(
-				"[1]Type \"exit\" to log out. "
+				"\n[1]Type \"deposit\" to make a deposit. "
 				+ "\n[2]Type \"withdrawal\" to make a withdrawal. "
-				+ "\n[3]Type \"deposit\" to make a deposit.");
+				+ "\n[3]Type \"exit\" to log out.");
 		input = console.nextLine();
-		if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("1")) {
+		if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("3")) {
 			return false;
 		} else if (input.equalsIgnoreCase("withdrawal") || input.equalsIgnoreCase("2")) {
 			System.out.println("Enter a numeric value greater than 0.01 to withdrawal");
@@ -120,16 +120,16 @@ public class View {
 			}
 			withdrawal = Controller.withdrawal(Double.parseDouble(input), acc);
 			if (withdrawal) {
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Withdrawal successful. New Balance: " + number.format(acc.getBalance()));
+			//	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+				System.out.println("Withdrawal successful. New Balance: $" + number.format(acc.getBalance()));
 				return true;
 			} else {
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Withdrawal failed. Current Balance: " + number.format(acc.getBalance()) + " amount requested: "
+			//	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+				System.out.println("Withdrawal failed. Current Balance: $" + number.format(acc.getBalance()) + " amount requested: "
 						+ input);
 				return true;
 			}
-		} else if (input.equalsIgnoreCase("deposit") || input.equalsIgnoreCase("3")) {
+		} else if (input.equalsIgnoreCase("deposit") || input.equalsIgnoreCase("1")) {
 			System.out.println("Enter a numeric value greater than 0.01 to deposit");
 			input = console.nextLine();
 			if (!input.matches("^\\d+\\.\\d{0,2}$")) {
@@ -141,12 +141,12 @@ public class View {
 			}
 
 			if (Controller.deposit(Double.parseDouble(input), acc)) {
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Deposit successful. New Balance: " + number.format(acc.getBalance()));
+				//new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+				System.out.println("Deposit successful. New Balance: $" + number.format(acc.getBalance()));
 				return true;
 			} else {
-				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-				System.out.println("Deposit failed. Current Balance: " + number.format(acc.getBalance()) + " amount requested: "
+			//	new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+				System.out.println("Deposit failed. Current Balance: $" + number.format(acc.getBalance()) + " amount requested: "
 						+ input);
 				return true;
 			}

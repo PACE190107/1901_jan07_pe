@@ -46,7 +46,7 @@ public class Driver {
 				while (loggedIn) {
 					loggedIn = View.loggedInMethod(currUser);
 					if (!loggedIn) {
-						new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+						//new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 						System.out.println("Would you like to log back in? (yes/no)");
 						input = console.nextLine();
 						if (input.equalsIgnoreCase("yes") || input.equalsIgnoreCase("y")) {
@@ -55,7 +55,7 @@ public class Driver {
 							loggedIn = false;
 							exit = false;
 							currUser = null;
-							new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+							//new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 
 						}
 						else{
@@ -64,9 +64,13 @@ public class Driver {
 						
 					}
 				}
-			} else if (input.equalsIgnoreCase("exit")) {
+			} else if (input.equalsIgnoreCase("exit") || input.equalsIgnoreCase("3")) {
+				
 				exit = true;
-				log.info("Invalid input. Please try again.");
+				
+			}
+			else {
+				System.out.println("Invalid input, please try again");
 			}
 		}
 		System.out.println("Thanks for choose our bank, come back soon");
