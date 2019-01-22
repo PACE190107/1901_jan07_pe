@@ -21,9 +21,11 @@ public class BankService {
 		BankService.user = user;
 	}
 	
-	public static BankService getBankService(User user) {
+	public static BankService getBankService(User user1) {
 		if(bank == null) {
-			bank = new BankService(user);
+			bank = new BankService(user1);
+		} else if (!user.equals(user1)) {
+			bank = new BankService(user1);
 		}
 		return bank;
 	}

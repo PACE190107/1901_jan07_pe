@@ -32,10 +32,15 @@ public class UserInterface {
 	public static void start() throws SQLException {
 		boolean running = true;
 		do {
-			// in.nextInt();
-			login();
-			// register();
-			running = false;
+			System.out.println("Welcome, what would you like to do\n1.) Login\n2.) Register\n3.) Exit");
+			int selection = getUserInt();
+			if (selection == 1) {
+				login();
+			} else if (selection == 2) {
+				register();
+			} else if (selection == 3) {
+				running = false;
+			}
 		} while (running);
 	}
 
@@ -47,7 +52,7 @@ public class UserInterface {
 		do {
 			System.out.println("Please input your username");
 			username = in.nextLine();
-			System.out.println("Pleae input your password");
+			System.out.println("Please input your password");
 			password = in.nextLine();
 			try {
 				User currentUser = UserService.getUserService().login(username, password);
@@ -117,11 +122,14 @@ public class UserInterface {
 		do {
 			System.out.println("\nPlease select an option " + "\n1.) Deposite        4.) Create Account"
 					+ "\n2.) Withdraw        5.) Delete Account" + "\n3.) View accounts   6.) View Transactions"
-					+ "\n7.)Exit");
+					+ "\n7.) Exit");
 			if (bank.superUser() == 1) {
-				System.out.println("8.) View users  10.)Update user\n9.)Create users 11.)Delete all users");
+				System.out.println("------------------------------------------\n"
+						+ "              Super User Options\n"
+						+ "------------------------------------------\n"
+						+ "8.) View users      10.) Update user\n9.) Create users    11.) Delete all users");
 			}
-			int option = in.nextInt();
+			int option = getUserInt();
 			if (option == 1) {
 				deposit();
 			} else if (option == 2) {
@@ -160,7 +168,7 @@ public class UserInterface {
 		try {
 			UserService.getUserService().viewAllUsers();
 			System.out.println("Which User Would you like to update");
-			int selection = in.nextInt();
+			int selection = getUserInt();
 			try {
 				User user = UserService.getUserService().getUser(selection);
 				boolean done = false;
@@ -168,7 +176,7 @@ public class UserInterface {
 				do {
 					System.out.println("Change 1.)First name  2.)Last name" + "\n3.) Username   4.)Password "
 							+ "\n5.) SuperUser  6.)Done");
-					selection = in.nextInt();
+					selection = getUserInt();
 					if (selection == 1) {
 						System.out.println("Please input new First name\nCurrent : " + user.getFirstName());
 						user.setFirstName(in.nextLine());
@@ -184,12 +192,15 @@ public class UserInterface {
 						newPassword = true;
 					} else if (selection == 5) {
 						System.out.println("Make user  SuperUser?\n1.) Yes\n2.) No");
-						user.setSuperuser(in.nextInt());
+						user.setSuperuser(getUserInt());
+						in.nextLine();
 					} else if (selection == 6) {
 						done = true;
 					}
 				} while (!done);
+				System.out.println("Updating");
 				UserService.getUserService().updateUser(user, newPassword);
+				System.out.println("Done updating");
 			} catch (UserNotFoundException e) {
 				log.warn("User could not be found");
 			}
@@ -202,21 +213,20 @@ public class UserInterface {
 		try {
 			bank.getAccounts(1);
 			System.out.println("Which account would you like to delete?");
-			int account = in.nextInt();
+			int account = getUserInt();
 			bank.deleteAccount(account);
 		} catch (EmptyAccountException e) {
 			System.out.println("Account must have a balance of zero");
-			// e.printStackTrace();
 		}
 	}
 
 	private static void createAccount() {
 		System.out.println(
 				"What kind of acount would you like to create\n" + "1.) Checkings\n" + "2.) Savings\n" + "3.) Go Back");
-		int response = in.nextInt();
+		int response = getUserInt();
 		if (response == 1) {
 			System.out.print("How much would you like to deposite\n$");
-			int amount = in.nextInt();
+			int amount = getUserInt();
 			try {
 				bank.createAccount("Checkings", amount);
 			} catch (SQLException e) {
@@ -224,7 +234,7 @@ public class UserInterface {
 			}
 		} else if (response == 2) {
 			System.out.print("How much would you like to deposite\n$");
-			int amount = in.nextInt();
+			int amount = getUserInt();
 			try {
 				bank.createAccount("Savings", amount);
 			} catch (SQLException e) {
@@ -243,19 +253,19 @@ public class UserInterface {
 			try {
 				bank.getAccounts(0);
 				System.out.println("Which account would like to deposit into?\n0.) Exit\n");
-				int account = in.nextInt();
+				int account = getUserInt();
 				if (account == 0) {
 					done = true;
 				} else
 					try {
 						if (bank.isAnAccount(account)) {
-							System.out.println("How much would you like to deposit!\n )0.) Exit\n");
-							int amount = in.nextInt();
+							System.out.println("How much would you like to deposit!\n0.) Exit\n");
+							int amount = getUserInt();
 							if (amount > 0) {
 								try {
 									bank.deposit(amount, account);
 									done = true;
-									transactions += "Deposited " + amount + " into account " + account;
+									transactions += "Deposited " + amount + " into account " + account + "\n";
 								} catch (DepositFailedException e) {
 									done = false;
 								}
@@ -278,7 +288,7 @@ public class UserInterface {
 			try {
 				bank.getAccounts(0);
 				System.out.println("Which account would like to withdraw from?\n0.) Exit\n");
-				int account = in.nextInt();
+				int account = getUserInt();
 				if (account == 0) {
 					done = true;
 				} else
@@ -286,12 +296,12 @@ public class UserInterface {
 						if (bank.isAnAccount(account)) {
 							do {
 								System.out.println("How much would you like to withdraw?\n0.) Exit\n");
-								int amount = in.nextInt();
+								int amount = getUserInt();
 								if (amount > 0) {
 									try {
 										bank.withdraw(amount, account);
 										done = true;
-										transactions += "Withdrew " + amount + " from account " + account;
+										transactions += "Withdrew " + amount + " from account " + account+"\n";
 									} catch (OverDraftException e) {
 										System.out.println("over draft");
 										done = false;
@@ -313,5 +323,11 @@ public class UserInterface {
 				log.error("No accounts where found for this user");
 			}
 		} while (!done);
+	}
+
+	public static int getUserInt() {
+		int selection = in.nextInt();
+		in.nextLine();
+		return selection;
 	}
 }

@@ -146,6 +146,7 @@ public class UserDaoImplementation implements UserDao {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "SELECT * FROM USERS WHERE U_ID = ?";
 			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
 			User user = new User();
 			ResultSet result = ps.executeQuery();
 			if (result.next()) {
@@ -165,7 +166,7 @@ public class UserDaoImplementation implements UserDao {
 	public void updateUser(User user, boolean newPassword) throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			if (newPassword) {
-				String sql = "Update USER SET U_FIRST = ?, U_LAST = ?, U_USERNAME = ?, U_PASSWORD = GET_USER_HASH(?,?), SUPERUSER = ? WHERE U_ID = ?";
+				String sql = "Update USERS SET U_FIRST = ?, U_LAST = ?, U_USERNAME = ?, U_PASSWORD = GET_USER_HASH(?,?), SUPERUSER = ? WHERE U_ID = ?";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1, user.getFirstName());
 				ps.setString(2, user.getLastName());
@@ -174,8 +175,10 @@ public class UserDaoImplementation implements UserDao {
 				ps.setString(5, user.getPassWord());
 				ps.setInt(6, user.getSuperuser());
 				ps.setInt(7, user.getId());
+				ps.executeUpdate();
+				
 			} else {
-				String sql = "Update USER SET U_FIRST = ?, U_LAST = ?, U_USERNAME = ?, U_PASSWORD = ?, SUPERUSER = ? WHERE U_ID = ?";
+				String sql = "Update USERS SET U_FIRST = ?, U_LAST = ?, U_USERNAME = ?, U_PASSWORD = ?, SUPERUSER = ? WHERE U_ID = ?";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setString(1, user.getFirstName());
 				ps.setString(2, user.getLastName());
@@ -183,6 +186,7 @@ public class UserDaoImplementation implements UserDao {
 				ps.setString(4, user.getPassWord());
 				ps.setInt(5, user.getSuperuser());
 				ps.setInt(6, user.getId());
+				ps.executeUpdate();
 			}
 		}
 	}
