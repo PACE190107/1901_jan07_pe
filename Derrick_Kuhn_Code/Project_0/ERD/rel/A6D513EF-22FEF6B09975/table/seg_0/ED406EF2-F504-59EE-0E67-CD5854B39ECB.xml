@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="ED406EF2-F504-59EE-0E67-CD5854B39ECB" schemaObject="1D2364B9-F88C-F71E-C74E-838D017CBC14" name="BANK_USER">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>ADMINISTRATOR</sourceObjSchema>
+<sourceObjName>BANK_USER</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="U_NAME" id="11A950EC-52A4-EE5B-2184-4AAC30CCE952">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_USER</sourceObjSchema>
+<sourceObjName>U_NAME</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 BYTE</dataTypeSize>
+<ownDataTypeParameters>15 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="U_PASSWORD" id="9C22329F-E1E4-5AFA-7973-4F4734349FBA">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_USER</sourceObjSchema>
+<sourceObjName>U_PASSWORD</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>100 BYTE</dataTypeSize>
+<ownDataTypeParameters>100 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="U_ID" id="EF5B083E-1977-1CD9-1BC3-1EC5B83F31B6">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_USER</sourceObjSchema>
+<sourceObjName>U_ID</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="U_SUPER" id="527E6BDC-4C11-B115-4044-B48F278895E1">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_USER</sourceObjSchema>
+<sourceObjName>U_SUPER</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="26E6F4FE-8032-1C52-9408-6F2118768EDF" schemaObject="1D2364B9-F88C-F71E-C74E-838D017CBC14" name="BANK_USER_PK">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>ADMINISTRATOR</sourceObjSchema>
+<sourceObjName>SYS_C003985</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EF5B083E-1977-1CD9-1BC3-1EC5B83F31B6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

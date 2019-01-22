@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<UserOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UserOraclev10g" name="ADMINISTRATOR" directorySegmentName="seg_0" id="76DF4F36-C5DB-78DD-6CFB-64E350DA5CBF">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjName>ADMINISTRATOR</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:27 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>1D2364B9-F88C-F71E-C74E-838D017CBC14</schemaObject>
+</UserOraclev10g>

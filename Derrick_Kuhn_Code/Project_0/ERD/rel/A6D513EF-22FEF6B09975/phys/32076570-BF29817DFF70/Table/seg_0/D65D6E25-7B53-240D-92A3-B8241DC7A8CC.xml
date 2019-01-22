@@ -1,0 +1,51 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="BANK_ACCOUNT" directorySegmentName="seg_0" id="D65D6E25-7B53-240D-92A3-B8241DC7A8CC">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>1D2364B9-F88C-F71E-C74E-838D017CBC14</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>D2CA7C1E-0615-FAE9-6DAE-9DBB39A779EE</segment>
+<tableSpace>7BA90A21-BE0D-B62A-F564-325B8FE482FC</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="A_BALANCE" id="7AEB93BE-5DBA-F7C6-15F0-97EB8991BEBF">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="U_ID" id="82EB1CFA-47F6-8C29-AEA4-EC2B54C32134">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="A_ID" id="FB1C51FA-3B2F-40F1-4F51-85C0610E61A5">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="SYS_C003989" id="37675906-8840-708E-15D7-7173A767950B">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:29 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="BANK_ACCOUNT_A_ID_UN" id="8176FB9D-C5F4-336E-2033-A907E8F634CE">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-19 21:02:28 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>1D2364B9-F88C-F71E-C74E-838D017CBC14</schemaObject>
+<segment>10F90A3D-D476-64B0-B9F9-9A025130D0D9</segment>
+<tableSpace>7BA90A21-BE0D-B62A-F564-325B8FE482FC</tableSpace>
+<indexSegment>10F90A3D-D476-64B0-B9F9-9A025130D0D9</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev11g>
