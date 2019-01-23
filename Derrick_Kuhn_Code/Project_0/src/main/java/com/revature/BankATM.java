@@ -50,7 +50,6 @@ public class BankATM {
 		switch(option) {
 			case 0:
 				blankSpace();
-				input.close();
 				System.out.println("ATM Closed");
 				break;
 			case 1:
@@ -528,7 +527,7 @@ public class BankATM {
 			blankSpace();
 			if(atm.deleteUser(usersList.get(option))) {
 				blankSpace();
-				System.out.println("Deleted "+usersList.get(option).getUserID()+" "+usersList.get(option).getUsername()+" "+usersList.get(option).getPassword()+ " successfully.");
+				System.out.println("Deleted User ID: "+usersList.get(option).getUserID()+"; Username: "+usersList.get(option).getUsername()+"; Password: "+usersList.get(option).getPassword()+ " successfully.");
 				superUserActions();
 			} else {
 				blankSpace();
@@ -559,7 +558,7 @@ public class BankATM {
 	}
 	
 	private static void blankSpace() {
-		for(int x = 0; x < 25; x++) {
+		for(int x = 0; x < 50; x++) {
 			System.out.println();
 		}
 	}
