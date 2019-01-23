@@ -20,6 +20,14 @@ public class ClientSide {
 	public ClientSide() {
 		
 	}
+	public static void correctOutput(String s, Scanner reader) {
+		while(!(reader.hasNextInt()))
+		{
+			reader.next();
+			System.out.println("Incorrect input try again.\n");
+			System.out.println(s);
+		}
+	}
 	
 	//Method is used to ask user if they would like to create a user or log in with username and password.
 	public void createOrNot() {
@@ -27,6 +35,7 @@ public class ClientSide {
 		String s = "0: Exit\n" + "1: Log In with username/password\n" + "2: Create new account\n";
 		Scanner reader = new Scanner(System.in);  // Reading from System.in
 		System.out.println(s);
+		correctOutput(s, reader);
 		response = Integer.parseInt(reader.next());
 		
 		while(response != 0) {
@@ -44,6 +53,7 @@ public class ClientSide {
 			System.out.println(s);
 			while(!(reader.hasNextLine())) {	
 			}
+			correctOutput(s, reader);
 			response = Integer.parseInt(reader.next());
 			
 		}
@@ -73,7 +83,9 @@ public class ClientSide {
 		System.out.println("Insert password: \n");
 		password = reader.next();
 		
-		System.out.println("How much money would you like to start your new account with? \n");
+		String s = "How much money would you like to start your new account with?";
+		System.out.println(s);
+		correctOutput(s, reader);
 		startDeposit = reader.nextInt();
 		
 		insert = CustomerService.getCustomerService().registerCustomerProcedure(new Customer(4, firstName, lastName, username, password, startDeposit));
@@ -173,29 +185,38 @@ public class ClientSide {
 		int nextMove;
 		
 		System.out.println(s);
+		correctOutput(s, reader);
 		nextMove = Integer.parseInt(reader.next());
 		
 		while(nextMove != 4) {
 			if(nextMove == 0) {
 				viewAllUsers();
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 				
 			}else if(nextMove == 1) {
 				createUser(reader);
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 				
 			}else if(nextMove == 2) {
 				modifyExistingUser(user, reader);
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 				
 			}else if(nextMove == 3) {
+				deleteAllUsers();
+				System.out.println(s);
+				correctOutput(s, reader);
+				nextMove = Integer.parseInt(reader.next());
 				
 			}else {
 				System.out.println("Sorry wrong input. Try Again.\n");
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 			}
 		}
@@ -204,9 +225,28 @@ public class ClientSide {
 		
 	}
 	
+	public void deleteAllUsers() {
+		boolean a;
+		boolean b;
+		a = CustomerDaoImplementation.getCustDao().deleteAllUSers("account");
+		b = CustomerDaoImplementation.getCustDao().deleteAllUSers("account_info");
+		
+		if(a == true && b == true) {
+			log.info("Delete All Users Successfull!");
+		}
+		else {
+			log.info("Delete All Users Unsuccessfull!");
+		}
+		
+	}
+
+	
 	public void modifyExistingUser(String user, Scanner reader) {
-		System.out.println("Would you like to view all users before you continue?\n 0: No\n 1: Yes\n");
+		String s = "Would you like to view all users before you continue?\n 0: No\n 1: Yes\n";
+		System.out.println(s);
+		correctOutput(s, reader);
 		int response = Integer.parseInt(reader.next());
+		
 		if(response == 1) {
 			viewAllUsers();
 		}
@@ -216,10 +256,11 @@ public class ClientSide {
 		System.out.println("Which user would you like to modify? Enter Username please.");
 		username = reader.next();
 		
-		String s = "What would you like to modify? Choose a numerical Value provided:\n" +
+		String t = "What would you like to modify? Choose a numerical Value provided:\n" +
 		"0: CANCEL\n" +"1: Modify First Name:\n" + "2: Modify Last Name\n" + "3: Modify Username\n" +
 				"4: Modify Password\n" + "5: Modify Account Balance\n";
-		System.out.println(s);
+		System.out.println(t);
+		correctOutput(t, reader);
 		next = Integer.parseInt(reader.next());
 		
 		while(next != 0) {
@@ -227,39 +268,46 @@ public class ClientSide {
 				System.out.println("FIRSTNAME: What would you like to change it to?\n");
 				String modifyFirst = reader.next();
 				modify(username, "A_FIRSTNAME", modifyFirst);
-				System.out.println(s);
+				System.out.println(t);
+				correctOutput(t, reader);
 				next = Integer.parseInt(reader.next());
 				
 			}else if(next == 2) {
 				System.out.println("LASTNAME: What would you like to change it to?\n");
 				String modifyFirst = reader.next();
 				modify(username, "A_LASTNAME", modifyFirst);
-				System.out.println(s);
+				System.out.println(t);
+				correctOutput(t, reader);
 				next = Integer.parseInt(reader.next());
 				
 			}else if(next == 3) {
 				System.out.println("USERNAME: What would you like to change it to?\n");
 				String modifyFirst = reader.next();
 				modify(username, "A_USERNAME", modifyFirst);
-				System.out.println(s);
+				System.out.println(t);
+				correctOutput(t, reader);
 				next = Integer.parseInt(reader.next());
 				
 			}else if(next == 4) {
 				System.out.println("PASSWORD: What would you like to change it to?\n");
 				String modifyFirst = reader.next();
 				modify(username, "A_PASSWORD", modifyFirst);
-				System.out.println(s);
+				System.out.println(t);
+				correctOutput(t, reader);
 				next = Integer.parseInt(reader.next());
 				
 			}else if(next == 5) {
 				System.out.println("ACCOUNTBALANCE: What would you like to change it to?\n");
-				String modifyFirst = reader.next();
-				modify(username, "A_BALANCE", modifyFirst);
-				System.out.println(s);
+				correctOutput("ACCOUNTBALANCE: What would you like to change it to?\n", reader);
+				int modifyFirst = Integer.parseInt(reader.next());
+				modify(username, "A_BALANCE", String.valueOf(modifyFirst));
+				System.out.println(t);
+				correctOutput(t, reader);
 				next = Integer.parseInt(reader.next());
 			}else {
 				System.out.println("Incorrect response please Try Again. \n");
-				System.out.println(s);
+				System.out.println(t);
+				correctOutput(t, reader);
 				next = Integer.parseInt(reader.next());
 			}
 			
@@ -316,6 +364,7 @@ public class ClientSide {
 		int amount;
 		boolean correct;
 		System.out.println(s);
+		correctOutput(s, reader);
 		nextMove = Integer.parseInt(reader.next());
 		
 		while(nextMove != 4) {
@@ -325,6 +374,7 @@ public class ClientSide {
 				correct = false;
 				while(correct == false) {
 					System.out.println("How much would you like to deposit?");
+					correctOutput("How much would you like to deposit?", reader);
 					amount = Integer.parseInt(reader.next());
 					if(amount > 0) {
 						correct = true;
@@ -332,6 +382,7 @@ public class ClientSide {
 				}
 				deposit(amount, user);
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 				
 			}else if(nextMove == 1){
@@ -339,13 +390,16 @@ public class ClientSide {
 				correct = false;
 				while(correct == false) {
 					System.out.println("How much would you like to withdraw?");
+					correctOutput("How much would you like to withdraw?", reader);
 					amount = Integer.parseInt(reader.next());
+					
 					if(amount > 0) {
 						correct = true;
 					}
 				}
 				withdraw(amount, user, reader);
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 				
 			}else if(nextMove == 2) {
@@ -353,6 +407,7 @@ public class ClientSide {
 					nextMove = 4;
 				}else {
 					System.out.println(s);
+					correctOutput(s, reader);
 					nextMove = Integer.parseInt(reader.next());
 					
 				}
@@ -362,11 +417,13 @@ public class ClientSide {
 				
 				customerInfo(user);
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 				
 			}else{
 				System.out.println("INCORRECT RESPONSE. TRY AGAIN.\\n");	
 				System.out.println(s);
+				correctOutput(s, reader);
 				nextMove = Integer.parseInt(reader.next());
 			}
 			
@@ -460,6 +517,7 @@ public class ClientSide {
 		currentAmount = b.getCurrentBalance();
 		while(!(currentAmount >= thisAmount)) {
 			System.out.println("You will overdraft, please try a smaller amount.");
+			correctOutput("You will overdraft, please try a smaller amount.", reader);
 			thisAmount = Integer.parseInt(reader.next());
 		}
 		nextAmount = currentAmount - thisAmount;

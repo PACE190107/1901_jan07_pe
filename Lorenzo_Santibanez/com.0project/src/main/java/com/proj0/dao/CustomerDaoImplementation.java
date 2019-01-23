@@ -155,16 +155,33 @@ public class CustomerDaoImplementation implements CustomerDao {
 		return true;
 	}
 	
+	public boolean deleteAllUSers(String account) {
+try(Connection conn = JDBSCConnectionUtil.getConnection()){
+	String sql;
+	Statement stmt;
+			
+	sql = "TRUNCATE TABLE " + account;
+	stmt = conn.createStatement();
+	stmt.executeQuery(sql);
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+		
+	}
+	
 	public boolean modify(int user, String action, String modifyTo) {
 		try(Connection conn = JDBSCConnectionUtil.getConnection()){
 			String sql;
 			CallableStatement ps;
 			
 			if("A_BALANCE".contentEquals(action)) {
-				int modifYTo = Integer.parseInt(modifyTo);
+				int result = Integer.parseInt(modifyTo);
 				sql = "call modify_account_balance(?,?)";
 				ps = conn.prepareCall(sql);
-				ps.setInt(1, modifYTo);
+				ps.setInt(1, result);
 				ps.setString(2, Integer.toString(user));
 				ps.executeUpdate();
 			}
