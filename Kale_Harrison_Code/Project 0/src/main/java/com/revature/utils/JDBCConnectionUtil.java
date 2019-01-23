@@ -13,7 +13,7 @@ public class JDBCConnectionUtil {
 	final static Logger log = Logger.getLogger(JDBCConnectionUtil.class);
 	static {
 		try {
-			log.info("JDBC driver is loaded / registered");
+			//log.info("JDBC driver is loaded / registered");
 			Class.forName("oracle.jdbc.OracleDriver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

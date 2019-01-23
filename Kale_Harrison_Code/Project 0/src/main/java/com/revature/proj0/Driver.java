@@ -9,6 +9,8 @@ public class Driver {
 
 	
 	public static void main(String[] args) throws SQLException {	
+		
+		
 		AuthenticatedUser user = new AuthenticatedUser();
 		JDBCFunctionsImplementation tester = new JDBCFunctionsImplementation();
 		Scanner sc = new Scanner(System.in);
@@ -44,11 +46,14 @@ public class Driver {
 	}	
 }
 		
-	
-	
+class Data {
 
-	
-	
-	
-	
+    int intVal = 0;
+    String strVal = "default";
+    public Data(int k){
+        this.intVal = k; 
+    }
 
+}
+
+ 

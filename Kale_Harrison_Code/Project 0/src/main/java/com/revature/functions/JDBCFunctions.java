@@ -22,5 +22,4 @@ public interface JDBCFunctions {
 	public void superChangeUser(AuthenticatedUser user, int userId) throws SQLException;
 	public void superChangePassword(AuthenticatedUser user, int userId) throws SQLException;
 	public void superDeleteUser(AuthenticatedUser user) throws SQLException;
-
 }

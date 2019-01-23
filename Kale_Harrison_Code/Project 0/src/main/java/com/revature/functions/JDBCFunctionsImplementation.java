@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import com.revature.account.BankAccount;
 import com.revature.user.AuthenticatedUser;
@@ -13,26 +14,44 @@ import com.revature.utils.JDBCConnectionUtil;
 
 public class JDBCFunctionsImplementation implements JDBCFunctions {
 	
-	Scanner sc = new Scanner(System.in);
-	BankAccount tester = new BankAccount();
 	
+	BankAccount tester = new BankAccount();
 	@Override
 	public void firstChoice() throws SQLException {
-		System.out.println("1)Log into existing account.          2)Create new account.");
-		int userChoice = sc.nextInt();
-		if (userChoice ==1) {
-			return;
-		}else if (userChoice ==2) {
-			createUserAccount();
+		Scanner sb = new Scanner(System.in);
+		try {
+			
+			int userChoice = 0;
+			System.out.println("1)Log into existing account.          2)Create new account.");
+			
+			userChoice = sb.nextInt();
+			
+			if (userChoice ==1) {
+				return;
+			}else if (userChoice ==2) {
+				createUserAccount();
+				firstChoice();
+			}else {
+				System.out.println("Not a valid selecton!");
+				firstChoice();
+			}
+		}catch (InputMismatchException i) {
+			System.out.println("Not a valid selection!");
+			
 			firstChoice();
-		}else {
-			System.out.println("Not a valid selecton!");
+		}	catch (NoSuchElementException n) {
+			System.out.println("error");
+			sb.close();	
 			firstChoice();
 		}
-	}
+	
+		
+		}
+		
 	 
 	@Override
 	public void createUserAccount() throws SQLException {
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection()){
 		System.out.println("Please enter a username");
 		String username = sc.next();
@@ -43,7 +62,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			ps.setString(1, username);
 			ps.setString(2, password);
 			if (ps.executeUpdate() > 0) {
+				System.out.println("\n\n");
+				System.out.println("*******************");
 				System.out.println("Account Created!");
+				System.out.println("*******************");
 			}
 				else {
 				System.out.println("An error occured! Please try again.");
@@ -52,17 +74,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			String sql2 = (" grant connect, resource to " + username);
 			String sql3 = (" grant DBA to " + username + " with admin option");
 			ps = conn.prepareCall(sql);
-				if (ps.executeUpdate() > 0) {
-					System.out.println("Account Created!");
-				}
 			ps = conn.prepareCall(sql2);	
-				if (ps.executeUpdate() > 0) {
-					System.out.println("Account Created!");
-				}
 			ps = conn.prepareCall(sql3);	
-				if (ps.executeUpdate() > 0) {
-					System.out.println("Account Created!");
-				}
+			ps.execute(sql);
+			ps.execute(sql2);
+			ps.execute(sql3);
 				String commit = "COMMIT";
 				Statement finalStmt = conn.createStatement();
 				ResultSet finalCommit = finalStmt.executeQuery(commit);
@@ -70,63 +86,86 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				finalCommit.close();
 				ps.close();
 				conn.close();
-			} 
+			} catch (InputMismatchException i) {
+				System.out.println("\n\n");
+				System.out.println("*******************");
+				System.out.println("Not valid input.\n");
+				System.out.println("*******************");
+				createUserAccount();
+			}
 		catch (SQLException e) {
-			System.out.println("\nUsername taken!\n");
+			System.out.println("\n\n");
+			System.out.println("\n*******************");
+			System.out.println("Username taken!");
+			System.out.println("*******************\n");
 		} 
 	}
 		
 	@Override
 	public void viewMenu(AuthenticatedUser user) throws SQLException {
-		int userChoice = 0;
-		
-		System.out.println("Welcome to the Bank!");
-		System.out.println("Please enter a number to select an option...");
-		System.out.println("1: View Existing Accounts     4: Make a Deposit");
-		System.out.println("2: Create a New Bank Account  5: Make a Withdrawl");
-		System.out.println("3: Delete an Account          6: Logout");
-		
-		userChoice = sc.nextInt();
+		Scanner sc = new Scanner(System.in);
+		try {
+			int userChoice = 0;
+			
+			System.out.println("\n\n\nWelcome to the Bank!");
+			System.out.println("Please enter a number to select an option...");
+			System.out.println("1: View Existing Accounts     4: Make a Deposit");
+			System.out.println("2: Create a New Bank Account  5: Make a Withdrawl");
+			System.out.println("3: Delete an Account          6: Logout");
+			
+			userChoice = sc.nextInt();
 
-		switch(userChoice) {
-		case 1:
-			System.out.println("View Existing Accounts ");
-			viewAccounts(user);
+			switch(userChoice) {
+			case 1:
+				System.out.println("View Existing Accounts ");
+				viewAccounts(user);
+				System.out.println("\n\n");
+				pressAnyKeyToContinue();
+				viewMenu(user);
+				break;
+			case 2:
+				System.out.println("Create a New Account");
+				createAccount(user);
+				System.out.println("\n\n");
+				viewMenu(user);
+				break;
+			case 3:
+				System.out.println("Delete an Account");
+				deleteAccount(user);
+				System.out.println("\n\n");
+				viewMenu(user);
+				break;
+			case 4:
+				System.out.println("Make a Deposit");
+				makeDeposit(user);
+				System.out.println("\n\n");
+				viewMenu(user);
+				break;
+			case 5:
+				System.out.println("Make a Withdrawl");
+				makeWithdrawl(user);
+				System.out.println("\n\n");
+				viewMenu(user);
+				break;
+			case 6:
+				System.out.println("Logout");
+				break;
+			default:
+				System.out.println("\n\n");
+				System.out.println("*******************");
+				System.out.println(userChoice + " is not a valid choice. Try again. \n");
+				System.out.println("*******************");
+				viewMenu(user);
+			}
+			
+		}catch(InputMismatchException i) {
 			System.out.println("\n\n");
-			pressAnyKeyToContinue();
-			viewMenu(user);
-			break;
-		case 2:
-			System.out.println("Create a New Account");
-			createAccount(user);
-			System.out.println("\n\n");
-			viewMenu(user);
-			break;
-		case 3:
-			System.out.println("Delete an Account");
-			deleteAccount(user);
-			System.out.println("\n\n");
-			viewMenu(user);
-			break;
-		case 4:
-			System.out.println("Make a Deposit");
-			makeDeposit(user);
-			System.out.println("\n\n");
-			viewMenu(user);
-			break;
-		case 5:
-			System.out.println("Make a Withdrawl");
-			makeWithdrawl(user);
-			System.out.println("\n\n");
-			viewMenu(user);
-			break;
-		case 6:
-			System.out.println("Logout");
-			break;
-		default:
-			System.out.println(userChoice + " is not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
 			viewMenu(user);
 		}
+		
 		
 	}
 	
@@ -135,7 +174,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 		try {Connection conn = JDBCConnectionUtil.getConnection(username, password);
 			conn.close();
 		} catch (SQLException e) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
 			System.out.println("\nInvalid credentials!\n");
+			System.out.println("*******************");
 			return false;
 		}
 		return true;
@@ -143,6 +185,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 	
 	@Override
 	public void viewAccounts(AuthenticatedUser user) throws  SQLException{
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
 			String getUserId = ("select USER_ID from ADMIN.BANK_USER WHERE USERNAME = '"  + user.getUsername() + "'");
 			Statement stmt = conn.createStatement();
@@ -168,7 +211,14 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			getSqlUser.close();
 			results.close();
 			conn.close();
-		} catch (SQLException e) {
+		} catch (InputMismatchException i) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			viewAccounts(user);
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
@@ -176,12 +226,12 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 	
 	@Override
 	public void createAccount(AuthenticatedUser user) throws  SQLException{
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
 			int accountTypeCheck = 0;
 			String accountType = " ";
 			String getUserId = ("select USER_ID from ADMIN.BANK_USER WHERE USERNAME = '"  + user.getUsername() + "'");
 			Statement stmt = conn.createStatement();
-			//NEED TO USE AN EXECUTE UPDATE STATEMENT????
 			ResultSet getSqlUser = stmt.executeQuery(getUserId);
 			int userId = 0;
 			while(getSqlUser.next()) {
@@ -195,7 +245,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			else if (accountTypeCheck == 2)
 				accountType = "Savings";
 			else {
+				System.out.println("\n\n");
+				System.out.println("*******************");
 				System.out.println( "\n" +  accountTypeCheck + " is not a valid selection!");
+				System.out.println("*******************");
 				createAccount(user);
 				return;
 			}	
@@ -204,7 +257,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			ps.setString(1, accountType);
 			ps.setInt(2, userId);
 			if (ps.executeUpdate() > 0) {
+				System.out.println("\n\n");
+				System.out.println("*******************");
 				System.out.println("Account Created!");
+				System.out.println("*******************");
 			}
 				else {
 				System.out.println("An error occured! Please try again.");
@@ -220,7 +276,13 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			ps.close();
 			conn.close();
 				
-		} catch (SQLException e) {
+		} catch (InputMismatchException i) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			createAccount(user);
+		}catch (SQLException e) {
 			e.printStackTrace();
 		} 
 	}
@@ -228,6 +290,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 
 	@Override
 	public void deleteAccount(AuthenticatedUser user) throws  SQLException{
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
 			int accountId = 0;
 			viewAccounts(user);
@@ -244,7 +307,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 					String sql = "delete from ADMIN.BANK_ACCOUNT where ACCOUNT_ID = " + accountId;
 					CallableStatement ps = conn.prepareCall(sql);
 					if (ps.executeUpdate() > 0) {
+						System.out.println("\n\n");
+						System.out.println("*******************");
 						System.out.println("Account deleted!");
+						System.out.println("*******************");
 						String commit = "COMMIT";
 						Statement finalStmt = conn.createStatement();
 						ResultSet finalCommit = finalStmt.executeQuery(commit);
@@ -266,9 +332,18 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 						deleteAccount(user);	
 				}
 			}else {
-				System.out.println("\n\nAccount has a balance greater than 0! Unable to delete.");
+				System.out.println("\n\n");
+				System.out.println("*******************");
+				System.out.println("Account has a balance greater than 0! Unable to delete.");
+				System.out.println("*******************");
 				return;
 			}
+				}catch (InputMismatchException i) {
+					System.out.println("\n\n");
+					System.out.println("*******************");
+					System.out.println("Not a valid choice. Try again. \n");
+					System.out.println("*******************");
+					deleteAccount(user);
 				} catch (SQLException e) {
 			e.printStackTrace();
 		} 
@@ -279,6 +354,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 	//ERROR: ANY account number can be typed in. Need a way to tell if account ID is valid...
 	@Override
 	public void makeDeposit(AuthenticatedUser user) throws  SQLException{
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
 			viewAccounts(user);
 			String getUserId = ("select USER_ID from ADMIN.BANK_USER WHERE USERNAME = '"  + user.getUsername() + "'");
@@ -298,7 +374,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			ps.setInt(2, accountId);
 			ps.setInt(3, userId);
 			if (ps.executeUpdate() > 0) {
+				System.out.println("\n\n");
+				System.out.println("*******************");
 				System.out.println("Deposit Succesful!");
+				System.out.println("*******************");
 			}
 				else {
 				System.out.println("An error occured! Please try again.");
@@ -313,13 +392,21 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			getSqlUser.close();
 			ps.close();
 			conn.close();
-		} catch (SQLException e) {
+		} 
+		catch (InputMismatchException i) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			makeDeposit(user);
+		}catch (SQLException e) {
 			e.printStackTrace();
 		} 
 	}
 	
 	@Override
 	public void makeWithdrawl(AuthenticatedUser user) throws  SQLException{
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
 			viewAccounts(user);
 			String getUserId = ("select USER_ID from ADMIN.BANK_USER WHERE USERNAME = '"  + user.getUsername() + "'");
@@ -351,7 +438,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				ps.setInt(2, accountId);
 				ps.setInt(3, userId);
 				if (ps.executeUpdate() > 0) {
+					System.out.println("\n\n");
+					System.out.println("*******************");
 					System.out.println("Withdrawl Succesful!");
+					System.out.println("*******************");
 				}
 					else {
 					System.out.println("An error occured! Please try again.");
@@ -369,11 +459,21 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				ps.close();
 				conn.close();	
 			}else {
-				System.out.println("\n\nInsufficient funds!");
+				System.out.println("\n\n");
+				System.out.println("*******************");
+				System.out.println("Insufficient funds!");
+				System.out.println("*******************");
 				return;
 			}
 			
-		} catch (SQLException e) {
+		} catch (InputMismatchException i) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			makeWithdrawl(user);
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		} 
 	}
@@ -382,7 +482,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 	@Override
 	 public void pressAnyKeyToContinue()
 	 { 
-	        System.out.println("Press Enter key to continue...");
+	        System.out.println("Press Enter key to continue...\n\n");
 	        try
 	        {
 	            System.in.read();
@@ -412,7 +512,14 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			stmt.close();
 			getSqlUser.close();
 			conn.close();
-		}catch (SQLException e) {
+		}catch (InputMismatchException i) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			testSuper(user);
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		} 
 		return false;
@@ -420,46 +527,60 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 	
 	@Override
 	public void superMenu(AuthenticatedUser user) throws SQLException {
-		int userChoice = 0;
-		System.out.println("Please enter a number to select an option...");
-		System.out.println("1: View Users                 4: Delete a User");
-		System.out.println("2: Create a User              5: Logout");
-		System.out.println("3: Update a User");
-		userChoice = sc.nextInt();
-		
-		switch(userChoice) {
-		case 1:
-			System.out.println("View Users ");
-			superViewUser(user);
+		Scanner sc = new Scanner(System.in);
+		try {
+			int userChoice = 0;
+			System.out.println("\n\n\nPlease enter a number to select an option...");
+			System.out.println("1: View Users                 4: Delete a User");
+			System.out.println("2: Create a User              5: Logout");
+			System.out.println("3: Update a User");
+			userChoice = sc.nextInt();
+			
+			switch(userChoice) {
+			case 1:
+				System.out.println("View Users ");
+				superViewUser(user);
+				System.out.println("\n\n");
+				pressAnyKeyToContinue();
+				superMenu(user);
+				break;
+			case 2:
+				System.out.println("Create a User");
+				createUserAccount();
+				System.out.println("\n\n");
+				superMenu(user);
+				break;
+			case 3:
+				System.out.println("Update a User");
+				superUpdate(user);
+				System.out.println("\n\n");
+				superMenu(user);
+				break;
+			case 4:
+				System.out.println("Delete a User");
+				superDeleteUser(user);
+				System.out.println("\n\n");
+				superMenu(user);
+				break;
+			case 5:
+				System.out.println("Logout");
+				break;
+			default:
+				System.out.println("\n\n");
+				System.out.println("*******************");
+				System.out.println(userChoice + " is not a valid choice. Try again. \n");
+				System.out.println("*******************");
+				superMenu(user);
+			}
+			
+		}catch (InputMismatchException i) {
 			System.out.println("\n\n");
-			pressAnyKeyToContinue();
-			superMenu(user);
-			break;
-		case 2:
-			System.out.println("Create a User");
-			createUserAccount();
-			System.out.println("\n\n");
-			superMenu(user);
-			break;
-		case 3:
-			System.out.println("Update a User");
-			superUpdate(user);
-			System.out.println("\n\n");
-			superMenu(user);
-			break;
-		case 4:
-			System.out.println("Delete a User");
-			superDeleteUser(user);
-			System.out.println("\n\n");
-			superMenu(user);
-			break;
-		case 5:
-			System.out.println("Logout");
-			break;
-		default:
-			System.out.println(userChoice + " is not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
 			superMenu(user);
 		}
+		
 		
 	}
 	
@@ -473,6 +594,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 					"on BANK_USER.USER_ID = BANK_ACCOUNT.USER_ID\r\n" + 
 					"WHERE SUPER = 0 order by UPPER (BANK_USER.USERNAME)";
 			ResultSet results = stmt.executeQuery(sql);
+			System.out.println("\n\n");
 			while(results.next()) {
 				System.out.print("Username: " + results.getString("USERNAME") + "   ");
 				System.out.print("Password: " +results.getString("PASSPHRASE")+ "   ");
@@ -497,30 +619,43 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 	
 	@Override
 	public void superUpdate(AuthenticatedUser user) throws SQLException {
-		System.out.print("Enter the User ID for the account to update: ");
-		int userId = sc.nextInt();
-		System.out.println("What would you like to update?");
-		System.out.println("1: Change Username");
-		System.out.println("2: Change Password");
-	//	System.out.println("3: Give Admin Privileges");
-		int userChoice = sc.nextInt();
-		switch(userChoice) {
-		case 1:
-			superChangeUser(user, userId);
+		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.print("Enter the User ID for the account to update: ");
+			int userId = sc.nextInt();
+			System.out.println("What would you like to update?");
+			System.out.println("1: Change Username");
+			System.out.println("2: Change Password");
+			int userChoice = sc.nextInt();
+			switch(userChoice) {
+			case 1:
+				superChangeUser(user, userId);
+				System.out.println("\n\n");
+				break;
+			case 2:
+				superChangePassword(user, userId);
+				System.out.println("\n\n");
+				break;
+			default:
+				System.out.println("\n\n");
+				System.out.println("*******************");
+				System.out.println("Not a valid selection!");
+				System.out.println("*******************");
+				superMenu(user);
+			}	
+		}catch (InputMismatchException i) {
 			System.out.println("\n\n");
-			break;
-		case 2:
-			superChangePassword(user, userId);
-			System.out.println("\n\n");
-			break;
-		default:
-			System.out.println("Not a valid selection!");
-			superMenu(user);
-		}	
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			superUpdate(user);
+		}
+		
 	}
 	
 	@Override
 	public void superChangeUser(AuthenticatedUser user, int userId) throws SQLException {
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection()){
 			System.out.println("What would you like the new username to be: ");
 			String newUsername = sc.next();
@@ -563,7 +698,10 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				ResultSet finalCommit = finalStmt.executeQuery(commit);
 				finalStmt.close();
 				finalCommit.close();
+			System.out.println("\n\n");
+			System.out.println("*******************");
 			System.out.println("Username Changed!");
+			System.out.println("*******************");
 			getSqlPass.close();
 			getSqlUser.close();
 			dropUser.close();
@@ -572,13 +710,24 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			stmt.close();
 			ps.close();
 			conn.close();
-		}catch (SQLException e) {
+		}catch (InputMismatchException i) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			superChangeUser(user, userId);
+		}
+		catch (SQLException e) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
 			System.out.println("Username taken!");
+			System.out.println("*******************");
 		} 
 	}
 	
 	@Override
 	public void superChangePassword(AuthenticatedUser user, int userId) throws SQLException {
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection()){
 			System.out.println("What would you like the new password to be: ");
 			String newPassword = sc.next();
@@ -619,12 +768,15 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				if (ps.executeUpdate() > 0) {
 					System.out.println("Account Created!");
 				}
-				String commit = "COMMIT";
-				Statement finalStmt = conn.createStatement();
-				ResultSet finalCommit = finalStmt.executeQuery(commit);
-				finalStmt.close();
-				finalCommit.close();
+			String commit = "COMMIT";
+			Statement finalStmt = conn.createStatement();
+			ResultSet finalCommit = finalStmt.executeQuery(commit);
+			finalStmt.close();
+			finalCommit.close();
+			System.out.println("\n\n");
+			System.out.println("*******************");
 			System.out.println("Password Changed!");
+			System.out.println("*******************");
 			getSqlPass.close();
 			getSqlUser.close();
 			dropUser.close();
@@ -633,13 +785,21 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			stmt.close();
 			ps.close();
 			conn.close();
-		}catch (SQLException e) {
+		}catch (InputMismatchException i) {
+			System.out.println("\n\n");
+			System.out.println("*******************");
+			System.out.println("Not a valid choice. Try again. \n");
+			System.out.println("*******************");
+			superChangePassword(user, userId);
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
 		} 	
 	}
 	
 	@Override
 	public void superDeleteUser(AuthenticatedUser user) throws SQLException {
+		Scanner sc = new Scanner(System.in);
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword())){
 			System.out.print("Please Enter the User ID of the User that you want to delete:");
 			int userId = sc.nextInt();
@@ -668,12 +828,21 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			drop.close();
 			conn.close();
 			}catch (SQLException e) {
+				System.out.println("\n\n");
+				System.out.println("*******************");
 				System.out.println("No user associated with that Account ID");
+				System.out.println("*******************");
 				return;
 			}catch(InputMismatchException i) {
+				System.out.println("*******************");
 				System.out.println("Not a valid Account ID!");
+				System.out.println("*******************");
 				return;
 			}
+		System.out.println("\n\n");
+		System.out.println("*******************");
 		System.out.println("User Deleted");
+		System.out.println("*******************");
 	}
+	
 }
