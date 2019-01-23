@@ -1,7 +1,5 @@
 package com.revature.test;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.junit.AfterClass;

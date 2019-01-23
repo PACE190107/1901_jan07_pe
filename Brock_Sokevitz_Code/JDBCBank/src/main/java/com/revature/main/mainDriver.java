@@ -144,7 +144,7 @@ public class mainDriver {
 		
 		while(!passwordEstablished) {
 				try {
-					if(strPassword.equals("")||strPassword.equalsIgnoreCase("exit")) {
+					if(strPassword.equals("")) {
 						throw new InvalidInputException();
 					}else {
 						passwordEstablished = true;
@@ -214,7 +214,7 @@ public class mainDriver {
 		char password[] = System.console().readPassword();
 		String strPassword = new String(password);
 		
-		while(passwordAttempts<3||strPassword.equalsIgnoreCase("exit")) {
+		while(passwordAttempts<3) {
 			try {
 				if(passwordAttempts == 3) {
 					throw new TooManyLoginAttemptsException();

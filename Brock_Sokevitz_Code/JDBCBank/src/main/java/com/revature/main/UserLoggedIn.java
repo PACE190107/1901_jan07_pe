@@ -9,6 +9,9 @@ import java.util.Scanner;
 import com.revature.exceptions.InvalidAccountDeletionException;
 import com.revature.exceptions.InvalidAccountIDException;
 import com.revature.exceptions.InvalidInputException;
+import com.revature.exceptions.NegativeDepositException;
+import com.revature.exceptions.NegativeWithdrawException;
+import com.revature.exceptions.NoAccountsException;
 import com.revature.exceptions.NotEnoughFundsException;
 import com.revature.exceptions.UnsupportedAccountTypeException;
 import com.revature.models.Account;
@@ -34,7 +37,6 @@ public class UserLoggedIn {
 		while(loggedIn) {
 			try {				
 				if(input.toLowerCase().equals("view")){
-					System.out.println("Here's a list of your accounts.");
 					viewAccounts(user);
 					System.out.println(" Please enter view, create, delete, deposit, withdraw, history, or logout.");
 					input = sc.nextLine();					
@@ -86,8 +88,21 @@ public class UserLoggedIn {
 
 	static void viewAccounts(User user) {
 		List<Account> accountList = AccountService.getAccountService().getAllAccounts(user.getUserID());
+		
+		try {
+			if(accountList.isEmpty())
+				throw new NoAccountsException();
+			
+			System.out.println("Here's a list of your accounts:");
+		}catch(NoAccountsException nao) {
+			
+		}
+		if(accountList.isEmpty()) {
+			System.out.println("You haven't created any accounts yet.");
+		}else {
 		for(Account account: accountList) {
 			System.out.println(account.getAccountID()+", "+account.getAccountType()+": $"+ df.format(account.getBalance()));
+		}
 		}
 	}
 	
@@ -191,6 +206,8 @@ public class UserLoggedIn {
 		String input = sc.nextLine();
 		while(!depositMade && !input.equalsIgnoreCase("exit")) {
 			try {
+					if(Double.parseDouble(input)<=0)
+						throw new NegativeDepositException();
 					double currentBalance = AccountService.getAccountService().getBalance(accountID);
 					
 					AccountService.getAccountService().updateBalance(accountID, Double.parseDouble(input)+currentBalance);
@@ -201,6 +218,10 @@ public class UserLoggedIn {
 				input = sc.nextLine();
 			}catch(NullPointerException np) {
 				System.out.println("Please enter a valid number.");
+				input = sc.nextLine();
+			} catch (NegativeDepositException nde) {
+				// TODO Auto-generated catch block
+				System.out.println(nde.getMessage());
 				input = sc.nextLine();
 			}
 		}
@@ -247,7 +268,9 @@ public class UserLoggedIn {
 		while(!depositMade && !input.equalsIgnoreCase("exit")) {
 			try {
 					double currentBalance = AccountService.getAccountService().getBalance(accountID);
-					if(currentBalance - Double.parseDouble(input)>=0) {
+					if(Double.parseDouble(input)<0){
+						throw new NegativeWithdrawException();
+					}else if(currentBalance - Double.parseDouble(input)>=0) {
 					AccountService.getAccountService().updateBalance(accountID, currentBalance-Double.parseDouble(input));
 					return TransactionService.getTransactionService().insertTransaction(new Transaction(accountID, userID, -Double.parseDouble(input)));			
 					}else {
@@ -262,6 +285,10 @@ public class UserLoggedIn {
 				input = sc.nextLine();
 			}catch(NotEnoughFundsException broke) {
 				System.out.println(broke.getMessage()+" Please check your balance and enter a valid number.");
+				input = sc.nextLine();
+			} catch (NegativeWithdrawException nwe) {
+				// TODO Auto-generated catch block
+				System.out.println(nwe.getMessage());
 				input = sc.nextLine();
 			}
 		}
