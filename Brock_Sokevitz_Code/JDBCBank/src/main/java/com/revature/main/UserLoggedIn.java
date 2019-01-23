@@ -208,8 +208,8 @@ public class UserLoggedIn {
 			try {
 					if(Double.parseDouble(input)<=0)
 						throw new NegativeDepositException();
-					double currentBalance = AccountService.getAccountService().getBalance(accountID);
 					
+					double currentBalance = AccountService.getAccountService().getBalance(accountID);
 					AccountService.getAccountService().updateBalance(accountID, Double.parseDouble(input)+currentBalance);
 					depositMade = TransactionService.getTransactionService().insertTransaction(new Transaction(accountID, userID, Double.parseDouble(input)));					
 					
@@ -268,7 +268,7 @@ public class UserLoggedIn {
 		while(!depositMade && !input.equalsIgnoreCase("exit")) {
 			try {
 					double currentBalance = AccountService.getAccountService().getBalance(accountID);
-					if(Double.parseDouble(input)<0){
+					if(Double.parseDouble(input)<=0){
 						throw new NegativeWithdrawException();
 					}else if(currentBalance - Double.parseDouble(input)>=0) {
 					AccountService.getAccountService().updateBalance(accountID, currentBalance-Double.parseDouble(input));

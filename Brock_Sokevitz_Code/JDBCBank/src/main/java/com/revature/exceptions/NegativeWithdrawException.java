@@ -9,6 +9,6 @@ public class NegativeWithdrawException extends Throwable{
 
 	
 	public String getMessage() {
-		return "Please enter a positive withdraw amount.";
+		return "Please enter a withdraw amount greater than 0.";
 	}
 }
