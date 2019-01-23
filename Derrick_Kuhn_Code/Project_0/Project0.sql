@@ -103,24 +103,26 @@ begin
 end;
 /
 
---create or replace procedure UPDATE_BALANCE(
 
-
-
-
-insert into BANK_USER values ('admin', 'admin', null, 1);
 
 
 
 --Debug commands
 select * from BANK_USER;
 select * from BANK_ACCOUNT;
+
+insert into BANK_USER values ('admin', 'admin', null, 1);
+exec REGISTER_USER('junit', 'junit');
+exec CREATE_ACCOUNT('junit', 2);
+update BANK_ACCOUNT set A_BALANCE = 1000 where U_ID = 2;
+
 --Test Procedure (U_NAME, U_PASSWORD)
 EXEC REGISTER_USER('rob', 'test');
-EXEC CREATE_ACCOUNT('Checking1', 2)
-EXEC CREATE_ACCOUNT('Checking2', 2)
-EXEC CREATE_ACCOUNT('Checking3', 2)
+EXEC CREATE_ACCOUNT('Checking1', 3)
+EXEC CREATE_ACCOUNT('Checking2', 3)
+EXEC CREATE_ACCOUNT('Checking3', 3)
+update BANK_ACCOUNT set A_BALANCE = 100 where U_ID = 3;
 commit;
 
 --delete BANK_USER where U_ID != 1;
-update BANK_USER set U_ID = 22, U_NAME = 'robert', U_PASSWORD = 'testing' where U_ID = 2;
+--update BANK_USER set U_ID = 22, U_NAME = 'robert', U_PASSWORD = 'testing' where U_ID = 2;

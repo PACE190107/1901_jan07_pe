@@ -23,12 +23,12 @@ public class ATMService {
 			return atmService;
 		} else return atmService;
 	}
-	public User verifyLogin(User u) {
-		try {return ATMQuery.getATMQuery().verifyLogin(u);}
-		catch (LoginFailedException e) {
-			System.out.println("\nLogin Failed, try again or register a new account.");
-			return null;
-		}
+	
+	//Testable units
+	
+	public User verifyLogin(User u) throws LoginFailedException{
+		return ATMQuery.getATMQuery().verifyLogin(u);
+		
 	}
 	public boolean registerNewUser(User u) {
 		return ATMQuery.getATMQuery().registerNewUser(u);

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.revature.exceptions.LoginFailedException;
 import com.revature.exceptions.OutstandingBalanceException;
 import com.revature.exceptions.OverdraftException;
 import com.revature.models.Account;
@@ -28,6 +29,7 @@ public class BankATM {
 	
 	public static void main(String[] args) {
 		atm = atm.getATMService();
+		blankSpace();
 		loginScreen();
 	}
 	
@@ -36,6 +38,7 @@ public class BankATM {
 		System.out.println("[0] Close ATM");
 		System.out.println("[1] Login for existing user.");
 		System.out.println("[2] Register as a new user.");
+		System.out.println("Enter number to select option:");
 		int option = 99;
 		try{
 			option = Integer.parseInt(input.nextLine());
@@ -72,22 +75,25 @@ public class BankATM {
 		usernameInput = input.nextLine();
 		System.out.print("Enter password: ");
 		passwordInput = input.nextLine();
-		currentUser = atm.verifyLogin(new User(usernameInput, passwordInput));
-		if(currentUser == null) { loginScreen();}
-		else {
-			if(currentUser.isSuperUser()) {
-				blankSpace();
-				System.out.println("Super User Login Successful");
-				superUserActions();
-			}
-			else {
-				blankSpace();
-				System.out.println("Login Successful");
-				userActions();
-			}
+		try {
+			currentUser = atm.verifyLogin(new User(usernameInput, passwordInput));
+		} catch (LoginFailedException e) {
+			blankSpace();
+			System.out.println("\nLogin Failed, try again or register a new account.");
+			loginScreen();
 		}
-		
+		if(currentUser.isSuperUser()) {
+			blankSpace();
+			System.out.println("Super User Login Successful.\n");
+			superUserActions();
+		}
+		else {
+			blankSpace();
+			System.out.println("Login Successful.\n");
+			userActions();
+		}
 	}
+		
 	
 	private static void registerNewUser() {
 		System.out.println("Register New User");
@@ -118,6 +124,7 @@ public class BankATM {
 		System.out.println("[3] Withdraw from an account.");
 		System.out.println("[4] Deposit from an account.");
 		System.out.println("[5] Close out an account.");
+		System.out.println("Enter number to select option:");
 		int option = 99;
 		try{
 			option = Integer.parseInt(input.nextLine());
@@ -155,7 +162,7 @@ public class BankATM {
 				if(currentUserAccounts.size() < 1) {
 					blankSpace();
 					System.out.println("You do not have any open accounts.");
-					System.out.println("Create an account to deposit.");
+					System.out.println("Create an account to deposit.\n");
 					userActions();
 				}
 				else {
@@ -166,7 +173,7 @@ public class BankATM {
 			case 5:
 				if(currentUserAccounts.size() < 1) {
 					blankSpace();
-					System.out.println("You do not have any open accounts to delete.");
+					System.out.println("You do not have any open accounts to delete.\n");
 					userActions();
 				} else {
 					blankSpace();
@@ -182,6 +189,7 @@ public class BankATM {
 	
 	private static void listAccounts() {
 		blankSpace();
+		currentUserAccounts = atm.getUserAccounts(currentUser);
 		int index = 0;
 		if(currentUserAccounts.size() > 0) {
 			System.out.println("List of open accounts.");
@@ -192,11 +200,13 @@ public class BankATM {
 		} else {
 			System.out.println("User does not have any open accounts.\nTry creating a new account.");
 		}
+		System.out.println();
 		userActions();
 	}
 	
 	private static void selectAccountWithdraw() {
 		int index = 0;
+		System.out.println("List of open accounts.");
 		for(Account a: currentUserAccounts) {
 			System.out.println("["+index+"] Name: "+a.getAccountName()+"; Balance: "+a.getBalance());
 			index++;
@@ -254,6 +264,7 @@ public class BankATM {
 	private static void selectAccountDeposit() {
 		blankSpace();
 		int index = 0;
+		System.out.println("List of open accounts.");
 		for(Account a: currentUserAccounts) {
 			System.out.println("["+index+"] Name: "+a.getAccountName()+"; Balance: "+a.getBalance());
 			index++;
@@ -369,6 +380,7 @@ public class BankATM {
 		System.out.println("[3] Update User account.");
 		System.out.println("[4] Delete a User account.");
 		System.out.println("[5] Delete all User accounts.");
+		System.out.println("Enter number to select option:");
 		int option = 99999999;
 		try{
 			option = Integer.parseInt(input.nextLine());

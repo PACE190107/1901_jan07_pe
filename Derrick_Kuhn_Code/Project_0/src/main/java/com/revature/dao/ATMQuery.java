@@ -57,8 +57,6 @@ public class ATMQuery implements ATMQueryInterface {
 			 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("Login exception from SQLException");
 			throw new LoginFailedException();
 		}
 	}
@@ -136,10 +134,9 @@ public class ATMQuery implements ATMQueryInterface {
 			return users;
 			 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO Auto-generated catch
+			return null;
 		}
-		return null;
 	}
 
 	@Override
@@ -187,7 +184,6 @@ public class ATMQuery implements ATMQueryInterface {
 			stmt.execute("commit");
 			return true;
 		} catch (SQLException e) {
-			System.out.println("SQL Exception on Delete");
 			return false;
 		}
 	}
@@ -201,7 +197,6 @@ public class ATMQuery implements ATMQueryInterface {
 			stmt.execute("commit");
 			return true;
 		} catch (SQLException e) {
-			System.out.println("SQL Exception on Delete");
 			return false;
 		}
 	}

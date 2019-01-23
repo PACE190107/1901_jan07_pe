@@ -40,7 +40,7 @@ public class DBConnectionUtil {
 			boolean dbsLoc = false;
 			boolean dbsUser = false;
 			boolean dbsPass = false;
-			while((s=readFile.readLine()) != null ) {
+			while((s=readFile.readLine()) != null ) { 
 				for(String p : s.split(" ")) {
 					if(dbsLoc) {
 						url = p;
