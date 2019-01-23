@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="SchemaObject" objectID="2EA9BC54-9871-3A79-4060-525A92B7B3F2" name="ADMINISTRATOR" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.relational.SchemaObject" propertyParentId="4CB11017-2051-5E8B-903C-6E543B582604" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="5223241B-320B-B4F4-C1E9-A99EA6D17BF0" name="BANK_ACCOUNT" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.relational.Table" propertyParentId="4CB11017-2051-5E8B-903C-6E543B582604" propertySourceId="" propertyTargetId=""/>
+   <object objectType="Table" objectID="0F187831-EB68-1D9C-B3BB-01138CFAAB68" name="BANK_USER" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.relational.Table" propertyParentId="4CB11017-2051-5E8B-903C-6E543B582604" propertySourceId="" propertyTargetId=""/>
+   <object objectType="FKIndexAssociation" objectID="76486CEF-EC59-25A0-655A-314D189B9C37" name="FK_U_ID" seqName="seg_0" containerID="5223241B-320B-B4F4-C1E9-A99EA6D17BF0" refContainerID="0F187831-EB68-1D9C-B3BB-01138CFAAB68" propertyClassName="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" propertyParentId="4CB11017-2051-5E8B-903C-6E543B582604" propertySourceId="0F187831-EB68-1D9C-B3BB-01138CFAAB68" propertyTargetId="5223241B-320B-B4F4-C1E9-A99EA6D17BF0"/>
+</oracle.dbtools.crest.model.design.relational.RelationalDesign>

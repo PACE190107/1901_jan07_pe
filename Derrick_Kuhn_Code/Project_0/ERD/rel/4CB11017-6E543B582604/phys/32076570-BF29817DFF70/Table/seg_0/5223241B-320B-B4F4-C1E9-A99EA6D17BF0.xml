@@ -1,0 +1,57 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="BANK_ACCOUNT" directorySegmentName="seg_0" id="5223241B-320B-B4F4-C1E9-A99EA6D17BF0">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>2EA9BC54-9871-3A79-4060-525A92B7B3F2</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>1E0EA2D9-A2AA-41C9-53B1-460C083A93B4</segment>
+<tableSpace>67412243-4E9E-D384-D902-C5ED9A80FB04</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="A_NAME" id="36355C18-99E8-F605-2C89-F91CF76AC74C">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="U_ID" id="43A2E137-9FF1-2BAF-FE30-A4907DC062B1">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="A_BALANCE" id="45341928-FA55-26CD-76EB-073580CE5CE9">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="A_ID" id="CFE20781-AC02-25BC-7B30-986A17F95D91">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<autoIncrementDDL>TRIGGER</autoIncrementDDL>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_U_ID" id="CEFE991C-89BE-AED0-FAD6-36576CA3BE4F">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:47 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="BANK_ACCOUNT_A_ID_UN" id="519B0878-5C1C-D236-C14E-3DEB7B366729">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:47 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>2EA9BC54-9871-3A79-4060-525A92B7B3F2</schemaObject>
+<segment>F10C6D39-CFC2-BA7B-FA3A-8FBE24C88763</segment>
+<tableSpace>67412243-4E9E-D384-D902-C5ED9A80FB04</tableSpace>
+<indexSegment>F10C6D39-CFC2-BA7B-FA3A-8FBE24C88763</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev11g>

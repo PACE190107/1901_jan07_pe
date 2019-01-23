@@ -16,7 +16,7 @@ create table bank_user (
 
 
 create table bank_account (
-    a_id number(20) unique not null,
+    a_id number(20) primary key,
     a_balance float(50) not null,
     a_name varchar2(20) not null,
     u_id number(10) not null,

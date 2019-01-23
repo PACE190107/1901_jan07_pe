@@ -34,7 +34,7 @@ public class BankATM {
 	}
 	
 	private static void loginScreen() {
-		System.out.println("Welcome to JDBC Bank");
+		System.out.println("Welcome to Skibidi Bank");
 		System.out.println("[0] Close ATM");
 		System.out.println("[1] Login for existing user.");
 		System.out.println("[2] Register as a new user.");

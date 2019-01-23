@@ -1,0 +1,103 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5223241B-320B-B4F4-C1E9-A99EA6D17BF0" schemaObject="2EA9BC54-9871-3A79-4060-525A92B7B3F2" name="BANK_ACCOUNT">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>ADMINISTRATOR</sourceObjSchema>
+<sourceObjName>BANK_ACCOUNT</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="A_ID" id="CFE20781-AC02-25BC-7B30-986A17F95D91">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNT</sourceObjSchema>
+<sourceObjName>A_ID</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,20,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>ASSIGN_ACCOUNT_ID</autoIncrementSequenceName>
+<autoIncrementTriggerName>NEW_ACCOUNT_CREATION</autoIncrementTriggerName>
+</Column>
+<Column name="A_BALANCE" id="45341928-FA55-26CD-76EB-073580CE5CE9">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNT</sourceObjSchema>
+<sourceObjName>A_BALANCE</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT021</logicalDatatype>
+<dataTypePrecision>50</dataTypePrecision>
+<ownDataTypeParameters>,50,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="A_NAME" id="36355C18-99E8-F605-2C89-F91CF76AC74C">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNT</sourceObjSchema>
+<sourceObjName>A_NAME</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="U_ID" id="43A2E137-9FF1-2BAF-FE30-A4907DC062B1">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNT</sourceObjSchema>
+<sourceObjName>U_ID</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="76486CEF-EC59-25A0-655A-314D189B9C37" referredColumn="31F82181-A3D4-A391-BDC0-BFF7E707CDEA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="519B0878-5C1C-D236-C14E-3DEB7B366729" schemaObject="2EA9BC54-9871-3A79-4060-525A92B7B3F2" name="BANK_ACCOUNT_A_ID_UN">
+<sourceConnName>Project0</sourceConnName>
+<sourceObjSchema>ADMINISTRATOR</sourceObjSchema>
+<sourceObjName>SYS_C004122</sourceObjName>
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:47 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CFE20781-AC02-25BC-7B30-986A17F95D91"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CEFE991C-89BE-AED0-FAD6-36576CA3BE4F" name="FK_U_ID">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:47 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="43A2E137-9FF1-2BAF-FE30-A4907DC062B1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

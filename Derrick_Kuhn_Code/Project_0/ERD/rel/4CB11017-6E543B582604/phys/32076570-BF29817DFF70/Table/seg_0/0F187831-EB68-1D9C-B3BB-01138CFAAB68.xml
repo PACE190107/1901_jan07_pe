@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="BANK_USER" directorySegmentName="seg_0" id="0F187831-EB68-1D9C-B3BB-01138CFAAB68">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>2EA9BC54-9871-3A79-4060-525A92B7B3F2</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>1E0EA2D9-A2AA-41C9-53B1-460C083A93B4</segment>
+<tableSpace>67412243-4E9E-D384-D902-C5ED9A80FB04</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="U_ID" id="31F82181-A3D4-A391-BDC0-BFF7E707CDEA">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<autoIncrementDDL>TRIGGER</autoIncrementDDL>
+</ColumnProxy>
+<ColumnProxy name="U_SUPER" id="33B400F6-C0FB-DEF1-F477-4C8455BC1321">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="U_NAME" id="B2748F47-D44D-3B7F-CD1B-F97652D0EAFE">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="U_PASSWORD" id="BB313A3B-C10E-BD29-8D4F-AB10394E8D65">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:46 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="BANK_USER_PK" id="D4442372-DA48-51B9-E5FD-DEF3E47488A4">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:47 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>2EA9BC54-9871-3A79-4060-525A92B7B3F2</schemaObject>
+<segment>F10C6D39-CFC2-BA7B-FA3A-8FBE24C88763</segment>
+<tableSpace>67412243-4E9E-D384-D902-C5ED9A80FB04</tableSpace>
+<indexSegment>F10C6D39-CFC2-BA7B-FA3A-8FBE24C88763</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="BANK_USER_U_NAME_UN" id="E09BE562-8AAE-82E9-AF21-C75538982F24">
+<createdBy>dkuhn</createdBy>
+<createdTime>2019-01-22 16:02:47 UTC</createdTime>
+<ownerDesignName>ERD</ownerDesignName>
+<schemaObject>2EA9BC54-9871-3A79-4060-525A92B7B3F2</schemaObject>
+<segment>F10C6D39-CFC2-BA7B-FA3A-8FBE24C88763</segment>
+<tableSpace>67412243-4E9E-D384-D902-C5ED9A80FB04</tableSpace>
+<indexSegment>F10C6D39-CFC2-BA7B-FA3A-8FBE24C88763</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev11g>
