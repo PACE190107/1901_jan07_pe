@@ -20,4 +20,19 @@ public class CustomerService {
 	public List<Customer> getAllCustomerDetails() {
 		return CustomerDaoImplementation.getCustDao().getAllCustomers();
 	}
+	
+	public boolean registerCustomer(Customer cust) {
+		return CustomerDaoImplementation.getCustDao().insertCustomer(cust);
+	}
+	
+	public boolean registerCustomerProcedure(Customer cust) {
+		return CustomerDaoImplementation.getCustDao().insertCustomerProcedure(cust);
+	}
+	
+	public Customer getCustomer() {
+		return CustomerDaoImplementation.getCustDao().getCustomer();
+	}
 }
+
+
+
