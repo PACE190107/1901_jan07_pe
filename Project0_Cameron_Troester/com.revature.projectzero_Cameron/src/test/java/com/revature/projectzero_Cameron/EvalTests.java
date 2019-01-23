@@ -28,7 +28,7 @@ public class EvalTests {
 	public ExpectedException expectedException = ExpectedException.none();
 
 	@Test
-	public void testCreateUserP1() throws IOException, SQLException {
+	public void testCreateUser() throws IOException, SQLException {
 		con = ConnectionUtil.getConnection();
 		con.setAutoCommit(false);
 		User user = new User("TestMe", "Test", "Me", "testpass");
