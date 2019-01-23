@@ -26,7 +26,7 @@ public class JDBCConnectionUtil {
 			String url = in.readLine();
 			String username = in.readLine();
 			String password = in.readLine();
-
+			in.close();
 			return DriverManager.getConnection(url,username,password);
 		}catch(IOException e) {
 			System.out.println("Connection failed");
@@ -38,6 +38,7 @@ public class JDBCConnectionUtil {
 		try {
 			BufferedReader in = new BufferedReader(new FileReader("C:\\my_git_repos\\1901_jan07_pe\\Kale_Harrison_Code\\Project 0\\src\\main\\resources\\Properties.txt"));
 			String url = in.readLine();
+			in.close();
 			return DriverManager.getConnection(url,username,password);
 		}catch(IOException e) {
 			System.out.println("Connection failed");

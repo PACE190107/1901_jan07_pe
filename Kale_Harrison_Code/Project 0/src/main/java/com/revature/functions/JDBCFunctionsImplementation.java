@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import com.revature.account.BankAccount;
 import com.revature.user.AuthenticatedUser;
@@ -30,7 +31,6 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 		}
 	}
 	 
-	//NEED TO MAKE THINGS COMMIT
 	@Override
 	public void createUserAccount() throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()){
@@ -63,11 +63,16 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				if (ps.executeUpdate() > 0) {
 					System.out.println("Account Created!");
 				}
+				String commit = "COMMIT";
+				Statement finalStmt = conn.createStatement();
+				ResultSet finalCommit = finalStmt.executeQuery(commit);
+				finalStmt.close();
+				finalCommit.close();
 				ps.close();
 				conn.close();
 			} 
 		catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("\nUsername taken!\n");
 		} 
 	}
 		
@@ -79,8 +84,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 		System.out.println("Please enter a number to select an option...");
 		System.out.println("1: View Existing Accounts     4: Make a Deposit");
 		System.out.println("2: Create a New Bank Account  5: Make a Withdrawl");
-		System.out.println("3: Delete an Account          6: View Transaction History");
-		System.out.println("                              7: Logout");
+		System.out.println("3: Delete an Account          6: Logout");
 		
 		userChoice = sc.nextInt();
 
@@ -117,11 +121,6 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			viewMenu(user);
 			break;
 		case 6:
-			System.out.println("View Transaction History");
-			System.out.println("\n\n");
-			viewMenu(user);
-			break;
-		case 7:
 			System.out.println("Logout");
 			break;
 		default:
@@ -160,6 +159,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				System.out.println(" Balance: " + results.getDouble("BALANCE"));
 				
 			}
+			String commit = "COMMIT";
+			Statement finalStmt = conn.createStatement();
+			ResultSet finalCommit = finalStmt.executeQuery(commit);
+			finalStmt.close();
+			finalCommit.close();
 			stmt.close();
 			getSqlUser.close();
 			results.close();
@@ -170,8 +174,6 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 		
 	}
 	
-	//Need to remove the hard code.
-	//Encountering an issue with case-sensitivity on username/password
 	@Override
 	public void createAccount(AuthenticatedUser user) throws  SQLException{
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
@@ -208,6 +210,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				System.out.println("An error occured! Please try again.");
 				createAccount(user);
 			}
+			String commit = "COMMIT";
+			Statement finalStmt = conn.createStatement();
+			ResultSet finalCommit = finalStmt.executeQuery(commit);
+			finalStmt.close();
+			finalCommit.close();
 			stmt.close();
 			getSqlUser.close();
 			ps.close();
@@ -218,25 +225,51 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 		} 
 	}
 	
-	//MAke able to delete while balance is not 0?
+
 	@Override
 	public void deleteAccount(AuthenticatedUser user) throws  SQLException{
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
-			int accountTypeCheck = 0;
+			int accountId = 0;
 			viewAccounts(user);
 			System.out.print("\nEnter the account number of the account you wish to delete: ");
-			accountTypeCheck = sc.nextInt();
-			String sql = "delete from ADMIN.BANK_ACCOUNT where ACCOUNT_ID = " + accountTypeCheck;
-			CallableStatement ps = conn.prepareCall(sql);
-			if (ps.executeUpdate() > 0) {
-				System.out.println("Account deleted!");
-			}else {
-				System.out.println("An error occured! Please try again.");
-				deleteAccount(user);
+			accountId = sc.nextInt();
+			String getBalance = ("select BALANCE from ADMIN.BANK_ACCOUNT WHERE ACCOUNT_ID = '"  + accountId + "'"); //need to get the user_id
+			Statement stmt = conn.createStatement();
+			ResultSet getSqlBalance = stmt.executeQuery(getBalance);
+			float balance = 0;
+			while(getSqlBalance.next()) {
+				balance = getSqlBalance.getFloat("BALANCE");
 			}
-			ps.close();
-			conn.close();
-		} catch (SQLException e) {
+				if (balance ==0) {
+					String sql = "delete from ADMIN.BANK_ACCOUNT where ACCOUNT_ID = " + accountId;
+					CallableStatement ps = conn.prepareCall(sql);
+					if (ps.executeUpdate() > 0) {
+						System.out.println("Account deleted!");
+						String commit = "COMMIT";
+						Statement finalStmt = conn.createStatement();
+						ResultSet finalCommit = finalStmt.executeQuery(commit);
+						stmt.close();
+						finalStmt.close();
+						finalCommit.close();
+						ps.close();
+						conn.close();
+					}else {
+						System.out.println("An error occured! Please try again.");
+						String commit = "COMMIT";
+						Statement finalStmt = conn.createStatement();
+						ResultSet finalCommit = finalStmt.executeQuery(commit);
+						stmt.close();
+						finalStmt.close();
+						finalCommit.close();
+						ps.close();
+						conn.close();
+						deleteAccount(user);	
+				}
+			}else {
+				System.out.println("\n\nAccount has a balance greater than 0! Unable to delete.");
+				return;
+			}
+				} catch (SQLException e) {
 			e.printStackTrace();
 		} 
 	}
@@ -250,7 +283,6 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			viewAccounts(user);
 			String getUserId = ("select USER_ID from ADMIN.BANK_USER WHERE USERNAME = '"  + user.getUsername() + "'");
 			Statement stmt = conn.createStatement();
-			//NEED TO USE AN EXECUTE UPDATE STATEMENT????
 			ResultSet getSqlUser = stmt.executeQuery(getUserId);
 			int userId = 0;
 			while(getSqlUser.next()) {
@@ -272,6 +304,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				System.out.println("An error occured! Please try again.");
 				makeDeposit(user);
 			}
+			String commit = "COMMIT";
+			Statement finalStmt = conn.createStatement();
+			ResultSet finalCommit = finalStmt.executeQuery(commit);
+			finalStmt.close();
+			finalCommit.close();
 			stmt.close();
 			getSqlUser.close();
 			ps.close();
@@ -297,23 +334,45 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			int accountId = sc.nextInt();
 			System.out.print("\nEnter an ammount to withdraw: ");
 			float balance = sc.nextFloat();
-			balance = balance * (-1);
-			String sql = "{call ADMIN.changeBalance(?,?,?)}";
-			CallableStatement ps = conn.prepareCall(sql);
-			ps.setFloat(1, balance);
-			ps.setInt(2, accountId);
-			ps.setInt(3, userId);
-			if (ps.executeUpdate() > 0) {
-				System.out.println("Withdrawl Succesful!");
+			
+			String getBalance = ("select BALANCE from ADMIN.BANK_ACCOUNT WHERE ACCOUNT_ID = '"  + accountId + "'"); //need to get the user_id
+			Statement stmt2 = conn.createStatement();
+			ResultSet getSqlBalance = stmt.executeQuery(getBalance);
+			float sqlBalance = 0;
+			while(getSqlBalance.next()) {
+				sqlBalance = getSqlBalance.getFloat("BALANCE");
 			}
-				else {
-				System.out.println("An error occured! Please try again.");
-				makeWithdrawl(user);
+			
+			if (balance <= sqlBalance) {
+				balance = balance * (-1);
+				String sql = "{call ADMIN.changeBalance(?,?,?)}";
+				CallableStatement ps = conn.prepareCall(sql);
+				ps.setFloat(1, balance);
+				ps.setInt(2, accountId);
+				ps.setInt(3, userId);
+				if (ps.executeUpdate() > 0) {
+					System.out.println("Withdrawl Succesful!");
+				}
+					else {
+					System.out.println("An error occured! Please try again.");
+					makeWithdrawl(user);
+				}
+				String commit = "COMMIT";
+				Statement finalStmt = conn.createStatement();
+				ResultSet finalCommit = finalStmt.executeQuery(commit);
+				finalStmt.close();
+				finalCommit.close();
+				stmt.close();
+				stmt2.close();
+				getSqlBalance.close();
+				getSqlUser.close();
+				ps.close();
+				conn.close();	
+			}else {
+				System.out.println("\n\nInsufficient funds!");
+				return;
 			}
-			stmt.close();
-			getSqlUser.close();
-			ps.close();
-			conn.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
@@ -345,6 +404,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			if (checkSuper == 1) {
 				return true;
 			}
+			String commit = "COMMIT";
+			Statement finalStmt = conn.createStatement();
+			ResultSet finalCommit = finalStmt.executeQuery(commit);
+			finalStmt.close();
+			finalCommit.close();
 			stmt.close();
 			getSqlUser.close();
 			conn.close();
@@ -403,22 +467,26 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 	public void superViewUser(AuthenticatedUser user) throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection(user.getUsername(), user.getPassword());){
 			Statement stmt = conn.createStatement();
-			String sql = "select USERNAME, PASSPHRASE, BANK_USER.USER_ID, SUPER, \r\n" + 
+			String sql = "select USERNAME, PASSPHRASE, BANK_USER.USER_ID, \r\n" + 
 					"ACCOUNT_TYPE, ACCOUNT_ID, BALANCE\r\n" + 
 					"FROM ADMIN.BANK_USER FULL JOIN ADMIN.BANK_ACCOUNT\r\n" + 
 					"on BANK_USER.USER_ID = BANK_ACCOUNT.USER_ID\r\n" + 
-					"order by UPPER (BANK_USER.USERNAME)";
+					"WHERE SUPER = 0 order by UPPER (BANK_USER.USERNAME)";
 			ResultSet results = stmt.executeQuery(sql);
 			while(results.next()) {
 				System.out.print("Username: " + results.getString("USERNAME") + "   ");
 				System.out.print("Password: " +results.getString("PASSPHRASE")+ "   ");
 				System.out.print("User ID: " +results.getInt("USER_ID")+ "   ");
-				System.out.print("Is Super?: " +results.getInt("SUPER")+ "   ");
 				System.out.print("Account Type: " +results.getString("ACCOUNT_TYPE")+ "   ");
 				System.out.print("Account ID: " +results.getInt("ACCOUNT_ID")+ "   ");
-				System.out.println("Balance: " +results.getDouble("BALANCE")+ "   ");	
+				System.out.println("Balance: $" +results.getDouble("BALANCE")+ "   ");	
 				System.out.println("----------------------------------------------------------------------");
 			}
+			String commit = "COMMIT";
+			Statement finalStmt = conn.createStatement();
+			ResultSet finalCommit = finalStmt.executeQuery(commit);
+			finalStmt.close();
+			finalCommit.close();
 			stmt.close();
 			results.close();
 			conn.close();
@@ -490,6 +558,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				if (ps.executeUpdate() > 0) {
 					System.out.println("Account Created!");
 				}
+				String commit = "COMMIT";
+				Statement finalStmt = conn.createStatement();
+				ResultSet finalCommit = finalStmt.executeQuery(commit);
+				finalStmt.close();
+				finalCommit.close();
 			System.out.println("Username Changed!");
 			getSqlPass.close();
 			getSqlUser.close();
@@ -500,7 +573,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			ps.close();
 			conn.close();
 		}catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("Username taken!");
 		} 
 	}
 	
@@ -546,6 +619,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				if (ps.executeUpdate() > 0) {
 					System.out.println("Account Created!");
 				}
+				String commit = "COMMIT";
+				Statement finalStmt = conn.createStatement();
+				ResultSet finalCommit = finalStmt.executeQuery(commit);
+				finalStmt.close();
+				finalCommit.close();
 			System.out.println("Password Changed!");
 			getSqlPass.close();
 			getSqlUser.close();
@@ -578,6 +656,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			ResultSet deleteUser = stmt.executeQuery(deleteFromTable);
 			String dropUser = "DROP USER " + userName;
 			ResultSet drop = stmt.executeQuery(dropUser);
+			String commit = "COMMIT";
+			Statement finalStmt = conn.createStatement();
+			ResultSet finalCommit = finalStmt.executeQuery(commit);
+			finalStmt.close();
+			finalCommit.close();
 			stmt.close();
 			deleteAccount.close();
 			getSqlUser.close();
@@ -585,7 +668,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			drop.close();
 			conn.close();
 			}catch (SQLException e) {
-				e.printStackTrace();
+				System.out.println("No user associated with that Account ID");
+				return;
+			}catch(InputMismatchException i) {
+				System.out.println("Not a valid Account ID!");
+				return;
 			}
 		System.out.println("User Deleted");
 	}
