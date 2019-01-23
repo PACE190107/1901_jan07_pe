@@ -1,7 +1,5 @@
 package com.revature.models;
 
-import java.util.List;
-
 public class User {
 	
 	private int userId;

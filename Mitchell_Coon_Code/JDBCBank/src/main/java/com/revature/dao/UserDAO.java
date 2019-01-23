@@ -1,6 +1,5 @@
 package com.revature.dao;
 
-import java.util.List;
 import com.revature.models.User;
 
 public interface UserDAO {
@@ -9,7 +8,7 @@ public interface UserDAO {
 	public boolean deposit(double amount, int userID, String accountType);
 	public boolean withdraw(double amount, int userID, String accountType);
 	public void viewBalances(int user_Id);
-	public void viewTransactions(int account_Id);
+	public void viewTransactions(String account_type, int user_id);
 	public boolean deleteAccount(int user_Id, String account_type);
 	public User getUser(String userName);
 	public int retrieveID(String userName);
@@ -23,5 +22,6 @@ public interface UserDAO {
 	public void viewUsers();
 	public boolean userExists(int user_id);
 	public boolean updateUser(int user_id, User updatedUser);
+	int retrieveAccountID(int user_id, String account_type);
 	
 }

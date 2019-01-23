@@ -144,6 +144,7 @@ public class UserConsole {
 		isSuperUser = verifySuperUser(user.getUserName(), user.getPassword());
 			
 		if (isSuperUser) {
+			
 			superUser = user;
 		}
 		
@@ -215,7 +216,7 @@ public class UserConsole {
 		// Ask what the user would like to do:
 		
 		if(isSuperUser) {
-			System.out.println("How may I be of service, master?");
+			System.out.println("How may I be of service?");
 		}
 		else {
 			System.out.println("How may I help you?");
@@ -223,7 +224,7 @@ public class UserConsole {
 		
 		System.out.println("1: Make a deposit");
 		System.out.println("2: Make a withdrawal");
-		System.out.println("3: View account balances");
+		System.out.println("3: View account information and balances");
 		System.out.println("4: View transaction history");
 		System.out.println("5: Add an account");
 		System.out.println("6: Delete an account");
@@ -279,33 +280,37 @@ public class UserConsole {
 					viewUsers();
 				}
 				else {
-					System.out.println("Sorry, filthy casuals aren't allowed to do that");
+					//System.out.println("Sorry, only superusers are allowed to do that");
+					break;
 				}
 				return;
 			case "10":
 				if(isSuperUser) {
 					createUsers();
+					return;
 				}
 				else {
-					System.out.println("Sorry, filthy casuals aren't allowed to do that");
+					//System.out.println("Sorry, only superusers are allowed to do that");
+					break;
 				}
-				return;
 			case "11":
 				if(isSuperUser) {
 					updateUsers();
+					return;
 				}
 				else {
-					System.out.println("Sorry, filthy casuals aren't allowed to do that");
+					//System.out.println("Sorry, only superusers are allowed to do that");
+					break;
 				}
-				return;
 			case "12":
 				if(isSuperUser) {
 					deleteUsers();
+					return;
 				}
 				else {
-					System.out.println("Sorry, filthy casuals aren't allowed to do that");
+					//System.out.println("Sorry, only superusers are allowed to do that");
+					break;
 				}
-				return;
 			} 
 
 			if(isSuperUser) {
@@ -549,7 +554,10 @@ public class UserConsole {
 			valid = isValidNumber(amount);
 
 			if (valid) {
-				UserService.getUserService().deposit(Double.parseDouble(amount), user.getUserId(), account_type);
+				boolean deposited = UserService.getUserService().deposit(Double.parseDouble(amount), user.getUserId(), account_type);
+				if (deposited) {
+					System.out.println("Deposit successful");
+				}
 			}
 			else {
 				try {
@@ -656,15 +664,51 @@ public class UserConsole {
 			System.out.println("Name: " + user.getFirstName() + " " + user.getLastName());
 			System.out.println("User ID: " + user.getUserId());
 			System.out.println("Username: " + user.getUserName() + "\n");
-			
+			UserService.getUserService().viewBalances(user.getUserId());
 		}
-		UserService.getUserService().viewBalances(user.getUserId());
 		accountActions();
 		
 	}
 	
 	public void viewTransactions() {
 		
+		// Ask the user which account they want to view:
+
+		System.out.println("Which account would you like to view?");
+
+		boolean valid = false;
+
+		String account_type = "";
+
+		do {
+
+			account_type = sc.nextLine();
+
+			valid = accountExists(account_type);
+
+			if (account_type.equals("back")) {
+				accountActions();
+				return;
+			}
+			else if (!valid) {
+				try {
+					throw new AccountDoesNotExistException();
+				}
+				catch (AccountDoesNotExistException e) {
+					System.out.println(e.getMessage());
+					System.out.println("Try entering \"Checking\", \"Savings\", or one of your other account names");
+					System.out.println("You can also type \"back\" to go back");
+				}
+			}
+
+		} while (!valid);
+
+		
+		if (valid) {
+			UserService.getUserService().viewTransactions(account_type, user.getUserId());
+		}
+		
+		accountActions();
 	}
 	
 	public void addAccount() {
@@ -835,21 +879,63 @@ public class UserConsole {
 		
 		// Ask for user information:
 		
-		System.out.println("Please enter the user's first name, master");
+		boolean validInput = false;
 		
-		String fName = sc.nextLine();
-		
-		System.out.println("Please enter the user's last name, master");
-		
-		String lName = sc.nextLine();
-		
-		System.out.println("Please enter the user's username, master");
-		
-		String username = sc.nextLine();
-		
-		System.out.println("Please enter the user's password, master");
-		
-		String pass = sc.nextLine();
+		String fName = "", lName = "", username = "", pass = "";
+
+		System.out.println("Please enter the user's new first name");
+
+		do {
+			fName = sc.nextLine();
+			validInput = verifyName(fName);
+
+			if(!validInput) {
+				System.out.println("Please enter only letters for the user's new name");
+			}
+
+		} while (!validInput);
+
+		validInput = false;
+
+		System.out.println("Please enter the user's new last name");
+
+		do {
+			lName = sc.nextLine();
+			validInput = verifyName(lName);
+
+			if(!validInput) {
+				System.out.println("Please enter only letters for the user's new name");
+			}
+
+		}while(!validInput);
+
+		validInput = false;
+
+		System.out.println("Please enter the user's new username");
+
+		do {
+			username = sc.nextLine();
+			validInput = verifyUsernameOrPassword(username);
+
+			if(!validInput) {
+				System.out.println("Please enter only letters, numbers, or underscores for the user's new username");
+			}
+
+		}while(!validInput);
+
+		validInput = false;
+
+		System.out.println("Please enter the user's new password");
+
+		do {
+			pass = sc.nextLine();
+			validInput = verifyUsernameOrPassword(pass);
+
+			if(!validInput) {
+				System.out.println("Please enter only letters, numbers, or underscores for the user's new password");
+			}
+
+		}while(!validInput);
 		
 		boolean accountCreated = false;
 		
@@ -872,7 +958,7 @@ public class UserConsole {
 	
 	public void updateUsers() {
 		
-		System.out.println("Who would you like to update, master?");
+		System.out.println("Who would you like to update?");
 		
 		boolean valid = false;
 		boolean updated = false;
@@ -893,7 +979,7 @@ public class UserConsole {
 				}
 				catch (InvalidInputException e) {
 					System.out.println(e.getMessage());
-					System.out.println("Please enter an integer, master");
+					System.out.println("Please enter an integer");
 					System.out.println("You can also type \"back\" to go back");
 				}
 			}
@@ -915,21 +1001,64 @@ public class UserConsole {
 		
 		// Ask for user information:
 
-		System.out.println("Please enter the user's new first name, master");
+		boolean validInput = false;
+		String fName = "", lName = "", username = "", pass = "";
 
-		String fName = sc.nextLine();
+		System.out.println("Please enter the user's new first name");
 
-		System.out.println("Please enter the user's new last name, master");
+		do {
+			fName = sc.nextLine();
+			validInput = verifyName(fName);
 
-		String lName = sc.nextLine();
+			if(!validInput) {
+				System.out.println("Please enter only letters for the user's new name");
+			}
 
-		System.out.println("Please enter the user's new username, master");
+		} while (!validInput);
 
-		String username = sc.nextLine();
+		validInput = false;
 
-		System.out.println("Please enter the user's new password, master");
+		System.out.println("Please enter the user's new last name");
 
-		String pass = sc.nextLine();
+		do {
+			lName = sc.nextLine();
+			validInput = verifyName(lName);
+
+			if(!validInput) {
+				System.out.println("Please enter only letters for the user's new name");
+			}
+
+		}while(!validInput);
+
+		validInput = false;
+
+		System.out.println("Please enter the user's new username");
+
+		do {
+			username = sc.nextLine();
+			validInput = verifyUsernameOrPassword(username);
+
+			if(!validInput) {
+				System.out.println("Please enter only letters, numbers, or underscores for the user's new username");
+			}
+
+		}while(!validInput);
+
+		validInput = false;
+
+		System.out.println("Please enter the user's new password");
+
+		do {
+			pass = sc.nextLine();
+			validInput = verifyUsernameOrPassword(pass);
+
+			if(!validInput) {
+				System.out.println("Please enter only letters, numbers, or underscores for the user's new password");
+			}
+
+		}while(!validInput);
+		
+		// Update the user:
 
 		User updatedUser = new User(0,fName,lName,username,pass);
 		
@@ -943,7 +1072,7 @@ public class UserConsole {
 	
 	public void deleteUsers() {
 		
-		System.out.println("Who would you like to delete, master?");
+		System.out.println("Who would you like to delete?");
 		
 		boolean valid = false;
 		boolean deleted = false;
@@ -964,7 +1093,7 @@ public class UserConsole {
 				}
 				catch (InvalidInputException e) {
 					System.out.println(e.getMessage());
-					System.out.println("Please enter an integer, master");
+					System.out.println("Please enter an integer");
 					System.out.println("You can also type \"back\" to go back");
 				}
 			}

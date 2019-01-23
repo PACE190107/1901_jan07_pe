@@ -19,8 +19,7 @@ create table Accounts(
 create table Transactions(
     transaction_id number,
     account_id number not null,
-    transaction_time varchar(40),
-    transaction_amount number not null,
+    amount number not null,
     constraint PK_TRANSACTIONS primary key (transaction_id)
 );
 
@@ -128,24 +127,24 @@ AS
     beforeCount number;
     afterCount number;
 BEGIN
-    select count (*) into beforeCount from Accounts;
+    select count (*) into beforeCount from BankUsers;
   insert into Accounts values(null, user_id, account_type, 0);
   commit;
-    select count (*) into afterCount from Accounts;
+    select count (*) into afterCount from BankUsers;
     resultCount := afterCount - beforeCount;
 END;
 /
 
 -- Stored procedure to create a transaction log
-CREATE OR REPLACE PROCEDURE Log_Transaction(account_id in number, transaction_time in varchar2, transaction_amount in number, resultCount out number)
+CREATE OR REPLACE PROCEDURE Log_Transaction(account_id in varchar2, amount in number, resultCount out number)
 AS
     beforeCount number;
     afterCount number;
 BEGIN
-    select count (*) into beforeCount from Transactions;
-  insert into Transactions values(null, account_id, transaction_time, transaction_amount);
+    select count (*) into beforeCount from BankUsers;
+  insert into Transactions values(null, account_id, amount);
   commit;
-    select count (*) into afterCount from Transactions;
+    select count (*) into afterCount from BankUsers;
     resultCount := afterCount - beforeCount;
 END;
 /
@@ -171,6 +170,7 @@ insert into Accounts values(1,62,'checking',0);
 insert into Accounts values(null,62,'savings',0);
 insert into BankUsers values(null, 'm', 'c', 'm', 'c');
 insert into BankUsers values(null, 'm', 'c', 'm_coon', 'p_word');
+insert into BankUsers values(null, 'phoebe', 'elizabeth','audelia','hemsworth');
 select * from Accounts;
 select * from BankUsers;
 

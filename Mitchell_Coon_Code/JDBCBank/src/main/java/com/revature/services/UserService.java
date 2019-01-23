@@ -1,7 +1,5 @@
 package com.revature.services;
 
-import java.util.List;
-
 import com.revature.dao.UserDAOImplementation;
 import com.revature.models.User;
 
@@ -87,6 +85,10 @@ public class UserService {
 
 	public boolean updateUser(int user_id, User updatedUser) {
 		return UserDAOImplementation.getUserDAO().updateUser(user_id, updatedUser);
+	}
+
+	public void viewTransactions(String account_type, int user_id) {
+		UserDAOImplementation.getUserDAO().viewTransactions(account_type, user_id);		
 	}
 	
 }

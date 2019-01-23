@@ -16,7 +16,3 @@ public class Driver {
 	}
 
 }
-
-// todo
-
-// Bonus, transaction history

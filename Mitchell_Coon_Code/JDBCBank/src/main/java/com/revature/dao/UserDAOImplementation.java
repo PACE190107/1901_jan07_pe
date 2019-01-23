@@ -7,8 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import org.apache.log4j.Logger;
 
@@ -60,11 +59,29 @@ public class UserDAOImplementation implements UserDAO {
 	@Override
 	public boolean deposit(double amount, int userID, String accountType) {
 		
+		// Retrieve account ID:
+		
+		int account_id = retrieveAccountID(userID, accountType);
+		
+		// Deposit into account:
+		
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "update Accounts set balance = "+ amount +" + balance where user_id = "+ userID +" and account_type = '"+ accountType +"'";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			if(ps.executeUpdate() > 0) {
-				return true;
+				
+				// Log transaction:
+				
+				String transaction_time = LocalDateTime.now().toString();
+				
+				sql = "insert into Transactions values(null, " + account_id + ", '"+ transaction_time + "', " + amount + ")";
+				ps = conn.prepareStatement(sql);
+				if(ps.executeUpdate() > 0) {
+					return true;
+				}
+				else {
+					throw new SQLException();
+				}
 			} else {
 				throw new SQLException();
 			}
@@ -79,15 +96,30 @@ public class UserDAOImplementation implements UserDAO {
 	@Override
 	public boolean withdraw(double amount, int userID, String accountType) {
 		
+		// Retrieve account ID:
+		
+		int account_id = retrieveAccountID(userID, accountType);
+		
+		// Withdraw from account:
+		
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "update Accounts set balance = -"+ amount +" + balance where user_id = "+ userID +" and account_type = '"+ accountType +"'";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
-			//ps.setDouble(1, amount);
-			//ps.setInt(2, userID);
-			//ps.setString(3, accountType);
 			if(ps.executeUpdate() > 0) {
-				return true;
+				
+				// Log transaction:
+				
+				String transaction_time = LocalDateTime.now().toString();
+				
+				sql = "insert into Transactions values(null, " + account_id + ", '"+ transaction_time + "', -" + amount + ")";
+				ps = conn.prepareStatement(sql);
+				if(ps.executeUpdate() > 0) {
+					return true;
+				}
+				else {
+					throw new SQLException();
+				}
 			} else {
 				throw new SQLException();
 			}
@@ -117,8 +149,26 @@ public class UserDAOImplementation implements UserDAO {
 	}
 	
 	@Override
-	public void viewTransactions(int account_Id) {
+	public void viewTransactions(String account_type, int user_Id) {
 		
+		// Retrieve account ID:
+		
+		int account_id = retrieveAccountID(user_Id, account_type);
+		
+		try (Connection conn = JDBCConnectionUtil.getConnection()) {
+			String sql = "select * from Transactions where Account_ID = '" + account_id + "'";
+			Statement stmt = conn.createStatement();
+			ResultSet results = stmt.executeQuery(sql);
+			System.out.println("Displaying transaction information:\n");
+			while (results.next()) {
+				System.out.println("Transaction time: " + results.getString("Transaction_time") + "; transaction amount: " + results.getDouble("Transaction_amount"));
+			}
+			System.out.println("");
+		} catch (SQLException e) {
+			System.out.println("SQL exception occurred");
+			System.out.println(e.getMessage());
+			System.out.println("Could not view transactions");
+		}
 	}
 	
 	@Override
@@ -220,6 +270,23 @@ public class UserDAOImplementation implements UserDAO {
 			System.out.println(e.getMessage());
 			System.out.println("Could not retrieve user ID");
 		} 
+		return 0;
+	}
+	
+	@Override
+	public int retrieveAccountID(int user_Id, String account_type) {
+		try (Connection conn = JDBCConnectionUtil.getConnection()) {
+			String sql = "select * from Accounts where Account_type = '" + account_type + "' and user_ID = " + user_Id;
+			Statement stmt = conn.createStatement();
+			ResultSet results = stmt.executeQuery(sql);
+			while(results.next()) {
+				 return results.getInt("Account_ID");
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL exception occurred");
+			System.out.println(e.getMessage());
+			System.out.println("Could not retrieve account ID");
+		}
 		return 0;
 	}
 
