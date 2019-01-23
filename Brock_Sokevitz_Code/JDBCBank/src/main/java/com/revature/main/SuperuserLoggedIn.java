@@ -211,11 +211,40 @@ public class SuperuserLoggedIn {
 		User user = UserService.getUserService().getUserDetails(userID);
 		String oldUsername = user.getUsername();
 		String oldPassword = user.getPassword();
-		user.setUsername(establishUsername());
+		user.setUsername(establishUsername(oldUsername));
 		user.setPassword(establishPassword());
 		UserService.getUserService().editUserDetails(oldUsername, oldPassword, user);
 		UserService.getUserService().deleteUserConnection(oldUsername);
 		UserService.getUserService().createUserConnection(user);
 		System.out.println("User successfully edited.");
+	}
+	
+	static String establishUsername(String oldUsername) {
+		boolean usernameEstablished = false;
+	
+		System.out.println("Please enter a username.");
+		Scanner sc = new Scanner(System.in);
+		String username = sc.nextLine();
+	
+		while(!usernameEstablished && !username.equalsIgnoreCase("exit")) {
+			try {		
+			
+				if(username.equals("") || username.equalsIgnoreCase("exit")) {
+					throw new InvalidInputException();
+				}else if(!username.equals(oldUsername) && UserService.getUserService().checkUsername(username)) {
+					throw new UserExistsException();
+				}else {
+					usernameEstablished = true;
+				}
+				
+			}catch(InvalidInputException e) {
+				System.out.println(e.getMessage() + " Please enter a valid username or type exit.");
+				username = sc.nextLine();
+			}catch(UserExistsException u) {
+				System.out.println(u.getMessage() + " Please enter a valid username or type exit.");
+				username = sc.nextLine();
+			}
+		}
+		return username;
 	}
 }
