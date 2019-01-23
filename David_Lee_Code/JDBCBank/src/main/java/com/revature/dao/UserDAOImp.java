@@ -296,7 +296,6 @@ public class UserDAOImp implements UserDAO{
 			switch (command) {
 			case 1:
 				query = "update USER_DETAILS set FIRSTNAME = '"+user.getFirstName() +"' WHERE USER_ID = " +user.getUser_id();
-				System.out.println(query);
 				break;
 			case 2:
 				query = "update USER_DETAILS set LASTNAME = '"+user.getLastName() +"' WHERE USER_ID = " +user.getUser_id();
