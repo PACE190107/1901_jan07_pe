@@ -73,7 +73,7 @@ public class SuperuserLoggedIn {
 	static void viewAllUsers() {
 		List<User> userList = UserService.getUserService().getAllUserDetails();
 		for(User user: userList) {
-			System.out.println(user.getUserID()+", "+user.getUsername());
+			System.out.println(user.getUserID()+": "+user.getUsername()+ ", " +user.getPassword());
 		}
 	}
 	

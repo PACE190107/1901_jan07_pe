@@ -69,11 +69,6 @@ create table account_transactions
     constraint account_id_fk foreign key (account_id) references bank_accounts(account_id)
 ); -- for tables, you put ;
 
-insert into bank_users values(new_user_id.nextval,'super', encrypt_password('superpass'), 25);
-create user super identified by superpass;
-grant dba to super with admin option;
-
-
 create or replace procedure delete_user(userid integer)
 as
 begin
@@ -84,14 +79,19 @@ end;
 
 --hashing function that combines password and extra word get_customer_hash(?) ?
 --taken from yuvi's notes
-create or replace function encrypt_password(password varchar) return varchar
+create or replace function encrypt_password(username varchar, password varchar) return varchar
 is
 extra varchar(10) := 'friendship';
 begin
     return to_char(DBMS_OBFUSCATION_TOOLKIT.MD5(
-  INPUT => UTL_I18N.STRING_TO_RAW(DATA => password || extra)));
+  INPUT => UTL_I18N.STRING_TO_RAW(DATA => username || password || extra)));
 end;
 /
+
+
+insert into bank_users values(new_user_id.nextval,'super', encrypt_password('super', 'superpass'), 25);
+create user super identified by superpass;
+grant dba to super with admin option;
 
 ---- TCL --
 create public synonym bank_accounts for bsokevitz.bank_accounts;

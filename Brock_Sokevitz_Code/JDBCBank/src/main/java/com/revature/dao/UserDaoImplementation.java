@@ -72,8 +72,9 @@ public class UserDaoImplementation implements UserDAO{
 		try(Connection conn = JDBCConnectUtil.getConnection()){
 			String sql = "insert into bank_users values(new_user_id.nextval,?,?,?)";
 			String output = "";
-			CallableStatement cs = conn.prepareCall("{? = call encrypt_password(?)}");	
-			cs.setString(2, user.getPassword());
+			CallableStatement cs = conn.prepareCall("{? = call encrypt_password(?,?)}");	
+			cs.setString(2, user.getUsername());
+			cs.setString(3, user.getPassword());
 			cs.registerOutParameter(1, Types.VARCHAR);
 			cs.execute();
 			output = cs.getString(1);
@@ -167,8 +168,9 @@ public class UserDaoImplementation implements UserDAO{
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("select password from bank_users where username ='"+ username +"'");	
 			String output = "";
-			CallableStatement cs = conn.prepareCall("{? = call encrypt_password(?)}");	
-			cs.setString(2, password);
+			CallableStatement cs = conn.prepareCall("{? = call encrypt_password(?,?)}");	
+			cs.setString(2, username);
+			cs.setString(3, password);
 			cs.registerOutParameter(1, Types.VARCHAR);
 			cs.execute();
 			output = cs.getString(1);
@@ -223,12 +225,19 @@ public class UserDaoImplementation implements UserDAO{
 			//never hardcode values in a method
 			//using prepared statement with parameterized statements: ?
 			String sql = "update bank_users set username = ?, password = ?, superuser = ? where user_id = ?";
+			String encrypt = "{? = call encrypt_password(?,?)}";
+			CallableStatement cs = conn.prepareCall(encrypt);
+			
+			cs.setString(2, user.getUsername());
+			cs.setString(3, user.getPassword());
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.execute();
+			String output = cs.getString(1);
 			PreparedStatement ps = conn.prepareStatement(sql);
 			
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, user.getUserID());
 			ps.setString(1, user.getUsername());
-			ps.setString(2, user.getPassword());
+			ps.setString(2, output);
 			ps.setInt(3, user.getSuperuser());
 			ps.setInt(4, user.getUserID());
 			
