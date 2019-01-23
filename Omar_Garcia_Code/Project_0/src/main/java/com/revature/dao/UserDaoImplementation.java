@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 import com.revature.Exceptions.*;
 import com.revature.models.User;
 import com.revature.util.JDBCConnectionUtil;
@@ -68,11 +66,6 @@ public class UserDaoImplementation implements UserDao {
 			}
 		}
 		return new User();
-	}
-
-	public User removeUser() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public List<User> getAllUsers() throws SQLException, EmptyUsersException {
@@ -134,11 +127,6 @@ public class UserDaoImplementation implements UserDao {
 		if (user.getId() > 0) {
 			return true;
 		}
-		return false;
-	}
-
-	public boolean insertUserPrecedure(User user) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

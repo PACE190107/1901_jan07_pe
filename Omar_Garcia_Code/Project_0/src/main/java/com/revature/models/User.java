@@ -145,9 +145,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		//return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName
-		//		+ ", passWord=" + passWord + ", superuser=" + superuser + "]";
-		
+		System.out.printf("%-10.10s %-10.10s %-10.10s %-10.10s %-10.10s%n\n", id, "| " + firstName, "| " + lastName,"| " + userName, "| " + superuser);
 		return id + ", " + firstName + ", " + lastName + ", " + userName + ", " + superuser;
 	}
 	

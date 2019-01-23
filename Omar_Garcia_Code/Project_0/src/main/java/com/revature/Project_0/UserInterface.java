@@ -24,6 +24,7 @@ public class UserInterface {
 	public static void main(String[] args) {
 		try {
 			start();
+			in.close();
 		} catch (SQLException e) {
 			log.error("SQL ERROR");
 		}
@@ -32,7 +33,7 @@ public class UserInterface {
 	public static void start() throws SQLException {
 		boolean running = true;
 		do {
-			System.out.println("Welcome, what would you like to do\n1.) Login\n2.) Register\n3.) Exit");
+			System.out.println("What would you like to do\n1.) Login\n2.) Register\n3.) Exit");
 			int selection = getUserInt();
 			if (selection == 1) {
 				login();
@@ -118,14 +119,14 @@ public class UserInterface {
 	}
 
 	public static void options() throws SQLException {
+		transactions = "";
 		boolean signout = false;
 		do {
-			System.out.println("\nPlease select an option " + "\n1.) Deposite        4.) Create Account"
+			System.out.println("Welcome "+ bank.getCurrentUser().getFirstName() + " "+ bank.getCurrentUser().getLastName()+ ", \nPlease select an option " + "\n1.) Deposite        4.) Create Account"
 					+ "\n2.) Withdraw        5.) Delete Account" + "\n3.) View accounts   6.) View Transactions"
-					+ "\n7.) Exit");
+					+ "\n7.) Log off");
 			if (bank.superUser() == 1) {
-				System.out.println("------------------------------------------\n"
-						+ "              Super User Options\n"
+				System.out.println("------------------------------------------\n" + "            Super User Options\n"
 						+ "------------------------------------------\n"
 						+ "8.) View users      10.) Update user\n9.) Create users    11.) Delete all users");
 			}
@@ -150,12 +151,15 @@ public class UserInterface {
 				signout = true;
 			} else if (option == 8) {
 				try {
+					System.out.printf("%-10.10s %-10.10s %-10.10s %-10.10s %-10.10s%n\n", "ID", "|FIRSTNAME",
+							"|LASTNAME", "|USERNAME", "|SUPERUSER");
 					UserService.getUserService().viewAllUsers();
 				} catch (EmptyUsersException e) {
 					System.out.println("No Users Found");
 				}
 			} else if (option == 9) {
 				register();
+				signout = true;
 			} else if (option == 10) {
 				updateUser();
 			} else if (option == 11) {
@@ -215,6 +219,8 @@ public class UserInterface {
 			System.out.println("Which account would you like to delete?");
 			int account = getUserInt();
 			bank.deleteAccount(account);
+			// transactions += bank.getCurrentUser().getFirstName() + " " +
+			// bank.getCurrentUser().getLastName() + " deleted an Account";
 		} catch (EmptyAccountException e) {
 			System.out.println("Account must have a balance of zero");
 		}
@@ -229,6 +235,8 @@ public class UserInterface {
 			int amount = getUserInt();
 			try {
 				bank.createAccount("Checkings", amount);
+				// transactions += bank.getCurrentUser().getFirstName() + " " +
+				// bank.getCurrentUser().getLastName() + " Created an new Checkings Account";
 			} catch (SQLException e) {
 				log.error("SQL error while creating account");
 			}
@@ -237,6 +245,8 @@ public class UserInterface {
 			int amount = getUserInt();
 			try {
 				bank.createAccount("Savings", amount);
+				// transactions += bank.getCurrentUser().getFirstName() + " " +
+				// bank.getCurrentUser().getLastName() + " Created an new Savings Account";
 			} catch (SQLException e) {
 				log.error("SQL error while creating account");
 			}
@@ -252,7 +262,7 @@ public class UserInterface {
 		do {
 			try {
 				bank.getAccounts(0);
-				System.out.println("Which account would like to deposit into?\n0.) Exit\n");
+				System.out.println("\nWhich account would like to deposit into?\n0.) Exit\n");
 				int account = getUserInt();
 				if (account == 0) {
 					done = true;
@@ -266,9 +276,17 @@ public class UserInterface {
 									bank.deposit(amount, account);
 									done = true;
 									transactions += "Deposited " + amount + " into account " + account + "\n";
+									try {
+										bank.getAccounts(0);
+									} catch (EmptyAccountException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
 								} catch (DepositFailedException e) {
 									done = false;
 								}
+							} else if (amount < 0) {
+								log.warn("Deposits should be more than 0!");
 							} else {
 								done = true;
 							}
@@ -287,7 +305,7 @@ public class UserInterface {
 		do {
 			try {
 				bank.getAccounts(0);
-				System.out.println("Which account would like to withdraw from?\n0.) Exit\n");
+				System.out.println("\nWhich account would like to withdraw from?\n0.) Exit\n");
 				int account = getUserInt();
 				if (account == 0) {
 					done = true;
@@ -301,7 +319,13 @@ public class UserInterface {
 									try {
 										bank.withdraw(amount, account);
 										done = true;
-										transactions += "Withdrew " + amount + " from account " + account+"\n";
+										transactions += "Withdrew " + amount + " from account " + account + "\n";
+										try {
+											bank.getAccounts(0);
+										} catch (EmptyAccountException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 									} catch (OverDraftException e) {
 										System.out.println("over draft");
 										done = false;
@@ -310,6 +334,8 @@ public class UserInterface {
 									} catch (WithdrawException e) {
 										log.error("An error occured withdrawing");
 									}
+								} else if (amount < 0) {
+									log.warn("Withdraw should be more than 0!");
 								} else {
 									done = true;
 								}
@@ -326,8 +352,18 @@ public class UserInterface {
 	}
 
 	public static int getUserInt() {
-		int selection = in.nextInt();
-		in.nextLine();
+		int selection = 0;
+		boolean done = false;
+		do {
+			if (in.hasNextInt()) {
+				selection = in.nextInt();
+				in.nextLine();
+				return selection;
+			} else {
+				System.out.println("Wrong Input type!");
+				in.nextLine();
+			}
+		} while (!done);
 		return selection;
 	}
 }

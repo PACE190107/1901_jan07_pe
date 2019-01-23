@@ -37,7 +37,7 @@ public class UserService {
 		users = UserDaoImplementation.getUserDao().getAllUsers();
 		
 		for(User user : users) {
-			System.out.println(user.toString());
+			user.toString();
 		}
 	}
 	

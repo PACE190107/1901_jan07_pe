@@ -93,9 +93,9 @@ public class BankImplementation implements BankDao {
 			ps.setInt(1, userID);
 			ResultSet results = ps.executeQuery();
 			List<Integer> account = new ArrayList<Integer>();
-			System.out.println("ID TYPE BALANCE");
+			System.out.printf("\n%-10.10s %-10.10s %-10.10s%n\n","ID", "TYPE" ,"BALANCE");
 			while (results.next()) {
-				System.out.println(results.getInt(1) + " " + results.getString(2) + " " + results.getInt(3));
+				System.out.printf("%-10.10s %-10.10s %-10.10s%n\n",results.getInt(1),results.getString(2), ""+results.getInt(3));
 				account.add(results.getInt(1));
 			}
 			if (account.isEmpty()) {
