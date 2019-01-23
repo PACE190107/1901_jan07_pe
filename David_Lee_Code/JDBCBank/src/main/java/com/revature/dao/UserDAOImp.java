@@ -19,6 +19,10 @@ import com.revature.models.User;
 import com.revature.services.UserService;
 import com.revature.utils.ConnectionUtil;
 
+/**
+ * @author David Lee
+ *
+ */
 public class UserDAOImp implements UserDAO{
 	//Private class object
 	private static UserDAOImp userDAO;

@@ -15,8 +15,7 @@ public class Driver extends Throwable{
 	 * 
 	 */
 	private static final long serialVersionUID = -1160321606827018044L;
-	//login
-	
+
 	public static void login(Scanner in) {
 		User existUser = new User();
 		String username = validateStrings(in,"Enter your username: TYPE 'EXIT' to return to the main menu.",false,true);
@@ -38,7 +37,7 @@ public class Driver extends Throwable{
 				}
 			} catch (incorrectPasswordException e) {
 				System.out.println("The password is incorrect.");
-				existUser.setPassword(validateStrings(in,"Enter your password: TYPE 'EXIT' o return to the main Menu. ",true,true));
+				existUser.setPassword(validateStrings(in,"Enter your password: TYPE 'EXIT' to return to the main Menu. ",true,true));
 			}
 		}
 		System.out.println("You are now logged in!");
@@ -67,27 +66,26 @@ public class Driver extends Throwable{
 			System.out.println("Sorry, we don't allow any numbers here.");
 			return validateStrings(in,question,spec,num);
 		}
-		
-		System.out.println("Is this correct? YES | NO: " +input);
-		switch (in.nextLine().toLowerCase()) {
-			case "yes":
-				return input;
-			case "no":
-				return validateStrings(in,question,spec,num);
-			default:
-				System.out.println("Invalid input, please re-enter your name.");
-				return validateStrings(in,question,spec,num);		
-			}
+			return input;
+//		System.out.println("Is this correct? YES | NO: " +input);
+//		switch (in.nextLine().toLowerCase()) {
+//			case "yes":
+//				return input;
+//			case "no":
+//				return validateStrings(in,question,spec,num);
+//			default:
+//				System.out.println("Invalid input, please re-enter your name.");
+//				return validateStrings(in,question,spec,num);		
+//			}
 		
 	}
 	
 	//Display all accounts
 	public static void displayAccounts(List<Account> accList) {
 		for (Account x: accList) {
-		System.out.println("Account ID: " +x.getAccountID());
-		System.out.println("Account Type: "+x.getAccountType());
-		System.out.println("Account Balance: $"+x.getAccountBalance());
-		System.out.println("--------------------------------------------------------");
+		System.out.println("| Account ID: " +x.getAccountID() +" | Account Type: "
+		+x.getAccountType()+" | Account Balance: $"+x.getAccountBalance());
+		System.out.println("-----------------------------------------------------------------------");
 		}
 	}
 	

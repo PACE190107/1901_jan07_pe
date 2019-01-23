@@ -110,13 +110,17 @@ public class Menus {
 		List<Account> accList = new ArrayList<Account>();
 		accList = UserService.getUserService().getAllAccounts(user);
 		System.out.println("You have "+accList.size()+" account(s) with us.");
-		System.out.println("--------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------");
 		//Format Table
 		Driver.displayAccounts(accList);
 		queryMenu(in,user, accList);
 	}
 	//Transfer money menu
 	public static void transferMenu(Scanner in, User user, List<Account> accList) {
+		if (accList.isEmpty()) {
+			System.out.println("Looks like you have no accounts with us. Please make a account first!");
+			queryMenu(in,user,accList);
+		}
 		System.out.println("What would you like to do?");
 		System.out.println("1. Withdraw from an account");
 		System.out.println("2. Deposit to an account");

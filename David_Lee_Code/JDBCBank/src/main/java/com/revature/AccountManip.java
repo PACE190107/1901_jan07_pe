@@ -10,12 +10,13 @@ import com.revature.models.User;
 import com.revature.services.UserService;
 
 public class AccountManip {
-	//Deposit method
+
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 * @param accList list of accounts associated with the user
+	 */
 	public static void deposit(Scanner in, User user, List<Account> accList) {
-		if (accList.isEmpty()) {
-			System.out.println("You have no active accounts with us. Please create an account first!");
-			Menus.accountMenu(in, user);
-		}
 		Driver.displayAccounts(accList);
 		System.out.println("Which account would you like to make a deposit on? Enter ID: ");
 		int accountID = checkaccountID(in, accList);
@@ -32,10 +33,15 @@ public class AccountManip {
 		Menus.accountMenu(in,user);
 	}
 	
-	//Withdraw method
+
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 * @param accList List of accounts associated with the user
+	 */
 	public static void withdraw(Scanner in, User user, List<Account> accList)  {
 		if (accList.isEmpty()) {
-			System.out.println("You have no active accounts with us. Please create an account first!");
+			System.out.println("You have no accounts to withdraw from. Please make a deposity or create an account first!");
 			Menus.accountMenu(in, user);
 		}
 		Driver.displayAccounts(accList);
@@ -76,7 +82,12 @@ public class AccountManip {
 		Menus.accountMenu(in, user);
 	}
 	
-	//Checks account ID
+
+	/**
+	 * @param in Scanner to read the user input
+	 * @param accList List of accounts associated with a user
+	 * @return
+	 */
 	public static int checkaccountID(Scanner in, List<Account> accList) {
 		List<Integer> accountIDs = new ArrayList<Integer>();
  		for (Account x : accList) {
@@ -95,7 +106,11 @@ public class AccountManip {
  		return account;
 	}
 	
-	//Checks account Balance
+	/**
+	 * @param in Scanner to read the user input
+	 * @param acc_ID Account ID
+	 * @return
+	 */
 	public static double checkAmountBalance(Scanner in, int acc_ID) {
 		double amount = 0;
 		String input = in.nextLine();
@@ -108,7 +123,9 @@ public class AccountManip {
 		return Math.round(amount * 100.0) / 100.0;
 	}
 
-	//Creates a new user
+	/**
+	 * @param in Scanner for user input
+	 */
 	public static void createUser(Scanner in) {
 		System.out.println("Welcome to the team! We are happy you decided to join us!");
 		System.out.println("Let us get to know you a little bit.");
@@ -136,7 +153,10 @@ public class AccountManip {
 		Menus.startMenu(in);
 	}
 
-	//Creates a new account
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 */
 	public static void createAccount(Scanner in, User user) {
 		Account newAcct = new Account(null, user.getUser_id(), 0, 0);
 		System.out.println("What kind of account would you like to make? ('EXIT' to go back)");
@@ -164,16 +184,20 @@ public class AccountManip {
 	}
 	//Deletes a empty bank account for the user
 	
-	//deletes an account
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 * @param accList List of accounts associated with the user
+	 */
 	public static void deleteAccount(Scanner in, User user, List<Account> accList) {
 		List<Integer> acc_Ids = new ArrayList<Integer>();
-		System.out.println("************************************");
+		System.out.println("*************************************************");
 		for (int i = 0; i < accList.size(); i++) {
 			if (accList.get(i).getAccountBalance() == 0.00) {
 				acc_Ids.add(accList.get(i).getAccountID());
-				System.out.println("Account ID: " +accList.get(i).getAccountID());
-				System.out.println("Account Type: "+accList.get(i).getAccountType());
-				System.out.println("************************************");
+				System.out.println("| Account ID: " +accList.get(i).getAccountID()
+						+"| Account Type: "+accList.get(i).getAccountType());
+				System.out.println("*************************************************");
 			}
 		}
 		if (acc_Ids.isEmpty()) {
@@ -204,7 +228,11 @@ public class AccountManip {
 	
 	
 	//SUPER USER--------------------------------------------------------------------------------
-	//Adds a user
+	
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 */
 	public static void addUser(Scanner in, User user) {
 		User newUser = new User();
 		String firstName = Driver.validateStrings(in,"User first name: ",false,false);
@@ -223,7 +251,12 @@ public class AccountManip {
 		System.out.println("User Created.");
 		Menus.superUserMenu(in, user);
 	}
-	//delete a user
+
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 * @param enter if the user enters into this method the first time, display the accounts
+	 */
 	public static void deleteUser(Scanner in, User user, boolean enter) {
 		if (enter) {
 			getAllUser(in,user);
@@ -274,29 +307,32 @@ public class AccountManip {
  					
  		}
 	}
-	//get all users
+
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 */
 	public static void getAllUser(Scanner in, User user) {
+		System.out.println("Getting all users....");
 		List<User> all_users = UserService.getUserService().getAllUsers();
-		System.out.println("-------------------------------------------");
+		System.out.println("---------------------------------------------------------");
 		for (User x : all_users) {
-			System.out.println("User ID: " +x.getUser_id());
-			System.out.println("User first name: " +x.getFirstName());
-			System.out.println("User last name: " +x.getLastName());
-			System.out.println("User username: " +x.getUserName());
-			System.out.println("-------------------------------------------");
+			System.out.println("User ID: " +x.getUser_id() + " | First name: " +x.getFirstName() +
+					" | Last name: " +x.getLastName() + " | Username: " +x.getUserName());
+			System.out.println("---------------------------------------------------------");
 		}
 	}
-	//Modify user data
+
+	/**
+	 * @param in Scanner for user input
+	 * @param user Current instance of the user
+	 */
 	public static void modifyUser(Scanner in, User user) {
 		List<User> users = UserService.getUserService().getAllUsers();
 		List<Integer> user_id = new ArrayList<Integer>();
+		getAllUser(in,user);
 		for (User u : users ) {
 			user_id.add(u.getUser_id());
-			System.out.println("User ID: " +u.getUser_id());
-			System.out.println("User First Name: " +u.getFirstName());
-			System.out.println("User Last Name: " +u.getLastName());
-			System.out.println("User name: " +u.getUserName());
-			System.out.println("----------------------------------------");
 		}
 		System.out.println("Please enter a User ID you wish to modify: 'EXIT' to exit ");
 		String input = in.nextLine();
