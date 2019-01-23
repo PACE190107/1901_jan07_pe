@@ -9,6 +9,6 @@ public class ThrowingAwayMoney extends RuntimeException
 	
 	public String getMessage()
 	{
-		return "\nFUNDS STILL AVAILABLE: YOU MUST EMPTY YOUR ACCOUNT BEFORE IT CAN BE DELETED.\n";
+		return "\nFUNDS STILL AVAILABLE: YOU MUST EMPTY YOUR ACCOUNT BEFORE IT CAN BE DELETED.";
 	}
 }

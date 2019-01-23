@@ -18,6 +18,7 @@ import com.revature.exceptions.InvalidOption;
 import com.revature.exceptions.OverdraftProtection;
 import com.revature.exceptions.ThrowingAwayMoney;
 import com.revature.models.User;
+import com.revature.services.UserService;
 import com.revature.util.JDBCConnectionUtil;
 
 public class AccountsDaoImplementation implements AccountsDAO 
@@ -59,7 +60,7 @@ public class AccountsDaoImplementation implements AccountsDAO
 			}
 			
 			System.out.println("[1] Create a new account\t\t[3] Withdraw/Deposit");
-			System.out.println("[2] Delete an empty account\t\t[4] Logout and Exit Portal");
+			System.out.println("[2] Delete an empty account\t\t[4] Logout");
 				
 			int choice;
 			
@@ -77,9 +78,8 @@ public class AccountsDaoImplementation implements AccountsDAO
 							break;
 					case 3: withdrawDeposit();
 							break;
-					case 4: System.out.println("\nThank you for banking with JDBCBank. Goodbye :)");
-							sc.close();
-							System.exit(0);
+					case 4: System.out.println("\nThank you for banking with JDBCBank. Goodbye :)\n");
+							UserService.welcome();
 					default: throw new InvalidOption();		
 					}
 				}
@@ -104,7 +104,7 @@ public class AccountsDaoImplementation implements AccountsDAO
 				}
 				
 				System.out.println("[1] Create a new account\t\t[3] Withdraw/Deposit");
-				System.out.println("[2] Delete an empty account\t\t[4] Logout and Exit Portal");
+				System.out.println("[2] Delete an empty account\t\t[4] Logout");
 			}
 			while(choice != 4);
 			conn.close();
@@ -122,7 +122,7 @@ public class AccountsDaoImplementation implements AccountsDAO
 		
 		try(Connection conn = JDBCConnectionUtil.getConnection())
 		{
-			System.out.println("\nWHICH TYPE OF ACCOUNT WOULD YOU LIKE TO CREATE?\n"
+			System.out.println("\nWHICH TYPE OF ACCOUNT WOULD YOU LIKE TO CREATE?\n\n"
 					+ "[1] Checking Account\t\t[2] Savings Account\n[3] Return to Accounts Menu");
 			int choice;
 			
@@ -137,6 +137,12 @@ public class AccountsDaoImplementation implements AccountsDAO
 					{
 					case 1: System.out.println("\nENTER A MONETARY AMOUNT TO DEPOSIT INTO YOUR ACCOUNT:");
 							money = sc.nextDouble();
+							
+							if(money < 0.0)
+							{
+								System.out.println("\nYOU CANNOT DEPOSIT A NEGATIVE AMOUNT. TRY AGAIN\n");
+								break;
+							}
 							
 							String sql = "call create_account(?,?,?,?)";
 							CallableStatement cs = conn.prepareCall(sql);
@@ -158,6 +164,12 @@ public class AccountsDaoImplementation implements AccountsDAO
 					case 2: System.out.println("\nENTER A MONETARY AMOUNT TO DEPOSIT INTO YOUR ACCOUNT:");
 							money = sc.nextDouble();
 					
+							if(money < 0.0)
+							{
+								System.out.println("\nYOU CANNOT DEPOSIT A NEGATIVE AMOUNT. TRY AGAIN\n");
+								break;
+							}
+							
 							String sql1 = "call create_account(?,?,?,?)";
 							CallableStatement cs1 = conn.prepareCall(sql1);
 							cs1.setInt(1, user.getUserId());
@@ -176,7 +188,7 @@ public class AccountsDaoImplementation implements AccountsDAO
 							break;
 							
 					case 3: break;
-					default: throw new InvalidOption();		
+					default: throw new InvalidOption();
 					}
 				}
 				catch(InvalidOption e)
@@ -185,7 +197,7 @@ public class AccountsDaoImplementation implements AccountsDAO
 				}
 				if(choice == 1 | choice == 2)
 				{
-				System.out.println("WOULD YOU LIKE TO CREATE ANOTHER ACCOUNT?\n"
+				System.out.println("WOULD YOU LIKE TO CREATE ANOTHER ACCOUNT?\n\n"
 						+ "[1] Checking Account\t\t[2] Savings Account\n[3] Return to Accounts Menu");
 				}
 			}
@@ -295,11 +307,11 @@ public class AccountsDaoImplementation implements AccountsDAO
 					throw new GhostAccount();
 				}
 				
+				System.out.println("\nWHAT KIND OF TRANSACTION WOULD YOU LIKE TO MAKE?\n\n"
+						+ "[1] Withdraw\t\t[2] Deposit\n[3] Return to Accounts Menu");
+				
 				do
 				{
-					System.out.println("\nWHAT KIND OF TRANSACTION WOULD YOU LIKE TO MAKE?\n"
-							+ "[1] Withdraw\t\t[2] Deposit\n[3] Return to Accounts Menu");
-					
 					choice = sc.nextInt();
 				
 					try 
@@ -320,6 +332,13 @@ public class AccountsDaoImplementation implements AccountsDAO
 									if(balance >= withdraw)
 									{
 										double newBalance = balance - withdraw;
+										
+										if(newBalance > balance)
+										{
+											System.out.println("\nYOU CANNOT WITHDRAW A NEGATIVE AMOUNT, DEPOSIT INTO THIS ACCOUNT INSTEAD.");
+											break;	
+										}
+										
 										String sql2 = "update Bank_Accounts set balance = " + newBalance +
 														" where account_id = " + accountNum;
 										PreparedStatement ps2 = conn.prepareStatement(sql2);
@@ -347,6 +366,13 @@ public class AccountsDaoImplementation implements AccountsDAO
 								double balance2 = rs1.getDouble(1);
 								
 								double newBalance2 = balance2 + deposit;
+								
+								if(newBalance2 < balance2)
+								{
+									System.out.println("\nYOU CANNOT DEPOSIT A NEGATIVE AMOUNT, WITHDRAW FROM THIS ACCOUNT INSTEAD.");
+									break;
+								}
+								
 								String sql4 = "update Bank_Accounts set balance = " + newBalance2 +
 										" where account_id = " + accountNum;
 								PreparedStatement ps4 = conn.prepareStatement(sql4);
@@ -363,6 +389,9 @@ public class AccountsDaoImplementation implements AccountsDAO
 					{
 						System.out.println(e.getMessage());
 					}
+					
+					System.out.println("\nWOULD YOU LIKE TO PERFORM ANOTHER TRANSACTION?\n\n"
+							+ "[1] Withdraw\t\t[2] Deposit\n[3] Return to Accounts Menu");
 				}
 				while(choice != 3);
 				conn.close();

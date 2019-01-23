@@ -9,6 +9,6 @@ public class GhostAccount extends RuntimeException
 
 	public String getMessage()
 	{
-		return "\nTHE ACCOUNT YOU HAVE SELECTED DOESN'T EXIST. REVIEW THE ACCOUNTS AND TRY AGAIN.\n";
+		return "\nTHE ACCOUNT YOU HAVE SELECTED DOESN'T EXIST. REVIEW THE ACCOUNTS AND TRY AGAIN.";
 	}
 }

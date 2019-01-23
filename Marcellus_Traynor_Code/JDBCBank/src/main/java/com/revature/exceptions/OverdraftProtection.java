@@ -9,6 +9,6 @@ public class OverdraftProtection extends RuntimeException
 	
 	public String getMessage()
 	{
-		return "\nOVERDRAFT WARNING: YOU CANNOT WITHDRAW MORE THAN WHAT IS IN YOUR ACCOUNT.\n";
+		return "\nOVERDRAFT WARNING: YOU CANNOT WITHDRAW MORE THAN WHAT IS IN YOUR ACCOUNT.";
 	}
 }

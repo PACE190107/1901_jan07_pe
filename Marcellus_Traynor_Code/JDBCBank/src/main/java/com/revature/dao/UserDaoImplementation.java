@@ -311,7 +311,7 @@ public class UserDaoImplementation implements UserDAO
 			System.out.println("UserID\tFirst_Name\tLast_Name\tUsername\tPassword");
 			System.out.println("******************************************************************");
 			
-			String sql = "select * from User_Details";
+			String sql = "select * from User_Details where User_ID <> 100";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next())
@@ -324,14 +324,14 @@ public class UserDaoImplementation implements UserDAO
 			}
 			
 			System.out.println("[1] Create a new user\t\t\t[3] Delete a user");
-			System.out.println("[2] Update a user's password\t\t[4] Logout and Exit Portal");
+			System.out.println("[2] Update a user's password\t\t[4] Logout");
 				
 			int choice;
 			
 			do
 			{
 				choice = sc.nextInt();
-					
+				sc.nextLine();
 				try
 				{
 					switch(choice)
@@ -342,9 +342,8 @@ public class UserDaoImplementation implements UserDAO
 							break;
 					case 3: deleteUser();
 							break;
-					case 4: System.out.println("\nHave a super day, Super User. Goodbye :)");
-							sc.close();
-							System.exit(0);
+					case 4: System.out.println("\nHave a super day, Super User. Goodbye :)\n");
+							welcome();
 					default: throw new InvalidOption();	
 					}
 				}
@@ -353,11 +352,11 @@ public class UserDaoImplementation implements UserDAO
 					System.out.println(e.getMessage());
 				}
 				
-				System.out.println("WELCOME TO THE SUPER USER MENU. WHAT WOULD YOU LIKE TO DO?\n");
+				System.out.println("\nWELCOME TO THE SUPER USER MENU. WHAT WOULD YOU LIKE TO DO?\n");
 				System.out.println("UserID\tFirst_Name\tLast_Name\tUsername\tPassword");
 				System.out.println("******************************************************************");
 				
-				String sql1 = "select * from User_Details";
+				String sql1 = "select * from User_Details where User_ID <> 100";
 				Statement stmt1 = conn.createStatement();
 				ResultSet rs1 = stmt1.executeQuery(sql1);
 				while(rs1.next())
@@ -370,7 +369,7 @@ public class UserDaoImplementation implements UserDAO
 				}
 				
 				System.out.println("[1] Create a new user\t\t\t[3] Delete a user");
-				System.out.println("[2] Update a user's password\t\t[4] Logout and Exit Portal");
+				System.out.println("[2] Update a user's password\t\t[4] Logout");
 			}
 			while(choice != 4);
 			conn.close();
@@ -390,23 +389,10 @@ public class UserDaoImplementation implements UserDAO
 		try(Connection conn = JDBCConnectionUtil.getConnection())
 		{
 			try
-			{
-				System.out.println("ENTER THE USERID OF THE USER YOU WOULD LIKE TO UPDATE:");
+			{	
+				System.out.println("\nENTER THE USERID OF THE USER YOU WOULD LIKE TO UPDATE:");
 				int userID = sc.nextInt();
 				sc.nextLine();
-				
-				System.out.println("\nENTER THIS USER'S NEW PASSWORD:");
-				String newPass = sc.nextLine();
-				
-				String sql = "UPDATE User_Details SET User_Password = ? WHERE User_ID = ?";
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setString(1, newPass);
-				ps.setInt(2, userID);
-				ps.executeUpdate();
-				
-				String sql1 = "SELECT * from User_details where User_ID = " + userID;
-				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(sql1);
 				
 				String sql3 = "select user_ID from User_Details";
 				Statement stmt1 = conn.createStatement();
@@ -422,7 +408,29 @@ public class UserDaoImplementation implements UserDAO
 					throw new GhostAccount();
 				}
 				
-				String sql2 = "ALTER USER " + rs.getString(4) + "IDENTIFIED BY " + rs.getString(5);
+				System.out.println("\nENTER THIS USER'S NEW PASSWORD:");
+				String newPass = sc.nextLine();
+				
+				String sql4 = "SELECT User_Password FROM User_Details WHERE User_ID = " + userID; 
+				PreparedStatement ps2 = conn.prepareStatement(sql4);
+				ResultSet rs2 = ps2.executeQuery();
+				rs2.next();
+				String oldPass = rs2.getString(1);
+				
+				String sql = "UPDATE User_Details SET User_Password = ? WHERE User_ID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, newPass);
+				ps.setInt(2, userID);
+				ps.executeUpdate();
+				
+				String sql1 = "SELECT User_Name FROM User_details WHERE User_ID = ?";
+				PreparedStatement ps3 = conn.prepareStatement(sql1);
+				ps3.setInt(1, userID);
+				ResultSet rs = ps3.executeQuery();
+				rs.next();
+				String uName = rs.getString(1);
+				
+				String sql2 = "ALTER USER " + uName + " IDENTIFIED BY " + newPass + " REPLACE " + oldPass;
 				PreparedStatement ps1 = conn.prepareStatement(sql2);
 				ps1.execute();
 			
@@ -472,6 +480,20 @@ public class UserDaoImplementation implements UserDAO
 					throw new GhostAccount();
 				}
 				
+				String sql4 = "select user_name from User_Details";
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql4);
+				List<String> nameList = new ArrayList<String>();
+				while(rs.next())
+				{
+					nameList.add(rs.getString("USER_NAME"));
+				}
+				
+				if(!nameList.contains(userN))
+				{
+					throw new GhostAccount();
+				}
+				
 				String sql = "delete from Bank_Accounts where U_id = ?";
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ps.setInt(1, userID);
@@ -486,7 +508,7 @@ public class UserDaoImplementation implements UserDAO
 				PreparedStatement ps2 = conn.prepareStatement(sql2);
 				ps2.execute();
 				
-				System.out.println("\nUSER AND ALL ASSOCIATED ACCOUNTS HAVE BEEN SUCCESSFULLY DELETED.\n");
+				System.out.println("\nUSER AND ALL ASSOCIATED ACCOUNTS HAVE BEEN SUCCESSFULLY DELETED.");
 			}
 			catch(GhostAccount e)
 			{
