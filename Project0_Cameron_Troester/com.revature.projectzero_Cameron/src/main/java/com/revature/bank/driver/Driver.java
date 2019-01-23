@@ -34,17 +34,17 @@ public class Driver {
 			input = input.toLowerCase();
 			if (input.equalsIgnoreCase("create") || input.equalsIgnoreCase("1")) {
 				while (!validInput) {
-					validInput = View.createView();
+					validInput = View.showView();
 				}
 			} else if (input.equalsIgnoreCase("log in") || input.equalsIgnoreCase("2")) {
 				while (!loggedIn) {
-					currUser = View.logInView();
+					currUser = View.logView();
 					if (currUser != null) {
 						loggedIn = true;
 					}
 				}
 				while (loggedIn) {
-					loggedIn = View.loggedInMethod(currUser);
+					loggedIn = View.loggedIn(currUser);
 					if (!loggedIn) {
 						//new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 						System.out.println("Would you like to log back in? (yes/no)");

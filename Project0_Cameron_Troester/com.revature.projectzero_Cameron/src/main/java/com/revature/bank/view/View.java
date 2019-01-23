@@ -21,7 +21,7 @@ public class View {
 	}
 
 	
-	public static boolean createView() throws InterruptedException, IOException {
+	public static boolean showView() throws InterruptedException, IOException {
 		ArrayList<String> accountCreate = new ArrayList<>();
 		String input = null;
 		//new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -84,7 +84,7 @@ public class View {
 		return false;
 	}
 
-	public static Account logInView() throws InterruptedException, IOException {
+	public static Account logView() throws InterruptedException, IOException {
 
 		Account acc;
 		System.out.println("Enter your User name for log in.");
@@ -97,7 +97,7 @@ public class View {
 
 	}
 
-	public static boolean loggedInMethod(Account acc) throws InterruptedException, IOException {
+	public static boolean loggedIn(Account acc) throws InterruptedException, IOException {
 		String input = null;
 		boolean withdrawal = false;
 
@@ -114,8 +114,8 @@ public class View {
 			if (!input.matches("^\\d+\\.\\d{0,2}$")) {
 				input = input + ".00";
 			}
-			while (!input.matches("^\\d+\\.\\d{0,2}$") || (Double.parseDouble(input) <= 0.01)) {
-				log.info("Invalid input. Please enter a valid number to withdrawal.");
+			while (!input.matches("^\\d+\\.\\d{0,2}$") && (Double.parseDouble(input) <= 0.01)) {
+				System.out.println("Invalid input. Please enter a valid number to withdrawal.");
 				input = console.nextLine();
 			}
 			withdrawal = Controller.withdrawal(Double.parseDouble(input), acc);
@@ -135,7 +135,7 @@ public class View {
 			if (!input.matches("^\\d+\\.\\d{0,2}$")) {
 				input = input + ".00";
 			}
-			while (!input.matches("^\\d+\\.\\d{0,2}$") || (Double.parseDouble(input) <= 0.01)) {
+			while (!input.matches("^\\d+\\.\\d{0,2}$") && (Double.parseDouble(input) <= 0.01)) {
 				System.out.println("Invalid input. Please enter a valid number to deposit.");
 				input = console.nextLine();
 			}

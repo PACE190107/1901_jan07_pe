@@ -128,7 +128,7 @@ public class Controller {
 						+ " If you do not have an account,\n then type \"create\" to create a new account.");
 				userName = console.nextLine();
 				if (userName.equalsIgnoreCase("create")) {
-					return View.createView();
+					return View.showView();
 				}
 				if (userNameSet.contains(userName)) {
 					acc = validate(userName);

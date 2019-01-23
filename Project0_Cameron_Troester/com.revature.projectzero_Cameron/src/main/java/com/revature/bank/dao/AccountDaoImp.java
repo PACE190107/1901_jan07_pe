@@ -153,7 +153,7 @@ public class AccountDaoImp implements AccountDAO {
 					rs.close();
 				}
 			} catch (SQLException e) {
-				log.error("rs failed to close.", e);
+				log.error("ResultSet in AccountDao failed to close.", e);
 			}
 		}
 
