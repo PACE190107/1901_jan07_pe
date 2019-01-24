@@ -199,7 +199,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			while(results.next()) {
 				System.out.print(results.getString("ACCOUNT_TYPE"));
 				System.out.print(" Account ID: " + results.getInt("ACCOUNT_ID"));
-				System.out.println(" Balance: " + results.getDouble("BALANCE"));
+				System.out.println(" Balance: $" + results.getDouble("BALANCE"));
 				
 			}
 			String commit = "COMMIT";
@@ -368,6 +368,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			int accountId = sc.nextInt();
 			System.out.print("\nEnter an ammount to deposit: ");
 			float balance = sc.nextFloat();
+			if (balance < 0) {
+				System.out.println("Not able to deposit negative amounts!");
+				makeDeposit(user);
+				return;
+			}
 			String sql = "{call ADMIN.changeBalance(?,?,?)}";
 			CallableStatement ps = conn.prepareCall(sql);
 			ps.setFloat(1, balance);
@@ -428,6 +433,11 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 			float sqlBalance = 0;
 			while(getSqlBalance.next()) {
 				sqlBalance = getSqlBalance.getFloat("BALANCE");
+			}
+			if (balance < 0) {
+				System.out.println("Not able to withdraw negative amounts!");
+				makeWithdrawl(user);
+				return;
 			}
 			
 			if (balance <= sqlBalance) {
@@ -837,7 +847,7 @@ public class JDBCFunctionsImplementation implements JDBCFunctions {
 				System.out.println("*******************");
 				System.out.println("Not a valid Account ID!");
 				System.out.println("*******************");
-				return;
+				superDeleteUser(user);
 			}
 		System.out.println("\n\n");
 		System.out.println("*******************");
