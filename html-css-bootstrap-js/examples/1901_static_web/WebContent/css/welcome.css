@@ -2,7 +2,7 @@
 
 /* example for element selector*/
 ol{
-	background-color: red;
+	background-color: rgb(100,200,200);
 	color: blue;
 	font-size: 30;
 	font-family: monospace;
@@ -10,7 +10,7 @@ ol{
 }
 	p, h3, h5, div{
 		font-size: 10;
-		color: black;
+		color: #FFABCD;
 		/* background-color: fuchsia; */
 	} 
 	body{
