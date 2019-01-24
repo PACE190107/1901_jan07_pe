@@ -64,6 +64,7 @@ public class ATMQuery implements ATMQueryInterface {
 	@Override
 	public boolean withdraw(Account account, double withdraw) throws OverdraftException {
 		try(Connection connect = DBConnectionUtil.getConnection()){
+			if(withdraw < 0) return false;
 			if(account.getBalance() < withdraw) {
 				throw new OverdraftException();
 			} else {
@@ -82,6 +83,7 @@ public class ATMQuery implements ATMQueryInterface {
 	@Override
 	public boolean deposit(Account account, double deposit) {
 		try(Connection connect = DBConnectionUtil.getConnection()){
+			if(deposit < 0) return false;
 			account.setBalance(account.getBalance() + deposit);
 			String sql = "update BANK_ACCOUNT set A_BALANCE = "+account.getBalance()+" where A_ID = "+account.getAccountNumber();
 			Statement stmt = connect.createStatement();

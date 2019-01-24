@@ -16,7 +16,7 @@ import com.revature.services.ATMService;
 
 public class BankATM {
 	private static ATMService atm;
-	private static User currentUser;
+	private static User currentUser = new User();;
 	private static ArrayList<Account> currentUserAccounts;
 	private static Account selectedAccount;
 	private static int currentAccount;
@@ -51,6 +51,7 @@ public class BankATM {
 			case 0:
 				blankSpace();
 				System.out.println("ATM Closed");
+				System.exit(0);
 				break;
 			case 1:
 				blankSpace();
@@ -121,7 +122,7 @@ public class BankATM {
 		System.out.println("[1] List accounts and balances");
 		System.out.println("[2] Create new account.");
 		System.out.println("[3] Withdraw from an account.");
-		System.out.println("[4] Deposit from an account.");
+		System.out.println("[4] Deposit into an account.");
 		System.out.println("[5] Close out an account.");
 		System.out.println("Enter number to select option:");
 		int option = 99;
@@ -252,7 +253,11 @@ public class BankATM {
 				System.out.println("Withdraw of $"+option+" completed.");
 				System.out.println("Name: "+selectedAccount.getAccountName()+"; Balance: "+selectedAccount.getBalance());
 				userActions();
-			};
+			} else {
+				blankSpace();
+				System.out.println("Withdraw of $"+option+" failed.");
+				userActions();
+			}
 		} catch (OverdraftException e) {
 			blankSpace();
 			System.out.println("Insufficient funds for withdraw.");
@@ -261,7 +266,6 @@ public class BankATM {
 	}
 	
 	private static void selectAccountDeposit() {
-		blankSpace();
 		int index = 0;
 		System.out.println("List of open accounts.");
 		for(Account a: currentUserAccounts) {

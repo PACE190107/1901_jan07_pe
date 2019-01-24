@@ -20,7 +20,9 @@ public class Person implements Comparable<Person> {
 	public String toString() {
 		return "Person [name=" + name + ", height=" + height + ", age=" + age + "]";
 	}
-	@Override
+	//Comparable has to be implemented & compareTo has to be overridden
+	//Comparable has a single argument
+	@Override  
 	public int compareTo(Person p1) {
 		if(this.height < p1.height) {
 			return -1;
@@ -29,7 +31,8 @@ public class Person implements Comparable<Person> {
 		} else
 		return 0;
 	}
-	
+	//Comparator does not have to be implemented but can be implemented and compare must be overridden
+	//Comparator takes 2 arguments
 	public static Comparator<Person> AgeComparator = new Comparator<Person> () {
 
 		@Override
