@@ -1,0 +1,34 @@
+/* this is an example for comments */
+
+/* example for element selector*/
+ol{
+	background-color: rgb(100,200,200);
+	color: blue;
+	font-size: 30;
+	font-family: monospace;
+	font-style: italic;
+}
+	p, h3, h5, div{
+		font-size: 10;
+		color: #FFABCD;
+		/* background-color: fuchsia; */
+	} 
+	body{
+		/* color : purple; */
+		background-color: white;
+	}
+
+/* example for attribute selector*/
+	form.classPropertyForLoginPage{
+		border: dotted; 
+		border-left-color: green; 
+	}
+	
+	input#user{
+		border: solid;
+		size: 1px;
+		border-color: red;
+	}
+	
+	
+	
