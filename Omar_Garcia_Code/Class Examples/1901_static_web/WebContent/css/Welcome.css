@@ -1,0 +1,31 @@
+/* This is an example of comments */
+
+ol{
+	background: red;
+	color: blue;
+	font-size: 30;
+	font-family: monospace;
+	font-style: italic
+}
+p, h3, h5, div {
+	font-size: 20;
+	color: blue;
+	background-color: aqua;
+}
+
+body {
+	color: purple;
+	background-color: maroon;
+}
+
+/*Example for attribute selector*/
+form.classPropertyForLoginPage{
+	border: solid;
+	border-left-color: lime;
+}
+
+input#user{
+border: solid;
+size: 1px;
+border-color: red;
+}

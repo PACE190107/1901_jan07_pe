@@ -33,7 +33,7 @@ public class UserInterface {
 	public static void start() throws SQLException {
 		boolean running = true;
 		do {
-			System.out.println("What would you like to do\n1.) Login\n2.) Register\n3.) Exit");
+			System.out.println("Welcome to Your Bank!\nWhat would you like to do?\n1.) Login\n2.) Register\n3.) Exit");
 			int selection = getUserInt();
 			if (selection == 1) {
 				login();
