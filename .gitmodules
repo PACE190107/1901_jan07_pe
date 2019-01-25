@@ -1,3 +1,6 @@
 [submodule "JDBCBank"]
 	path = JDBCBank
 	url = https://github.com/craleigh318/JDBCBank.git
+[submodule "ExpenseReimbursementSystem"]
+	path = ExpenseReimbursementSystem
+	url = https://github.com/craleigh318/ExpenseReimbursementSystem.git
