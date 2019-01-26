@@ -51,7 +51,8 @@ if (c == 20){
 console.log(c + " outside the block - global scope");
 //console.log(variableDeclaredUsingLet + " outside the block - global scope");
 
-//commonly seen error messages - TypeError, NameError, ReferenceError
+//commonly seen error messages - TypeError, NameError, ReferenceError, 
+//SyntaxError, EvalError, URIError, RangeError
 
 //js has methods and functions
 //functions are objects in js
@@ -207,6 +208,110 @@ u2.onfocus = function(){
 	}
 }
 
+var a = 123;
+var a = "asdfsadfsd";
+console.log(a);
+//let a = 456;
+
+//Redeclaring a var variable with var, in the same scope or same block - allowed 
+//Redeclaring a let variable with var, in the same scope or same block - not allowed
+//Redeclaring a var variable with let, in the same scope or same block - not allowed
+//Redeclaring a let variable with let, in the same scope or same block - not allowed
+//Redeclaring a let variable with let, in the another scope - allowed
+
+console.log("value of c- " + c);
+//c = 40;
+if(true){
+	let c = 50;
+	console.log("value of c- " + c);
+}
+
+//var c = 60;
+
+
+//simple example for call back function
+var c1 = function(msg){
+	console.log(msg);
+}
+//	c1('hello message');
+//	c1("this is not a call back function, because we're calling the function");
+function run(plsPassAFunction){
+	plsPassAFunction('this is an example for call back function');
+}
+run(c1); //this is callback function
+
+//json vs java script object
+let j1 = [{name:'tom',age:21},{name:'mike',age:20}];
+console.log(j1);
+console.log(typeof(j1));	//object
+
+//convert js object to json - stringify
+let j2 = JSON.stringify(j1);
+console.log(j2);
+console.log(typeof(j2));	//json -string
+
+//convert string to js object
+console.log(JSON.parse(j2));
+console.log(typeof(JSON.parse(j2)));	//object
+
+var j4 = [];
+//Array methods 
+//filter - filter from an array of value 
+//shift  - to remove the first element of an array and returns that element
+//length - returns the size of an array	myArray.length
+//split  - split a string based on a delimiter var myArray = myData.split(',');
+//toString - to convert an array to string (doesn't need a parameter) 
+//join	- converts an array to string (takes a parameter to join)
+//push	- to add a value at the end of an array
+//pop		- to remove a value at the end of an array
+//unshift() and shift() work in exactly the same way as push() and pop(), respectively, except that they work on the beginning of the array, not the end.
+
+x = "my name is ${name}";
+name = 'Yuvi';
+
+console.log(x);	//prints my name is ${name}
+a = `my name is ${name}`
+console.log(a);	//prints my name is Yuvi
+
+//create an object using literal 
+let o1 = {name:"WATMAN", nickname: "WAT", age: "WAT"};
+
+//is JavaScript pass by reference or value?
+//pass by value for arguments
+//pass by reference for objects
+let o2 = o1;
+
+for (let x in o1){
+	console.log(x + " - " + o1[x]);
+}
+
+o1.specialMove = "confusion";
+o1.superPower = "WAT POWER";
+o1.occupation = "does WAT?";
+
+for (let x in o1){
+	console.log(x + " - " + o1[x]);
+}
+
+//create an object using new keyword
+let o3 = new Object();
+o3.name = "Carl Lucas" ;
+o3.hero = "Luke Cage" ;
+o3.occupation = "King of Harlem";
+//o3.gift = "punch holes in a steel wall";
+o3.gift = function(){
+	return "bullet proof";
+}
+
+//create object using constructor 
+function o4(name, hero, occupation){
+	this.name = name;
+	this.hero = hero;
+	this.occupation = occupation;
+	this.gift = function(){
+		return "bullet proof";
+	}
+}
 
 
 
