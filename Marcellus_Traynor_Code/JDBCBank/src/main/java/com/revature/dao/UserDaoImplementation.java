@@ -505,8 +505,8 @@ public class UserDaoImplementation implements UserDAO
 				ps1.executeUpdate();
 				
 				String sql2 = "drop user " + userN;
-				PreparedStatement ps2 = conn.prepareStatement(sql2);
-				ps2.execute();
+				Statement stmt2 = conn.createStatement();
+				stmt2.execute(sql2);
 				
 				System.out.println("\nUSER AND ALL ASSOCIATED ACCOUNTS HAVE BEEN SUCCESSFULLY DELETED.");
 			}
