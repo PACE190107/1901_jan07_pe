@@ -1,10 +1,13 @@
 package com.revature.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.revature.module.Employee;
 import com.revature.util.JDBCConnectionUtil;
@@ -23,24 +26,16 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 		return employeeImp;
 	}
 	
-	public String viewEmployee() throws SQLException {
+	public List<Employee> viewEmployee() throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "SELECT * FROM EMPLOYEE";
 			Statement stmnt = conn.createStatement();
 			ResultSet results = stmnt.executeQuery(sql);
-			String json = "[\n";
+			List<Employee> allEmp = new ArrayList<Employee>();
 			while (results.next()) {
-				json += "\n{\n\"E_ID\" : " + results.getInt(1)  +
-						",\n\"E_FIRST\": \"" + results.getString(2) +"\"" +
-						",\n\"E_LAST\": \"" + results.getString(3) +"\"" +
-						",\n\"E_USERNAME\": \"" + results.getString(4) +"\"" +
-						",\n\"E_PASSWORD\": \"" + results.getString(5) +"\"" +
-						",\n\"E_MANAGER\": \"" + results.getInt(6) +"\"" +
-						",\n\"E_EMAIL\": \"" + results.getString(7) +"\"},";
+				allEmp.add(new Employee(results.getInt(1), results.getString(2),results.getString(3) , results.getString(4), "**HIDDEN**", results.getInt(6), results.getString(7)));
 			}
-			json =json.substring(0, json.length() - 1) + "\n]";
-			System.out.print(json);
-			return json;
+			return allEmp;
 		}
 	}
 
@@ -59,6 +54,27 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 		}
 		System.out.println("not found\n" + username + "\n" + password);
 		return null;
+	}
+
+	@Override
+	public Employee register(Employee newEmp)
+			throws SQLException {
+		try (Connection conn = JDBCConnectionUtil.getConnection()) {
+			String sql = "CALL INSERT_EMPLOYEE(?,?,?,?,?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setString(1, newEmp.getFirstName());
+			cs.setString(2, newEmp.getLastName());
+			cs.setString(3, newEmp.getUsername());
+			cs.setString(4, newEmp.getPassword());
+			cs.setString(6, newEmp.getEmail());
+			if(newEmp.isManager()) {
+				cs.setInt(5, 1);
+			} else {
+				cs.setInt(5, 0);
+			}
+			cs.execute();
+		}
+		return login(newEmp.getUsername(), newEmp.getPassword());
 	}
 
 }

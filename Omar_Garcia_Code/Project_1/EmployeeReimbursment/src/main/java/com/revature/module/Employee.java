@@ -1,12 +1,15 @@
 package com.revature.module;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Employee {
 	private int id;
 	private String firstName;
 	private String lastName;
 	private String username;
+	@JsonIgnore
 	private String password;
-	private boolean manager;
+	private boolean manager = false;
 	private String email;
 	
 	public Employee() {

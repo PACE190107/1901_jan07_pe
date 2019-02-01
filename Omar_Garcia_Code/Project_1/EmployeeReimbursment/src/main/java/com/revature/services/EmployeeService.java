@@ -1,12 +1,22 @@
 package com.revature.services;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dao.EmployeeDaoImplementation;
 import com.revature.module.Employee;
+import com.revature.module.login;
 
 public class EmployeeService {
 	private static EmployeeService employee;
+	private final ObjectMapper mapper = new ObjectMapper();
 
 	private EmployeeService() {
 
@@ -19,16 +29,40 @@ public class EmployeeService {
 		return employee;
 	}
 
-	public Employee login(String username, String password) throws SQLException {
-		return EmployeeDaoImplementation.getEmployeeDao().login(username, password);
+	public Employee login(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+		if (req.getMethod().equals("POST")) {
+			login emp;
+			try {
+				emp = mapper.readValue(req.getReader(), login.class);
+				return EmployeeDaoImplementation.getEmployeeDao().login(emp.getUsername(), emp.getPassword());
+			} catch (JsonParseException e) {
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
-	public Employee register(String first, String last, String username, String password, String email) {
 		return null;
 	}
 
-	public String viewAllEmployees() throws SQLException {
-			return EmployeeDaoImplementation.getEmployeeDao().viewEmployee();
+	public Employee register(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+		Employee emp;
+		try {
+			emp = mapper.readValue(req.getReader(), Employee.class);
+			return EmployeeDaoImplementation.getEmployeeDao().register(emp);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public List<Employee> viewAllEmployees() throws SQLException {
+		return EmployeeDaoImplementation.getEmployeeDao().viewEmployee();
 	}
 
 	public void updatePassword(String password) {
