@@ -124,5 +124,13 @@ EXEC CREATE_ACCOUNT('Checking3', 3)
 update BANK_ACCOUNT set A_BALANCE = 100 where U_ID = 3;
 commit;
 
+drop user kuhn;
+--how to create a new user
+create user kuhn identified by Project1;
+--grant user permission
+grant connect, resource to kuhn;
+--grant admin permission
+grant DBA to kuhn with admin option;
+commit;
 --delete BANK_USER where U_ID != 1;
 --update BANK_USER set U_ID = 22, U_NAME = 'robert', U_PASSWORD = 'testing' where U_ID = 2;

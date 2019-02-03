@@ -35,7 +35,7 @@ public class DBConnectionUtil {
 	
 	public static void dbConnectionInfo() {
 		try {
-			BufferedReader readFile = new BufferedReader(new FileReader("..\\..\\..\\jdbcbank.properties"));
+			BufferedReader readFile = new BufferedReader(new FileReader("..\\..\\..\\jdbc.properties"));
 			String s;
 			boolean dbsLoc = false;
 			boolean dbsUser = false;
