@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+	 integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<title>Manager Home Page</title>
+</head>
+<body style = "background-color: steelblue;">
+
+	<h2 class = "text-center" style = "margin-top: 20px;">Welcome to the Manager Homepage</h2> <br>
+	
+	<div class="container col-md-10 offset-md-1 justify-content-center text-center" 
+		style = "background-color: lightgray; padding: 20px;">
+		
+		<div class = "row justify-content-center text-center">
+			<h3>Employees</h3>
+		</div>
+	
+		<div>
+			<table class = "table table-bordered table-striped">
+				<tbody id = "manEmpTable">
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Job Description</th>
+					<th>Username</th>
+				</tbody>
+			</table>
+			<br>
+		</div>
+		
+		<div class = "justify-content-center text-center">
+			<h4>Filter employee reimbursements</h4>
+			<p>Enter the Username of the employee you would like to view reimbursements for:</p>
+			<div class = "row justify-content-center">
+				<form>
+					<input type = "text" id = "empUsername" class = "form-control">
+					<button id = "singleEmp" class = "btn btn-outline-success">Single Employee</button>
+					<button id = "allEmp" class = "btn btn-outline-danger">All Employees</button>
+				</form>
+			</div>
+			<br>
+		</div>
+		
+		<div>
+		<h3>Reimbursements</h3>
+			<table class = "table table-bordered table-striped">
+				<tbody id = "manReTable">
+					<th>Username</th>
+					<th>Reimbursement ID</th>
+					<th>Reason</th>
+					<th>Amount</th>
+					<th>Status</th>
+					<th>Resolving Manager
+				</tbody>
+			</table>
+			<br>
+		</div>
+		
+		<div class = "row justify-content-center text-center">
+			<h5>Filter Reimbursements --></h5>
+			<button id = "manPendingBtn" class = "btn btn-outline-success">Pending</button>
+			<button id = "manResolvedBtn" class = "btn btn-outline-success">Resolved</button>
+			
+		</div>
+		
+		<br>
+		
+		<div class = "justify-content-center text-center">
+			<h4>Resolve pending reimbursements</h4>
+			<p>Enter the Reimbursement ID you would like to resolve:</p>
+			<div class = "row justify-content-center">
+				<form>
+					<input type = "number" id = "rID" class = "form-control">
+					<button id = "approveReim" class = "btn btn-outline-success">Approve</button>
+					<button id = "denyReim" class = "btn btn-outline-danger">Deny</button>
+				</form>
+			</div>
+			<br>
+		</div>
+		
+		
+		<button id = "manLogout" class = "btn btn-danger">Logout</button>
+	</div>
+	
+	<script type = "text/javascript"></script>
+</body>
+</html>

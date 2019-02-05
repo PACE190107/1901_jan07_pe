@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" 
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<title>Login Page</title>
+</head>
+<body style = "background-color: steelblue;">
+	<h1 class = "text-center" style = "margin-top: 150px">Welcome to the ERS login portal!</h1>
+	<div class="container col-md-4 justify-content-center text-center" style = "margin-top: 50px; background-color: lightgray">
+		<div class="row justify-content-center" style = "padding: 50px;">
+			<form class = "form-group" id = "login" action="/ERS/home" method="POST">
+		
+				<label for="username">Username</label> 
+				<input class = "form-control" type="text" name="username"> <br> 
+				
+				<label for="password">Password</label>
+				<input class = "form-control" type="password" name="password"> <br> 
+				
+				<input class = "btn btn-outline-success" id = "subBtn" type="submit" value="Login">
+		
+			</form>
+		</div>
+	</div>	
+</body>
+</html>

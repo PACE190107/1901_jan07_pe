@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" 
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<title>Employee Home Page</title>
+</head>
+<body style = "background-color: steelblue;">
+
+	<h2 class = "text-center" style = "margin-top: 20px;">Welcome to the Employee Homepage</h2> <br>
+	
+	<div class="container col-md-10 offset-md-1 justify-content-center text-center" 
+		style = "background-color: lightgray; padding: 20px;">
+		
+		<div class = "row justify-content-center text-center">
+		
+			<h3>Employee Info --></h3>
+			<button id = "editInfo" class = "btn btn-outline-success">Edit</button>
+		</div>
+	
+		<br>
+	
+		<div>
+			<table class = "table table-bordered table-striped">
+				<tbody id = "empEmpTable">
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Job Description</th>
+					<th>Username</th>
+				</tbody>
+			</table>
+			<br>
+		</div>
+		
+		<div>
+		<h3>Reimbursements</h3>
+			<table class = "table table-bordered table-striped">
+				<tbody id = "empReTable">
+					<th>Username</th>
+					<th>Reimbursement ID</th>
+					<th>Reason</th>
+					<th>Amount</th>
+					<th>Status</th>
+				</tbody>
+			</table>
+			<br>
+		</div>
+		
+		<div class = "row justify-content-center text-center">
+			<h5>Filter Reimbursements --></h5>
+			<button id = "empAllBtn" class = "btn btn-outline-success">All</button>
+			<button id = "empPendingBtn" class = "btn btn-outline-success">Pending</button>
+			<button id = "empResolvedBtn" class = "btn btn-outline-success">Resolved</button>
+			<button id = "empNewBtn" class = "btn btn-outline-success">Create New</button>
+		</div>
+		
+		<br>
+		<button id = "empLogout" class = "btn btn-danger">Logout</button>
+	</div>
+	
+	<script type = "text/javascript"></script>
+</body>
+</html>
