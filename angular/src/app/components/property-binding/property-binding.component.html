@@ -1,0 +1,8 @@
+<h1>Property Binding</h1>
+<p>Property Binding is a feature in Angular that allows developers to set the value of 
+  HTML attributes to the properties found in its component class
+</p>
+<button class="btn btn-outline-danger" (click)="toggle()">Reveal Image</button>
+<div *ngIf="isHidden">
+  <img [src]="imageSource" [style.height.px]='size' [style.width.px]='size' >
+</div>

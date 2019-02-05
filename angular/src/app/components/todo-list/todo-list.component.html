@@ -1,0 +1,18 @@
+<div class="col-md-8 offset-md-2">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Body</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let todo of todos">
+        <td>{{ todo.id }}</td>
+        <td>{{ todo.title }}</td>
+        <td>{{ todo.body }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
