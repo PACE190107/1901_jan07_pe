@@ -56,8 +56,8 @@ public class ManagerService {
         return dao.updateProfileInformation(emp);
     }
 
-    public boolean updateRequest(Request req){
-        return dao.updateRequest(req);
+    public boolean updateRequest(Request req, Employee emp){
+        return dao.updateRequest(req, emp);
     }
 }
 

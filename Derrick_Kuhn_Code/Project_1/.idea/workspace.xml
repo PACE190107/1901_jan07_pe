@@ -1,44 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Project_1:war" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="f1aa6584-8f00-41a4-a014-39e8cbbae7f6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../Project1.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/libraries/Maven__com_oracle_ojdbc7_12_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/libraries/Maven__junit_junit_4_12.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Project_0/JDBCBank.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Project_1.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/model/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/model/Request.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/model/Status.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/services/EmployeeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/utils/DBConnectionUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project_0/Project0.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Project_0/Project0.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project_0/src/main/java/com/revature/utils/DBConnectionUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project_0/src/main/java/com/revature/utils/DBConnectionUtil.java" afterDir="false" />
+    <list default="true" id="f1aa6584-8f00-41a4-a014-39e8cbbae7f6" name="Default Changelist" comment="DAO progress commit.">
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/services/RequestService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/Java/com/revature/utils/DateConversion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/static/employeeHome.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/static/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project1.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Project1.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Project_0/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Project_0/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Project_0/target/classes/META-INF/maven/com.revature/Project_0/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Project_0/target/classes/META-INF/maven/com.revature/Project_0/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../jdbc/target/classes/META-INF/maven/com.revature/1901_jdbc/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../jdbc/target/classes/META-INF/maven/com.revature/1901_jdbc/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../projects/project1_ERS Requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../projects/project1_ERS Requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/com/revature/model/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/revature/model/Request.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -51,28 +34,21 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="26" lean-forward="true" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            <state relative-caret-position="170">
+              <caret line="10" column="19" lean-forward="true" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/model/Request.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="92" column="37" selection-start-line="92" selection-start-column="37" selection-end-line="92" selection-end-column="37" />
+            <state relative-caret-position="-50">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
               <folding>
-                <element signature="e#1034#1035#0" expanded="true" />
-                <element signature="e#1062#1063#0" expanded="true" />
-                <element signature="e#1222#1223#0" expanded="true" />
-                <element signature="e#1252#1253#0" expanded="true" />
-                <element signature="e#1374#1375#0" expanded="true" />
-                <element signature="e#1408#1409#0" expanded="true" />
-                <element signature="e#1686#1687#0" expanded="true" />
-                <element signature="e#1720#1721#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,25 +57,31 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="118" column="74" selection-start-line="118" selection-start-column="74" selection-end-line="118" selection-end-column="74" />
+            <state relative-caret-position="340">
+              <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#420#421#0" expanded="true" />
-                <element signature="e#451#452#0" expanded="true" />
-                <element signature="e#1311#1312#0" expanded="true" />
-                <element signature="e#1414#1415#0" expanded="true" />
-                <element signature="e#1524#1525#0" expanded="true" />
-                <element signature="e#1635#1636#0" expanded="true" />
-                <element signature="e#1721#1722#0" expanded="true" />
-                <element signature="e#1814#1815#0" expanded="true" />
-                <element signature="e#1908#1909#0" expanded="true" />
-                <element signature="e#1996#1997#0" expanded="true" />
-                <element signature="e#2096#2097#0" expanded="true" />
-                <element signature="e#2199#2200#0" expanded="true" />
-                <element signature="e#2297#2298#0" expanded="true" />
-                <element signature="e#2405#2406#0" expanded="true" />
-                <element signature="e#2496#2497#0" expanded="true" />
+                <element signature="method#login#0;class#SinisterSpongeImpl#0" />
+                <element signature="e#816#845#1" />
+                <element signature="e#1587#1588#0" expanded="true" />
+                <element signature="method#getEmployeeRequests#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getEmployeePendingRequests#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getEmployeeResolvedRequests#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getAllRequests#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getAllPendingRequests#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getAllResolvedRequests#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getAllEmployees#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getProfileInformation#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#updateProfileInformation#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#registerNewEmployee#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#createNewRequest#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#updateRequest#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#getPassword#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#setEnum#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#convertEnum#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#isManager#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#createRequestList#0;class#SinisterSpongeImpl#0" />
+                <element signature="method#commitQuery#0;class#SinisterSpongeImpl#0" />
               </folding>
             </state>
           </provider>
@@ -118,12 +100,14 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeController.java">
+        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/utils/DateConversion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="12" column="4" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="79" />
+            <state relative-caret-position="374">
+              <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#218#219#0" expanded="true" />
+                <element signature="e#248#249#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -132,8 +116,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="273">
+              <caret line="49" column="35" lean-forward="true" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#260#261#0" expanded="true" />
@@ -143,29 +127,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/services/EmployeeService.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/services/RequestService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="77" lean-forward="true" selection-start-line="14" selection-start-column="77" selection-end-line="14" selection-end-column="77" />
+            <state relative-caret-position="102">
+              <caret line="6" column="69" lean-forward="true" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#539#540#0" expanded="true" />
-                <element signature="e#569#570#0" expanded="true" />
-                <element signature="e#344#345#0" expanded="true" />
-                <element signature="e#371#372#0" expanded="true" />
-                <element signature="e#496#497#0" expanded="true" />
-                <element signature="e#517#518#0" expanded="true" />
-                <element signature="e#591#592#0" expanded="true" />
-                <element signature="e#618#619#0" expanded="true" />
-                <element signature="e#687#688#0" expanded="true" />
-                <element signature="e#714#715#0" expanded="true" />
-                <element signature="e#772#773#0" expanded="true" />
-                <element signature="e#799#800#0" expanded="true" />
-                <element signature="e#860#861#0" expanded="true" />
-                <element signature="e#881#882#0" expanded="true" />
-                <element signature="e#948#949#0" expanded="true" />
-                <element signature="e#975#976#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -174,55 +142,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
+            <state relative-caret-position="273">
+              <caret line="60" column="5" lean-forward="true" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#442#443#0" expanded="true" />
-                <element signature="e#463#464#0" expanded="true" />
-                <element signature="e#541#542#0" expanded="true" />
-                <element signature="e#572#573#0" expanded="true" />
-                <element signature="e#612#613#0" expanded="true" />
-                <element signature="e#630#631#0" expanded="true" />
-                <element signature="e#767#768#0" expanded="true" />
+                <element signature="e#763#764#0" expanded="true" />
                 <element signature="e#814#815#0" expanded="true" />
                 <element signature="e#858#859#0" expanded="true" />
-                <element signature="e#883#884#0" expanded="true" />
-                <element signature="e#957#958#0" expanded="true" />
-                <element signature="e#982#983#0" expanded="true" />
-                <element signature="e#1059#1060#0" expanded="true" />
-                <element signature="e#1077#1078#0" expanded="true" />
-                <element signature="e#1156#1157#0" expanded="true" />
-                <element signature="e#1199#1200#0" expanded="true" />
-                <element signature="e#1246#1247#0" expanded="true" />
-                <element signature="e#1298#1299#0" expanded="true" />
-                <element signature="e#1372#1373#0" expanded="true" />
-                <element signature="e#1393#1394#0" expanded="true" />
-                <element signature="e#1476#1477#0" expanded="true" />
-                <element signature="e#1501#1502#0" expanded="true" />
+                <element signature="e#901#902#0" expanded="true" />
+                <element signature="e#1472#1473#0" expanded="true" />
+                <element signature="e#1517#1518#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/utils/DBConnectionUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="39" column="20" lean-forward="true" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
-              <folding>
-                <element signature="e#596#597#0" expanded="true" />
-                <element signature="e#627#628#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/model/Status.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -233,8 +163,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Interface" />
+        <option value="HTML File" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -248,15 +179,28 @@
         <option value="$PROJECT_DIR$/src/main/Java/com/revature/model/Employee.java" />
         <option value="$PROJECT_DIR$/src/main/Java/com/revature/model/Status.java" />
         <option value="$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeController.java" />
-        <option value="$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java" />
         <option value="$PROJECT_DIR$/src/main/Java/com/revature/services/EmployeeService.java" />
-        <option value="$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java" />
         <option value="$PROJECT_DIR$/src/main/Java/com/revature/utils/DBConnectionUtil.java" />
-        <option value="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeDao.java" />
-        <option value="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/index.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/employeeHome.html" />
         <option value="$PROJECT_DIR$/src/main/Java/com/revature/model/Request.java" />
+        <option value="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeDao.java" />
+        <option value="$PROJECT_DIR$/src/main/Java/com/revature/utils/DateConversion.java" />
+        <option value="$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/static/home.html" />
+        <option value="$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java" />
+        <option value="$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java" />
+        <option value="$PROJECT_DIR$/src/main/Java/com/revature/services/RequestService.java" />
       </list>
     </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -318,7 +262,30 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="Java" type="462c0819:PsiDirectoryNode" />
               <item name="revature" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project_1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project_1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Project1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Project_1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -329,12 +296,19 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549227773707" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1549328258420" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\derrick_kuhn_repos\1901_jan07_pe\Derrick_Kuhn_Code\Project_1\src\main\webapp" />
+      <recent name="C:\derrick_kuhn_repos\1901_jan07_pe\Derrick_Kuhn_Code\Project_1\src\main\webapp\WEB-INF" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -347,6 +321,81 @@
         </RuleState>
       </list>
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Tomcat 9.0.14" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.14" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/Project_1_war/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment>
+        <artifact name="Project_1:war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/Project_1_war" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_Project1" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="64357" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Project_1:war" />
+        </option>
+      </method>
+    </configuration>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -364,19 +413,36 @@
       <workItem from="1548977614390" duration="2589000" />
       <workItem from="1549133443107" duration="1666000" />
       <workItem from="1549153893224" duration="599000" />
-      <workItem from="1549203330934" duration="12714000" />
+      <workItem from="1549203330934" duration="30063000" />
     </task>
+    <task id="LOCAL-00001" summary="DAO progress commit.">
+      <created>1549227799647</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1549227799648</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21157000" />
+    <option name="totallyTimeSpent" value="38506000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="762" y="0" width="781" height="830" extended-state="0" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29542303" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49858356" visible="true" weight="0.14295302" />
+      <window_info id="Structure" order="1" sideWeight="0.50141644" side_tool="true" weight="0.14295302" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
@@ -384,17 +450,18 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info id="Web" order="7" side_tool="true" />
       <window_info id="Learn" order="8" />
+      <window_info anchor="bottom" id="Application Servers" weight="0.3295129" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295129" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3295129" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.3295129" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3286119" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3286119" />
       <window_info anchor="bottom" id="Java Enterprise" order="11" />
       <window_info anchor="bottom" id="Database Changes" order="12" />
       <window_info anchor="bottom" id="Version Control" order="13" weight="0.3295129" />
@@ -412,19 +479,11 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="DAO progress commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="DAO progress commit." />
+  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/model/Employee.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2750#2751#0" expanded="true" />
-            <element signature="e#2848#2849#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/model/Status.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -436,38 +495,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="26" lean-forward="true" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="41" selection-start-line="12" selection-start-column="41" selection-end-line="12" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#442#443#0" expanded="true" />
-            <element signature="e#463#464#0" expanded="true" />
-            <element signature="e#541#542#0" expanded="true" />
-            <element signature="e#572#573#0" expanded="true" />
-            <element signature="e#612#613#0" expanded="true" />
-            <element signature="e#630#631#0" expanded="true" />
-            <element signature="e#767#768#0" expanded="true" />
-            <element signature="e#814#815#0" expanded="true" />
-            <element signature="e#858#859#0" expanded="true" />
-            <element signature="e#883#884#0" expanded="true" />
-            <element signature="e#957#958#0" expanded="true" />
-            <element signature="e#982#983#0" expanded="true" />
-            <element signature="e#1059#1060#0" expanded="true" />
-            <element signature="e#1077#1078#0" expanded="true" />
-            <element signature="e#1156#1157#0" expanded="true" />
-            <element signature="e#1199#1200#0" expanded="true" />
-            <element signature="e#1246#1247#0" expanded="true" />
-            <element signature="e#1298#1299#0" expanded="true" />
-            <element signature="e#1372#1373#0" expanded="true" />
-            <element signature="e#1393#1394#0" expanded="true" />
-            <element signature="e#1476#1477#0" expanded="true" />
-            <element signature="e#1501#1502#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -497,16 +524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" column="4" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="79" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/utils/DBConnectionUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -518,14 +535,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        <state relative-caret-position="17">
+          <caret line="1" selection-start-line="1" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/model/Request.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="121" column="53" selection-start-line="121" selection-start-column="53" selection-end-line="121" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#260#261#0" expanded="true" />
-            <element signature="e#291#292#0" expanded="true" />
+            <element signature="e#1034#1035#0" expanded="true" />
+            <element signature="e#1062#1063#0" expanded="true" />
+            <element signature="e#1222#1223#0" expanded="true" />
+            <element signature="e#1252#1253#0" expanded="true" />
+            <element signature="e#1374#1375#0" expanded="true" />
+            <element signature="e#1408#1409#0" expanded="true" />
+            <element signature="e#1686#1687#0" expanded="true" />
+            <element signature="e#1720#1721#0" expanded="true" />
+            <element signature="e#2434#2435#0" expanded="true" />
+            <element signature="e#2469#2470#0" expanded="true" />
+            <element signature="e#2532#2533#0" expanded="true" />
+            <element signature="e#2580#2581#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/model/Employee.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2750#2751#0" expanded="true" />
+            <element signature="e#2848#2849#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -540,44 +586,114 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/utils/DateConversion.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="118" column="74" selection-start-line="118" selection-start-column="74" selection-end-line="118" selection-end-column="74" />
+        <state relative-caret-position="374">
+          <caret line="22" column="38" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#420#421#0" expanded="true" />
-            <element signature="e#451#452#0" expanded="true" />
-            <element signature="e#1311#1312#0" expanded="true" />
-            <element signature="e#1414#1415#0" expanded="true" />
-            <element signature="e#1524#1525#0" expanded="true" />
-            <element signature="e#1635#1636#0" expanded="true" />
-            <element signature="e#1721#1722#0" expanded="true" />
-            <element signature="e#1814#1815#0" expanded="true" />
-            <element signature="e#1908#1909#0" expanded="true" />
-            <element signature="e#1996#1997#0" expanded="true" />
-            <element signature="e#2096#2097#0" expanded="true" />
-            <element signature="e#2199#2200#0" expanded="true" />
-            <element signature="e#2297#2298#0" expanded="true" />
-            <element signature="e#2405#2406#0" expanded="true" />
-            <element signature="e#2496#2497#0" expanded="true" />
+            <element signature="e#218#219#0" expanded="true" />
+            <element signature="e#248#249#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/model/Request.java">
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/services/ManagerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="92" column="37" selection-start-line="92" selection-start-column="37" selection-end-line="92" selection-end-column="37" />
+        <state relative-caret-position="273">
+          <caret line="60" column="5" lean-forward="true" selection-start-line="60" selection-start-column="5" selection-end-line="60" selection-end-column="5" />
           <folding>
-            <element signature="e#1034#1035#0" expanded="true" />
-            <element signature="e#1062#1063#0" expanded="true" />
-            <element signature="e#1222#1223#0" expanded="true" />
-            <element signature="e#1252#1253#0" expanded="true" />
-            <element signature="e#1374#1375#0" expanded="true" />
-            <element signature="e#1408#1409#0" expanded="true" />
-            <element signature="e#1686#1687#0" expanded="true" />
-            <element signature="e#1720#1721#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#763#764#0" expanded="true" />
+            <element signature="e#814#815#0" expanded="true" />
+            <element signature="e#858#859#0" expanded="true" />
+            <element signature="e#901#902#0" expanded="true" />
+            <element signature="e#1472#1473#0" expanded="true" />
+            <element signature="e#1517#1518#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/employeeHome.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="19" lean-forward="true" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/static/home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="38" column="57" selection-start-line="38" selection-start-column="57" selection-end-line="38" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeDispatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="49" column="35" lean-forward="true" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#260#261#0" expanded="true" />
+            <element signature="e#291#292#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/dao/SinisterSpongeImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="52" column="5" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#login#0;class#SinisterSpongeImpl#0" />
+            <element signature="e#816#845#1" />
+            <element signature="e#1587#1588#0" expanded="true" />
+            <element signature="method#getEmployeeRequests#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getEmployeePendingRequests#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getEmployeeResolvedRequests#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getAllRequests#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getAllPendingRequests#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getAllResolvedRequests#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getAllEmployees#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getProfileInformation#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#updateProfileInformation#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#registerNewEmployee#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#createNewRequest#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#updateRequest#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#getPassword#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#setEnum#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#convertEnum#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#isManager#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#createRequestList#0;class#SinisterSpongeImpl#0" />
+            <element signature="method#commitQuery#0;class#SinisterSpongeImpl#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/servlet/SinisterSpongeController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-50">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Java/com/revature/services/RequestService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="69" lean-forward="true" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

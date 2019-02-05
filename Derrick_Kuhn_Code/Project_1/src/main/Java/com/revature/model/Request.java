@@ -1,6 +1,5 @@
 package com.revature.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
@@ -12,7 +11,8 @@ public class Request {
     private String description;
     private double amount;
     private long approver_id;
-    private LocalDateTime date;
+    private LocalDateTime dateRequested;
+    private LocalDateTime dateApproved;
     private Status status;
 
     public Request() {
@@ -24,17 +24,18 @@ public class Request {
         this.description = description;
         this.amount = amount;
         this.status = Status.PENDING;
-        this.date = LocalDateTime.now();
+        this.dateRequested = LocalDateTime.now();
     }
 
-    public Request(long id, long e_id, String subject, String description, double amount, long approver_id, LocalDateTime date, Status status) {
+    public Request(long id, long e_id, String subject, String description, double amount, long approver_id, LocalDateTime date, LocalDateTime dateApproved, Status status) {
         this.id = id;
         this.e_id = e_id;
         this.subject = subject;
         this.description = description;
         this.amount = amount;
         this.approver_id = approver_id;
-        this.date = date;
+        this.dateRequested = date;
+        this.dateApproved = dateApproved;
         this.status = status;
     }
 
@@ -86,12 +87,12 @@ public class Request {
         this.approver_id = approver_id;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getDateRequested() {
+        return dateRequested;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDateRequested(LocalDateTime date) {
+        this.dateRequested = date;
     }
 
     public Status getStatus() {
@@ -100,6 +101,14 @@ public class Request {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public LocalDateTime getDateApproved() {
+        return dateApproved;
+    }
+
+    public void setDateApproved(LocalDateTime dateApproved) {
+        this.dateApproved = dateApproved;
     }
 
     @Override
@@ -113,13 +122,13 @@ public class Request {
                 approver_id == request.approver_id &&
                 Objects.equals(subject, request.subject) &&
                 Objects.equals(description, request.description) &&
-                Objects.equals(date, request.date) &&
+                Objects.equals(dateRequested, request.dateRequested) &&
                 status == request.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, e_id, subject, description, amount, approver_id, date, status);
+        return Objects.hash(id, e_id, subject, description, amount, approver_id, dateRequested, dateApproved, status);
     }
 
     @Override
@@ -131,7 +140,7 @@ public class Request {
                 ", description='" + description + '\'' +
                 ", amount=" + amount +
                 ", approver_id=" + approver_id +
-                ", date=" + date +
+                ", date=" + dateRequested +
                 ", status=" + status +
                 '}';
     }

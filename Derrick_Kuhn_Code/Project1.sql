@@ -79,6 +79,17 @@ begin
             into :NEW.E_PASS from DUAL;
 end;
 /
+
+create or replace trigger NEW_REQUEST
+    before insert
+    on REQUEST
+    for each row
+begin
+        if :NEW.R_ID is null then
+            select ASSIGN_R_ID.nextval into :NEW.R_ID from DUAL;
+        end if;
+end;
+/
     
 create or replace procedure 
 REGISTER_EMPLOYEE(EMAIL varchar2, UNAME varchar2, PASS varchar2, FNAME varchar2, LNAME varchar2)
@@ -93,7 +104,7 @@ end;
 
 create or replace procedure
     CREATE_REQUEST(E_ID varchar2, R_SUBJECT varchar2, R_DESCRIPTION varchar2,
-    R_AMOUNT varchar2, R_STATUS varchar2)
+    R_AMOUNT number, R_STATUS varchar2)
 as
 begin
     insert into REQUEST values (null, E_ID, R_SUBJECT, R_DESCRIPTION, R_AMOUNT,
