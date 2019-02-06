@@ -5,7 +5,6 @@ drop sequence reimbursement_seq;
 drop PUBLIC SYNONYM Employee_Info;
 drop PUBLIC SYNONYM Reimbursements;
 drop PUBLIC SYNONYM reimbursement_seq;
---drop PUBLIC SYNONYM register_user;
 drop PUBLIC SYNONYM create_reimbursement;
 drop user super;
 
@@ -49,19 +48,6 @@ BEGIN
     END IF;
 END;
 /
-
---Stored procedure to register a new user
---CREATE OR REPLACE PROCEDURE register_user
---(
---    firstname varchar2, lastname varchar2, username varchar2, password varchar2, rows out number
---)
---AS
---BEGIN
---    INSERT INTO User_Details VALUES(null, firstname, lastname, username, password);
---    rows := sql%rowcount;
---    COMMIT;
---END;
---/
 
 --Stored procedure to generate a new bank account
 CREATE OR REPLACE PROCEDURE create_reimbursement

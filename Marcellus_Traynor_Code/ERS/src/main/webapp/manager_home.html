@@ -31,14 +31,16 @@
 		
 		<div class = "justify-content-center text-center">
 			<h4>Filter employee reimbursements</h4>
-			<p>Enter the Username of the employee you would like to view reimbursements for:</p>
+			<p>Enter the Username of the employee you would like to view reimbursements for (only for a single employee):</p>
 			<div class = "row justify-content-center">
-				<form>
-					<input type = "text" id = "empUsername" class = "form-control">
-					<button id = "singleEmp" class = "btn btn-outline-success">Single Employee</button>
-					<button id = "allEmp" class = "btn btn-outline-danger">All Employees</button>
+				<form action="/ERS/home" method = "GET">
+					<input type = "text" name = "empUsername" class = "form-control" placeholder = "Enter an employee username">
+					<input type = "submit" id = "singleEmp" class = "btn btn-outline-success" name = "btn" value = "SingleEmployee">
 				</form>
 			</div>
+			<form action="/ERS/home" method = "GET">
+				<input type = "submit" id = "allEmp" class = "btn btn-outline-info" name = "btn" value = "AllEmployees">
+				</form>
 			<br>
 		</div>
 		
@@ -54,14 +56,15 @@
 					<th>Resolving Manager
 				</tbody>
 			</table>
-			<br>
+			
 		</div>
 		
 		<div class = "row justify-content-center text-center">
 			<h5>Filter Reimbursements --></h5>
-			<button id = "manPendingBtn" class = "btn btn-outline-success">Pending</button>
-			<button id = "manResolvedBtn" class = "btn btn-outline-success">Resolved</button>
-			
+			<form action="/ERS/home" method = "GET">
+				<input type = "submit" id = "manPendingBtn" class = "btn btn-outline-success" name = "btn" value = "PendingRequests">
+				<input type = "submit" id = "manResolvedBtn" class = "btn btn-outline-success" name = "btn" value = "ResolvedRequests">
+			</form>
 		</div>
 		
 		<br>
@@ -70,19 +73,21 @@
 			<h4>Resolve pending reimbursements</h4>
 			<p>Enter the Reimbursement ID you would like to resolve:</p>
 			<div class = "row justify-content-center">
-				<form>
-					<input type = "number" id = "rID" class = "form-control">
-					<button id = "approveReim" class = "btn btn-outline-success">Approve</button>
-					<button id = "denyReim" class = "btn btn-outline-danger">Deny</button>
+				<form action="/ERS/home" method = "POST">
+					<input type = "number" id = "rId" name = "rId" class = "form-control" placeholder = "Reimbursement ID">
+					<input type = "submit" id = "approveReim" class = "btn btn-outline-success" name = "btn" value = "Approve">
+					<input type = "submit" id = "denyReim" class = "btn btn-outline-danger" name = "btn" value = "Deny">
 				</form>
 			</div>
 			<br>
 		</div>
 		
-		
-		<button id = "manLogout" class = "btn btn-danger">Logout</button>
+		<br>
+		<form class = "form-group" action="/ERS/home" id = "logout" method = "POST">
+		<input type = "submit" class = "btn btn-danger" name = "btn" value = "Logout">
+		</form>
 	</div>
 	
-	<script type = "text/javascript"></script>
+	<script type = "text/javascript" src = "JS/manager.js"></script>
 </body>
 </html>

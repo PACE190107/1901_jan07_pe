@@ -1,8 +1,10 @@
 package com.revature.services;
 
-import com.revature.models.Employee;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public interface LoginService 
 {
-	Employee attemptAuthentication(String username, String password);
+	public void attemptAuthentication(HttpServletRequest request, HttpServletResponse response);
+	public void logout(HttpServletRequest request, HttpServletResponse response);
 }

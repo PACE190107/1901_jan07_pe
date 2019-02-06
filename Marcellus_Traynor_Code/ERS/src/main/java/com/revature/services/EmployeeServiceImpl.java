@@ -1,7 +1,11 @@
 package com.revature.services;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -14,37 +18,58 @@ public class EmployeeServiceImpl implements EmployeeService
 	final static Logger log = Logger.getLogger(EmployeeServiceImpl.class);
 	
 	@Override
-	public Object process(HttpServletRequest request, HttpServletResponse response) 
+	public void updateInfo(HttpServletRequest request, HttpServletResponse response) 
 	{
-		if(request.getMethod().equals("GET"))
-		{
-			log.info("inside the GET request of EmployeeServiceImpl");
-			
-			//Get all employees
-			String[] path = request.getRequestURI().split("/");
-			
-			if (path.length == 4) 
-			{		
-				log.info("inside the GET/all request of EmployeeServiceImpl");
-				return employeeDao.getAllEmployeeInfo();
-			}
-			
-			//Get single employee
-			if (path.length == 5) 
-			{		
-				log.info("inside the GET/singleEmployee request of EmployeeServiceImpl");
-
-				String username = String.valueOf(path[4]);
-				return employeeDao.getEmployeeInfo(username);
-			}
-		}
+		HttpSession session = request.getSession();
+		final String username = (String)session.getAttribute("username");
 		
-		if(request.getMethod().equals("PUT"))
+		final String newFname = request.getParameter("newFname");
+		final String newLname = request.getParameter("newLname");
+		final String newPassword = request.getParameter("newPassword");
+		
+		employeeDao.updateEmployee(username, newFname, newLname, newPassword);
+
+		try 
 		{
-			log.info("inside the PUT request of EmployeeServiceImpl");
-			//Update employee info
-			
+			request.getRequestDispatcher("employee_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in EmployeeServiceImpl updateInfo");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in EmployeeServiceImpl updateInfo");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
 		}
-		return null;
+	}
+
+	@Override
+	public void getEmployeeInfo(HttpServletRequest request, HttpServletResponse response) 
+	{
+		HttpSession session = request.getSession();
+		final String username = (String)session.getAttribute("username");
+		
+		employeeDao.getEmployeeInfo(username);
+
+		try 
+		{
+			request.getRequestDispatcher("employee_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
 	}
 }

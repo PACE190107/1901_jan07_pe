@@ -2,91 +2,255 @@ package com.revature.services;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dao.ReimbursementDao;
 import com.revature.dao.ReimbursementDaoImpl;
-import com.revature.models.Reimbursement;
 
 public class ReimbursementServiceImpl implements ReimbursementService
 {
 	private final ReimbursementDao reimbursementDao = new ReimbursementDaoImpl();
-	private final ObjectMapper mapper = new ObjectMapper();
 	final static Logger log = Logger.getLogger(ReimbursementServiceImpl.class);
 	
 	@Override
-	public Object process(HttpServletRequest request, HttpServletResponse response) 
+	public void empReimbursements(HttpServletRequest request, HttpServletResponse response) 
 	{
-		if(request.getMethod().equals("GET"))
-		{
-			log.info("inside the GET request of ReimbursementServiceImpl");
-			//Get all reimbursements
-			String[] path = request.getRequestURI().split("/");
-			
-			if (path.length == 4 & request.getRequestURI().contains("all")) 
-			{		
-				log.info("inside the GET/all request of ReimbursementServiceImpl");
-				return reimbursementDao.getAllReimbursements();
-			}
-			
-			//Get all resolved reimbursements
-			if (path.length == 4 & request.getRequestURI().contains("resolved")) 
-			{		
-				log.info("inside the GET/resolved request of ReimbursementServiceImpl");
-				return reimbursementDao.getResolvedReimbursements();
-			}
-			
-			//Get single employee reimbursements
-			if (path.length == 5) 
-			{		
-				log.info("inside the GET/employeeReimbursements request of ReimbursementServiceImpl");
-				
-				String username = String.valueOf(path[4]);
-				return reimbursementDao.getEmployeeReimbursements(username);
-			}
-		}
+		HttpSession session = request.getSession();
+		final String username = (String)session.getAttribute("username");
 		
-		if(request.getMethod().equals("POST"))
-		{
-			log.info("inside the POST request of ReimbursementServiceImpl");
-			//Create reimbursement
-			if (request.getHeader("Content-Type").equals("application/json")) 
-			{
-				log.info("inside the POST/createReimbursement request of ReimbursementServiceImpl");
-				try 
-				{
-					HttpSession session = request.getSession();
-					Reimbursement reimbursement = mapper.readValue(request.getReader(), Reimbursement.class);
-					reimbursementDao.createReimbursement((String)session.getAttribute("username"), reimbursement);
-				} 
-				catch (IOException e) 
-				{
-					e.printStackTrace();
-				}
-			}
-			
-			try 
-			{
-				// 415 is an Unsupported Media Type
-				response.sendError(415, "Please create using application/json");
-			} 
-			catch (IOException e) 
-			{
-				e.printStackTrace();
-			}
-		}
+		log.info("getting the employee's reimbursements");
+		reimbursementDao.empEmployeeReimbursements(username);
 		
-		if(request.getMethod().equals("PUT"))
+		try 
 		{
-			log.info("inside the PUT request of ReimbursementServiceImpl");
-			//Update reimbursement
-			
+			request.getRequestDispatcher("employee_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl empAll");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
 		}
-		return null;
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl empAll");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+	
+	@Override
+	public void empPendingReimbursements(HttpServletRequest request, HttpServletResponse response) 
+	{
+		HttpSession session = request.getSession();
+		final String username = (String)session.getAttribute("username");
+		
+		log.info("getting the employee's pending reimbursements");
+		reimbursementDao.empPendingReimbursements(username);
+		
+		try 
+		{
+			request.getRequestDispatcher("employee_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl empPending");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl empPending");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+	
+	@Override
+	public void empResolvedReimbursements(HttpServletRequest request, HttpServletResponse response) 
+	{
+		HttpSession session = request.getSession();
+		final String username = (String)session.getAttribute("username");
+		
+		log.info("getting the employee's resolved reimbursements");
+		reimbursementDao.empResolvedReimbursements(username);
+		
+		try 
+		{
+			request.getRequestDispatcher("employee_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl empResolved");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl empResolved");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+	
+	@Override
+	public void createReimbursement(HttpServletRequest request, HttpServletResponse response) 
+	{
+		HttpSession session = request.getSession();
+		final String username = (String)session.getAttribute("username");
+		final String reason = request.getParameter("reason");
+		final double amount = Double.parseDouble(String.valueOf(request.getParameter("amount")));
+		
+		log.info("creating a new reimbursement");
+		reimbursementDao.createReimbursement(username, reason, amount);
+		
+		try 
+		{
+			request.getRequestDispatcher("employee_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl create");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl create");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void manEmployeeReimbursements(HttpServletRequest request, HttpServletResponse response) 
+	{
+		final String empUsername = request.getParameter("empUsername");
+		log.info("getting a single employee's reimbursements");
+		reimbursementDao.manEmployeeReimbursements(empUsername);
+		
+		try 
+		{
+			request.getRequestDispatcher("manager_home.html").forward(request, response);
+		} 
+		catch (ServletException e)
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl manEmployee");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl manEmployee");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void manResolvedReimbursements(HttpServletRequest request, HttpServletResponse response) 
+	{
+		log.info("getting all resolved reimbursements");
+		reimbursementDao.manResolvedReimbursements();
+		
+		try 
+		{
+			request.getRequestDispatcher("manager_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl manResolved");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e)
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl manResolved");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void manPendingReimbursements(HttpServletRequest request, HttpServletResponse response) 
+	{
+		log.info("getting all pending reimbursements");
+		reimbursementDao.manPendingReimbursements();
+		
+		try 
+		{
+			request.getRequestDispatcher("manager_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl manPending");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl manPending");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+	
+	@Override
+	public void manAllReimbursements(HttpServletRequest request, HttpServletResponse response) 
+	{
+		log.info("getting all reimbursements");
+		reimbursementDao.manAllReimbursements();
+		
+		try 
+		{
+			request.getRequestDispatcher("manager_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl manAll");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl manAll");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
+	}
+
+	@Override
+	public void updateReimbursement(HttpServletRequest request, HttpServletResponse response) 
+	{
+		HttpSession session = request.getSession();
+		final String username = (String)session.getAttribute("username");
+		final int id = Integer.parseInt(String.valueOf(request.getParameter("rId")));
+		final String status = request.getParameter("btn");
+		System.out.println(status + " " + id);
+		
+		log.info("resolving the reimbursement");
+		reimbursementDao.updateReimbursement(status, id, username);
+		
+		try 
+		{
+			request.getRequestDispatcher("manager_home.html").forward(request, response);
+		} 
+		catch (ServletException e) 
+		{
+			log.error("error occured in ServletException catch block in ReimbursementServiceImpl update");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		} 
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in ReimbursementServiceImpl update");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
 	}
 }

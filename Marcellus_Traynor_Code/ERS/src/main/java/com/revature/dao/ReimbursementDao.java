@@ -6,18 +6,13 @@ import com.revature.models.Reimbursement;
 
 public interface ReimbursementDao 
 {
-	//Create new reimbursement
-	public void createReimbursement(String username, Reimbursement reimbursement);
-	
-	//View all reimbursements (pending, resolved, and resolving manager)
-	public List<Reimbursement> getAllReimbursements();
-	
-	//Manager -- View reimbursements from a single employee
-	public List<Reimbursement> getEmployeeReimbursements(String username);
-		 
-	//Manager -- approve or deny reimbursements (Update reimbursement)
-	public void updateReimbursement(String status, int rId);
-		
-	//Manager -- view all resolved reimbursements and which manager resolved
-	public List<Reimbursement> getResolvedReimbursements();
+	public void createReimbursement(String username, String reason, double amount);
+	public List<Reimbursement> manEmployeeReimbursements(String username);
+	public void updateReimbursement(String status, int rId, String username);
+	public List<Reimbursement> manAllReimbursements();
+	public List<Reimbursement> manResolvedReimbursements();
+	public List<Reimbursement> manPendingReimbursements();
+	public List<Reimbursement> empResolvedReimbursements(String username);
+	public List<Reimbursement> empPendingReimbursements(String username);
+	public List<Reimbursement> empEmployeeReimbursements(String username);
 }

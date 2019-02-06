@@ -24,6 +24,16 @@ public class Reimbursement
 		this.approved_by = approved_by;
 	}
 	
+	public Reimbursement(String username, int rId, String reason, double amount, String status) 
+	{
+		super();
+		this.username = username;
+		this.rId = rId;
+		this.reason = reason;
+		this.amount = amount;
+		this.status = status;
+	}
+
 	public Reimbursement(String username, int rId, String reason, double amount, String status, String approved_by) 
 	{
 		super();

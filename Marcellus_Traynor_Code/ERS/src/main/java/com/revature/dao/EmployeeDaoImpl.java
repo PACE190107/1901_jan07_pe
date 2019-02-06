@@ -51,6 +51,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 	@Override
 	public List<Employee> getEmployeeInfo(String username) 
 	{
+		log.info("Retrieving single employe info");
 		List<Employee> employeeInfo = new ArrayList<Employee>();
 		
 		try(Connection conn = ConnectionUtil.getConnection())
@@ -79,17 +80,20 @@ public class EmployeeDaoImpl implements EmployeeDao
 	}
 
 	@Override
-	public void updateEmployee(String username, String newUsername, String newPassword)
+	public void updateEmployee(String username, String newFname, String newLname, String newPassword)
 	{
+		System.out.println(username + " " + newFname + " " + newLname);
+		log.info("updating employee info");
 		try(Connection conn = ConnectionUtil.getConnection())
 		{
-			String sql = "UPDATE Employee_Info SET user_name = ? AND user_password = ? "
+			String sql = "UPDATE Employee_Info SET first_name = ?, last_name = ?, user_password = ? "
 					+ "WHERE user_name = ?";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, newUsername);
-			ps.setString(2, newPassword);
-			ps.setString(3, username);
+			ps.setString(1, newFname);
+			ps.setString(2, newLname);
+			ps.setString(3, newPassword);
+			ps.setString(4, username);
 			ps.executeUpdate();
 			
 			conn.close();

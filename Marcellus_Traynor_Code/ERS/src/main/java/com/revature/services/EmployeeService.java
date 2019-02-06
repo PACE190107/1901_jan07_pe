@@ -5,5 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface EmployeeService 
 {
-	Object process(HttpServletRequest request, HttpServletResponse response);
+	public void updateInfo(HttpServletRequest request, HttpServletResponse response);
+	public void getEmployeeInfo(HttpServletRequest request, HttpServletResponse response);
 }

@@ -1,5 +1,14 @@
 package com.revature.services;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+
 import com.revature.dao.EmployeeDao;
 import com.revature.dao.EmployeeDaoImpl;
 import com.revature.models.Employee;
@@ -7,12 +16,95 @@ import com.revature.models.Employee;
 public class LoginServiceImpl implements LoginService
 {
 	private final EmployeeDao employeeDao = new EmployeeDaoImpl();
+	final static Logger log = Logger.getLogger(LoginServiceImpl.class);
 	
 	@Override
-	public Employee attemptAuthentication(String username, String password)
+	public void attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 	{
-		Employee employee = employeeDao.employeeLogin(username, password);
-		return employee;
+		
+		final String username = request.getParameter("username");
+		final String password = request.getParameter("password");
+			
+		log.info("authenticating employee");
+		Employee attempting = employeeDao.employeeLogin(username, password);
+		
+			
+		if ((attempting != null) && (attempting.getJob().equalsIgnoreCase("Employee"))) 
+		{
+			HttpSession session = request.getSession();
+			session.setAttribute("username", username);
+			try 
+			{
+				log.info("employee_home");
+				request.getRequestDispatcher("employee_home.html").forward(request, response);
+			} 
+			catch (ServletException e) 
+			{
+				log.error("error occured in ServletException catch block in LoginServiceImpl attemptAuthentication");
+				log.error(e.getMessage());
+				log.error(e.getStackTrace());
+			} 
+			catch (IOException e) 
+			{
+				log.error("error occured in IOException catch block in LoginServiceImpl attemptAuthentication");
+				log.error(e.getMessage());
+				log.error(e.getStackTrace());
+			}
+		}
+		else if ((attempting != null) && (attempting.getJob().equalsIgnoreCase("Manager"))) 
+		{
+			HttpSession session = request.getSession();
+			session.setAttribute("username", username);
+			try 
+			{
+				log.info("manager_home");
+				request.getRequestDispatcher("manager_home.html").forward(request, response);
+			} 
+			catch (ServletException e) 
+			{
+				log.error("error occured in ServletException catch block in LoginServiceImpl attemptAuthentication");
+				log.error(e.getMessage());
+				log.error(e.getStackTrace());
+			}
+			catch (IOException e) 
+			{
+				log.error("error occured in IOException catch block in LoginServiceImpl attemptAuthentication");
+				log.error(e.getMessage());
+				log.error(e.getStackTrace());
+			}
+		}
+		else
+		{
+			try 
+			{
+				log.info("invalid login, return to login screen");
+				response.sendRedirect("/ERS");
+			} 
+			catch (IOException e) 
+			{
+				log.error("error occured in IOException catch block in LoginServiceImpl loginRedirect");
+				log.error(e.getMessage());
+				log.error(e.getStackTrace());
+			}
+		}
+	}
+	
+	@Override
+	public void logout(HttpServletRequest request, HttpServletResponse response)
+	{
+		log.info("invalidating session");
+		request.getSession().invalidate();
+
+		try 
+		{
+			response.sendRedirect("/ERS");
+		}
+		catch (IOException e) 
+		{
+			log.error("error occured in IOException catch block in LoginServiceImpl logoutRedirect");
+			log.error(e.getMessage());
+			log.error(e.getStackTrace());
+		}
 	}
 
 //	//This is where you would check against stored hashed passwords
