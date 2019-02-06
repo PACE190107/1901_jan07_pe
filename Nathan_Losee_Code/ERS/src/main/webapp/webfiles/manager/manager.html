@@ -1,0 +1,65 @@
+<div class="container-fluid">
+	<br>
+	
+	<h1 class="row justify-content-center">Hello,&nbsp;<span id="usernameField"></span>!</h1>
+	<div class="row justify-content-center">
+		<button id="alter" class="btn-outline-success col-3" type="button">Settings</button>
+		<button id="logout" class="btn-outline-danger col-3" type="button">Logout</button>
+	</div>
+	
+	<br><br>
+	
+	<div class="row">
+		<button id="registration" class="col-6 btn-outline-success" type="button">Register New Employee</button>
+		<span id="spacer" class="col-6"></span>
+		<button id="unfocus" style="display: none" class="col-6 btn-outline-danger" type="button">
+			Unfocus Employee&nbsp;<span id="focusID"></span></button>
+	</div>
+	<br>
+	
+	<div class="row">
+		<table class="col-6 table table-light table-bordered">
+			<thead>
+				<tr class="thead-dark">
+					<th class="table-header" colspan="5">Employees</th>
+				</tr>
+				<tr>
+					<th>E ID</th>
+					<th>Username</th>
+					<th>F Name</th>
+					<th>L Name</th>
+					<th>Email</th>
+				</tr>
+			</thead>
+			<tbody id="employeeRecords">
+				
+			</tbody>
+		</table>
+		<table class="col-6 table table-light table-bordered">
+			<thead>
+				<tr class="thead-dark">
+					<th class="table-header" colspan="6">Reimbursement Requests</th>
+				</tr>
+				<tr>
+					<th>R ID</th>
+					<th>Employee ID</th>
+					<th>Manager ID</th>
+					<th>Description</th>
+					<th>Amount</th>
+					<th>Approved</th>
+				</tr>
+			</thead>
+			<tbody id="requestRecords_Pending">
+				
+			</tbody>
+			<tbody id="requestRecords_Approved">
+				
+			</tbody>
+			<tbody id="requestRecords_Denied">
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+	
+<span id="loadTarget">manager</span>

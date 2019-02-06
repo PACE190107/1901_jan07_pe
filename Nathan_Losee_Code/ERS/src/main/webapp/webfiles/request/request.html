@@ -1,0 +1,28 @@
+<div class="popup-form">
+	<form class="container">
+		<fieldset>
+			<h2 class="row justify-content-center">Request Reimbursement</h2>
+			
+			<br>
+
+			<fieldset>
+				<legend>Request Information:</legend>
+				<div class="form-row justify-content-center form-group">
+					<label for="rDescription" class="col-form-label col-2">Description:</label>
+					<input id="rDescription" type="text" required="required" name="rDescription" placeholder="Description" class="col-10">
+				</div>
+				<div class="form-row justify-content-center form-group">
+					<label for="rAmount" class="col-form-label col-2">Amount:</label>
+					<input id="rAmount" type="number" required="required" name="rAmount" placeholder="Amount" class="col-10">
+				</div>
+			</fieldset>
+			
+			<br>
+			
+			<button id="request" type="button" class="btn-success col-12">Make Request</button>
+			<button id="cancel" type="button" class="btn-danger col-12">Cancel</button>
+		</fieldset>
+	</form>
+</div>
+
+<span id="loadTarget">request</span>

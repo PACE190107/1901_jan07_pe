@@ -1,0 +1,39 @@
+<div class="popup-form">
+	<form class="container">
+		<fieldset>
+			<h2 class="row justify-content-center">Employee Registration</h2>
+			
+			<br>
+
+			<fieldset>
+				<legend>Username:</legend>
+				<div class="form-row justify-content-center form-group">
+					<input id="rUser" type="text" required="required" name="rUser" placeholder="Username" class="col-12">
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<legend>Personal Information:</legend>
+				<div class="form-row justify-content-center form-group">
+					<label for="firstname" class="col-form-label col-2">First Name:</label>
+					<input id="rFirst" type="text" required="required" name="rFirst" placeholder="First Name" class="col-10">
+				</div>
+				<div class="form-row justify-content-center form-group">
+					<label for="lastname" class="col-form-label col-2">Last Name:</label>
+					<input id="rLast" type="text" required="required" name="rLast" placeholder="Last Name" class="col-10">
+				</div>
+				<div class="form-row justify-content-center form-group">
+					<label for="email" class="col-form-label col-2">Email:</label>
+					<input id="rEmail" type="email" required="required" name="rEmail" placeholder="Email" class="col-10">
+				</div>
+			</fieldset>
+			
+			<br>
+			
+			<button id="register" type="button" class="btn-success col-12">Register</button>
+			<button id="cancel" type="button" class="btn-danger col-12">Cancel</button>
+		</fieldset>
+	</form>
+</div>
+
+<span id="loadTarget">register</span>

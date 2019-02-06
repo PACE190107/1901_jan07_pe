@@ -1,0 +1,26 @@
+@charset "ISO-8859-1";
+
+input {
+	text-align: center;
+}
+
+body {
+	background-color: black;
+}
+
+h1 {
+	color: white;
+}
+
+button {
+	background-color: black;
+	font-weight: bold;
+}
+
+th, td {
+  overflow: hidden;
+}
+
+table {
+  table-layout: fixed;
+}

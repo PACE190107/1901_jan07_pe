@@ -1,0 +1,39 @@
+<div class="container-fluid">
+	<br>
+	
+	<h1 class="row justify-content-center">Hello,&nbsp;<span id="usernameField"></span>!</h1>
+	<div class="row justify-content-center">
+		<button id="alter" class="btn-outline-success col-3" type="button">Settings</button>
+		<button id="logout" class="btn-outline-danger col-3" type="button">Logout</button>
+	</div>
+	
+	<br><br>
+	
+	<div class="row justify-content-center">
+		<button id="makeRequest" class="col-12 btn-outline-success" type="button">Make New Request</button>
+	</div>
+	
+	<br>
+	
+	<table class="table table-light table-bordered">
+		<thead>
+			<tr>
+				<th>Request ID</th>
+				<th>Description</th>
+				<th>Amount</th>
+				<th>Approved</th>
+			</tr>
+		</thead>
+		<tbody id="requestRecords_Pending">
+			
+		</tbody>
+		<tbody id="requestRecords_Approved">
+			
+		</tbody>
+		<tbody id="requestRecords_Denied">
+			
+		</tbody>
+	</table>
+</div>
+	
+<span id="loadTarget">employee</span>
