@@ -1,5 +1,6 @@
 package com.revature.backend;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -18,8 +19,8 @@ public class MasterServlet extends HttpServlet {
 		
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		System.out.println("Connected");
-		resp.setContentType("application/json");
+		System.out.println("connected");
+		resp.setContentType("json");
 		try {
 			resp.setStatus(200);
 			resp.getWriter().append(mapper.writeValueAsString(MasterDispatcher.process(req, resp)));

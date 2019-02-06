@@ -7,28 +7,32 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
     crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="../CSS/style.css">
   <title>Login</title>
 </head>
 
-<body>
+<body id='body'>
   <div>
     <h3 id="header">Welcome</h3>
   </div>
   <div>
-    <form id="loginform">
+    <form>
       <label for="username">Username</label>
-      <input type="text" name="username">
+      <input id='user' type="text" name="username">
       <br>
 
       <label for="passwords">Password</label>
-      <input type="password" name="password">
+      <input id='pass' type="password" name="password">
       <br>
 
-      <input id="login" type="button" value="Log In">
+      <h3 id='errornotify'></h3>
+
+     <!--- <input type="submit" value="Log In"> -->
+    </form>
+    <form>
+      <button id="test" type="button">Login</button>
     </form>
   </div>
-  <script src="../JS/login.js"></script>
+  
+  <script type="text/javascript" src="../JS/login.js"></script>
 </body>
-
 </html>

@@ -9,7 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
+
   <servlet>
   	<servlet-name>MServlet</servlet-name>
   	<servlet-class>com.revature.backend.MasterServlet</servlet-class>
@@ -20,5 +20,16 @@
   	<url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>LServlet</servlet-name>
+  	<servlet-class>com.revature.backend.loginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>LServlet</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+ 
+ 
   
 </web-app>

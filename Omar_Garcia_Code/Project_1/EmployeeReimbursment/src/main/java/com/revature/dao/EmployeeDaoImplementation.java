@@ -40,6 +40,7 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 	}
 
 	public Employee login(String username, String password) throws SQLException {
+		System.out.println("Username " + username + "\npassword " + password);
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "SELECT * FROM EMPLOYEE WHERE E_PASSWORD LIKE GET_USER_HASH(?,?)";
 			PreparedStatement ps = conn.prepareStatement(sql);

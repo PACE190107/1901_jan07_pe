@@ -86,4 +86,9 @@ exec INSERT_EMPLOYEE('first','last','first','password',0,'sample@website.com');
 exec INSERT_EMPLOYEE('Isa','Manager','mag1','password',1,'sample1@website.com');
 
 
-select * from EMPLOYEE;
+
+select * from employee;
+
+select * from REQUEST where R_APPROVALE = 0;
+
+select * from EMPLOYEE WHERE E_PASSWORD LIKE GET_USER_HASH('first','password');

@@ -30,21 +30,30 @@ public class EmployeeService {
 	}
 
 	public Employee login(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
-		if (req.getMethod().equals("POST")) {
-			login emp;
+		Employee emp = null;
+		if(req.getMethod().contentEquals("GET")) {
+		emp = EmployeeDaoImplementation.getEmployeeDao().login(req.getParameter("username"), req.getParameter("password"));
+		} else if (req.getMethod().equals("POST")) {
 			try {
-				emp = mapper.readValue(req.getReader(), login.class);
-				return EmployeeDaoImplementation.getEmployeeDao().login(emp.getUsername(), emp.getPassword());
-			} catch (JsonParseException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
+				login log = mapper.readValue(req.getReader(), login.class);
+				emp = EmployeeDaoImplementation.getEmployeeDao().login(log.getUsername(), log.getPassword());
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		return null;
+		/*if(emp != null) {
+			try {
+				req.getSession().setAttribute("usernme", emp.getUsername());
+				req.getRequestDispatcher("home.jsp").forward(req, resp);
+			} catch (ServletException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}	*/
+		return emp;
 	}
+	
 
 	public Employee register(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
 		Employee emp;
