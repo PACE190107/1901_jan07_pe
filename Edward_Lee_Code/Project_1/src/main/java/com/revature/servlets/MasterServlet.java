@@ -25,12 +25,17 @@ public class MasterServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getRequestURI().contains("logout")) {
-			request.getSession().invalidate(); //doesn't work quite right
-			request.getRequestDispatcher("/").forward(request,response);
-		}
+			System.out.println("logout");
+	        request.getSession().invalidate(); //doesn't work quite right
+
+	        request.getRequestDispatcher("/").forward(request,response);
+		}else {
 		Object o = MasterDispatcher.process(request, response);
 		if(o != null) {
 			if(o instanceof Manager) {
+		        response.addHeader("Cache-Control", "no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0"); 
+		        response.addHeader("Pragma", "no-cache"); 
+		        response.addDateHeader ("Expires", 0);
 				request.getSession().setAttribute("employee", (Employee)o);
 				reimbursementService rs = new reimbursementServiceImpl();
 				List<Reimbursement> pending =rs.getPendingReimbursement();
@@ -39,6 +44,9 @@ public class MasterServlet extends HttpServlet{
 				request.getSession().setAttribute("resolved", resolved);
 				request.getRequestDispatcher("/ManagerPortal.jsp").forward(request, response);
 			}else if( o instanceof Employee) {
+		        response.addHeader("Cache-Control", "no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0"); 
+		        response.addHeader("Pragma", "no-cache"); 
+		        response.addDateHeader ("Expires", 0);
 				//pending and resolved reimbursements for the returned employee
 				reimbursementService rs = new reimbursementServiceImpl();
 				request.getSession().setAttribute("employee", (Employee)o);
@@ -57,6 +65,7 @@ public class MasterServlet extends HttpServlet{
 			}
 		}else { //goes here with an invalid login. I want to replace the calls with ajax to avoid this and be able to change the text
 			request.getRequestDispatcher("/").forward(request,response);
+		}
 		}
 	}
 	

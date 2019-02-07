@@ -116,7 +116,6 @@ public class ReimbursementDAOImpl implements ReimbursementDAO{
 			cs.execute();
 			ResultSet rs = (ResultSet) cs.getObject(1);
 			while(rs.next()) {
-				System.out.println("in the while");
 				if (rs.getInt(6) ==1){
 					reimbursements.add(new ResolvedReimbursement(rs.getInt(1),rs.getInt(2), rs.getDouble(3), rs.getDate(4),rs.getDate(5), true, rs.getDate(7), rs.getInt(8)));
 				}else if(rs.getInt(6) ==0) {

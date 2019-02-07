@@ -81,7 +81,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-           <form><button type="submit" class="btn btn-danger" >Log Out</button></form>
+    <form method="POST" action="logout"><button class="dropdown-item btn-danger" href="logout">Log Out</button></form>
       </div>
     </div>
   </div>
