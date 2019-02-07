@@ -1,0 +1,163 @@
+<!-- http://localhost:8080/ExpenseReimbursement/html/Home.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
+crossorigin="anonymous">
+<style>
+	body{
+		background-color: #39b5c0 ;
+	}
+	th{
+		font-size: 20;
+		color: White;
+		background-color: Red;
+		font-style: bold;
+	} 
+	tr{
+		font-size: 20;
+		color: Black;
+		font-style: bold;
+	} 
+.btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #cce0f0;
+  cursor: pointer;
+  font-size: 18px;
+  color: black;
+}
+
+/* Style the active class, and buttons on mouse-over */
+.active, .btn:hover {
+  background-color: #666;
+  color: white;
+}
+
+.mystyle {
+ 
+ background-color: black ;
+ color: #69babe
+}
+</style>
+<title>Expense Reimbursement</title>
+</head>
+
+<body class="col-md-8 offset-md-2">
+
+<div id="btn-group">
+  <button id="getSingleUserBtn"  class="btn" onclick="toggleSingleUser()">Employee Details</button>
+  <button id="viewResolvedBtn" class="btn"  onclick="toggleResolvedReb()">View All Approved Requests</button>
+  <button id="viewPendingBtn"  class="btn"  onclick="togglePendingReb()">View All Pending Requests</button>
+  <button onclick="toggleSubmitForm()" class="btn"  id="toggleSubmitNew" >Submit A New Request</button>
+  <button id="logout" class="btn"  >Logout</button>
+</div>
+<div>
+<div id="singleUserDiv" style="display: none">
+		<table class="table table-bordered table-striped">
+			<tbody id="employeeDetails">
+				<th>ID</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+			</tbody>
+		</table>
+		
+		<div>
+			<input type="text" id="newUsername">
+			<button id="changeUsernameBtn"class="btn btn-primary">Change Username</button>
+			<input type="text" id="newEmail">
+			<button id="changeEmailBtn"class="btn btn-primary">Change Email</button>
+		</div>	
+	</div>
+	<div id="resolvedRebDIV" style="display: none">
+		<table class="table table-bordered table-striped">
+			<tbody id="resolvedRebTable">
+				<th>Employee ID</th>
+				<th>Reimbursement ID</th>
+				<th>Amount</th>
+				<th>Description</th>
+				<th>Status</th>
+				<th>Resolver ID</th>
+			</tbody>
+		</table>
+	</div>
+	<div id="pendingRebDIV" style="display: none">
+		<table class="table table-bordered table-striped">
+			<tbody id="pendingRebTable">
+				<th>Employee ID</th>
+				<th>Reimbursement ID</th>
+				<th>Amount</th>
+				<th>Description</th>
+				<th>Status</th>
+				<th>Resolver ID</th>
+			</tbody>
+		</table>
+	</div>
+	<div id="submitForm" style="display: none">
+		<input type="number" id="rebAmount" placeholder="Enter Amount">
+		<div>
+		<input type="text" id="rebDesc" placeholder="Enter Brief Description" maxlength="40" class="col-sm-3">
+		</div>
+		<button id="submitReb" class="btn">Submit Request</button>
+	</div>
+	<div>
+		<p id="rebStatus"></p>
+	</div>
+</div>
+<!-- ----------------------------------------------------------------------------------- -->
+
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+	<div>
+		<p id="usernameStatus"></p>
+	</div>
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+	<div>
+		<p id="passwordStatus"></p>
+	</div>
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+	<div>
+		<p id="emailStatus"></p>
+	</div>
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+
+	<script type="text/javascript" src="../js/employee.js"></script>
+	<!-- ----------------------------------------------------------------------------------- -->
+	<!-- ----------------------------------------------------------------------------------- -->
+</body>
+</html>
+
+
+
+
+
+
+
+

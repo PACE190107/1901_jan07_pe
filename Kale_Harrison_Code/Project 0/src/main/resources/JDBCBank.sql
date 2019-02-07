@@ -79,6 +79,7 @@ COMMIT;
 END;
 /
 
+EXEC cahangebalalnce (7, 434343, 343434)
 --Inserting a new user into a row 
 CREATE OR REPLACE PROCEDURE newUser (username varchar2, passphrase varchar2)
 AS

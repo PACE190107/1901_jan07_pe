@@ -1,0 +1,133 @@
+<!-- http://localhost:8080/ExpenseReimbursement/html/ManagerHome.html -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" 
+crossorigin="anonymous">
+<style>
+	body{
+		background-color: #39b5c0 ;
+	}
+	th{
+		font-size: 20;
+		color: White;
+		background-color: Red;
+		font-style: bold;
+	} 
+	tr{
+		font-size: 20;
+		color: Black;
+		font-style: bold;
+	} 
+.btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #cce0f0;
+  cursor: pointer;
+  font-size: 18px;
+  color: black;
+}
+
+/* Style the active class, and buttons on mouse-over */
+.active, .btn:hover {
+  background-color: #666;
+  color: white;
+}
+
+.mystyle {
+ 
+ background-color: black ;
+ color: #69babe
+}
+</style>
+<title>Employee Reimbursement Manager</title>
+</head>
+<body class="col-md-8 offset-md-2">
+	<div>
+		<button id="getAllUsersBtn"class="btn" onclick="toggleAllUsers()">View All Employees</button>
+		<button id="getAllPendingBtn"class="btn" onclick="toggleAllPending()" >See all Pending Requests </button>
+	</div>
+	<div id="allUsersDIV">
+		<table class="table table-bordered table-striped">
+			<tbody id="employeeTable">
+				<th>ID</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+			</tbody>
+		</table>
+	</div>
+	<div id="allPendingDIV">
+		<table class="table table-bordered table-striped">
+			<tbody id="pendingRebTable">
+				<th>Employee ID</th>
+				<th>Reimbursement ID</th>
+				<th>Amount</th>
+				<th>Description</th>
+				<th>Status</th>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<h1>Welcome!</h1>
+		<button id="getAllApprovedBtn"class="btn btn-primary">See all Approved Requests</button>
+		<button onclick="toggleAllApproved()" class="btn btn-danger">Toggle Approved</button>
+	</div>
+	<div id="allApprovedDIV">
+		<table class="table table-bordered table-striped">
+			<tbody id="approvedRebTable">
+				<th>Employee ID</th>
+				<th>Reimbursement ID</th>
+				<th>Amount</th>
+				<th>Description</th>
+				<th>Status</th>
+				<th>Resolver ID</th>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<button onclick="toggleAllRebEmpForm()" class="btn btn-primary">See Single Employee Requests</button>
+	</div>
+	<div id="allRebEmpForm" style="display: none">
+		<h1>Welcome!</h1>
+		<input type="number" id="requestedId" placeholder="Enter Employee ID">
+		<button id="getAllRebEmpBtn"class="btn btn-primary">Submit</button>
+		<button onclick="toggleAllRebEmp()" class="btn btn-danger">Toggle Requests</button>
+	</div>
+	<div id="allRebEmp" >
+		<table class="table table-bordered table-striped">
+			<tbody id="allRebEmpTable">
+				<th>Employee ID</th>
+				<th>Reimbursement ID</th>
+				<th>Amount</th>
+				<th>Description</th>
+				<th>Status</th>
+				<th>Resolver ID</th>
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<button onclick="toggleDecision()" class="btn btn-primary">Approve or Deny Requests</button>
+	</div>
+	<div id="decisionForm" style="display: none">
+		<h1>Welcome!</h1>
+		<input type="number" id="rebId" placeholder="Enter Reimburement ID">
+		<button id="approveRequest"class="btn btn-primary">Approve</button>
+		<button id="denyRequest"class="btn btn-primary">Deny</button>
+	</div>
+	<div>
+		<p id="decision"></p>
+	</div>
+		<div>
+		<button id="logout" class="btn btn-primary">Logout</button>
+	</div>
+	<script type="text/javascript" src="../js/manager.js"></script>
+</body>
+</html>
+
+
