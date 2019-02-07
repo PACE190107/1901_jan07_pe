@@ -6,8 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Employee implements Serializable {
-    private long id;
-    @JsonIgnore
+    private long e_id;
     private String password;
     private String username;
     private String first_name;
@@ -18,6 +17,16 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
+    public Employee(Long e_id, boolean manager){
+        this.e_id = e_id;
+        this.manager = manager;
+    }
+
+    public Employee(String username, String password){
+        this.password = password;
+        this.username = username;
+    }
+
     public Employee(String password, String username, String first_name, String last_name, String email) {
         this.password = password;
         this.username = username;
@@ -26,8 +35,8 @@ public class Employee implements Serializable {
         this.email = email;
     }
 
-    public Employee(long id, String password, String username, String first_name, String last_name, String email, boolean manager) {
-        this.id = id;
+    public Employee(long e_id, String password, String username, String first_name, String last_name, String email, boolean manager) {
+        this.e_id = e_id;
         this.password = password;
         this.username = username;
         this.first_name = first_name;
@@ -36,12 +45,12 @@ public class Employee implements Serializable {
         this.manager = manager;
     }
 
-    public long getId() {
-        return id;
+    public long getE_id() {
+        return e_id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setE_id(long e_id) {
+        this.e_id = e_id;
     }
 
     public String getPassword() {
@@ -97,7 +106,7 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id &&
+        return e_id == employee.e_id &&
                 manager == employee.manager &&
                 Objects.equals(password, employee.password) &&
                 Objects.equals(username, employee.username) &&
@@ -108,13 +117,13 @@ public class Employee implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, password, username, first_name, last_name, email, manager);
+        return Objects.hash(e_id, password, username, first_name, last_name, email, manager);
     }
 
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
+                "e_id=" + e_id +
                 ", password='" + password + '\'' +
                 ", username='" + username + '\'' +
                 ", first_name='" + first_name + '\'' +

@@ -18,12 +18,14 @@ public class DateConversion {
     }
 
     public Date convertLDTtoDate(LocalDateTime ldt) {
+        if(ldt==null) return null;
         return java.util.Date
                 .from(ldt.atZone(ZoneId.systemDefault())
                         .toInstant());
     }
 
     public LocalDateTime convertDateToLDT(Date date){
+        if(date==null) return null;
         return date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();

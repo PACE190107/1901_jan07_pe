@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Sinister Sponge Login</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-lg">
+            <ul class="nav nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <p class="h5">Login to access site.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="username-label">Username</span>
+                </div>
+                <input type="text" class="form-control" id="username" placeholder="Enter username...">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="input-group input-group-lg">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Password  </span>
+                </div>
+                <input type="password" class="form-control" id="password" placeholder="Enter password...">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+            <div class="text-center">
+                <button type="button" id="loginBtn" class="btn btn-dark btn-lg">Login</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../javascript/login.js"></script>
+<!--<script type="text/javascript">
+    window.onload = () => {
+        let loginBtn = document.getElementById("loginBtn");
+        loginBtn.addEventListener("click", () => {
+            console.log("login button pressed");
+            let loginRequest = new XMLHttpRequest();
+            let passinput = document.getElementById("password").value;
+            let userinput = document.getElementById("username").value;
+            let inputEmployee = {
+                "username" : userinput,
+                "password" : passinput
+            }
+            const jsonMsg = JSON.stringify(inputEmployee);
+            loginRequest.onreadystatechange = () => {
+                console.log(" " + loginRequest.readyState);
+                if((loginRequest.readyState == 4) && (loginRequest.status == 200)){
+                    console.log("response: " + loginRequest.responseText);
+                    if(loginRequest.responseText == 'true'){
+                        console.log("Login successful");
+                        window.location.href="http://localhost:8080/Project_1_war/static/home.html";
+                    } else {
+                        console.log("Login failed.");
+                        window.location.href="http://localhost:8080/Project_1_war/static/login.html";
+                    }
+                }
+            };
+            loginRequest.open("post", "http://localhost:8080/Project_1_war/login");
+            loginRequest.setRequestHeader("Content-Type", "application/json");
+            loginRequest.send(jsonMsg);
+        });
+    }
+</script>-->
+</body>
+</html>

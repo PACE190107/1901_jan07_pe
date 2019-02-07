@@ -2,8 +2,7 @@ package com.revature.servlet;
 
 import com.revature.model.Employee;
 import com.revature.model.Request;
-import com.revature.services.EmployeeService;
-import com.revature.services.ManagerService;
+import com.revature.services.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
@@ -19,9 +18,11 @@ public class SinisterSpongeDispatcher {
 
     private static SinisterSpongeDispatcher instance = new SinisterSpongeDispatcher();
 
-    private static EmployeeService employeeService = EmployeeService.getInstance();
+    private static EmployeeServ employeeService = EmployeeImpl.getInstance();
 
-    private static ManagerService managerService = ManagerService.getInstance();
+    private static RequestService requestService = RequestImpl.getInstance();
+
+    private static LoginService loginService = LoginImpl.getLoginService();
 
     private Employee currentEmployee;
     private Request currentRequest;
@@ -34,22 +35,26 @@ public class SinisterSpongeDispatcher {
         return instance;
     }
 
-    public void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
-        String uri = req.getRequestURI().substring(req.getContextPath().length()+1);
-        while(uri.indexOf("/")>0){
-            uri = uri.substring(0, uri.indexOf("/"));
-        }
-        switch(uri){
-            case "Project_1_war": RequestDispatcher rd = req.getRequestDispatcher("/static/home.html");
-                rd.include(req, resp); break;
-            case "Project_1": req.getRequestDispatcher("home.html").forward(req, resp); break;
-            case "login": System.out.println("Not implemented"); break;
-            case "logout": System.out.println("Not implemented"); break;
-            case "requests": System.out.println("Not implemented"); break;
-            case "user_info": System.out.println("Not implemented"); break;
-            default: System.out.println("Not implemented");
+    public Object process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+        if (req.getRequestURI().contains("request")){
+            System.out.println("Send Request to requestService");
+            return requestService.process(req, resp);}
+        else if (req.getRequestURI().contains("employee")) {
+            System.out.println("Send Request to employeeServ");
+            return employeeService.process(req, resp);
+        } else if (req.getRequestURI().contains("login")){
+            System.out.println("Send request to loginService");
+            return loginService.process(req, resp);
+        } else {
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/static/login.html");
+            dispatcher.forward(req, resp);
+        };
+        return null;
 
-        }
-        System.out.println("Dispacter received request: " + req.getRequestURI());
+        //if (request.getRequestURI().contains("users"))
+            //return userService.process(request, response);
+        //else
+        //System.out.println("Dispacter received request: " + req.getRequestURI());
+        //return null;
     }
 }

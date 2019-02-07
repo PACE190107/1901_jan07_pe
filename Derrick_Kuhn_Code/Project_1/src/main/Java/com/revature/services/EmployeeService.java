@@ -24,6 +24,10 @@ public class EmployeeService {
         return dao.login(emp);
     }
 
+    public Employee registerEmployee(Employee emp){
+        return dao.registerNewEmployee(emp);
+    }
+
     public List<Request> getEmployeeRequests(Employee emp){
         return dao.getEmployeeRequests(emp);
     }

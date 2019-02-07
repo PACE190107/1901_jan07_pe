@@ -1,0 +1,56 @@
+URL Patterns
+--------------------------------------------------------------------
+LoginService
+
+Request login - /Project_1/Login - POST
+
+--------------------------------------------------------------------
+RequestService
+
+Request all Requests - /Project_1/.../Request - GET
+Request all Pending Requests - /Project_1/.../Request/Pending -GET
+Request all Resolved Requests - /Project_1/.../Request/Resolved -GET
+Create new Request - /Project_1/.../Request/ - POST
+Approve/Deny Request - /Project_1/.../Request/ -PUT
+
+--------------------------------------------------------------------
+EmployeeService
+
+Request all Employees - /Project_1/.../Employee - GET
+Request Employee Info - /Project_1/.../Employee/Info - GET
+Update Employee Info - /Project_1/.../Employee/Update - PUT
+Register New Employee - /Project_1/.../Employee/Register - POST
+
+
+if (request.getMethod().equals("POST")) {
+            if (request.getHeader("Content-Type").equals("application/json")) {
+                try {
+                    Employee logEmployee = null;
+                    logEmployee = mapper.readValue(request.getReader(), Employee.class);
+                    final String username = logEmployee.getE_username();
+                    final String password = logEmployee.getE_password();
+                    
+                    Employee attempting = attemptAuthentication(username, password);
+                    if (attempting != null) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("e_username", attempting.getE_username());
+                        session.setAttribute("e_id", attempting.getE_id());
+                        String url = "http://localhost:8080/ExpenseReimbursement/html/Home.html";
+                        response.setHeader("Location", url);
+                        return attempting;
+                    }else
+                        return null;
+                } catch (JsonParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (JsonMappingException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+                
+            }
+                }

@@ -1,6 +1,5 @@
 package com.revature.utils;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class DBConnectionUtil {
     static {
         dbConnectionInfo();
         try {
-            Class.forName("oracle.jdbc.OracleDriver");
+            Class.forName(driver);
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -43,15 +42,14 @@ public class DBConnectionUtil {
     public static void dbConnectionInfo() {
         try {
             Properties prop = new Properties();
-            prop.load(new FileReader("..\\..\\..\\project1.properties"));
+            prop.load(new FileReader("C:\\derrick_kuhn_repos\\project1.properties"));
             driver = prop.getProperty("driver");
             url = prop.getProperty("dbs");
             user = prop.getProperty("username");
             pass = prop.getProperty("password");
-
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("File not found for DBConnection");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
