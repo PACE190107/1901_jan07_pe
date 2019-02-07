@@ -1,6 +1,6 @@
 if (!loadUsername)
 	loadUsername = function() {
-		fetch('http://localhost:8080/ERS/username/')
+		fetch('http://' + location.host + '/ERS/username/')
 		.then(response => {
 			if (response.ok) {
 				return response.text();
@@ -16,7 +16,7 @@ if (!loadUsername)
 
 if (!alter)
 	alter = function() {
-		fetch('http://localhost:8080/ERS/alter/')
+		fetch('http://' + location.host + '/ERS/alter/')
 			.then(response => {
 				if (response.ok) {
 					return response.text();
@@ -39,13 +39,13 @@ if (!logout)
 				loadContent(logoutRequest.responseText);
 			}
 		};
-		logoutRequest.open('GET', 'http://localhost:8080/ERS/logout/');
+		logoutRequest.open('GET', 'http://' + location.host + '/ERS/logout/');
 		logoutRequest.send();
 	}
 
 if (!makeRequest)
 	makeRequest = function() {
-		fetch('http://localhost:8080/ERS/request/')
+		fetch('http://' + location.host + '/ERS/request/')
 			.then(response => {
 				if (response.ok) {
 					return response.text();
@@ -61,7 +61,7 @@ if (!makeRequest)
 
 if (!loadRequests)
 	loadRequests = function(isManager) {
-		fetch('http://localhost:8080/ERS/requests/')
+		fetch('http://' + location.host + '/ERS/requests/')
 			.then(response => {
 				if (response.ok) {
 					return response.json();

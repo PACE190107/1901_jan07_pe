@@ -1,11 +1,15 @@
 if (!submitRequest)
 	submitRequest = function() {
+		if (document.getElementsByTagName("form")[0].checkValidity() === false) {
+	        return;
+	    }
+		
 		let request = {
 				rrDescription: document.getElementById("rDescription").value,
 				rrAmount: document.getElementById("rAmount").value,
 			};
 		
-		fetch('http://localhost:8080/ERS/request/', {
+		fetch('http://' + location.host + '/ERS/request/', {
 			method: "POST",
 			body: JSON.stringify(request),
 			headers: {

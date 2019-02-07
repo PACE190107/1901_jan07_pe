@@ -35,3 +35,13 @@ fieldset {
 span {
 	text-align: center;
 }
+
+.input-group-prepend {
+	flex: 0 0 20%;
+}
+.input-group-text {
+	width: 100%;
+}
+.input-group {
+	width: 100%;
+}

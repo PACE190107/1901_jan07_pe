@@ -1,10 +1,14 @@
 if (!confirm)
 	confirm = function() {
-		let employeeJSON = {
+		if (document.getElementsByTagName("form")[0].checkValidity() === false) {
+	        return;
+	    }
+		
+		let passwordJSON = {
 			credential: "confirmation",
 			newValue: document.getElementById("pass").value
 		};
-		if (employeeJSON.pass == "")
+		if (passwordJSON.pass == "")
 			return null;
 		
 		let confirmRequest = new XMLHttpRequest();
@@ -14,9 +18,9 @@ if (!confirm)
 				loadContent(confirmRequest.responseText);
 			}
 		};
-		confirmRequest.open('PUT', 'http://localhost:8080/ERS/settings/');
+		confirmRequest.open('PUT', 'http://' + location.host + '/ERS/settings/');
 		confirmRequest.setRequestHeader("Content-Type", "application/json");
-		confirmRequest.send(JSON.stringify(employeeJSON));
+		confirmRequest.send(JSON.stringify(passwordJSON));
 	}
 
 if (!logout)
@@ -28,7 +32,7 @@ if (!logout)
 				loadContent(logoutRequest.responseText);
 			}
 		};
-		logoutRequest.open('GET', 'http://localhost:8080/ERS/logout/');
+		logoutRequest.open('GET', 'http://' + location.host + '/ERS/logout/');
 		logoutRequest.send();
 	}
 

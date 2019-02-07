@@ -1,5 +1,9 @@
 if (!submitRegistration)
 	submitRegistration = function() {
+		if (document.getElementsByTagName("form")[0].checkValidity() === false) {
+	        return;
+	    }
+		
 		let registration = {
 				eUsername: document.getElementById("rUser").value,
 				eFirstName: document.getElementById("rFirst").value,
@@ -7,7 +11,7 @@ if (!submitRegistration)
 				eEmail: document.getElementById("rEmail").value
 			};
 		
-		fetch('http://localhost:8080/ERS/register/', {
+		fetch('http://' + location.host + '/ERS/register/', {
 			method: "POST",
 			body: JSON.stringify(registration),
 			headers: {

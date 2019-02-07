@@ -60,9 +60,10 @@ public class ManagerService {
 				registration.geteUsername(), registration.geteUsername(),
 				registration.geteFirstName(), registration.geteLastName(),
 				registration.geteEmail(), false);
-		sendConfirmationEmail(registration.geteEmail(), registration.geteUsername());
+		sendConfirmationEmail(registration.geteEmail(), registration.geteUsername(),
+				req.getServerName() + ":" + req.getServerPort());
 	}
-	private static void sendConfirmationEmail(String email, String username) {
+	private static void sendConfirmationEmail(String email, String username, String host) {
 	      String origin = "sand-storm15@hotmail.com";
 	      Properties properties = System.getProperties();
 	      properties.setProperty("mail.transport.protocol", "smtp");
@@ -80,7 +81,7 @@ public class ManagerService {
 	        		+ "<p>Your username and password are:</p><br>"
 	        		+ "<p>Username: " + username + "</p>"
 	        		+ "<p>Password: " + username + "</p><br><br>"
-	        		+ "<a href=\"http://localhost:8080/ERS?temp=" + username + "/\">Click here to reset your password</a>"
+	        		+ "<a href=\"http://" + host + "/ERS?temp=" + username + "/\">Click here to reset your password</a>"
 	         		+ "</div>", "utf-8", "html");
 	         
 	 		Transport transport = session.getTransport("smtp");

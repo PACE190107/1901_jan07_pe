@@ -9,16 +9,25 @@
 	<br><br>
 	
 	<div class="row justify-content-center">
-		<form class="login-form">
+		<form class="login-form was-validated">
 			<fieldset>
 				<legend>Employee Login</legend>
-				<div class="form-row justify-content-center form-group">
-					<label for="user" class="col-form-label col-2">Username:</label>
-					<input id="user" name="user" type="text" placeholder="Enter your username" class="col-10">
+				
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Username</span>
+						</div>
+						<input id="user" type="text" class="form-control" placeholder="Enter your username" required>
+					</div>
 				</div>
-				<div class="form-row justify-content-center form-group">
-					<label for="pass" class="col-form-label col-2">Password:</label>
-					<input id="pass" name="pass" type="password" placeholder="Enter your password" class="col-10">
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Password</span>
+						</div>
+						<input id="pass" type="password" class="form-control" placeholder="Enter your password" required>
+					</div>
 				</div>
 	
 				<div class="row justify-content-center">

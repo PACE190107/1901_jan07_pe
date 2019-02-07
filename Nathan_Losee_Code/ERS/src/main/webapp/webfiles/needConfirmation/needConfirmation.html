@@ -1,0 +1,41 @@
+<div class="container-fluid">
+
+	<br><br><br><br>
+	
+	<div class="row justify-content-center">
+		<form class="login-form was-validated">
+			<fieldset>
+				<legend>Unconfirmed Email</legend>
+			
+				<p>You must use the link provided in the confirmation email sent to your address to
+				change your password before logging in. You may change your email address here if necessary.</p>
+				
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Current Email</span>
+						</div>
+						<input id="emailField" type="text" class="form-control" readonly>
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">New Email</span>
+						</div>
+						<input id="emailInput" type="email" class="form-control" placeholder="Enter your email" required>
+					</div>
+				</div>
+				
+				<div class="row justify-content-center">
+					<button id="submit" class="btn-outline-success col-6" type="button">Change Email</button>
+				</div>
+				<div class="row justify-content-center">
+					<button id="cancel" class="btn-outline-danger col-6" type="button">Logout</button>
+				</div>
+			</fieldset>
+		</form>
+	</div>
+</div>
+
+<span id="loadTarget">needConfirmation</span>

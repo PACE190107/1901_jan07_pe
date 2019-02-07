@@ -1,23 +1,20 @@
 @charset "ISO-8859-1";
 
-.popup-form {
-	background: white;
-	position: fixed;
-	top: 10px;
-	right: 10%;
-	left: 10%;
+.login-form {
+	width: 40%;
 }
 
-
-h2 {
-	color: black;
+p, span {
+	color: white;
 }
 
 legend {
+	color: white;
 	width: inherit;
 }
 
 label {
+	color: white;
 	text-align: right;
 }
 
@@ -29,7 +26,7 @@ fieldset {
     min-inline-size: min-content;
     border-width: 2px;
     border-style: groove;
-    border-color: black;
+    border-color: white;
     border-image: initial;
 }
 
@@ -37,8 +34,11 @@ fieldset {
 	flex: 0 0 20%;
 }
 .input-group-text {
+	background-color: black;
+	color: white;
 	width: 100%;
 }
 .input-group {
+	border-color: white;
 	width: 100%;
 }

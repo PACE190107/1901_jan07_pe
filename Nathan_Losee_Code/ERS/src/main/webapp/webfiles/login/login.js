@@ -1,11 +1,13 @@
 if (!login)
 	login = function() {
+		if (document.getElementsByTagName("form")[0].checkValidity() === false) {
+	        return;
+	    }
+		
 		let employeeJSON = {
 			user: document.getElementById("user").value,
 			pass: document.getElementById("pass").value
 		};
-		if (employeeJSON.user == "" || employeeJSON.pass == "")
-			return null;
 		
 		let loginRequest = new XMLHttpRequest();
 		loginRequest.onreadystatechange = () => {
@@ -14,7 +16,7 @@ if (!login)
 				loadContent(loginRequest.responseText);
 			}
 		};
-		loginRequest.open('POST', 'http://localhost:8080/ERS/login/');
+		loginRequest.open('POST', 'http://' + location.host + '/ERS/login/');
 		loginRequest.setRequestHeader("Content-Type", "application/json");
 		loginRequest.send(JSON.stringify(employeeJSON));
 	}

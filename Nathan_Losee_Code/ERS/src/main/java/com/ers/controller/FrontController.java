@@ -35,10 +35,17 @@ public class FrontController extends DefaultServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	    System.out.println("Host = " + req.getServerName());
+	    System.out.println("Port = " + req.getServerPort());
 		if (req.getRequestURI().endsWith(".html") ||
 			req.getRequestURI().endsWith(".js") ||
 			req.getRequestURI().endsWith(".css") ||
-			(req.getRequestURI().equals("/ERS/") && req.getParameter("temp") == null)) {
+			req.getRequestURI().equals("/ERS/")) {
+			if (req.getParameter("temp") != null) {
+				req.getSession().invalidate();
+				req.getSession().setAttribute("temp", new String(req.getParameter("temp")));
+				resp.sendRedirect("/ERS/");
+			}
 			resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 			resp.setHeader("Pragma", "no-cache");
 			resp.setHeader("Expires", "0");

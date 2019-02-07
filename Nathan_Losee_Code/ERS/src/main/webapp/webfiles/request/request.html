@@ -1,5 +1,5 @@
 <div class="popup-form">
-	<form class="container">
+	<form class="container was-validated">
 		<fieldset>
 			<h2 class="row justify-content-center">Request Reimbursement</h2>
 			
@@ -7,13 +7,37 @@
 
 			<fieldset>
 				<legend>Request Information:</legend>
-				<div class="form-row justify-content-center form-group">
-					<label for="rDescription" class="col-form-label col-2">Description:</label>
-					<input id="rDescription" type="text" required="required" name="rDescription" placeholder="Description" class="col-10">
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Description</span>
+						</div>
+						<input id="rDescription" type="text" class="form-control" placeholder="Enter your username" required>
+					</div>
 				</div>
-				<div class="form-row justify-content-center form-group">
-					<label for="rAmount" class="col-form-label col-2">Amount:</label>
-					<input id="rAmount" type="number" required="required" name="rAmount" placeholder="Amount" class="col-10">
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Amount</span>
+						</div>
+						<input id="rAmount" type="number" class="form-control" placeholder="Enter your username" required>
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Amount</span>
+						</div>
+						<input id="rAmount" type="number" class="form-control" placeholder="Enter your username" required>
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Receipt</span>
+						</div>
+						<input id="receipt" type="file" accept="image/*">
+					</div>
 				</div>
 			</fieldset>
 			

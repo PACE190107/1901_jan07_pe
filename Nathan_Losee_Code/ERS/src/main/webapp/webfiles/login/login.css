@@ -25,3 +25,16 @@ fieldset {
     border-color: white;
     border-image: initial;
 }
+
+.input-group-prepend {
+	flex: 0 0 20%;
+}
+.input-group-text {
+	background-color: black;
+	color: white;
+	width: 100%;
+}
+.input-group {
+	border-color: white;
+	width: 100%;
+}

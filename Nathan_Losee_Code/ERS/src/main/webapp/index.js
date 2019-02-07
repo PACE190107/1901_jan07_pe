@@ -31,8 +31,9 @@ let loadContent = function(htmlContent, isPopup = false) {
 	loadTarget.parentNode.removeChild(loadTarget);
 }
 
-let login, logout, closePopup, loadUsername, confirm,
-	alter, loadSettings, changeSetting, focus, unfocus,
+let login, logout, closePopup,
+	loadUsername, loadEmail, confirm, changeEmail,
+	alter, loadSettings, changeSetting,
 	loadRequests, loadRequestsSingle, makeRequest, submitRequest, stampRequest,
 	loadEmployees, loadEmployee, registerEmployee, submitRegistration;
 
@@ -41,7 +42,7 @@ window.onload = () => {
 	cssMainTarget = document.getElementById("cssMainTarget");
 	cssAltTarget = document.getElementById("cssAltTarget");
 	
-	fetch('http://localhost:8080/ERS/session/')
+	fetch('http://' + location.host + '/ERS/session/')
 		.then(response => {
 			if (response.ok) {
 				return response.text();

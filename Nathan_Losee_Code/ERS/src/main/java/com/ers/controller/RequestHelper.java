@@ -49,24 +49,31 @@ public class RequestHelper {
 		String switchString = switchStrings[switchStrings.length - 1];
 		switch (switchString) {
 		case "session":
-			if (req.getSession().getAttribute("user") == null)
-				req.getRequestDispatcher("/webfiles/login/login.html").forward(req, resp);
+			if (req.getSession().getAttribute("user") == null ||
+				req.getSession().getAttribute("temp") != null) {
+				if (req.getSession().getAttribute("temp") == null)
+					req.getRequestDispatcher("/webfiles/login/login.html").forward(req, resp);
+				else
+					LoginService.login(req, resp);
+				req.getSession().setAttribute("temp", null);
+			}
 			else {
 				ConnectionManager.setJDBCConnection(
 						((Employee) req.getSession().getAttribute("user")).geteUsername(),
 						((Employee) req.getSession().getAttribute("user")).getePassword());
 				if (((Employee) req.getSession().getAttribute("user")).isManager())
 					req.getRequestDispatcher("/webfiles/manager/manager.html").forward(req, resp);
-				else {
-					if (((Employee) req.getSession().getAttribute("user")).isConfirmed())
-						req.getRequestDispatcher("/webfiles/employee/employee.html").forward(req, resp);
-					else
-						req.getRequestDispatcher("/webfiles/passwordChange/passwordChange.html").forward(req, resp);
-				}
+				else if (((Employee) req.getSession().getAttribute("user")).isConfirmed())
+					req.getRequestDispatcher("/webfiles/employee/employee.html").forward(req, resp);
+				else
+					req.getRequestDispatcher("/webfiles/needConfirmation/needConfirmation.html").forward(req, resp);
 			}
 			break;
 		case "username":
 			EmployeeService.getUsername(req, resp);
+			break;
+		case "email":
+			EmployeeService.getEmail(req, resp);
 			break;
 		case "alter":
 			req.getRequestDispatcher("/webfiles/settings/settings.html").forward(req, resp);
@@ -91,9 +98,7 @@ public class RequestHelper {
 				req.getRequestDispatcher("/webfiles/register/register.html").forward(req, resp);
 			break;
 		case "ERS":
-			System.out.println("called");
 			LoginService.login(req, resp);
-			resp.sendRedirect("/ERS/");
 			break;
 		case "logout":
 			LoginService.logout(req, resp);

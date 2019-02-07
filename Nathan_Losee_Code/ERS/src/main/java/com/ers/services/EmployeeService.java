@@ -5,7 +5,14 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,6 +53,11 @@ public class EmployeeService {
 		resp.setContentType("text/plain");
 		resp.getWriter().write(((Employee) req.getSession().getAttribute("user")).geteUsername());
 	}
+	public static void getEmail(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException {
+		resp.setContentType("text/plain");
+		resp.getWriter().write(((Employee) req.getSession().getAttribute("user")).geteEmail());
+	}
 
 	public static void getSettings(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
@@ -78,6 +90,10 @@ public class EmployeeService {
 			break;
 		case "email":
 			((Employee) req.getSession().getAttribute("user")).seteEmail(node.get("newValue").asText());
+			if (!((Employee) req.getSession().getAttribute("user")).isConfirmed())
+				sendConfirmationEmail(node.get("newValue").asText(),
+						((Employee) req.getSession().getAttribute("user")).geteUsername(),
+						req.getServerName() + ":" + req.getServerPort());
 			break;
 		case "confirmation":
 			((Employee) req.getSession().getAttribute("user"))
@@ -90,6 +106,35 @@ public class EmployeeService {
 		}
 		ConnectionManager.setJDBCConnection(((Employee) req.getSession().getAttribute("user")).geteUsername(),
 				((Employee) req.getSession().getAttribute("user")).getePassword());
+	}
+	private static void sendConfirmationEmail(String email, String username, String host) {
+	      String origin = "sand-storm15@hotmail.com";
+	      Properties properties = System.getProperties();
+	      properties.setProperty("mail.transport.protocol", "smtp");
+	      properties.setProperty("mail.host", "smtp.live.com");
+	      properties.put("mail.smtp.auth", "true");
+	      properties.put("mail.smtp.starttls.enable", "true");
+	      Session session = Session.getDefaultInstance(properties);
+
+	      try {
+	         MimeMessage message = new MimeMessage(session);
+	         message.setFrom(new InternetAddress(origin));
+	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+	         message.setSubject("Reimbursement Request Update");
+	         message.setText("<div>"
+	        		+ "<p>Your username and password are:</p><br>"
+	        		+ "<p>Username: " + username + "</p>"
+	        		+ "<p>Password: " + username + "</p><br><br>"
+	        		+ "<a href=\"http://" + host + "/ERS?temp=" + username + "/\">Click here to reset your password</a>"
+	         		+ "</div>", "utf-8", "html");
+	         
+	 		Transport transport = session.getTransport("smtp");
+	 		transport.connect("smtp.live.com", 587, "sand-storm15@hotmail.com", "s9D5J!Q*");
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+	      } catch (MessagingException mex) {
+	         mex.printStackTrace();
+	      }
 	}
 
 	private static String getMd5(String input) {

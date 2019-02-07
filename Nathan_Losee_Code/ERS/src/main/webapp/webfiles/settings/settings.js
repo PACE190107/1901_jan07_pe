@@ -1,6 +1,6 @@
 if (!loadSettings)
 	loadSettings = function() {
-		fetch('http://localhost:8080/ERS/settings/')
+		fetch('http://' + location.host + '/ERS/settings/')
 			.then(response => {
 				if (response.ok) {
 					return response.json();
@@ -9,23 +9,27 @@ if (!loadSettings)
 			})
 			.then(data => {
 				if (data) {
-					document.getElementById("idField").innerHTML = data.eID;
-					document.getElementById("usernameField2").innerHTML = data.eUsername;
-					document.getElementById("firstNameField").innerHTML = data.eFirstName;
-					document.getElementById("lastNameField").innerHTML = data.eLastName;
-					document.getElementById("emailField").innerHTML = data.eEmail;
+					document.getElementById("idField").value = data.eID;
+					document.getElementById("usernameField2").value = data.eUsername;
+					document.getElementById("firstNameField").value = data.eFirstName;
+					document.getElementById("lastNameField").value = data.eLastName;
+					document.getElementById("emailField").value = data.eEmail;
 				}
 			});
 	}
 
 if (!changeSetting)
 	changeSetting = function(credential) {
+		if (document.getElementById(credential + "Input").checkValidity() === false) {
+	        return;
+	    }
+		
 		let change = {
 				credential: credential,
 				newValue: document.getElementById(credential + "Input").value,
 			};
 		
-		fetch('http://localhost:8080/ERS/settings/', {
+		fetch('http://' + location.host + '/ERS/settings/', {
 			method: "PUT",
 			body: JSON.stringify(change),
 			headers: {

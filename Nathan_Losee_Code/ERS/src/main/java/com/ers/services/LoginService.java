@@ -17,13 +17,14 @@ public class LoginService {
 	private LoginService() { }
 	
 	public static void login(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, SQLException {
-		
+		boolean isConfirming = false;
 		String username;
 		String password;
 		
-		if (req.getParameter("temp") != null) {
-			username = req.getParameter("temp").replace("/", "");
+		if (req.getSession().getAttribute("temp") != null) {
+			username = ((String) req.getSession().getAttribute("temp")).replace("/", "");
 			password = username;
+			isConfirming = true;
 		} else {
 			ObjectMapper mapper = new ObjectMapper();
 			String inJson = req.getReader().readLine();
@@ -39,12 +40,14 @@ public class LoginService {
 			ConnectionManager.setJDBCConnection(employee.geteUsername(), employee.getePassword());
 			if (employee.isManager())
 				req.getRequestDispatcher("/webfiles/manager/manager.html").forward(req, resp);
-			else if (req.getMethod().equals("POST")) {
-				if (employee.isConfirmed())
-					req.getRequestDispatcher("/webfiles/employee/employee.html").forward(req, resp);
-				else
-					req.getRequestDispatcher("/webfiles/passwordChange/passwordChange.html").forward(req, resp);
-			}
+			else if (employee.isConfirmed())
+				req.getRequestDispatcher("/webfiles/employee/employee.html").forward(req, resp);
+			else if (isConfirming)
+				req.getRequestDispatcher("/webfiles/passwordChange/passwordChange.html").forward(req, resp);
+			else
+				req.getRequestDispatcher("/webfiles/needConfirmation/needConfirmation.html").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/webfiles/login/login.html").forward(req, resp);
 		}
 	}
 
