@@ -46,11 +46,15 @@ crossorigin="anonymous">
 <title>Employee Reimbursement Manager</title>
 </head>
 <body class="col-md-8 offset-md-2">
-	<div>
+	<div id="btn-group">
 		<button id="getAllUsersBtn"class="btn" onclick="toggleAllUsers()">View All Employees</button>
-		<button id="getAllPendingBtn"class="btn" onclick="toggleAllPending()" >See all Pending Requests </button>
+		<button id="getAllPendingBtn" class="btn" onclick="toggleAllPending()" >View All Pending Requests </button>
+		<button id="getAllApprovedBtn"class="btn" onclick="toggleAllApproved()">View All Approved Requests</button>
+		<button id = "getSingle" onclick="toggleAllRebEmpForm()" class="btn">See Single Employee Requests</button>
+		<button  id ="decsBtn" onclick="toggleDecision()" class="btn">Approve or Deny Requests</button>
+		<button id="logout" class="btn btn-primary">Logout</button>
 	</div>
-	<div id="allUsersDIV">
+	<div id="allUsersDIV" style="display: none">
 		<table class="table table-bordered table-striped">
 			<tbody id="employeeTable">
 				<th>ID</th>
@@ -62,7 +66,7 @@ crossorigin="anonymous">
 			</tbody>
 		</table>
 	</div>
-	<div id="allPendingDIV">
+	<div id="allPendingDIV" style="display: none">
 		<table class="table table-bordered table-striped">
 			<tbody id="pendingRebTable">
 				<th>Employee ID</th>
@@ -73,12 +77,7 @@ crossorigin="anonymous">
 			</tbody>
 		</table>
 	</div>
-	<div>
-		<h1>Welcome!</h1>
-		<button id="getAllApprovedBtn"class="btn btn-primary">See all Approved Requests</button>
-		<button onclick="toggleAllApproved()" class="btn btn-danger">Toggle Approved</button>
-	</div>
-	<div id="allApprovedDIV">
+	<div id="allApprovedDIV" style="display: none">
 		<table class="table table-bordered table-striped">
 			<tbody id="approvedRebTable">
 				<th>Employee ID</th>
@@ -90,16 +89,11 @@ crossorigin="anonymous">
 			</tbody>
 		</table>
 	</div>
-	<div>
-		<button onclick="toggleAllRebEmpForm()" class="btn btn-primary">See Single Employee Requests</button>
-	</div>
 	<div id="allRebEmpForm" style="display: none">
-		<h1>Welcome!</h1>
 		<input type="number" id="requestedId" placeholder="Enter Employee ID">
-		<button id="getAllRebEmpBtn"class="btn btn-primary">Submit</button>
-		<button onclick="toggleAllRebEmp()" class="btn btn-danger">Toggle Requests</button>
+		<button  onclick="toggleAllRebEmp()" id="getAllRebEmpBtn"class="btn">Submit</button>
 	</div>
-	<div id="allRebEmp" >
+	<div id="allRebEmp" style="display: none" >
 		<table class="table table-bordered table-striped">
 			<tbody id="allRebEmpTable">
 				<th>Employee ID</th>
@@ -111,20 +105,13 @@ crossorigin="anonymous">
 			</tbody>
 		</table>
 	</div>
-	<div>
-		<button onclick="toggleDecision()" class="btn btn-primary">Approve or Deny Requests</button>
-	</div>
 	<div id="decisionForm" style="display: none">
-		<h1>Welcome!</h1>
-		<input type="number" id="rebId" placeholder="Enter Reimburement ID">
-		<button id="approveRequest"class="btn btn-primary">Approve</button>
-		<button id="denyRequest"class="btn btn-primary">Deny</button>
-	</div>
-	<div>
-		<p id="decision"></p>
-	</div>
 		<div>
-		<button id="logout" class="btn btn-primary">Logout</button>
+		<input type="number" id="rebId" placeholder="Reimburement ID" min=0>
+		</div>
+		
+		<button id="approveRequest"class="btn">Approve</button>
+		<button id="denyRequest"class="btn">Deny</button>
 	</div>
 	<script type="text/javascript" src="../js/manager.js"></script>
 </body>

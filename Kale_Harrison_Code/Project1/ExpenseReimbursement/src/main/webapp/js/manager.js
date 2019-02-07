@@ -207,8 +207,19 @@ function logout(){
 	xhr.open("POST", "http://localhost:8080/ExpenseReimbursement/rest/employee/logout");
 	xhr.send();
 }
+var header = document.getElementById("btn-group");
+var btns = header.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("active");
+  current[0].className = current[0].className.replace(" active", "");
+  this.className += " active";
+  });
+}
 function toggleAllUsers() {
 	  var x = document.getElementById("allUsersDIV");
+	  var btn = document.getElementById("getAllUsersBtn");
+	  btn.classList.toggle("mystyle");
 	  if (x.style.display === "none") {
 	    x.style.display = "block";
 	  } else {
@@ -217,6 +228,8 @@ function toggleAllUsers() {
 	}
 function toggleAllPending() {
 	  var x = document.getElementById("allPendingDIV");
+	  var btn = document.getElementById("getAllPendingBtn");
+	  btn.classList.toggle("mystyle");
 	  if (x.style.display === "none") {
 	    x.style.display = "block";
 	  } else {
@@ -225,6 +238,8 @@ function toggleAllPending() {
 	}
 function toggleAllApproved() {
 	  var x = document.getElementById("allApprovedDIV");
+	  var btn = document.getElementById("getAllApprovedBtn");
+	  btn.classList.toggle("mystyle");
 	  if (x.style.display === "none") {
 	    x.style.display = "block";
 	  } else {
@@ -234,6 +249,8 @@ function toggleAllApproved() {
 
 function toggleAllRebEmpForm() {
 	  var x = document.getElementById("allRebEmpForm");
+	  var btn = document.getElementById("getSingle");
+	  btn.classList.toggle("mystyle");
 	  if (x.style.display === "none") {
 	    x.style.display = "block";
 	  } else {
@@ -250,6 +267,8 @@ function toggleAllRebEmp() {
 	}
 function toggleDecision() {
 	  var x = document.getElementById("decisionForm");
+	  var btn = document.getElementById("decsBtn");
+	  btn.classList.toggle("mystyle");
 	  if (x.style.display === "none") {
 	    x.style.display = "block";
 	  } else {
