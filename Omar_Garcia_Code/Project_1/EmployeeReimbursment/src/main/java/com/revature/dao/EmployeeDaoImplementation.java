@@ -14,18 +14,18 @@ import com.revature.util.JDBCConnectionUtil;
 
 public class EmployeeDaoImplementation implements EmployeeDao {
 	private static EmployeeDaoImplementation employeeImp;
-	
+
 	private EmployeeDaoImplementation() {
-		
+
 	}
-	
+
 	public static EmployeeDaoImplementation getEmployeeDao() {
-		if(employeeImp == null) {
+		if (employeeImp == null) {
 			employeeImp = new EmployeeDaoImplementation();
 		}
 		return employeeImp;
 	}
-	
+
 	public List<Employee> viewEmployee() throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "SELECT * FROM EMPLOYEE";
@@ -33,7 +33,8 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 			ResultSet results = stmnt.executeQuery(sql);
 			List<Employee> allEmp = new ArrayList<Employee>();
 			while (results.next()) {
-				allEmp.add(new Employee(results.getInt(1), results.getString(2),results.getString(3) , results.getString(4), "**HIDDEN**", results.getInt(6), results.getString(7)));
+				allEmp.add(new Employee(results.getInt(1), results.getString(2), results.getString(3),
+						results.getString(4), "**HIDDEN**", results.getInt(6), results.getString(7)));
 			}
 			return allEmp;
 		}
@@ -50,7 +51,8 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 			if (result.next()) {
 				System.out.println("found");
 				return new Employee(result.getInt("E_ID"), result.getString("E_FIRST"), result.getString("E_LAST"),
-						result.getString("E_USERNAME"), result.getString("E_PASSWORD"), result.getInt("E_MANAGER"), result.getString("EMAIL"));
+						result.getString("E_USERNAME"), result.getString("E_PASSWORD"), result.getInt("E_MANAGER"),
+						result.getString("EMAIL"));
 			}
 		}
 		System.out.println("not found\n" + username + "\n" + password);
@@ -58,8 +60,7 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 	}
 
 	@Override
-	public Employee register(Employee newEmp)
-			throws SQLException {
+	public Employee register(Employee newEmp) throws SQLException {
 		try (Connection conn = JDBCConnectionUtil.getConnection()) {
 			String sql = "CALL INSERT_EMPLOYEE(?,?,?,?,?,?)";
 			CallableStatement cs = conn.prepareCall(sql);
@@ -68,7 +69,7 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 			cs.setString(3, newEmp.getUsername());
 			cs.setString(4, newEmp.getPassword());
 			cs.setString(6, newEmp.getEmail());
-			if(newEmp.isManager()) {
+			if (newEmp.isManager()) {
 				cs.setInt(5, 1);
 			} else {
 				cs.setInt(5, 0);
@@ -78,4 +79,25 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 		return login(newEmp.getUsername(), newEmp.getPassword());
 	}
 
+	@Override
+	public Employee update(Employee emp) throws SQLException {
+		System.out.println(emp.toString());
+		try (Connection conn = JDBCConnectionUtil.getConnection()) {
+			String sql = "CALL UPDATE_EMP(?,?,?,?,?,?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt(1, emp.getId());
+			cs.setString(2, emp.getFirstName());
+			cs.setString(3, emp.getLastName());
+			cs.setString(4, emp.getUsername());
+			cs.setString(5, emp.getPassword());
+			cs.setString(7, emp.getEmail());
+			if (emp.isManager()) {
+				cs.setInt(6, 1);
+			} else {
+				cs.setInt(6, 0);
+			}
+			cs.execute();
+		}
+		return emp;
+	}
 }

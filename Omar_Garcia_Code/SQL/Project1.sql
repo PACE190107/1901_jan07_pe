@@ -10,6 +10,22 @@ CONSTRAINT UNIQUE_USERNAME UNIQUE (E_USERNAME),
 CONSTRAINT E_ID_PK PRIMARY KEY (E_ID)
 );
 
+CREATE OR REPLACE PROCEDURE UPDATE_EMP(EID NUMBER, EFIRST VARCHAR, ELAST VARCHAR, EUSERNAME VARCHAR, EPASSWORD VARCHAR, EMANAGER NUMBER, EEMAIL VARCHAR)
+AS
+BEGIN
+    IF EPASSWORD IS NULL THEN
+    UPDATE EMPLOYEE
+    SET E_FIRST = EFIRST, E_LAST = ELAST, E_USERNAME = EUSERNAME,  E_MANAGER = EMANAGER, EMAIL = EEMAIL
+    WHERE E_ID = EID;
+    ELSE
+    UPDATE EMPLOYEE
+    SET E_FIRST = EFIRST, E_LAST = ELAST, E_USERNAME = EUSERNAME, E_PASSWORD = GET_USER_HASH(EUSERNAME, EPASSWORD), E_MANAGER = EMANAGER, EMAIL = EEMAIL
+    WHERE E_ID = EID;
+    END IF;
+    commit;
+END;
+/
+
 CREATE SEQUENCE EMPLOYEE_SEQ
 START WITH 1
 INCREMENT BY 1;
@@ -82,12 +98,35 @@ END;
 
 commit;
 
+CREATE OR REPLACE PROCEDURE CHANGE_REQ(REQID NUMBER, MAN_ID NUMBER, APPROVE NUMBER)
+AS
+BEGIN
+    UPDATE REQUEST
+    SET R_APPROVALE = APPROVE, R_MANAGER = MAN_ID
+    WHERE R_ID = REQID;
+    commit;
+END;
+/
+
 exec INSERT_EMPLOYEE('first','last','first','password',0,'sample@website.com');
 exec INSERT_EMPLOYEE('Isa','Manager','mag1','password',1,'sample1@website.com');
+exec INSERT_EMPLOYEE('Test','Manager','test','password',1,'sample1@website.com');
 
+exec CHANGE_REQ(2,1,1);
+
+exec CHANGE_REQ(1,0,0);
+exec CHANGE_REQ(2,0,0);
+exec CHANGE_REQ(3,0,0);
+
+
+exec UPDATE_EMP(21, 'firstname','lastname','username','password', 0, 'email');
+exec UPDATE_EMP(21, 'test','Manager','test','password', 0, 'sample@website.com');
+exec UPDATE_EMP(21, 'test','Manager','test',NULL, 0, 'sample@website.com');
 
 
 select * from employee;
+
+select * from request;
 
 select * from REQUEST where R_APPROVALE = 0;
 

@@ -9,4 +9,5 @@ public interface EmployeeDao {
 		List<Employee> viewEmployee() throws SQLException;
 		Employee login(String username, String password) throws SQLException;
 		Employee register(Employee newEmp) throws SQLException;
+		Employee update(Employee emp) throws SQLException;
 }

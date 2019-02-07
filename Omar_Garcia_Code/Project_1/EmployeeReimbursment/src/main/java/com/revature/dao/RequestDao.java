@@ -10,5 +10,6 @@ public interface RequestDao {
 	List<Request> getAllRequest(int i) throws SQLException;
 	Request addRequest(Request req) throws SQLException;
 	Request viewEmpRequest(int id);
+	Request updateRequest(Request req) throws SQLException;
 
 }

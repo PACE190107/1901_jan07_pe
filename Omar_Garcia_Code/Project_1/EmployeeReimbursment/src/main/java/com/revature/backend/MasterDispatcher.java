@@ -29,6 +29,10 @@ public class MasterDispatcher {
 			return RequestService.getRequestService().getAllRequest(0);
 		} else if (req.getRequestURI().contains("viewAllResolvedRequests")) {
 			return RequestService.getRequestService().getAllRequest(1);
+		} else if (req.getRequestURI().contains("updateRequests")) {
+			return RequestService.getRequestService().reqChange(req, resp);
+		} else if (req.getRequestURI().contains("updateEmployee")) {
+			return EmployeeService.getEmployeeService().updateEmployee(req, resp);
 		} 
 		return null;
 	}

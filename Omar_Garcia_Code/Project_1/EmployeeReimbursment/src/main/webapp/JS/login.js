@@ -5,6 +5,7 @@ window.onload = function () {
 document.getElementById("test").addEventListener('click', function () {
     let usernm = document.getElementById('user').value;
     let pssword = document.getElementById('pass').value;
+    
     console.log(usernm + " " + pssword);
     const body = {
         username: usernm,

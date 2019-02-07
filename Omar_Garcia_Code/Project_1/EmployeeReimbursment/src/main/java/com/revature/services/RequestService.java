@@ -37,5 +37,16 @@ public class RequestService {
 			}
 			return null;
 	}
+	
+	public Request reqChange(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+		Request request = null;
+		try {
+			request = mapper.readValue(req.getReader(), Request.class);
+		return RequestDaoImplementation.getDaoImplementation().updateRequest(request);
+				} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return request;
+	}
 
 }

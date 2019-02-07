@@ -65,4 +65,17 @@ public class RequestDaoImplementation implements RequestDao {
 		return null;
 	}
 
+	@Override
+	public Request updateRequest(Request req) throws SQLException {
+		try (Connection conn = JDBCConnectionUtil.getConnection()) {
+			String sql = "CALL CHANGE_REQ(?,?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt(1, req.getId());
+			cs.setInt(2, req.getManager());
+			cs.setInt(3, req.getApproved());
+			cs.execute();
+		}
+		return req;
+	}
+
 }

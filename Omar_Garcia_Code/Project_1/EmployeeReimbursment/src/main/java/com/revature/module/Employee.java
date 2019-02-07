@@ -7,7 +7,6 @@ public class Employee {
 	private String firstName;
 	private String lastName;
 	private String username;
-	@JsonIgnore
 	private String password;
 	private boolean manager = false;
 	private String email;

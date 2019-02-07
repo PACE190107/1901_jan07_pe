@@ -38,19 +38,9 @@ public class EmployeeService {
 				login log = mapper.readValue(req.getReader(), login.class);
 				emp = EmployeeDaoImplementation.getEmployeeDao().login(log.getUsername(), log.getPassword());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		/*if(emp != null) {
-			try {
-				req.getSession().setAttribute("usernme", emp.getUsername());
-				req.getRequestDispatcher("home.jsp").forward(req, resp);
-			} catch (ServletException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}	*/
 		return emp;
 	}
 	
@@ -74,8 +64,19 @@ public class EmployeeService {
 		return EmployeeDaoImplementation.getEmployeeDao().viewEmployee();
 	}
 
-	public void updatePassword(String password) {
-
+	public Employee updateEmployee(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+		Employee emp;
+		try {
+			emp = mapper.readValue(req.getReader(), Employee.class);
+			return EmployeeDaoImplementation.getEmployeeDao().update(emp);
+		} catch (JsonParseException e) {
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
