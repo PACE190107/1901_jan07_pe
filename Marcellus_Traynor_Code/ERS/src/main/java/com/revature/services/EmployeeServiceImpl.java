@@ -20,61 +20,6 @@ public class EmployeeServiceImpl implements EmployeeService
 	private final static EmployeeDao employeeDao = new EmployeeDaoImpl();
 	final static Logger log = Logger.getLogger(EmployeeServiceImpl.class);
 	
-//	public Object process(HttpServletRequest request, HttpServletResponse response)
-//	{
-//		List<Employee> employee = new ArrayList<Employee>();
-//		
-//		 if(request.getRequestURI().endsWith("/getEmployeeInfo"))
-//		 {
-//			 log.info("employee process");
-//			 HttpSession session = request.getSession();
-//			final String username = (String)session.getAttribute("username");
-//				
-//			employee = employeeDao.getEmployeeInfo(username);
-//
-//			try 
-//			{
-//				request.getRequestDispatcher("employee_home.html").forward(request, response);
-//			} 
-//			catch (ServletException e) 
-//			{
-//				log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
-//				log.error(e.getMessage());
-//				log.error(e.getStackTrace());
-//			} 
-//			catch (IOException e) 
-//			{
-//				log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
-//				log.error(e.getMessage());
-//				log.error(e.getStackTrace());
-//			}
-//		 }
-//		 
-//		 if(request.getRequestURI().endsWith("/getAllEmployeeInfo"))
-//		 {
-//			 log.info("all employee process");
-//			employee = employeeDao.getAllEmployeeInfo();
-//
-//			try 
-//			{
-//				request.getRequestDispatcher("employee_home.html").forward(request, response);
-//			} 
-//			catch (ServletException e) 
-//			{
-//				log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
-//				log.error(e.getMessage());
-//				log.error(e.getStackTrace());
-//			} 
-//			catch (IOException e) 
-//			{
-//				log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
-//				log.error(e.getMessage());
-//				log.error(e.getStackTrace());
-//			}
-//		 }
-//		 return employee;
-//	}
-	
 	@Override
 	public Employee updateInfo(HttpServletRequest request, HttpServletResponse response) 
 	{
@@ -115,22 +60,6 @@ public class EmployeeServiceImpl implements EmployeeService
 		
 		employee = employeeDao.getEmployeeInfo(username);
 
-//		try 
-//		{
-//			request.getRequestDispatcher("employee_home.html").forward(request, response);
-//		} 
-//		catch (ServletException e) 
-//		{
-//			log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
-//			log.error(e.getMessage());
-//			log.error(e.getStackTrace());
-//		} 
-//		catch (IOException e) 
-//		{
-//			log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
-//			log.error(e.getMessage());
-//			log.error(e.getStackTrace());
-//		}
 		return employee;
 	}
 	
@@ -139,22 +68,6 @@ public class EmployeeServiceImpl implements EmployeeService
 	{	
 		List<Employee> employees = employeeDao.getAllEmployeeInfo();
 
-//		try 
-//		{
-//			request.getRequestDispatcher("employee_home.html").forward(request, response);
-//		} 
-//		catch (ServletException e) 
-//		{
-//			log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
-//			log.error(e.getMessage());
-//			log.error(e.getStackTrace());
-//		} 
-//		catch (IOException e) 
-//		{
-//			log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
-//			log.error(e.getMessage());
-//			log.error(e.getStackTrace());
-//		}
 		return employees;
 	}
 }

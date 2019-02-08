@@ -17,7 +17,6 @@ public class MasterServlet extends HttpServlet
 	 */
 	private static final long serialVersionUID = 4610864359249189402L;
 	
-	// This is the object responsible for marshalling/unmarshalling POJOS to JSON
 	private final ObjectMapper mapper = new ObjectMapper();
 	final static Logger log = Logger.getLogger(MasterServlet.class);
 

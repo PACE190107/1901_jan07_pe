@@ -43,7 +43,6 @@ public class EmployeeDaoImpl implements EmployeeDao
 			log.error(e1.getStackTrace());
 			return null;
 		}
-		
 	}
 	
 	@Override
@@ -113,8 +112,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 		
 		try(Connection conn = ConnectionUtil.getConnection())
 		{
-			//String sql = "SELECT first_name, last_name, job_description, user_name FROM Employee_Info";
-			String sql = "SELECT * FROM Employee_Info";
+			String sql = "SELECT first_name, last_name, job_description, user_name FROM Employee_Info";
 			
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -122,7 +120,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 			while(rs.next())
 			{
 				allEmployeeInfo.add(new Employee(rs.getString("first_name"), rs.getString("last_name"),
-						rs.getString("job_description"), rs.getString("user_name"), rs.getString("user_password")));
+						rs.getString("job_description"), rs.getString("user_name")));
 			}
 			conn.close();
 		} 
@@ -132,7 +130,6 @@ public class EmployeeDaoImpl implements EmployeeDao
 			log.error(e.getMessage());
 			log.error(e.getStackTrace());
 		}
-		System.out.println(allEmployeeInfo.toString());
 		return allEmployeeInfo;
 	}
 }

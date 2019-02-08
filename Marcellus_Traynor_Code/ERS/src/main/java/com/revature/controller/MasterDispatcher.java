@@ -1,15 +1,13 @@
 package com.revature.controller;
 
-
-
-//import java.util.List;
-
+import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 
-//import com.revature.models.Employee;
-//import com.revature.models.Reimbursement;
 import com.revature.services.EmployeeService;
 import com.revature.services.EmployeeServiceImpl;
 import com.revature.services.LoginService;
@@ -28,52 +26,6 @@ public class MasterDispatcher
 	
 	public static Object process(HttpServletRequest request, HttpServletResponse response) 
 	{
-//		String value = request.getParameter("btn");
-//		System.out.println(value);
-//		switch(value)
-//		{
-//		case "Login": log.info("call authentication method");
-//			Employee attempting = loginService.attemptAuthentication(request, response);
-//			return attempting;
-//		case "Logout": log.info("call logout method");
-//			loginService.logout(request, response);
-//			return null;
-//		case "Edit": log.info("call updateEmployee method");
-//			List<Employee> employeeInfo = employeeService.updateInfo(request, response);
-//			return employeeInfo;
-//		case "All": log.info("call empReimbursements method");
-//			List<Reimbursement> list = reimburseService.empReimbursements(request, response);
-//			return list;
-//		case "Pending": log.info("call empPending method");
-//			List<Reimbursement> list1 = reimburseService.empPendingReimbursements(request, response);
-//			return list1;
-//		case "Resolved": log.info("call empResolved method");
-//			List<Reimbursement> list2 = reimburseService.empResolvedReimbursements(request, response);
-//			return list2;
-//		case "CreateNew": log.info("call createReimbursement method");
-//			reimburseService.createReimbursement(request, response);
-//			return null;
-//		case "SingleEmployee": log.info("call manEmployeeReimbursements method");
-//			List<Reimbursement> list3 = reimburseService.manEmployeeReimbursements(request, response);
-//			return list3;
-//		case "AllEmployees": log.info("call manAllReimbursements method");
-//			List<Reimbursement> list4 = reimburseService.manAllReimbursements(request, response);
-//			return list4;
-//		case "PendingRequests": log.info("call manPending method");
-//			List<Reimbursement> list5 = reimburseService.manPendingReimbursements(request, response);
-//			return list5;
-//		case "ResolvedRequests": log.info("call manResolved method");
-//			List<Reimbursement> list6 = reimburseService.manResolvedReimbursements(request, response);
-//			return list6;
-//		case "Approve": log.info("call updateReimbursement/approve method");
-//			reimburseService.updateReimbursement(request, response);
-//			return null;
-//		case "Deny": log.info("call updateReimbursement/deny method");
-//			reimburseService.updateReimbursement(request, response);
-//			return null;
-//		default: log.info("Not yet implemented");
-//			return null;
-//		}
 		String[] path = request.getRequestURI().split("/");
 		
 		if(request.getParameter("btn") != null)
@@ -88,8 +40,6 @@ public class MasterDispatcher
 			{
 				log.info("call logout method");
 				loginService.logout(request, response);
-//				Employee e = new Employee();
-//				return e;
 			}
 			
 			if(request.getParameter("btn").equals("Edit"))
@@ -102,56 +52,44 @@ public class MasterDispatcher
 			{
 				log.info("call createReimbursement method");
 				reimburseService.createReimbursement(request, response);
-//				Reimbursement r = new Reimbursement();
-//				return r;
 			}
 			
 			if(request.getParameter("btn").equals("SingleEmployee"))
 			{
-				log.info("call manEmployeeReim method");
-				return reimburseService.manEmployeeReimbursements(request, response);
-//				Reimbursement r = new Reimbursement();
-//				return r;
+				log.info("call assign empUsername to session");
+				String empUsername = request.getParameter("empUsername");
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("empUsername", empUsername);
+				
+				try 
+				{
+					request.getRequestDispatcher("manager_home.html").forward(request, response);
+				} 
+				catch (ServletException e) 
+				{
+					log.error("error occured in ServletException catch block in ReimbursementServiceImpl create");
+					log.error(e.getMessage());
+					log.error(e.getStackTrace());
+				} 
+				catch (IOException e) 
+				{
+					log.error("error occured in IOException catch block in ReimbursementServiceImpl create");
+					log.error(e.getMessage());
+					log.error(e.getStackTrace());
+				}
 			}
-//			
-//			if(request.getParameter("btn").equals("AllEmployees"))
-//			{
-//				log.info("call manAllReim method");
-//				reimburseService.manAllReimbursements(request, response);
-////				Reimbursement r = new Reimbursement();
-////				return r;
-//			}
-//			
-//			if(request.getParameter("btn").equals("PendingRequests"))
-//			{
-//				log.info("call manPendingReim method");
-//				reimburseService.manPendingReimbursements(request, response);
-////				Reimbursement r = new Reimbursement();
-////				return r;
-//			}
-//			
-//			if(request.getParameter("btn").equals("ResolvedRequests"))
-//			{
-//				log.info("call manResolvedReim method");
-//				reimburseService.manResolvedReimbursements(request, response);
-////				Reimbursement r = new Reimbursement();
-////				return r;
-//			}
 			
 			if(request.getParameter("btn").equals("Approve"))
 			{
 				log.info("call updateReimbursement/approve method");
 				reimburseService.updateReimbursement(request, response);
-//				Reimbursement r = new Reimbursement();
-//				return r;
 			}
 			
 			if(request.getParameter("btn").equals("Deny"))
 			{
 				log.info("call updateReimbursement/deny method");
 				reimburseService.updateReimbursement(request, response);
-//				Reimbursement r = new Reimbursement();
-//				return r;
 			}
 		}
 		
@@ -192,7 +130,7 @@ public class MasterDispatcher
 			if(path[3].equals("singleEmployeeReim"))
 			{
 				log.info("call manEmployeeReimbursements method");
-				return reimburseService.manEmployeeReimbursements(request, response);
+				return reimburseService.manEmployeeReimbursements(request, response);	
 			}
 			
 			if(path[3].equals("allEmployeeReim"))

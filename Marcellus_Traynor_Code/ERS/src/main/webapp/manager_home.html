@@ -34,18 +34,20 @@
 			<h4>Filter employee reimbursements</h4>
 			<p>Enter the Username of the employee you would like to view reimbursements for (only for a single employee):</p>
 			<div class = "row justify-content-center">
-				<form class = "form-group" action="/ERS/home" method = "POST">
-					<input type = "text" name = "empUsername" class = "form-control" placeholder = "Enter an employee username" required>
+				<form class = "form-group" action = "/ERS/home" method = "POST">
+					<input type = "text" id = "empUsername" name = "empUsername" class = "form-control" placeholder = "Enter an employee username" required>
 					<input type = "submit" id = "singleEmp" class = "btn btn-outline-success" name = "btn" value = "SingleEmployee">
 				</form>
+				
 			</div>
-			
+				<button type = "submit" id = "manSingleBtn" class = "btn btn-outline-info">View Single Employee</button>
 				<button type = "submit" id = "allEmp" class = "btn btn-outline-info" name = "btn">AllEmployees</button>
 				
 			<br>
 		</div>
 		
 		<div>
+		<br>
 		<h3>Reimbursements</h3>
 			<table class = "table table-bordered table-striped">
 				<thead>
@@ -66,7 +68,6 @@
 			
 				<button type = "submit" id = "manPendingBtn" class = "btn btn-outline-success" name = "btn">PendingRequests</button>
 				<button type = "submit" id = "manResolvedBtn" class = "btn btn-outline-success" name = "btn">ResolvedRequests</button>
-			
 		</div>
 		
 		<br>

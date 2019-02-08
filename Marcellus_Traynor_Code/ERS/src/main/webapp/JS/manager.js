@@ -1,6 +1,6 @@
 window.onload = function()
 {
-	//document.getElementById("singleEmp").addEventListener("click", getSingleEmployeeReim);
+	document.getElementById("manSingleBtn").addEventListener("click", getSingleEmployeeReim);
 	document.getElementById("allEmp").addEventListener("click", getAllEmployeeReim);
 	document.getElementById("manPendingBtn").addEventListener("click", getPendingReimbursements);
 	document.getElementById("manResolvedBtn").addEventListener("click", getResolvedReimbursements);
@@ -39,91 +39,50 @@ window.onload = function()
 		}
 	};
 	employee.send();
-	
-//	var reim = new XMLHttpRequest();
-//	reim.open("get", "http://localhost:8080/ERS/home/allEmployeeReim");
-//	
-//	reim.onreadystatechange = () =>
-//	{
-//		if((reim.readyState == 4) && (reim.status == 200))
-//		{
-//			
-//			let data = JSON.parse(reim.responseText);
-//			console.log(data);
-//			
-//			for(i = 0; i < data.length; i++)
-//			{
-//				let row = document.createElement("tr");
-//				let username = document.createElement("td");
-//				let rId = document.createElement("td");
-//				let reason = document.createElement("td");
-//				let amount = document.createElement("td");
-//				let status = document.createElement("td");
-//				let approved_by = document.createElement("td");
-//				
-//				username.textContent = data[i].username;
-//				rId.textContent = data[i].rId;
-//				reason.textContent = data[i].reason;
-//				amount.textContent = data[i].amount;
-//				status.textContent = data[i].status;
-//				approved_by.textContent = data[i].approved_by;
-//				
-//				row.appendChild(username);
-//				row.appendChild(rId);
-//				row.appendChild(reason);
-//				row.appendChild(amount);
-//				row.appendChild(status);
-//				row.appendChild(approved_by);
-//				
-//				document.getElementById("manReTable").appendChild(row);
-//			}
-//		}
-//	};
-//	reim.send();
 }
 
-//function getSingleEmployeeReim()
-//{
-//	fetch('http://localhost:8080/ERS/home/singleEmployeeReim')
-//	.then(function(response)
-//		{
-//			return response.json();
-//		})
-//	.then(function(data)
-//		{
-//			console.log(data); 
-//			
-//			let Table = document.getElementById("manReTable");
-//			Table.innerHTML = "";
-//			
-//			for(i = 0; i < data.length; i++)
-//			{
-//				let row = document.createElement("tr");
-//				let username = document.createElement("td");
-//				let rId = document.createElement("td");
-//				let reason = document.createElement("td");
-//				let amount = document.createElement("td");
-//				let status = document.createElement("td");
-//				let approved_by = document.createElement("td");
-//				
-//				username.textContent = data[i].username;
-//				rId.textContent = data[i].rId;
-//				reason.textContent = data[i].reason;
-//				amount.textContent = data[i].amount;
-//				status.textContent = data[i].status;
-//				approved_by.textContent = data[i].approved_by;
-//				
-//				row.appendChild(username);
-//				row.appendChild(rId);
-//				row.appendChild(reason);
-//				row.appendChild(amount);
-//				row.appendChild(status);
-//				row.appendChild(approved_by);
-//				
-//				document.getElementById("manReTable").appendChild(row);
-//			}
-//		});
-//}
+function getSingleEmployeeReim()
+{
+	fetch('http://localhost:8080/ERS/home/singleEmployeeReim')
+	.then(function(response)
+		{
+			return response.json();
+		})
+	.then(function(data)
+		{
+			console.log(data); 
+			
+			let Table = document.getElementById("manReTable");
+			Table.innerHTML = "";
+			
+			for(i = 0; i < data.length; i++)
+			{
+				let row = document.createElement("tr");
+				let username = document.createElement("td");
+				let rId = document.createElement("td");
+				let reason = document.createElement("td");
+				let amount = document.createElement("td");
+				let status = document.createElement("td");
+				let approved_by = document.createElement("td");
+				
+				username.textContent = data[i].username;
+				rId.textContent = data[i].rId;
+				reason.textContent = data[i].reason;
+				amount.textContent = data[i].amount;
+				status.textContent = data[i].status;
+				approved_by.textContent = data[i].approved_by;
+				
+				row.appendChild(username);
+				row.appendChild(rId);
+				row.appendChild(reason);
+				row.appendChild(amount);
+				row.appendChild(status);
+				row.appendChild(approved_by);
+				
+				document.getElementById("manReTable").appendChild(row);
+			}
+		});
+}
 
 function getAllEmployeeReim()
 {
