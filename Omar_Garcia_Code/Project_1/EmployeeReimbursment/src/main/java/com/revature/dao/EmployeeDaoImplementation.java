@@ -100,4 +100,21 @@ public class EmployeeDaoImplementation implements EmployeeDao {
 		}
 		return emp;
 	}
+
+	@Override
+	public Employee getEmployee(int id) throws SQLException {
+		try (Connection conn = JDBCConnectionUtil.getConnection()) {
+			String sql = "SELECT * FROM EMPLOYEE WHERE E_ID = ?";
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet result = ps.executeQuery();
+			if (result.next()) {
+				System.out.println("found");
+				return new Employee(result.getInt("E_ID"), result.getString("E_FIRST"), result.getString("E_LAST"),
+						result.getString("E_USERNAME"), result.getString("E_PASSWORD"), result.getInt("E_MANAGER"),
+						result.getString("EMAIL"));
+			}
+		}
+		return null;
+	}
 }

@@ -9,7 +9,7 @@ public interface RequestDao {
 	
 	List<Request> getAllRequest(int i) throws SQLException;
 	Request addRequest(Request req) throws SQLException;
-	Request viewEmpRequest(int id);
+	List<Request> viewEmpRequest(int id, int aproval) throws SQLException;
 	Request updateRequest(Request req) throws SQLException;
 
 }

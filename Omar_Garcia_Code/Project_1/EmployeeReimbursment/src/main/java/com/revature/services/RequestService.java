@@ -48,5 +48,27 @@ public class RequestService {
 		}
 		return request;
 	}
+	
+	public List<Request> getEmpReq(HttpServletRequest req, HttpServletResponse resp) throws SQLException{
+		int id = 0;
+		int approval = 0;
+		
+		if(req.getMethod().equals("GET")) {
+			return RequestDaoImplementation.getDaoImplementation().viewEmpRequest(Integer.parseInt(req.getParameter("id")), Integer.parseInt(req.getParameter("approval"))); 
+		} else if (req.getMethod().equals("POST")) {
+			try {
+				Request request = mapper.readValue(req.getReader(), Request.class);
+				id = request.getId();
+				approval = request.getApproved();
+				
+				System.out.println(id + " " + approval);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return RequestDaoImplementation.getDaoImplementation().viewEmpRequest(id, approval);
+	}
 
 }

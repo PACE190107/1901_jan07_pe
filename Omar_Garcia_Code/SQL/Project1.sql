@@ -128,6 +128,19 @@ select * from employee;
 
 select * from request;
 
+DELETE FROM request;
+
+select * from EMPLOYEE WHERE E_ID = 1;
+
+select * from request where r_approvale = 0;
+select * from request where r_approvale = 1;
+select * from request where r_approvale = 2;
+
+select * from request where r_approvale = 0 AND R_USERID = 1;
+select * from request where r_approvale = 1 AND R_USERID = 1;
+select * from request where r_approvale = 2 AND R_USERID = 1;
+
+
 select * from REQUEST where R_APPROVALE = 0;
 
 select * from EMPLOYEE WHERE E_PASSWORD LIKE GET_USER_HASH('first','password');

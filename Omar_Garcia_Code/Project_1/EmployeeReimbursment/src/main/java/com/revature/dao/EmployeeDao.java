@@ -10,4 +10,5 @@ public interface EmployeeDao {
 		Employee login(String username, String password) throws SQLException;
 		Employee register(Employee newEmp) throws SQLException;
 		Employee update(Employee emp) throws SQLException;
+		Employee getEmployee(int id) throws SQLException;
 }

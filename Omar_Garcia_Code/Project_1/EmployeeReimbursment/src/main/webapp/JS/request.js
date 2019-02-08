@@ -7,7 +7,7 @@ submitPage = function () {
         <option value="Study">Study Expenses</option>
         <option value="Other">Other</option>
     </select>
-</form>
+    </form>
 
 <label for="reqAmount">Amount</label>
 <input id="reqAmount" type="number" min=0 name="reqAmount">
@@ -34,10 +34,10 @@ submitRequest = function () {
     }
 
     const body = {
-        type : reqtype.value,
-        amount : reqamount.value,
-        description : reqdescription.value,
-        userId : sessionStorage.getItem("id")
+        type: reqtype.value,
+        amount: reqamount.value,
+        description: reqdescription.value,
+        userId: sessionStorage.getItem("id")
     };
 
     fetch('http://localhost:8080/EmployeeReimbursment/rest/addRequest', {
@@ -50,55 +50,80 @@ submitRequest = function () {
                 'Access-Control-Allow-Methods': 'POST'
             },
         })
-        .then(response => viewRequest(1));
+        .then(response => viewRequest(sessionStorage.getItem("id")));
 }
 
 
 
 viewRequest = function (num) {
-    document.getElementById('displayArea').innerHTML = `<div>
-<h1>Requests</h1>
-</h1>
-</div>
-<div>
-<table class="table table-bordered table-striped ">
-    <tbody id="myTable">
-        <th>ID</th>
-        <th>Type</th>
-        <th>Amount</th>
-        <th>Description</th>
-        <th>User</th>
-        <th>Manager</th>
-        <th>Status</th>
-    </tbody>
-</table>
-</div>`;
+    document.getElementById('displayArea').innerHTML = `
+    <div>
+    <h1>Requests</h1>
+    </h1>
+    </div>
+    <div>
+    <form id='selectForm'>
+        
+        </form>
+    </div>
+    <div>
+    <table class="table table-bordered table-striped ">
+        <tbody id="myTable">
+            <th>ID</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>User</th>
+            <th>Manager</th>
+            <th>Status</th>
+        </tbody>
+    </table>
+    </div>`;
+    if (employee.manager == 'true' && num == 0) {
+        document.getElementById('selectForm').innerHTML = `
+                    <label for="empReq">Filter</label>
+        <select id="empReq" name="empReq" onchange="filter()">
+        </select>`;
+    }
     populate(num);
 }
 
 populate = function (num) {
     let xhr = new XMLHttpRequest();
+
+    console.log(num);
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var jsonData = JSON.parse(xhr.responseText);
             tableIsPop = false;
+
+            var idset = new Set();
+            idset.add('all');
+
             for (i = 0; i < jsonData.length; i++) {
                 addReq = false;
-                if ((jsonData[i].userId == employee.u_id) || employee.manager == 'true') {
-                    if (num == 1) {
+                if ((jsonData[i].userId == num) || employee.manager == 'true' || (jsonData[i].userId == employee.u_id)) {
+                    if (num == 0) {
                         addReq = true;
-                    } else if (num == 2) {
+                    } else if (num == -1) {
                         if (jsonData[i].approved > 0) {
                             addReq = true;
                         }
-                    } else if (num == 3) {
+                    } else if (num == -2) {
                         if (jsonData[i].approved == 0) {
                             addReq = true;
                         }
+                    } else if (jsonData[i].userId == num) {
+                        addReq = true;
                     }
                 }
                 if (addReq == true) {
+                    if (employee.manager == 'true') {
+                        idset.add(jsonData[i].userId);
+                    }
                     tableIsPop = true;
+                    console.log(tableIsPop);
+
                     let row = document.createElement("tr");
                     let idcol = document.createElement("td");
                     let tcol = document.createElement("td");
@@ -132,7 +157,7 @@ populate = function (num) {
                         row.appendChild(resolve);
 
                     } else if (jsonData[i].approved == 0) {
-                        apcol.textContent = "N/A";
+                        apcol.textContent = "Pending";
                         mcol.textContent = "N/A";
                         row.appendChild(mcol);
                         row.appendChild(apcol);
@@ -154,8 +179,19 @@ populate = function (num) {
                     }
                     document.getElementById("myTable").appendChild(row);
                 }
+                if (employee.manager == 'true' && num == 0) {
+                    document.getElementById('empReq').innerHTML = "";
+
+                    idset.forEach(function (val) {
+                        let opt = document.createElement('option');
+                        opt.innerHTML = val;
+                        opt.value = val;
+                        document.getElementById('empReq').append(opt);
+                    });
+                }
             }
             if (tableIsPop == false) {
+                console.log(tableIsPop);
                 let err = document.createElement('h3');
                 err.innerHTML = 'no available request';
                 document.getElementById("displayArea").appendChild(err);
@@ -166,4 +202,21 @@ populate = function (num) {
     xhr
         .open('GET', 'http://localhost:8080/EmployeeReimbursment/rest/viewAllRequests');
     xhr.send();
+}
+
+filter = () => {
+    document.getElementById("myTable").innerHTML = `
+    <th>ID</th>
+    <th>Type</th>
+    <th>Amount</th>
+    <th>Description</th>
+    <th>User</th>
+    <th>Manager</th>
+    <th>Status</th>`;
+    let fil = document.getElementById("empReq").value;
+    if (fil == 'all') {
+        populate(0);
+    } else {
+        populate(fil);
+    }
 }

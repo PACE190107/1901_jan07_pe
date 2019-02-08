@@ -14,10 +14,15 @@ import com.revature.module.Employee;
 
 public class loginServlet extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final ObjectMapper mapper = new ObjectMapper();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		System.out.println("works");
 		Employee emp = null;
 		try {
 			emp = EmployeeDaoImplementation.getEmployeeDao().login(req.getParameter("username"),
@@ -33,9 +38,10 @@ public class loginServlet extends HttpServlet {
 			req.getSession().setAttribute("email", emp.getEmail());
 			req.getSession().setAttribute("id", emp.getId());
 			req.getSession().setAttribute("manager", emp.isManager());
+			resp.sendRedirect("home.jsp");
 			// req.getRequestDispatcher("home.jsp").forward(req, resp);
 			// req.getRequestDispatcher("HTML/employeePage.html").forward(req, resp);
-			if (emp.isManager()) {
+			/*if (emp.isManager()) {
 				System.out.println("Manager");
 				// req.getRequestDispatcher("employeePage.jsp").forward(req, resp);
 				// resp.sendRedirect("HTML/managerPage.html");
@@ -44,11 +50,13 @@ public class loginServlet extends HttpServlet {
 				System.out.println("Employee");
 				resp.sendRedirect("employeePage.jsp");
 			}
-
+*/
 		} else {
 			resp.setStatus(300);
 			req.getSession().setAttribute("error", "Invalid credentials");
-			req.getRequestDispatcher("HTML/loginPage.html").forward(req, resp);
+			//req.getRequestDispatcher("HTML/.html").forward(req, resp);
+			req.getRequestDispatcher("login.jsp").forward(req, resp);
+
 		}
 	}
 

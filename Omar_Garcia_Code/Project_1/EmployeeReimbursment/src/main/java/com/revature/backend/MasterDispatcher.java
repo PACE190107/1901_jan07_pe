@@ -33,6 +33,10 @@ public class MasterDispatcher {
 			return RequestService.getRequestService().reqChange(req, resp);
 		} else if (req.getRequestURI().contains("updateEmployee")) {
 			return EmployeeService.getEmployeeService().updateEmployee(req, resp);
+		} else if (req.getRequestURI().contains("getEmpReq")) {
+			return RequestService.getRequestService().getEmpReq(req, resp);
+		} else if (req.getRequestURI().contains("getEmp")) {
+			return EmployeeService.getEmployeeService().getEmployee(req, resp);
 		} 
 		return null;
 	}

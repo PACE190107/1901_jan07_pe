@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dao.EmployeeDaoImplementation;
 import com.revature.module.Employee;
+import com.revature.module.Request;
 import com.revature.module.login;
 
 public class EmployeeService {
@@ -77,6 +78,23 @@ public class EmployeeService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Employee getEmployee(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+		Employee emp = null;
+		if(req.getMethod().contentEquals("GET")) {
+			emp = EmployeeDaoImplementation.getEmployeeDao().getEmployee( Integer.parseInt(req.getParameter("id")));
+			} else if (req.getMethod().equals("POST")) {
+				try {
+					emp = mapper.readValue(req.getReader(), Employee.class);
+					int id = emp.getId();
+					return EmployeeDaoImplementation.getEmployeeDao().getEmployee(id);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return emp;
 	}
 
 }

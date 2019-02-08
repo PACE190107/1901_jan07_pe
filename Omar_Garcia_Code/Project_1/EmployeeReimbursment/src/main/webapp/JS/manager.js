@@ -1,7 +1,7 @@
 createManPage = function (employee) {
     document.getElementById('optionArea').innerHTML = `
-    <button type='button' onclick='viewRequest(1)'>View all Requests</button>
-    <button type='button' onclick='viewRequest(3)'>View pending Requests</button>
+    <button type='button' onclick='viewRequest(0)'>View all Requests</button>
+    <button type='button' onclick='viewRequest(-2)'>View pending Requests</button>
     <button type='button' onclick='viewEmployees()'>View all employees</button>
     <button type='submit' onclick='logoff()'>Logoff</button>
     `;
@@ -38,7 +38,7 @@ approve = function (reqid) {
                 'Access-Control-Allow-Methods': 'POST'
             },
         })
-        .then(response => viewRequest(1));
+        .then(response => viewRequest(-2));
 }
 
 
@@ -61,7 +61,7 @@ deny = function (reqid) {
                 'Access-Control-Allow-Methods': 'POST'
             },
         })
-        .then(response => viewRequest(1));
+        .then(response => viewRequest(-2));
 }
 
 

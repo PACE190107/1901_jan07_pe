@@ -12,6 +12,7 @@ document.getElementById("test").addEventListener('click', function () {
         password: pssword
     };
 
+    
     fetch('http://localhost:8080/EmployeeReimbursment/rest/login', {
             method: 'post',
             body: JSON.stringify(body),

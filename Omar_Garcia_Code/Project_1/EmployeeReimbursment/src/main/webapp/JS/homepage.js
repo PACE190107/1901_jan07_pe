@@ -32,9 +32,9 @@ window.onload = () => {
 
 createEmpPage = (employee) => {
     document.getElementById('optionArea').innerHTML = `
-    <button type='button' onclick='viewRequest(1)'>View current Requests</button>
-    <button type='button' onclick='viewRequest(2)'>View resolved Requests</button>
-    <button type='button' onclick='viewRequest(3)'>View pending Requests</button>
+    <button type='button' onclick='viewRequest(${employee.u_id})'>View all Requests</button>
+    <button type='button' onclick='viewRequest(-1)'>View resolved Requests</button>
+    <button type='button' onclick='viewRequest(-2)'>View pending Requests</button>
     <button  type='button' onclick='submitPage()'>Submit new request</button>
     <button  type='button' onclick='viewInfo()'>View Information</button>
     <button  type='button' onclick='changeInfo()'>Change Information</button>

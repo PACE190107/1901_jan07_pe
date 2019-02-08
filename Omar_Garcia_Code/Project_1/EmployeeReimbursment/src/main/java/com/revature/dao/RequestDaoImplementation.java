@@ -2,6 +2,7 @@ package com.revature.dao;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -60,9 +61,32 @@ public class RequestDaoImplementation implements RequestDao {
 	}
 
 	@Override
-	public Request viewEmpRequest(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Request> viewEmpRequest(int id, int aproval) throws SQLException {
+
+		try (Connection conn = JDBCConnectionUtil.getConnection()) {
+			ResultSet results = null;
+
+			if (aproval == -1) {
+				System.out.println("work");
+				String sql = "select * from request where R_USERID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, id);
+				results = ps.executeQuery();
+			} else {
+				String sql = "select * from request where r_approvale = ? AND R_USERID = ?";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, aproval);
+				ps.setInt(2, id);
+				results = ps.executeQuery();
+			}
+
+			List<Request> allReq = new ArrayList<Request>();
+			while (results.next()) {
+				allReq.add(new Request(results.getInt(1), results.getString(2), results.getInt(3), results.getString(4),
+						results.getInt(5), results.getInt(6), results.getInt(7)));
+			}
+			return allReq;
+		}
 	}
 
 	@Override
@@ -77,5 +101,4 @@ public class RequestDaoImplementation implements RequestDao {
 		}
 		return req;
 	}
-
 }
