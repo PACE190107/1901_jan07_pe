@@ -347,7 +347,7 @@ if (!loadRequestsSingle)
 						let receipt = document.createElement("td");
 						let receiptBtn = document.createElement("button");
 						receiptBtn.innerHTML = "Load";
-						receiptBtn.seAttribute("class", "btn btn-secondary");
+						receiptBtn.setAttribute("class", "btn btn-secondary");
 						receiptBtn.addEventListener("click", () => { loadReceipt(data[i].rrID); });
 						receipt.appendChild(receiptBtn);
 						record.appendChild(receipt);
