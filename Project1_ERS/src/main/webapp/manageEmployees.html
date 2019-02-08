@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Manager Home</title>
+  </head>
+  <body>
+    <h1>Manage Employees</h1>
+    
+	  <form >
+	    <input type="button" id="backBtn" value="back">
+	  </form>
+	  
+    <h2>Employees</h2>
+    <p>------Id ----First Name --------Last Name ---------Username ------------Email</p>
+   	<ul id = "employeeList">
+   	<!-- insert employees here -->
+   	</ul>
+	
+	<h2>View Single Employee</h2>
+	  <form class="emp">
+	    <input type="text" id="eId" placeholder="Employee Id">
+	    <input type="button" id="loadEmployee" value="Load Employee">
+	  </form>
+	<p id = "employeeView"></p>
+	<ul id = "employeeReimbursements"></ul>
+	<script type = "text/javascript" src = "manageEmployees.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>Employee Home</title>
+  </head>
+  <body>
+    <h1>Employee Homepage</h1>
+    
+    <form class="eHomeLogout">
+	  <input type="button" id="eHomeLogout" value="Logout">
+	</form>
+    
+    <h2>Personal Info</h2>
+      <p> 
+        <strong id = "eId"></strong> <br>
+        <strong id = "fName"></strong> <br>
+        <strong id = "lName"></strong><br> 
+        <strong id = "email"></strong> 
+      </p>
+    
+    <h4>Update Personal Info</h4>
+    <form class="personalInfo">
+	  <input type="text" id="updateFirstName" placeholder="New First Name">
+	  <input type="button" id="firstNameButton" value="Update First Name">
+	  <input type="text" id="updateLastName" placeholder="New Last Name">
+	  <input type="button" id="lastNameButton" value="Update Last Name">
+	  <input type="text" id="updateEmail" placeholder="New Email">
+	  <input type="button" id="emailButton" value="Update Email">
+	</form>
+    
+    
+    <h2>Reimbursements</h2>
+    <p>--------Id -- Subject -- Amount ----- Status</p>
+   	<ul id = "reimbursements">
+   	<!-- insert Reimbersement requests here -->
+   	</ul>
+   	
+   	<h2>Submit a Reimbursement Request</h2>
+	<form class="classPropertyForLoginPage">
+	  <input type="text" id="rSubject" placeholder="Reimbursement Subject">
+	  <input type="text" id="rAmount" placeholder="Reimbursement Amount">
+	  <input type="text" id="rDescription" placeholder="Description">
+	  <input type="button" id="createRequest" value="Create Request">
+	</form>
+	<script type="text/javascript" src="employeeHome.js"></script>
+</body>
+</html>

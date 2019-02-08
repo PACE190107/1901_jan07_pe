@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Manager Home</title>
+  </head>
+  <body>
+    <h1>Manager Homepage</h1>
+    
+      <form class="classPropertyForLoginPage">
+	    <input type="button" id="logoutBtn" value="Logout">
+	  </form>
+	<h2>Personal Info</h2>
+      <p> 
+        <strong id = "eId"></strong> <br>
+        <strong id = "fName"></strong> <br>
+        <strong id = "lName"></strong><br> 
+        <strong id = "email"></strong> 
+      </p>
+    <h2>Reimbursement Requests</h2>
+    <p>--------Id -- Subject -- Amount ----- Status -------User Id-----Approver Id</p>
+   	<ul id = "reimbursements">
+   	<!-- insert Reimbersement requests here -->
+   	</ul>
+	
+	<h2>Resolve Request</h2>
+	<form class="approveDeny">
+	  <input type="text" id="requestId" placeholder="Enter Reimbursement Id">
+	  <input type="button" id="approveRequest" value="Approve">
+	  <input type="button" id="denyRequest" value="Deny">
+	</form>
+	
+	<h2>View Employees</h2>
+	  <form class="viewEmployees">
+	    <input type="button" id="viewEmployees" value="view Employees">
+	  </form>
+	<script type="text/javascript" src="managerHome.js"></script>
+</body>
+</html>
