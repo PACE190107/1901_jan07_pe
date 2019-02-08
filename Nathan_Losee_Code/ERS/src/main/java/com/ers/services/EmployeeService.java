@@ -183,7 +183,7 @@ public class EmployeeService {
 			((Employee) req.getSession().getAttribute("user"))
 					.setePassword(getMd5(node.get("newValue").asText() + "SALT").toUpperCase());
 			((Employee) req.getSession().getAttribute("user")).setConfirmed(true);
-			req.getRequestDispatcher("/webfiles/employee/employee.html").forward(req, resp);
+			req.getRequestDispatcher("/components/employee/employee.html").forward(req, resp);
 			break;
 		default:
 			break;

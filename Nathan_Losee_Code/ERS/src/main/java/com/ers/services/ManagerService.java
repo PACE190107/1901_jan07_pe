@@ -42,7 +42,7 @@ public class ManagerService {
 				&& ((Employee) req.getSession().getAttribute("user")).isManager()) {
 			String inJson = req.getReader().readLine();
 			ObjectNode node = (ObjectNode)mapper.readTree(inJson);
-			String outJson = mapper.writeValueAsString(EmployeeDAO.getDAO().readEmployeeByID(node.get("eID").asInt()));
+			String outJson = mapper.writeValueAsString(EmployeeDAO.getDAO().readEmployee(node.get("eID").asInt()));
 			resp.setContentType("application/json");
 			resp.getWriter().write(outJson);
 		}
@@ -124,7 +124,7 @@ public class ManagerService {
 		
 		ReimbursementRequest request = ReimbursementRequestDAO.getDAO().readRequest(
 				node.get("request").asInt());
-		sendApprovalEmail(EmployeeDAO.getDAO().readEmployeeByID(request.geteID()).geteEmail(), request);
+		sendApprovalEmail(EmployeeDAO.getDAO().readEmployee(request.geteID()).geteEmail(), request);
 	}
 	private static void sendApprovalEmail(String email, ReimbursementRequest request) {
 	      String origin = "sand-storm15@hotmail.com";

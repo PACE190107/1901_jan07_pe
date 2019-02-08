@@ -22,8 +22,6 @@ public class ReimbursementRequestDAO implements ReimbursementRequestDAOInterface
 	private PreparedStatement readRequestsStmnt;
 	private PreparedStatement readRequestStmnt;
 	private PreparedStatement updateRequestStmnt;
-	private PreparedStatement deleteRequestsStmnt;
-	private PreparedStatement deleteRequestStmnt;
 	public void resetStmnts() throws SQLException {
 		String sql = "SELECT * FROM reimbursement_requests WHERE e_id = ?";
 		readRequestsStmnt = ConnectionManager.getJDBCConnection().prepareStatement(sql);
@@ -33,10 +31,6 @@ public class ReimbursementRequestDAO implements ReimbursementRequestDAOInterface
 				+ "SET m_id = ?, is_approved = ? "
 				+ "WHERE rr_id = ?";
 		updateRequestStmnt = ConnectionManager.getJDBCConnection().prepareStatement(sql);
-		sql = "SELECT * FROM reimbursement_requests WHERE e_id = ?";
-		deleteRequestsStmnt = ConnectionManager.getJDBCConnection().prepareStatement(sql);
-		sql = "DELETE FROM reimbursement_requests WHERE rr_id = ?";
-		deleteRequestStmnt = ConnectionManager.getJDBCConnection().prepareStatement(sql);
 	}
 	
 	@Override
@@ -49,6 +43,8 @@ public class ReimbursementRequestDAO implements ReimbursementRequestDAOInterface
 			
 			stmnt.executeUpdate();
 			return stmnt.getInt(4) > 0;
+		} catch (SQLException e) {
+			throw new ERSExceptions.InvalidEIDException();
 		}
 	}
 	
@@ -73,6 +69,8 @@ public class ReimbursementRequestDAO implements ReimbursementRequestDAOInterface
 			}
 			
 			return requests;
+		} catch (SQLException e) {
+			throw new ERSExceptions.InvalidEIDException();
 		}
 	}
 	@Override
@@ -99,29 +97,14 @@ public class ReimbursementRequestDAO implements ReimbursementRequestDAOInterface
 	
 	@Override
 	public boolean updateRequest(int rrid, int mID, boolean isApproved) throws SQLException {
-		updateRequestStmnt.setInt(1, mID);
-		updateRequestStmnt.setString(2, (isApproved ? "t" : "f"));
-		updateRequestStmnt.setInt(3, rrid);
-		return updateRequestStmnt.executeUpdate() > 0;
-	}
-
-	@Override
-	public boolean deleteRequests(int eID) throws SQLException {
-		deleteRequestsStmnt.setInt(1, eID);
 		try {
-			deleteRequestsStmnt.executeUpdate();
-			return true;
-		} catch (SQLException se) {
-			throw new ERSExceptions.InvalidEIDException();
-		}
-	}
-	@Override
-	public boolean deleteRequest(int rrID) throws SQLException {
-		deleteRequestStmnt.setInt(1, rrID);
-		try {
-			deleteRequestStmnt.executeUpdate();
-			return true;
-		} catch (SQLException se) {
+			updateRequestStmnt.setInt(1, mID);
+			updateRequestStmnt.setString(2, (isApproved ? "t" : "f"));
+			updateRequestStmnt.setInt(3, rrid);
+			if (updateRequestStmnt.executeUpdate() > 0)
+				return true;
+			throw new SQLException();
+		} catch (SQLException e) {
 			throw new ERSExceptions.InvalidRRIDException();
 		}
 	}

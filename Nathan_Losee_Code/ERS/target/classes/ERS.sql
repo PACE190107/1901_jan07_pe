@@ -50,10 +50,12 @@ CREATE TABLE reimbursement_requests
     is_approved CHAR(1),
     CONSTRAINT rr_fk_employee
         FOREIGN KEY (e_id)
-        REFERENCES employees (e_id),
+        REFERENCES employees (e_id)
+        ON DELETE CASCADE,
     CONSTRAINT rr_fk_manager
         FOREIGN KEY (m_id)
         REFERENCES employees (e_id)
+        ON DELETE CASCADE
 );
     
 CREATE OR REPLACE FUNCTION get_employee_hash(in_e_password VARCHAR2) RETURN VARCHAR2
@@ -161,16 +163,22 @@ CREATE OR REPLACE PROCEDURE update_employee
     END;
     /
 
-CREATE OR REPLACE PROCEDURE delete_employee
-    (in_e_id IN INTEGER, p_success OUT INTEGER)
+CREATE OR REPLACE PROCEDURE delete_employees
     AUTHID CURRENT_USER AS
-    username_store VARCHAR(20);
+    CURSOR user_list is SELECT e_username FROM employees;
+    num_employees INTEGER;
+    username VARCHAR(20);
     BEGIN
-        SELECT e_username INTO username_store FROM employees
-            WHERE e_id = in_e_id;
-        DELETE FROM employees WHERE e_id = in_e_id;
-        p_success := SQL%ROWCOUNT;
-        EXECUTE IMMEDIATE ('DROP USER '||username_store);
+        OPEN user_list;
+        SELECT COUNT(*) INTO num_employees FROM employees;
+        FOR i IN 1..num_employees LOOP
+            FETCH user_list INTO username;
+            EXIT WHEN user_list%NOTFOUND;
+            EXECUTE IMMEDIATE ('DROP USER '||username);
+        END LOOP;
+        CLOSE user_list;
+        
+        DELETE FROM employees;
         COMMIT;
     END;
     /

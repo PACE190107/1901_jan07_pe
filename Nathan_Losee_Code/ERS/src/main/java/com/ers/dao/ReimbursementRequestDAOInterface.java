@@ -10,6 +10,4 @@ public interface ReimbursementRequestDAOInterface {
 	public List<ReimbursementRequest> readRequests(int eID) throws SQLException;
 	public ReimbursementRequest readRequest(int rrID) throws SQLException;
 	public boolean updateRequest(int rrid, int mID, boolean isApproved) throws SQLException;
-	public boolean deleteRequests(int eID) throws SQLException;
-	public boolean deleteRequest(int rrID) throws SQLException;
 }

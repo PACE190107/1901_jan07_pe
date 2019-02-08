@@ -36,6 +36,9 @@ fieldset {
 .input-group-prepend {
 	flex: 0 0 20%;
 }
+.small {
+	flex: inherit;
+}
 .input-group-text {
 	width: 100%;
 }

@@ -53,7 +53,7 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 			stmnt.executeUpdate();
 			return true;
 		} catch (SQLIntegrityConstraintViolationException e) {
-			throw new ERSExceptions.ExistingEmployeeException();
+			throw new ERSExceptions.ExistingUsernameException();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
@@ -89,7 +89,7 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 		}
 	}
 	@Override
-	public Employee readEmployeeByID(int eID) {
+	public Employee readEmployee(int eID) {
 		try {
 			readEmployeeIDStmnt.setInt(1, eID);
 			try (ResultSet foundEmployees = readEmployeeIDStmnt.executeQuery()) {
@@ -107,7 +107,7 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 					
 					return employee;
 				} else {
-					return null;
+					throw new ERSExceptions.InvalidEIDException();
 				}
 			}
 		} catch (SQLException e) {
@@ -135,7 +135,7 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 					
 					return employee;
 				} else {
-					return null;
+					throw new ERSExceptions.InvalidUsernamePasswordException();
 				}
 			}
 		} catch (SQLException e) {
@@ -169,26 +169,12 @@ public class EmployeeDAO implements EmployeeDAOInterface {
 			stmnt.registerOutParameter(4, Types.INTEGER);
 			stmnt.executeUpdate();
 			if (stmnt.getInt(4) <= 0)
-				throw new ERSExceptions.InvalidUsernamePasswordException();
+				throw new ERSExceptions.InvalidEIDException();
 			if (stmnt.getInt(4) == 2)
 				throw new ERSExceptions.ExistingUsernameException();
 			return true;
 		} catch (SQLSyntaxErrorException e) {
-			throw new ERSExceptions.InvalidUsernamePasswordException();
-		}
-	}
-
-	@Override
-	public boolean deleteEmployee(int eID) throws SQLException {
-		String sql = "CALL delete_user(?,?)";
-		try (CallableStatement stmnt = ConnectionManager.getJDBCConnection().prepareCall(sql)) {
-			stmnt.setInt(1, eID);
-			stmnt.registerOutParameter(2, Types.INTEGER);
-			
-			stmnt.executeUpdate();
-			return true;
-		} catch (SQLSyntaxErrorException e) {
-			throw new ERSExceptions.InvalidUsernamePasswordException();
+			throw new ERSExceptions.InvalidEIDException();
 		}
 	}
 }

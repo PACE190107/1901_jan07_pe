@@ -14,7 +14,7 @@ let loadContent = function(htmlContent, isPopup = false) {
 		contentTarget.innerHTML = htmlContent;
 	
 	let loadTarget = document.getElementById("loadTarget");
-	let path = "/ERS/webfiles/" + loadTarget.innerHTML + "/" + loadTarget.innerHTML;
+	let path = "/ERS/components/" + loadTarget.innerHTML + "/" + loadTarget.innerHTML;
 	
 	let jsTarget = document.createElement("script");
 	jsTarget.setAttribute("type", "text/javascript");

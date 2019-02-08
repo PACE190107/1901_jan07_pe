@@ -39,21 +39,21 @@ public class LoginService {
 			req.getSession().setAttribute("user", employee);
 			ConnectionManager.setJDBCConnection(employee.geteUsername(), employee.getePassword());
 			if (employee.isManager())
-				req.getRequestDispatcher("/webfiles/manager/manager.html").forward(req, resp);
+				req.getRequestDispatcher("/components/manager/manager.html").forward(req, resp);
 			else if (employee.isConfirmed())
-				req.getRequestDispatcher("/webfiles/employee/employee.html").forward(req, resp);
+				req.getRequestDispatcher("/components/employee/employee.html").forward(req, resp);
 			else if (isConfirming)
-				req.getRequestDispatcher("/webfiles/passwordChange/passwordChange.html").forward(req, resp);
+				req.getRequestDispatcher("/components/passwordChange/passwordChange.html").forward(req, resp);
 			else
-				req.getRequestDispatcher("/webfiles/needConfirmation/needConfirmation.html").forward(req, resp);
+				req.getRequestDispatcher("/components/needConfirmation/needConfirmation.html").forward(req, resp);
 		} else {
-			req.getRequestDispatcher("/webfiles/login/login.html").forward(req, resp);
+			req.getRequestDispatcher("/components/login/login.html").forward(req, resp);
 		}
 	}
 
 	public static void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		ConnectionManager.setJDBCConnection("Admin01", "s9d5j1q8");
 		req.getSession().invalidate();
-		req.getRequestDispatcher("/webfiles/login/login.html").forward(req, resp);
+		req.getRequestDispatcher("/components/login/login.html").forward(req, resp);
 	}
 }
