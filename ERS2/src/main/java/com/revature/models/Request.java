@@ -13,16 +13,16 @@ public class Request {
 	public Request() {
 	}
 
-	public Request(int id, int submitBy, String vendor, String desc, double amount, int pending, int approveBy,
+	public Request( int pending, int approveBy, int id,  int submitBy, String vendor, String desc, double amount,
 			int approved) {
 		super();
+		this.pending = pending;
+		this.approveBy = approveBy;
 		this.id = id;
 		this.submitBy = submitBy;
 		this.vendor = vendor;
 		this.desc = desc;
 		this.amount = amount;
-		this.pending = pending;
-		this.approveBy = approveBy;
 		this.approved = approved;
 	}
 

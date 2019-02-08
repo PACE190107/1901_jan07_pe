@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.revature.data.DataSource;
 import com.revature.models.Employee;
@@ -20,7 +21,8 @@ public class LoginServiceImpl implements LoginService {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		for (Employee employee : dataSource.getEmployeeTable())
-			if (employee.getUsername().equals(username) && getHashedPassword(employee.getUsername(), employee.getPassword()).equals(password))
+			//if (employee.getUsername().equals(username) && getHashedPassword(employee.getUsername(), employee.getPassword()).equals(password))
+			if (employee.getUsername().equals(username) && employee.getPassword().equals(password))
 				return employee;
 		return null;
 	}	

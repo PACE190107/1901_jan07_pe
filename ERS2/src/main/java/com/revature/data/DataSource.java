@@ -4,6 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,13 +48,13 @@ public class DataSource {
 			rs = ((OracleCallableStatement)cs).getCursor(1);
 			while (rs.next()) {
 				requests.add(new Request(
+						rs.getInt("REQ_PENDING"),
+						rs.getInt("MGR_APPROVE"),
 						rs.getInt("REQ_ID"),
 						rs.getInt("EMP_SUBMIT"),
 						rs.getString("REQ_VENDOR"),
 						rs.getString("REQ_DESC"),
 						rs.getDouble("REQ_AMOUNT"),
-						rs.getInt("REQ_PENDING"),
-						rs.getInt("MGR_APPROVE"),
 						rs.getInt("REQ_APPROVED")));
 			}
 		} catch (SQLException e) {

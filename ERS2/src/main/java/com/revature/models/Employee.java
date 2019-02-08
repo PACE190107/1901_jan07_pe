@@ -9,7 +9,6 @@ public class Employee {
 	private String address;
 	private String email;
 	private String username;
-	@JsonIgnore
 	private String password;
 	private int isManager;
 	

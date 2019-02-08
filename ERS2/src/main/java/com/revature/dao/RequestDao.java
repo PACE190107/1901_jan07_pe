@@ -2,21 +2,13 @@ package com.revature.dao;
 
 import java.util.List;
 
+import com.revature.models.Employee;
 import com.revature.models.Request;
 
 public interface RequestDao {
 	
-	// Read some
-	List<Request> getRequestsPendingById(int id);
-	
-	// Read some
-	List<Request> getRequestsCompleteById(int id);
-	
-	// Read some
-	List<Request> getAllRequestsPending();
-		
-	// Read some
-	List<Request> getAllRequestsComplete();
+	// Read one
+	Request getRequestById(int id);
 	
 	//Read all
 	List<Request> getAllRequests();
@@ -26,5 +18,7 @@ public interface RequestDao {
 	
 	// Update
 	Request updateRequest(Request request);
+
+	Request deleteRequest(int id);
 
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.dao.RequestDao;
 import com.revature.dao.RequestDaoImpl;
+import com.revature.exception.EmployeeNotFoundException;
 import com.revature.exception.RequestNotFoundException;
 import com.revature.models.Request;
 
@@ -32,32 +33,13 @@ public class RequestServiceImpl implements RequestService {
 				return dao.getAllRequests();
 			}
 			// GET ONE LOGIC
-			if (path.length == 5) {		// execute if request looks like /PaceServletExamples/rest/Requests/3
+			if (path.length == 5) {		// execute if request looks like /PaceServletExamples/rest/employees/3
 				try {
-					if (Integer.valueOf(path[4]) == 0) { //0==request pending
-						return dao.getAllRequestsPending();
-					}
-					else if (Integer.valueOf(path[4]) == 1) {//1==request processed
-						return dao.getAllRequestsComplete();
-					}
+					int requestId = Integer.valueOf(path[4]);
+					return dao.getRequestById(requestId);
 				} catch (NumberFormatException e) {
 					return "Cannot convert " + path[4] + " into a number";
-				} catch (RequestNotFoundException e) {
-					return e.getMessage();
-				}
-			}
-			if (path.length == 6) {		// execute if request looks like /PaceServletExamples/rest/Requests/3
-				try {
-					int employeeId = Integer.valueOf(path[5]);
-					if (Integer.valueOf(path[4]) == 0) {//0==request pending
-						return dao.getRequestsPendingById(employeeId);
-					}
-					else if (Integer.valueOf(path[4]) == 1) {//1==request processed
-						return dao.getRequestsCompleteById(employeeId);
-					}
-				} catch (NumberFormatException e) {
-					return "Cannot convert " + path[4] + " into a number";
-				} catch (RequestNotFoundException e) {
+				} catch (EmployeeNotFoundException e) {
 					return e.getMessage();
 				}
 			}
@@ -89,6 +71,26 @@ public class RequestServiceImpl implements RequestService {
 					return dao.updateRequest(Request);
 				} catch (IOException e) {
 					e.printStackTrace();
+				}
+			}
+			try {
+				// 415 is an Unsupported Media Type
+				response.sendError(415, "Please create using application/json");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if (request.getMethod().equals("DELETE")) {
+			// DELETE LOGIC
+			if (request.getHeader("Content-Type").equals("application/json")) {
+				String[] path = request.getRequestURI().split("/");
+				try {
+					int requestId = Integer.valueOf(path[4]);
+					return dao.deleteRequest(requestId);
+				} catch (NumberFormatException e) {
+					return "Cannot convert " + path[4] + " into a number";
+				} catch (EmployeeNotFoundException e) {
+					return e.getMessage();
 				}
 			}
 			try {
