@@ -30,7 +30,9 @@ public class EmployeeServiceImpl implements EmployeeService
 		final String newLname = request.getParameter("newLname");
 		final String newPassword = request.getParameter("newPassword");
 		
-		Employee employeeInfo = employeeDao.updateEmployee(username, newFname, newLname, newPassword);
+		String hashPass = employeeDao.hash(username, newPassword);
+		
+		Employee employeeInfo = employeeDao.updateEmployee(username, newFname, newLname, hashPass);
 
 		try 
 		{

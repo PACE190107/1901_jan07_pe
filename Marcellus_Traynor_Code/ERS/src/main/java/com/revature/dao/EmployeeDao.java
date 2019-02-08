@@ -10,4 +10,5 @@ public interface EmployeeDao
 	public List<Employee> getEmployeeInfo(String username);
 	public Employee updateEmployee(String username, String newFname, String newLname, String newPassword);
 	public List<Employee> getAllEmployeeInfo();
+	public String hash(String username, String password);
 }

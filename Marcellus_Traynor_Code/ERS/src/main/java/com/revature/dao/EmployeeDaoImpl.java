@@ -1,10 +1,12 @@
 package com.revature.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,30 @@ public class EmployeeDaoImpl implements EmployeeDao
 		catch (SQLException e1) 
 		{
 			log.error("error occured in catch block in EmployeeDaoImpl employeeLogin method");
+			log.error(e1.getMessage());
+			log.error(e1.getStackTrace());
+			return null;
+		}
+	}
+	
+	@Override
+	public String hash(String username, String password)
+	{
+		try(Connection conn = ConnectionUtil.getConnection())
+		{	
+			CallableStatement cs = conn.prepareCall("{? = call get_password_hash(?,?)}");
+			cs.setString(2,username);
+			cs.setString(3,password);
+			cs.registerOutParameter(1, Types.VARCHAR);
+			cs.execute();
+			
+			String hashPass = cs.getString(1);
+			return hashPass;
+			
+		} 
+		catch (SQLException e1) 
+		{
+			log.error("error occured in catch block in EmployeeDaoImpl hash method");
 			log.error(e1.getMessage());
 			log.error(e1.getStackTrace());
 			return null;
@@ -83,7 +109,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 		
 		log.info("updating employee info");
 		try(Connection conn = ConnectionUtil.getConnection())
-		{
+		{	
 			String sql = "UPDATE Employee_Info SET first_name = ?, last_name = ?, user_password = ? "
 					+ "WHERE user_name = ?";
 			

@@ -7,4 +7,5 @@ public interface LoginService
 {
 	public void attemptAuthentication(HttpServletRequest request, HttpServletResponse response);
 	public void logout(HttpServletRequest request, HttpServletResponse response);
+	public String getHashedPassword(String username, String password);
 }

@@ -23,9 +23,11 @@ public class LoginServiceImpl implements LoginService
 		
 		final String username = request.getParameter("username");
 		final String password = request.getParameter("password");
+		
+		String hashPass = getHashedPassword(username, password);
 			
 		log.info("authenticating employee");
-		String attempting = employeeDao.employeeLogin(username, password);
+		String attempting = employeeDao.employeeLogin(username, hashPass);
 		
 			
 		if ((attempting != null) && (attempting.equalsIgnoreCase("Employee"))) 
@@ -106,10 +108,9 @@ public class LoginServiceImpl implements LoginService
 		}
 	}
 
-//	//This is where you would check against stored hashed passwords
-//	private String getHashedPassword(String password) 
-//	{
-//		// invoke a Stored Procedure to perform the one-way hash of your password
-//		return null;
-//	}
+	public String getHashedPassword(String username, String password) 
+	{
+		log.info("hashing password");
+		return employeeDao.hash(username, password);
+	}
 }

@@ -6,6 +6,7 @@ drop PUBLIC SYNONYM Employee_Info;
 drop PUBLIC SYNONYM Reimbursements;
 drop PUBLIC SYNONYM reimbursement_seq;
 drop PUBLIC SYNONYM create_reimbursement;
+drop PUBLIC SYNONYM get_password_hash;
 drop user super;
 
 --Employee table
@@ -15,7 +16,7 @@ CREATE TABLE Employee_Info
     last_name varchar2(20),
     job_description varchar2(20),
     user_name varchar(30) not null,
-    user_password varchar2(30),
+    user_password varchar2(100),
     CONSTRAINT user_name_PK PRIMARY KEY (user_name)
 );
 
@@ -63,7 +64,7 @@ END;
 /
 
 --HASHING FUNCTION THAT COMBINES USERNAME, PASSWORD AND A SPECIAL WORD  
-CREATE OR REPLACE FUNCTION GET_CUSTOMER_HASH(USERNAME VARCHAR2, PASSWORD VARCHAR2) RETURN VARCHAR2
+CREATE OR REPLACE FUNCTION GET_PASSWORD_HASH(USERNAME VARCHAR2, PASSWORD VARCHAR2) RETURN VARCHAR2
 IS
 EXTRA VARCHAR2(10) := 'NQOPZ';
 BEGIN
@@ -76,24 +77,24 @@ END;
 CREATE PUBLIC SYNONYM Employee_Info FOR MTRevature.Employee_Info;
 CREATE PUBLIC SYNONYM Reimbursements FOR MTRevature.Reimbursements;
 CREATE PUBLIC SYNONYM reimbursement_seq FOR MTRevature.reimbursement_seq;
---CREATE PUBLIC SYNONYM register_user FOR MTRevature.register_user;
+CREATE PUBLIC SYNONYM get_password_hash FOR MTRevature.get_password_hash;
 CREATE PUBLIC SYNONYM create_reimbursement FOR MTRevature.create_reimbursement;
 
 --Populate employees
 insert into Employee_Info (first_name, last_name, job_description, user_name, user_password) 
-    values('M', 'Karen', 'Manager', 'man1', 'qwerty321');
+    values('M', 'Karen', 'Manager', 'man1', get_password_hash('man1', 'qwerty321'));
 insert into Employee_Info (first_name, last_name, job_description, user_name, user_password) 
-    values('M', 'Phil', 'Manager', 'man2', 'qwerty987');
+    values('M', 'Phil', 'Manager', 'man2', get_password_hash('man2', 'qwerty987'));
 insert into Employee_Info (first_name, last_name, job_description, user_name, user_password)
-    values('E', 'Un', 'Employee', 'emp1', 'qwerty1');
+    values('E', 'Un', 'Employee', 'emp1', get_password_hash('emp1', 'qwerty1'));
 insert into Employee_Info (first_name, last_name, job_description, user_name, user_password) 
-    values('E', 'Deux', 'Employee', 'emp2', 'qwerty2');
+    values('E', 'Deux', 'Employee', 'emp2', get_password_hash('emp2', 'qwerty2'));
 insert into Employee_Info (first_name, last_name, job_description, user_name, user_password) 
-    values('E', 'Trois', 'Employee', 'emp3', 'qwerty3');
+    values('E', 'Trois', 'Employee', 'emp3', get_password_hash('emp3', 'qwerty3'));
 insert into Employee_Info (first_name, last_name, job_description, user_name, user_password) 
-    values('E', 'Quatre', 'Employee', 'emp4', 'qwerty4');
+    values('E', 'Quatre', 'Employee', 'emp4', get_password_hash('emp4', 'qwerty4'));
 insert into Employee_Info (first_name, last_name, job_description, user_name, user_password) 
-    values('E', 'Cinq', 'Employee', 'emp5', 'qwerty5');
+    values('E', 'Cinq', 'Employee', 'emp5', get_password_hash('emp5', 'qwerty5'));
 
 --DataBase Admin
 create user super identified by super;
