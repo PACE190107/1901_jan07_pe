@@ -1,0 +1,66 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app>
+	<display-name>ERS_Updated</display-name> <!-- THIS MUST MATCH PROJECT NAME -->
+	<servlet>
+		<servlet-name>MasterServlet</servlet-name>
+		<servlet-class>com.revature.servlet.MasterServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/Home/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/Personal/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/ViewEmployees/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/ViewReimbursements/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/MyReimbursements/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/getEmployee/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/getAllEmployees/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/getAllReimbursements/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/getMyReimbursements/*</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/getAllReimbursementsSingle/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/insertReimbursement/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/updateEmployee/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/updateReimbursement/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MasterServlet</servlet-name>
+		<url-pattern>/logout/*</url-pattern>
+	</servlet-mapping>
+</web-app>

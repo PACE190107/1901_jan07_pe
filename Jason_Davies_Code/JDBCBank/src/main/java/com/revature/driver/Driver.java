@@ -1,6 +1,5 @@
 package com.revature.driver;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -793,7 +792,7 @@ public class Driver {
 		account.setBalance(result);
 		AccountService.getAccountService().updateAccount(account);
 		
-		printFormattedMessage("Youd have successfully made a transaction.\n" + ENTER_ANY_KEY, false);
+		printFormattedMessage("You have successfully made a transaction.\n" + ENTER_ANY_KEY, false);
 		scanner.nextLine();
 		return UIState.USER_MENU;
 	}
@@ -809,15 +808,16 @@ public class Driver {
 	
 	// Helper method for CMD
 	private void clearCMD() {
-		try {
-			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor(); // runs cls command in cmd
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
+//		try {
+//			new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor(); // runs cls command in cmd
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} 
 	}
 
+	// Helper method for printing messages
 	private void printFormattedMessage(String message, boolean isException) {
 		if (isException) {
 			System.out.println("********************************************************\n"

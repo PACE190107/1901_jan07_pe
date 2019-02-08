@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<title>ERS | Personal</title>
+</head>
+<body class="container">
+	<h1 id="title">Personal Information</h1>
+	<form action="/ERS_Updated/Home" method="POST">
+		<div class="col-sm-2">
+			<input type="submit" value="Back" name="btn">
+		</div>
+	</form>
+	<div class="well">
+		<form action="/ERS_Updated/updateEmployee" method="POST">
+			<div class="form-group row" style="background: lightgrey">
+				<label for="firstName" class="col-sm-2 col-form-label">First
+					Name</label>
+				<div class="col-sm-4">
+					<input type="text" readonly class="form-control-plaintext"
+						id="firstName" value="">
+				</div>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control"
+						placeholder="Updated First Name..."
+						aria-label="Updated First Name..." aria-describedby="basic-addon2"
+						name="firstNameUpdate">
+					<div class="input-group-append">
+						<input type="submit" value="Update" name="btn">
+					</div>
+				</div>
+			</div>
+			<div class="form-group row" style="background: lightgrey">
+				<label for="lastName" class="col-sm-2 col-form-label">Last
+					Name</label>
+				<div class="col-sm-4">
+					<input type="text" readonly class="form-control-plaintext"
+						id="lastName" value="">
+				</div>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control"
+						placeholder="Updated Last Name..."
+						aria-label="Updated Last Name..." aria-describedby="basic-addon2"
+						name="lastNameUpdate">
+					<div class="input-group-append">
+						<input type="submit" value="Update" name="btn">
+					</div>
+				</div>
+			</div>
+			<div class="form-group row" style="background: lightgrey">
+				<label for="email" class="col-sm-2 col-form-label">Email</label>
+				<div class="col-sm-4">
+					<input type="text" readonly class="form-control-plaintext"
+						id="email" value="">
+				</div>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control"
+						placeholder="Updated Email Address..."
+						aria-label="Updated Email Address..."
+						aria-describedby="basic-addon2" name="emailUpdate">
+					<div class="input-group-append">
+						<input type="submit" value="Update" name="btn">
+					</div>
+				</div>
+			</div>
+			<div class="form-group row" style="background: lightgrey">
+				<label for="username" class="col-sm-2 col-form-label">Username</label>
+				<div class="col-sm-4">
+					<input type="text" readonly class="form-control-plaintext"
+						id="username" value="">
+				</div>
+				<div class="col-sm-4">
+					<input type="text" readonly class="form-control-plaintext"
+						id="usernameNote" value="Username cannot be changed.">
+				</div>
+			</div>
+			<div class="form-group row" style="background: lightgrey">
+				<label for="password" class="col-sm-2 col-form-label">Password</label>
+				<div class="col-sm-4">
+					<input type="text" readonly class="form-control-plaintext"
+						id="password" value="">
+				</div>
+				<div class="input-group mb-3">
+					<input type="text" class="form-control"
+						placeholder="Updated Password..." aria-label="Updated Password..."
+						aria-describedby="basic-addon2" name="passwordUpdate">
+					<div class="input-group-append">
+						<input type="submit" value="Update" name="btn">
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="js/personal.js"></script>
+	<!-- RELATIVE PATH STARTS FROM webapp directory -->
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<title>ERS | Home</title>
+</head>
+<body class="container">
+	<h1 id="title">Home</h1>
+	<form action="/ERS_Updated/Personal" method="POST">
+		<div class="col-sm-2">
+			<input type="submit" value="Personal" name="btn">
+		</div>
+	</form>
+	<form action="/ERS_Updated/ViewEmployees" method="POST">
+		<div class="col-sm-2">
+			<input type="submit" value="Employees" name="btn">
+		</div>
+	</form>
+	<form action="/ERS_Updated/ViewReimbursements" method="POST">
+		<div class="col-sm-2">
+			<input type="submit" value="Reimbursements" name="btn">
+		</div>
+	</form>
+	<form action="/ERS_Updated/logout" method="POST">
+		<div class="col-sm-2">
+			<input type="submit" value="Logout" name="btn">
+		</div>
+	</form>
+</body>
+</html>

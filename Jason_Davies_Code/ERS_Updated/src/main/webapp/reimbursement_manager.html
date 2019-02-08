@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<title>ERS | Reimbursements</title>
+</head>
+<body class="container">
+	<h1>Reimbursements</h1>
+	<form action="/ERS_Updated/Home" method="POST">
+		<div class="form-group row">
+			<div class="col-sm-2">
+				<input type="submit" value="Back" name="btn">
+			</div>
+		</div>
+	</form>
+	<form action="/ERS_Updated/getAllReimbursementsSingle" method="POST">
+		<div class="form-group row" style="background: lightgrey">
+			<div class="col-sm-2">
+				<label for="amount">Requester ID</label>
+			</div>
+			<div class="col-sm-2">
+				<input type="number" name="requesterId" id="requesterId" min="1">
+			</div>
+			<div class="col-sm-2">
+				<input type="submit" value="Filter" name="singleEmployee"
+					id="singleEmployee">
+			</div>
+		</div>
+	</form>
+	<form action="/ERS_Updated/updateReimbursement" method="POST">
+		<div class="form-group row" style="background: lightgrey">
+			<div class="col-sm-2">
+				<label for="amount">Reimbursement ID</label>
+			</div>
+			<div class="col-sm-2">
+				<input type="number" name="id" min="1">
+			</div>
+			<div class="col-sm-2">
+				<input type="submit" name="btn" value="APPROVED">
+			</div>
+			<div class="col-sm-2">
+				<input type="submit" name="btn" value="DENIED">
+			</div>
+		</div>
+	</form>
+	<div>
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Reimbursement ID</th>
+				<th>Requester ID</th>
+				<th>Authorizer ID</th>
+				<th>Type</th>
+				<th>Status</th>
+				<th>Amount</th>
+				<th>Date</th>
+			</tr>
+			<tbody id="tableBody"></tbody>
+		</table>
+	</div>
+	<script type="text/javascript" src="js/reimbursement_manager.js"></script>
+</body>
+</html>
