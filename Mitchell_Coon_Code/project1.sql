@@ -110,44 +110,10 @@ BEGIN
     resultCount := afterCount - beforeCount;
 END;
 /
-insert into Employees values(null,'Ren','Amamiya','Joker','Arsene',1);
-insert into Employees values(null,'Mitchell','Coon','Mitch','Coon',1);
-select * from Employees;
-select employee_id, firstname, lastname, username, pass, isManager from Employees where Employees.username = 'Mitch' and Employees.pass = get_User_Hash('Mitch', 'Coon');
-commit;
-select * from Reimbursements;
-update Reimbursements set approved_status = 'approved', approved_by = 'Mitch' where reimbursement_id = 8;
---select count(pass) from BankUsers where BankUsers.username = 'm' and BankUsers.pass = get_User_Hash('m','c');
-
---select firstname from BankUsers where BankUsers.user_id = 1;
-
---insert into Accounts values(1,62,'checking',0);
---insert into Accounts values(null,62,'savings',0);
---insert into BankUsers values(null, 'm', 'c', 'm', 'c');
---insert into BankUsers values(null, 'm', 'c', 'm_coon', 'p_word');
---select * from Accounts;
---select * from BankUsers;
-
---update Accounts set balance = 10.0 + balance where user_id = 21 and account_type = 'checking';
-
---update Accounts set balance = -10.0 + balance where user_id = 21 and account_type = 'checking';
-
---select * from Accounts where User_ID = 62 and account_Type = 'checking';
---select count(user_ID) from Accounts where Accounts.user_ID = 62 and Accounts.account_type = 'checking';
---select count(pass) from BankUsers where BankUsers.username = 'm' and BankUsers.pass = get_User_Hash('m', 'c');
---select count(pass) from BankUsers where BankUsers.username = 'c' and BankUsers.pass = get_User_Hash('c', 'g');
-
---delete from Accounts where Accounts.account_id = 1;
---delete from BankUsers where BankUsers.username = 'm';
---delete from BankUsers where BankUsers.user_id = 21;
---delete from BankUsers;
---delete from BankUsers where BankUsers.user_id = 63;
-
---create or replace procedure Add_To_Account(account_id in varchar2, amount in number)
---as
---begin 
---select balance from Accounts where Accounts.account_id = account_id;
---end;
---/
-
+--insert into Employees values(null,'Ren','Amamiya','Joker','Arsene',1);
+--insert into Employees values(null,'Mitchell','Coon','Mitch','Coon',1);
+--select * from Employees;
+--select employee_id, firstname, lastname, username, pass, isManager from Employees where Employees.username = 'Mitch' and Employees.pass = get_User_Hash('Mitch', 'Coon');
 --commit;
+--select * from Reimbursements;
+--update Reimbursements set approved_status = 'approved', approved_by = 'Mitch' where reimbursement_id = 8;

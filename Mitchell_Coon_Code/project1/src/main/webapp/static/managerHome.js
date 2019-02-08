@@ -3,7 +3,6 @@ window.onload = () => {
 	reqBtn.addEventListener("click",() => {
 		var x = new XMLHttpRequest();
 		x.onreadystatechange = () => {
-			//comment the if condition and try to print all different readyStates
 			if((x.readyState == 4) && (x.status ==200)){
 
 				var reimbursements = JSON.parse(x.responseText);
@@ -60,7 +59,8 @@ window.onload = () => {
 	infoBtn.addEventListener("click",() => {
 		var y = new XMLHttpRequest();
 		y.onreadystatechange = () => {
-			//comment the if condition and try to print all different readyStates
+			// comment the if condition and try to print all different
+			// readyStates
 			if((y.readyState == 4) && (y.status ==200)){
 
 				var user = JSON.parse(y.responseText);
@@ -113,7 +113,8 @@ window.onload = () => {
 	EmpBtn.addEventListener("click",() => {
 		var z = new XMLHttpRequest();
 		z.onreadystatechange = () => {
-			//comment the if condition and try to print all different readyStates
+			// comment the if condition and try to print all different
+			// readyStates
 			if((z.readyState == 4) && (z.status ==200)){
 
 				var employees = JSON.parse(z.responseText);
@@ -176,7 +177,8 @@ window.onload = () => {
 	allReqBtn.addEventListener("click",() => {
 		var w = new XMLHttpRequest();
 		w.onreadystatechange = () => {
-			//comment the if condition and try to print all different readyStates
+			// comment the if condition and try to print all different
+			// readyStates
 			if((w.readyState == 4) && (w.status ==200)){
 
 				var reimbursements = JSON.parse(w.responseText);
@@ -245,7 +247,8 @@ window.onload = () => {
 	allReqBtn.addEventListener("click",() => {
 		var t = new XMLHttpRequest();
 		t.onreadystatechange = () => {
-			//comment the if condition and try to print all different readyStates
+			// comment the if condition and try to print all different
+			// readyStates
 			if((t.readyState == 4) && (t.status ==200)){
 
 				var employees = JSON.parse(t.responseText);
@@ -268,7 +271,8 @@ window.onload = () => {
 	approveDenyBtn.addEventListener("click",() => {
 		var s = new XMLHttpRequest();
 		s.onreadystatechange = () => {
-			//comment the if condition and try to print all different readyStates
+			// comment the if condition and try to print all different
+			// readyStates
 			if((s.readyState == 4) && (s.status ==200)){
 
 				var reimbursements = JSON.parse(s.responseText);
@@ -292,7 +296,8 @@ window.onload = () => {
 	filterReqBtn.addEventListener("click",() => {
 		var u = new XMLHttpRequest();
 		u.onreadystatechange = () => {
-			//comment the if condition and try to print all different readyStates
+			// comment the if condition and try to print all different
+			// readyStates
 			if((u.readyState == 4) && (u.status ==200)){
 
 				var reimbursements = JSON.parse(u.responseText);

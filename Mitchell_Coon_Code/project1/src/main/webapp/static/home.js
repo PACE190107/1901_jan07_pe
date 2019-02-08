@@ -51,7 +51,7 @@ window.onload = () => {
 				}
 			}
 		};
-		x.open("get","http://localhost:8080/proj1/viewRequests");
+		x.open("get","http://localhost:8080/project1/viewRequests");
 		x.send();
 	});
 	
@@ -105,7 +105,7 @@ window.onload = () => {
 					
 			}
 		};
-		y.open("get","http://localhost:8080/proj1/viewInformation");
+		y.open("get","http://localhost:8080/project1/viewInformation");
 		y.send();
 	});
 	
