@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+<title>Manager Home Page</title>
+
+</head>
+<body class="container">
+	<div>
+		<h3>Expense Reimbursement System</h3>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info btn-lg"
+					data-toggle="modal" data-target="#submitRequest">Submit Request</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="submitRequest" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Submit Reimbursement Request</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<form action="submitRequest" method="post" id="submitRequest" title =>
+									<input type="text" name = "Purpose" id = "Purpose" placeholder = "Purpose" required/>
+									<input type="number" name = "Amount" id = "Amount" placeholder = "Amount" required/>
+									<input type="submit" value="Submit" />
+								</form>
+							</div>
+							<div class="modal-footer">
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info btn-lg" id="viewRequestsBtn"
+					data-toggle="modal" data-target="#viewRequests">View My Requests</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="viewRequests" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">My Requests</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<table class = "table table-light table-hover" id = requestTable>
+								<thead>
+								</thead>
+								<tbody>
+								</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info btn-lg" id="viewInfoBtn"
+					data-toggle="modal" data-target="#viewInformation">View/Update My Information</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="viewInformation" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">My Information</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<table class="table table-light table-hover" id=infoTable>
+									<thead>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								<form action="updateInformation" method="post"
+									id="updateInformation" title=>
+									<input type="text" name="firstname" id="firstname" placeholder="First Name" required/>
+									<input type="text" name="lastname" id="lastname" placeholder="Last Name" required/>
+									<input type="text" name="username" id="username" placeholder="New Username" required/>
+									<input type="password" name="pass" id="pass" placeholder="New Password" required/>
+									<input type="submit" value="Submit" />
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		
+		
+		
+		<!-- Second row -->
+		
+		
+		
+		
+		<div class="row">
+			
+			<div class="col-md-3">
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info btn-lg" id="approveDenyBtn"
+					data-toggle="modal" data-target="#approveDeny">Approve/Deny Requests</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="approveDeny" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Approve or Deny Requests</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<form action="approveDeny" method="post" id="approveDenyForm" title=>
+									<select id="reimbursementSelector" name ="reimbursementSelector">
+										<option selected disabled>Reimbursement</option>
+									</select>
+									<select id="approveDenySelector" name ="approveDenySelector">
+										<option selected>Approve</option>
+										<option>Deny</option>
+									</select>
+									<input type="submit" value="Submit" />
+								</form>
+							</div>
+							<div class="modal-footer">
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info btn-lg" id="viewAllRequestsBtn"
+					data-toggle="modal" data-target="#viewAllRequests">View All Requests</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="viewAllRequests" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">View Employee Requests</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<table class = "table table-light table-hover" id = allRequestsTable>
+								<thead>
+								</thead>
+								<tbody>
+								</tbody>
+								</table>
+								<p>Filter Requests by ID:</p>
+									<select id = filter>
+										<option selected disabled>Employee ID</option>
+									</select>
+									<!-- <input type = "number" name = "filter" id = "filter" placeholder = "ID Number"/> -->
+									<button type="button" id="filterRequestsBtn">Filter </button>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info btn-lg" id="viewEmployeesBtn"
+					data-toggle="modal" data-target="#viewEmployees">View/Register Employees</button>
+				
+				<!-- Modal -->
+				<div class="modal fade" id="viewEmployees" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Employee List</h4>
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<table class="table table-light table-hover" id=employeesTable>
+									<thead>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+								<p>Register New Employee:</p>
+								<form action="registerEmployee" method="post" id="registerEmployee" title = "Register New Employee">
+									<input type="text" name="empfirstname" id="empfirstname" placeholder="First Name" required/>
+								    <input type="text" name="emplastname" id="emplastname" placeholder="Last Name" required/>
+									<input type="text" name="empusername" id="empusername" placeholder="Username" required/>
+									<input type="password" name="emppass" id="emppass" placeholder="New Password" required/>
+									<input type = number name = "empismanager" id = "empismanager" placeholder = "Manager? (0 or 1)"/>
+									<input type="submit" value="Submit" />
+								</form>
+							</div>
+							<div class="modal-footer">
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class = "row">
+			<div class="col-md-3">
+				<form action="logout" method="post">
+					<input type="submit" value="Logout" />
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script type="text/javascript" src="static/managerHome.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>
