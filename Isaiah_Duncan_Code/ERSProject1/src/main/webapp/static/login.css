@@ -1,0 +1,55 @@
+
+/*  FONTS USED THROUGHOUT WEBSITE
+
+* font-family: 'Roboto', sans-serif;
+* font-family: 'Major Mono Display', monospace;
+* font-family: 'Baloo Thambi', cursive;
+
+*/
+
+body{
+	background-attachment: fixed !important;
+    background-image: url("/ERSProject1/static/sunset-loop.gif") !important;
+    background-color: black !important;
+    background-size: 100% !important;
+    color: red !important;
+    height: 100vh !important;
+}
+
+a {
+	font-family: 'Baloo Thambi', cursive !important;
+	font-size: 13em !important;
+	color: #FFF;
+  	-webkit-text-fill-color: #FFF; /* Will override color (regardless of order) */
+ 	-webkit-text-stroke-width: 5px;
+  	-webkit-text-stroke-color: #f13932;
+  	transition: ease 1000ms;	
+}
+
+a:hover{
+	color: #f13932;
+	-webkit-text-fill-color: #f13932; /* Will override color (regardless of order) */
+ 	-webkit-text-stroke-width: 5px;
+  	-webkit-text-stroke-color: #FFF;
+  	text-decoration: none;
+}
+
+#outer {
+	display:flex;
+	flex-direction:column;
+	height: 100% !important;
+	justify-content: center;
+	
+}
+
+#innner {
+	width: 100% !important;
+	display:flex;
+}
+
+.title {
+	display: block;
+	margin: 0 auto;
+	
+}
+

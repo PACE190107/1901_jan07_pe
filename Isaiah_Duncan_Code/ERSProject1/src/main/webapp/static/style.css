@@ -1,0 +1,337 @@
+
+/*  FONTS USED THROUGHOUT WEBSITE
+
+* font-family: 'Roboto', sans-serif;
+* font-family: 'Major Mono Display', monospace;
+* font-family: 'Baloo Thambi', cursive;
+
+*/
+
+/*
+    GLOBAL STYLING
+*/
+body{
+    background-attachment: fixed !important;
+    background-image: url("wood.jpg") !important;
+    background-size: 100% !important;
+}
+
+#wrapper{
+    padding: 0px !important;
+    margin: 0px !important;
+    /*background-image: url("wood.jpg") !important;
+    background-size: 100% !important;
+    background-attachment: cover !important;*/
+    content: "" !important;
+    height: 100vh;
+}
+
+.removePadding{padding: 0px !important;}
+.removeMargin{margin: 0px !important;}
+.removeBorderRadius{border-radius: 0px !important;}
+
+div{
+    font-family: 'Roboto', sans-serif;
+}
+
+.myShadow{
+  	-webkit-box-box-shadow: -5px 5px 5px #000 !important;
+  	-moz-box-box-shadow: -5px 5px 5px #000 !important;
+  	box-shadow: -3px 3px 20px #000 !important; 
+  	
+}
+
+/*
+    NAV BAR STYLING
+*/
+
+#companyTitle{
+    font-family: 'Baloo Thambi', cursive;
+    font-weight: normal;
+    font-size: 1.4em;
+}
+#companyTitle:hover{
+    color: #f7f1b9 !important;
+}
+
+#navContainer{
+    margin-top: 25px !important;
+    padding: 0px;
+}
+
+#navBar{
+    text-transform: uppercase;
+    margin: 0px !important;
+    background-color: rgb(241, 57, 50) !important;
+    color: #fff !important;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border: 4px solid #000;
+    /*border: 1px solid #000;*/
+}
+
+.makeLinkWhite{
+    color: #fff !important;
+}
+
+#navBtn{
+    background-color: transparent !important;
+    padding: 0px !important;
+    border: 0px !important;
+}
+
+#navBtn:hover{
+    cursor: pointer;
+    color: #f13932 !important;
+}
+
+.navBtnPadding{
+	margin-left: 23px !important;
+	color: blue;
+}
+
+#navMainBtn{
+    background-color: transparent !important;
+    padding: 0px !important;
+    border: 0px !important;
+    color: #fff !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+}
+#navMainBtn:hover{
+    cursor: pointer;
+    color: #f7f1b9 !important;
+}
+.manager-dropdown{
+	width: 235px !important;
+}
+.dropdown-item:hover{
+    color: #f13932 !important;
+}
+#navbarDropdownMenuLink:hover{
+    color: #f7f1b9 !important;
+}
+.linkHoverColorChange:hover{
+    color: #f7f1b9 !important;
+}
+
+/*
+    HEADER IMG STYLING
+*/
+
+#headerImgContainer{
+    margin-top: 10px;
+    border-radius: 0px;
+    border: 4px solid #000;
+    /*border: 1px solid #000;*/
+    /*background-image: url("happy-people.jpg");*/
+    background-size: 100%;
+    background-attachment: cover;
+    background-repeat: no-repeat;
+    background-position-y: -100px;
+    background-color: transparent !important;
+    content: "";
+    height: 300px !important;
+}
+
+#carouselExampleControls{
+    overflow: hidden !important;
+    position: absolute !important;
+    left: 0px !important;
+    top: 0px !important;
+    height: 300px !important;
+}
+#carouselExampleSlidesOnly, .carousel-inner{
+    height: 100% !important;
+    width: 100% !important;
+    padding: 0px !important;
+    margin: 0px !important;
+
+}
+
+/*
+    PENDING REQUESTS STYLING
+*/
+
+#pendingRequestsContainer{
+    margin-top: 10px;
+}
+
+/*.tableBg{
+    background-color: #f13932 !important;
+}*/
+
+.tableHeaderRowBorder{
+    border-top: 1px solid #f13932 !important;
+    border-bottom: 4px solid #f13932 !important;
+}
+
+.tableRowBorder{
+    border-top: 1px solid #f13932 !important;
+    border-bottom: 1px solid #f13932 !important;
+}
+
+
+/*
+    ACCORDING STYLING
+*/
+
+.accordion{
+    border: 2px solid #000 !important;
+}
+.card{
+    border: 2px solid #000 !important;
+}
+
+.accordionHeader{
+    background-color: #f13932 !important;
+    color: #fff !important;
+}
+
+.accordionHeaderBtn{
+    text-decoration: none !important;
+    text-transform: uppercase;
+    font-weight: bold !important;
+    letter-spacing: 5px;
+    color: #fff !important;
+}
+
+.acordionContent{
+    background-color: rgb(255, 255, 255) !important;
+    border-left: 1px solid #f13932;
+    border-right: 1px solid #f13932;
+}
+
+.card{
+    border-radius: 0px !important;
+}
+
+.expandClickArea{
+    font-size: .7em !important;
+    letter-spacing: 10px !important;
+    width: 100% !important;
+    margin: 0px !important;
+    padding: 20px !important;
+}
+.expandClickArea:hover{
+    color: #f7f1b9 !important;
+    letter-spacing: 12px !important;
+    transition: ease 250ms;
+}
+
+/*
+    FORM STYLING
+*/
+
+#expenseRequestBtn, #editProfileBtn{
+    width: 100% !important;
+    color: #fff !important;
+    font-size: 1.2em !important;
+    background-color: #f13932 !important;
+    border: 2px solid #fff !important;
+    letter-spacing: 20px !important;
+    text-transform: uppercase !important;
+}
+#expenseRequestBtn:hover, #editProfileBtn:hover{
+    background-color: #fff !important;
+    color: #f13932 !important;
+}
+
+.addInputBorder{
+    border: 1px solid #ff7e7a !important;
+}
+
+.addInputBorder:hover{
+    border: 2px solid #f13932 !important;
+}
+
+
+
+/* 
+
+	FILTER TABLE STYLING
+
+ */
+ 
+ #myInput {
+	  background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+	  background-position: 10px 12px; /* Position the search icon */
+	  background-repeat: no-repeat; /* Do not repeat the icon image */
+	  width: 100%; /* Full-width */
+	  font-size: 16px; /* Increase font-size */
+	  padding: 12px 20px 12px 40px; /* Add some padding */
+	  border: 1px solid #ddd; /* Add a grey border */
+	  margin-bottom: 12px; /* Add some space below the input */
+}
+
+#myTable {
+	  border-collapse: collapse; /* Collapse borders */
+	  width: 100%; /* Full-width */
+	  border: 1px solid #ddd; /* Add a grey border */
+	  font-size: 18px; /* Increase font-size */
+}
+
+#myTable th, #myTable td {
+	  text-align: left; /* Left-align text */
+	  padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+	  /* Add a bottom border to all table rows */
+	  border-bottom: 1px solid #ddd; 
+}
+
+#myTable tr.header, #myTable tr:hover {
+	  /* Add a grey background color to the table header and on hover */
+	  background-color: #f1f1f1;
+}
+
+/*
+    FOOTER STYLING
+*/
+
+#footerContainer{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #f13932 !important;
+    color: #fff;
+    padding: 5px 5px 5px 20px;
+    border: 4px solid #000;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/*
+
+	LOGIN STYLING
+
+*/
+
+.loginTitle{
+	font-family: 'Baloo Thambi', cursive;
+	font-size: 10.5vw;
+	color: #000 !important;
+	-webkit-text-fill-color: #f13932; /* Will override color (regardless of order) */
+ 	-webkit-text-stroke-width: 5px;
+  	-webkit-text-stroke-color: #FFF;
+}
+
+.loginTitleOffset{
+	position: relative;
+	top: 30px;
+}
+
+.loginSubtitle{
+	font-family: 'Baloo Thambi', cursive;
+	font-size: 4vw;
+	color: #000 !important;
+	-webkit-text-fill-color: #000; /* Will override color (regardless of order) */
+ 	-webkit-text-stroke-width: 2px;
+  	-webkit-text-stroke-color: #292929;
+}
+
+.loginSubtitleOffset{
+	position: relative;
+	bottom: 20px;
+}
