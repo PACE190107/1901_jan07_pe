@@ -4,16 +4,124 @@
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<title>Insert title here</title>
+<title>manager menu</title>
 </head>
 <body>
 	<label>manager.html</label>
-	<div>
-		<h1>Manager Page</h1>
-	</div>
 	
 	<div>
-		
+		<h1>Manager Menu</h1>
 	</div>
+	
+	<div id="btn-group">
+		<button id="viewAllEmp" class="btn">View All Employees</button>
+		<button id="pendingReqs" class="btn">View Pending Requests</button>
+	</div>
+	
+	<div id="allEmployees">
+		<table class="table table-striped">
+			<tbody id="allEmpTable">
+				<th>ID#</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+			</tbody>
+		</table>
+	</div>
+	
+	<div id="allPendingRequests">
+		<table class="table table-striped">
+			<tbody id="allPendReqTable">
+				<th>Request #</th>
+				<th>Request Amount</th>
+				<th>Employee ID</th>
+				<th>Approval Status</th>
+				<th>Resolved By</th>
+			</tbody>
+		</table>
+	</div>
+	
+<script>
+window.onload = function(){
+	document.getElementById("viewAllEmp").addEventListener("click", getAllUsers);
+	document.getElementById("pendingReqs").addEventListener("click", getAllPending);
+}
+
+/*function getAllPending(){
+	for(var i = 1; i<document.getElementById("allPendReqTable").rows.length;){
+		document.getElementById("allPendReqTable").deleteRow(i);
+	}
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function(){
+		if ((xhr.status == 200) && (xhr.readyState == 4)){
+			var i = 0;
+			var data = JSON.parse(this.responseText);
+			while (i <= (data.length - 1)){
+				let pendReqRow = document.createElement("tr");
+				let req# = document.createElement("td");
+				let reqAmt = document.createElement("td");
+				let eid = document.createElement("td");
+				let approved = document.createElement("td");
+				let resolveBy = document.createElement("td");
+				req#.innerHTML = data[i].requestNum;
+				reqAmt.innerHTML = data[i].requestAmount;
+				eid.innherHTML = data[i].user_id;
+				approved.innerHTML = data[i].isApproved;
+				resolveBy.innerHTML = data[i].resolvedBy;
+				pendReqRow.appendChild(req#);
+				pendReqRow.appendChild(reqAmt);
+				pendReqRow.appendChild(eid);
+				pendReqRow.appendChild(approved);
+				pendReqRow.appendChild(resolveBy);
+				document.getElementById("allPendReqTable");
+				i++;
+			}
+		}
+	};
+	xhr.open("GET", "http://localhost:8080/projectone/frontController/request/pending");
+	xhr.send();
+}*/
+
+//kale told me how to do this
+function getAllUsers(){
+    for(var i = 1;i<document.getElementById("allEmpTable").rows.length;){
+       document.getElementById("allEmpTable").deleteRow(i);
+   }
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange  = function(){
+        if ((xhr.status == 200) && (xhr.readyState == 4)){
+            var i = 0;
+            var data = JSON.parse(this.responseText);
+            while (i <= (data.length - 1)){
+                let employeeRow = document.createElement("tr");
+                let employeeId = document.createElement("td");
+                let employeeUsername = document.createElement("td");
+                let employeePassword = document.createElement("td");
+                let employeeFirstName = document.createElement("td");
+                let employeeLastName = document.createElement("td");
+                let employeeEmail = document.createElement("td");
+                employeeId.innerHTML = data[i].user_id;
+                employeeUsername.innerHTML = data[i].userName;
+                employeePassword.innerHTML = data[i].password;
+                employeeFirstName.innerHTML = data[i].firstName;
+                employeeLastName.innerHTML = data[i].lastName;
+                employeeEmail.innerHTML = data[i].emailAddress;
+                employeeRow.appendChild(employeeId);
+                employeeRow.appendChild(employeeUsername);
+                employeeRow.appendChild(employeePassword);
+                employeeRow.appendChild(employeeFirstName);
+                employeeRow.appendChild(employeeLastName);
+                employeeRow.appendChild(employeeEmail);
+                document.getElementById("allEmpTable").append(employeeRow);
+                i++;
+            }
+        }
+    };
+    xhr.open("GET", "http://localhost:8080/projectone/frontController/employee");
+    xhr.send();
+}
+</script>	
 </body>
 </html>

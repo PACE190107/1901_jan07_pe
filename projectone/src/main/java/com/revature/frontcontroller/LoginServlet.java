@@ -17,7 +17,11 @@ public class LoginServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	private final LoginService service = new LoginServiceImp();
-	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("in doGet");
+		doPost(req, resp);
+}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		final String username = req.getParameter("username");
@@ -45,9 +49,5 @@ public class LoginServlet extends HttpServlet{
 		}
 	}
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("in doGet");
-		doPost(req, resp);
-}
+
 }

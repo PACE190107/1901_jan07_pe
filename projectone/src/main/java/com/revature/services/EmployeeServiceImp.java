@@ -18,13 +18,15 @@ public class EmployeeServiceImp implements EmployeeService{
 		if (req.getMethod().contentEquals("GET")) {
 			String[] path = req.getRequestURI().split("/");
 			if (path.length == 4) {
+				System.out.println(dao.getAllEmployees());
 				return dao.getAllEmployees();
 			}
-			
+			System.out.println(path.length);
 			if (path.length == 5) {
 				try {
 					int employeeId = Integer.valueOf(path[4]);
-					return dao.getEmployee(employeeId);
+					System.out.println(path.length);
+					return dao.getEmployee((int) req.getSession().getAttribute("user_id"));
 				} catch (NumberFormatException e) {
 					return "Cannot convert " + path[4] + " into a number";
 				} catch (EmployeeNotFoundException e) {

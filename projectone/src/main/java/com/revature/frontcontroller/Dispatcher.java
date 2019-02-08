@@ -17,9 +17,10 @@ public class Dispatcher {
 	private static final RequestService requestService = new RequestServiceImp();
 	
 	public static Object process(HttpServletRequest req, HttpServletResponse res) {
-		if (req.getRequestURI().contains("Employee"))
+		System.out.println(req.getRequestURI());
+		if (req.getRequestURI().contains("employee"))
 			return employeeService.process(req, res);
-		else if (req.getRequestURI().contains("Request"))
+		else if (req.getRequestURI().contains("request"))
 			return requestService.process(req, res);
 		else return "Not yet implemented";
 	}

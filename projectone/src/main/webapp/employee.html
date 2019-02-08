@@ -2,9 +2,71 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<title>employee menu</title>
 </head>
 <body>
 	<label>employee.html</label>
+	
+	<div>
+		<h1>Employee Menu</h1>
+	</div>
+	
+	<div id="btn-group">
+		<button id="viewEmp" class="btn">View Employee Info</button>
+	</div>
+	
+	<div id="EmployeeInfo">
+		<table class="table table-striped">
+			<tbody id="EmpInfoTable">
+				<th>ID#</th>
+				<th>Username</th>
+				<th>Password</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+			</tbody>
+		</table>
+	</div>
+	<script>
+	window.onload = function(){
+		document.getElementById("viewEmp").addEventListener("click", getEmployee);
+	}
+	
+	function getEmployee(){
+		for(var i = 1;i<document.getElementById("EmpInfoTable").rows.length;){
+			document.getElementById("EmpInfoTable").deleteRow(i);
+		}
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(){
+			if ((xhr.status == 200) && (xhr.readyState == 4)){
+				var i=0;
+				var data = JSON.parse(this.responseText);
+				let employeeRow = document.createElement("tr");
+                let employeeId = document.createElement("td");
+                let employeeUsername = document.createElement("td");
+                let employeePassword = document.createElement("td");
+                let employeeFirstName = document.createElement("td");
+                let employeeLastName = document.createElement("td");
+                let employeeEmail = document.createElement("td");
+                employeeId.innerHTML = data[i].user_id;
+                employeeUsername.innerHTML = data[i].userName;
+                employeePassword.innerHTML = data[i].password;
+                employeeFirstName.innerHTML = data[i].firstName;
+                employeeLastName.innerHTML = data[i].lastName;
+                employeeEmail.innerHTML = data[i].emailAddress;
+                employeeRow.appendChild(employeeId);
+                employeeRow.appendChild(employeeUsername);
+                employeeRow.appendChild(employeePassword);
+                employeeRow.appendChild(employeeFirstName);
+                employeeRow.appendChild(employeeLastName);
+                employeeRow.appendChild(employeeEmail);
+                document.getElementById("allEmpTable").append(employeeRow);
+			}
+		};
+		xhr.open("GET", "http://localhost:8080/projectone/frontController/employee/single");
+		xhr.send();
+	}
+	</script>
 </body>
 </html>
