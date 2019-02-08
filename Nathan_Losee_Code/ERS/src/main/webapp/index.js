@@ -32,7 +32,7 @@ let loadContent = function(htmlContent, isPopup = false) {
 }
 
 let login, logout, closePopup,
-	loadUsername, loadEmail, confirm, changeEmail,
+	loadUsername, loadEmail, confirm, changeEmail, efocus, unfocus,
 	alter, loadSettings, changeSetting, loadReceipt, fetchReceipt, saveReceipt, submitReceipt,
 	loadRequests, loadRequestsSingle, makeRequest, submitRequest, stampRequest,
 	loadEmployees, loadEmployee, registerEmployee, submitRegistration;

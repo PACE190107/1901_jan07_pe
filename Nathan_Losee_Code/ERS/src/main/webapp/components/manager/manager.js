@@ -83,10 +83,12 @@ if (!loadEmployees)
 						
 						if (data[i].manager)
 							record.setAttribute("class", "table-info");
-						else
-							record.addEventListener("click", function() {
-								focus(data[i].eID);
+						else {
+							console.log("called");
+							record.addEventListener("click", () => {
+								efocus(data[i].eID);
 							});
+						}
 						
 						employeeRecords.appendChild(record);
 					}
@@ -139,13 +141,6 @@ if (!loadEmployee)
 					let email = document.createElement("td");
 					email.innerHTML = data.eEmail;
 					record.appendChild(email);
-					
-					if (data.manager)
-						record.setAttribute("class", "table-info");
-					else
-						record.addEventListener("click", function() {
-							loadEmployee(data.eID);
-						});
 					
 					employeeRecords.appendChild(record);
 				}
@@ -401,10 +396,9 @@ if (!stampRequest)
 			});
 	}
 
-if (!focus)
-	focus = function(eID) {
+if (!efocus)
+	efocus = function(eID) {
 		document.getElementById("unfocus").setAttribute("style", "display: inline");
-		document.getElementById("spacer").setAttribute("style", "display: none");
 		document.getElementById("focusID").innerHTML = eID;
 		loadEmployee(eID);
 		loadRequestsSingle(eID);
@@ -413,7 +407,6 @@ if (!focus)
 if (!unfocus)
 	unfocus = function() {
 		document.getElementById("unfocus").setAttribute("style", "display: none");
-		document.getElementById("spacer").setAttribute("style", "display: inline");
 		document.getElementById("focusID").innerHTML = "";
 		loadEmployees();
 		loadRequests(true);

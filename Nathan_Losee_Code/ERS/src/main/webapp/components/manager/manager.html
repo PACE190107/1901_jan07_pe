@@ -9,19 +9,16 @@
 	
 	<br><br>
 	
-	<div class="row">
-		<button id="registration" class="col-6 btn-outline-success" type="button">Register New Employee</button>
-		<span id="spacer" class="col-6"></span>
-		<button id="unfocus" style="display: none" class="col-6 btn-outline-danger" type="button">
-			Unfocus Employee&nbsp;<span id="focusID"></span></button>
-	</div>
-	<br>
-	
-	<div class="row">
-		<table class="col-6 table table-light table-bordered">
+	<div class="row justify-content-center">
+		<table class="col-11 table table-light table-bordered">
 			<thead>
 				<tr class="thead-dark">
 					<th class="table-header" colspan="5">Employees</th>
+				</tr>
+				<tr class="thead-dark">
+					<th class="table-header" colspan="5">
+						<button id="registration" class="btn-outline-success" type="button">Register New Employee</button>
+					</th>
 				</tr>
 				<tr>
 					<th>E ID</th>
@@ -35,10 +32,18 @@
 				
 			</tbody>
 		</table>
-		<table class="col-6 table table-light table-bordered">
+	</div>
+	<div class="row justify-content-center">
+		<table class="col-11 table table-light table-bordered">
 			<thead>
 				<tr class="thead-dark">
 					<th class="table-header" colspan="7">Reimbursement Requests</th>
+				</tr>
+				<tr class="thead-dark">
+					<th class="table-header" colspan="7">
+						<button id="unfocus" style="display: none" class="btn-outline-danger" type="button">
+							Unfocus Employee&nbsp;<span id="focusID"></span></button>
+					</th>
 				</tr>
 				<tr>
 					<th>R ID</th>

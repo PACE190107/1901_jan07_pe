@@ -204,7 +204,7 @@ public class EmployeeService {
 	         MimeMessage message = new MimeMessage(session);
 	         message.setFrom(new InternetAddress(origin));
 	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-	         message.setSubject("Reimbursement Request Update");
+	         message.setSubject("ERS Email Confirmation");
 	         message.setText("<div>"
 	        		+ "<p>Your username and password are:</p><br>"
 	        		+ "<p>Username: " + username + "</p>"

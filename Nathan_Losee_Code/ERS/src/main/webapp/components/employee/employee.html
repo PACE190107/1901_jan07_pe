@@ -9,19 +9,22 @@
 	
 	<br><br>
 	
-	<div class="row justify-content-center">
-		<button id="makeRequest" class="col-12 btn-outline-success" type="button">Make New Request</button>
-	</div>
-	
-	<br>
-	
 	<table class="table table-light table-bordered">
 		<thead>
+			<tr class="thead-dark">
+				<th class="table-header" colspan="5">Reimbursement Requests</th>
+			</tr>
+			<tr class="thead-dark">
+				<th class="table-header" colspan="5">
+					<button id="makeRequest" class="btn-outline-success" type="button">Make New Request</button>
+				</th>
+			</tr>
 			<tr>
 				<th>Request ID</th>
 				<th>Description</th>
 				<th>Amount</th>
 				<th>Approved</th>
+				<th>Receipt</th>
 			</tr>
 		</thead>
 		<tbody id="requestRecords_Pending">
