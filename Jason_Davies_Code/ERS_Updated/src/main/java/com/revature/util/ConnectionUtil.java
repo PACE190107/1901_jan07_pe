@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import com.revature.model.Employee;
 
 public class ConnectionUtil {
+	
 	private static Logger logger = Logger.getLogger(ConnectionUtil.class);
 	private static BufferedReader br;
 	private static String url = "";
@@ -32,10 +33,10 @@ public class ConnectionUtil {
 		return DriverManager.getConnection(url, username, password);
 	}
 	
-	public static void setCredentials(Employee employee) {
-		username = employee.getUsername();
-		password = employee.getPassword();
+	public static void setCredentials(String username, String password) {
 		logger.info("New Credentials - username: " + username + " - password: " + password);
+		ConnectionUtil.username = username;
+		ConnectionUtil.password = password;
 	}
 	
 	public static void defaultCredentials() {
@@ -49,5 +50,9 @@ public class ConnectionUtil {
 		} catch (IOException e) {
 			logger.error("defaultCredentials() exception due to: " + e.getMessage());
 		}
+	}
+	
+	public static String getPassword() {
+		return ConnectionUtil.password;
 	}
 }

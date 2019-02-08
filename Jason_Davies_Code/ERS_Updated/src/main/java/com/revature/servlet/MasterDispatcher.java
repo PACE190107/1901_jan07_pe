@@ -49,7 +49,6 @@ public class MasterDispatcher {
 		} else if (uri.endsWith("getAllReimbursementsSingle")) { // Get all reimbursements for a single employee
 			return null;
 		} else if (uri.endsWith("getMyReimbursements")) { // Get all MY reimbursements
-			logger.info("uri.endsWith(\"getMyReimbursements\")");
 			return mapper.writeValueAsString(reimbursementService.getAllReimbursements(
 					Integer.parseInt(request.getSession().getAttribute("id").toString()), 
 					request, response).toArray());

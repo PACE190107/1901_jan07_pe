@@ -21,7 +21,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private static Logger logger = Logger.getLogger(EmployeeServiceImpl.class);
 	private final EmployeeDAO dao = EmployeeDAOImplementation.getEmployeeDAO();
-	private final ObjectMapper mapper = new ObjectMapper();
 
 	@Override
 	public Employee login(HttpServletRequest request, HttpServletResponse response)
@@ -33,10 +32,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return null;
 		}
 		Employee exists = dao.getEmployee(username);
-		if (exists != null && exists.getPassword().equals(password)) {
-			ConnectionUtil.setCredentials(exists);
+		if (exists != null && exists.getPassword().equals(dao.hashPassword(username, password))) {
+			ConnectionUtil.setCredentials(username, password);
 			request.getSession().setAttribute("id", exists.getId());
-			request.getSession().setAttribute("username", exists.getUsername());
+			request.getSession().setAttribute("username", username);
 			logger.info("login() - succeeded");
 			return exists;
 		}
@@ -69,9 +68,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee exists = dao.getEmployee(username);
 		if (exists == null) {
 			exists = dao.insertEmployee(new Employee(-1, username, password, "empty", "empty", "empty", false));
-			dao.insertCredentials(exists);
+			dao.insertCredentials(username, password);
 			dao.grantDBPermissions(exists);
-			ConnectionUtil.setCredentials(exists);
+			ConnectionUtil.setCredentials(username, password);
 			request.getSession().setAttribute("id", exists.getId());
 			request.getSession().setAttribute("username", exists.getUsername());
 			logger.info("register() - succeeded");
@@ -83,6 +82,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee updateEmployee(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String backupPassword = ConnectionUtil.getPassword();
 		String username = request.getSession().getAttribute("username").toString();
 		String password = request.getParameter("passwordUpdate");
 		String email = request.getParameter("emailUpdate");
@@ -104,10 +104,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 			}
 			ConnectionUtil.defaultCredentials();
 			exists = dao.updateEmployee(exists);
-			dao.updateCredentials(exists);
-			ConnectionUtil.setCredentials(exists);
+			if (!password.equals("")) {
+				dao.updateCredentials(username, password);
+				ConnectionUtil.setCredentials(username, password);
+			} else {
+				ConnectionUtil.setCredentials(username, backupPassword);
+			}
 			logger.info("updateEmployee() - succeeded");
-			return dao.updateEmployee(exists);
+			return exists;
 		}
 		logger.info("updateEmployee() - failed");
 		return null;

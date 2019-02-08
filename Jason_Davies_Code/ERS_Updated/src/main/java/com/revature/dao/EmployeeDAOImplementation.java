@@ -1,10 +1,12 @@
 package com.revature.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -31,7 +33,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 			String sql = "INSERT INTO EMPLOYEE values(NULL,?,?,?,?,?,?)";
 			try (PreparedStatement ps = connection.prepareStatement(sql)) {
 				ps.setString(1, employee.getUsername());
-				ps.setString(2, employee.getPassword());
+				ps.setString(2, hashPassword(employee.getUsername(), employee.getPassword()));
 				ps.setString(3, employee.getEmail());
 				ps.setString(4, employee.getFirstName());
 				ps.setString(5, employee.getLastName());
@@ -54,7 +56,7 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 					+ "E_LASTNAME = ?, E_IS_MANAGER = ? WHERE E_ID = ?";
 			try (PreparedStatement ps = connection.prepareStatement(sql)) {
 				ps.setString(1, employee.getUsername());
-				ps.setString(2, employee.getPassword());
+				ps.setString(2, hashPassword(employee.getUsername(), employee.getPassword()));
 				ps.setString(3, employee.getEmail());
 				ps.setString(4, employee.getFirstName());
 				ps.setString(5, employee.getLastName());
@@ -138,9 +140,9 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 		return null;
 	}
 
-	public boolean insertCredentials(Employee employee) {
+	public boolean insertCredentials(String username, String password) {
 		try (Connection connection = ConnectionUtil.getConnection()) {
-			String sql = "CREATE USER " + employee.getUsername() + " IDENTIFIED BY " + employee.getPassword();
+			String sql = "CREATE USER " + username + " IDENTIFIED BY " + password;
 			try (Statement stmt = connection.createStatement()) {
 				stmt.execute(sql);
 				return true;
@@ -151,9 +153,9 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 		return false;
 	}
 
-	public boolean updateCredentials(Employee employee) {
+	public boolean updateCredentials(String username, String password) {
 		try (Connection connection = ConnectionUtil.getConnection()) {
-			String sql = "ALTER USER " + employee.getUsername() + " IDENTIFIED BY " + employee.getPassword();
+			String sql = "ALTER USER " + username + " IDENTIFIED BY " + password;
 			try (Statement stmt = connection.createStatement()) {
 				stmt.executeUpdate(sql);
 				return true;	
@@ -223,5 +225,24 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 			logger.error("grantPermissions() exception due to: " + e.getMessage());
 		}
 		return false;
+	}
+	
+	public String hashPassword(String username, String password) {
+		try (Connection connection = ConnectionUtil.getConnection()) {
+			String sql = "SELECT GET_EMPLOYEE_HASH(?, ?) FROM dual";
+			try (CallableStatement cs = connection.prepareCall(sql)) {
+				//cs.registerOutParameter(1, Types.VARCHAR);
+				cs.setString(1, username);
+				cs.setString(2, password);
+				ResultSet rs = cs.executeQuery();
+				if (rs.next()) {
+					System.out.println(rs.getString(1));
+					return rs.getString(1);	
+				}
+			}
+		} catch (SQLException e) {
+			logger.error("insertCredentials() exception due to: " + e.getMessage());
+		}
+		return null;
 	}
 }

@@ -85,6 +85,12 @@ public class ERSTests {
 		assertNull(ReimbursementDAOImplementation.getReimbursementDAO().updateReimbursement(nonexistent));
 	}
 	
+	@Test
+	public void checkHashPassword() {
+		String hash = EmployeeDAOImplementation.getEmployeeDAO().hashPassword("username", "password");
+		assertNotNull(hash);
+	}
+	
 	@AfterClass
 	public static void deinitialize() {
 		ReimbursementDAOImplementation.getReimbursementDAO().deleteReimbursement(r.getId());

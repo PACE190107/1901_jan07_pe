@@ -39,12 +39,7 @@ public class MasterServlet extends DefaultServlet {
 				response.setContentType("application/json");
 				response.getWriter().append(mapper.writeValueAsString(object));
 			} else if (uri.endsWith("updateEmployee")) {
-				response.setContentType("text/html");
-//				if (employee.getIsManager()) {
-//					request.getRequestDispatcher("home_manager.html").forward(request, response);
-//				} else {
-//					request.getRequestDispatcher("home_employee.html").forward(request, response);	
-//				} 
+				response.setContentType("text/html"); 
 				request.getRequestDispatcher("personal.html").forward(request, response);
 			} else if (uri.endsWith("logout")) {
 				response.sendRedirect("/ERS_Updated"); // Used to transition after logout
@@ -64,13 +59,10 @@ public class MasterServlet extends DefaultServlet {
 					request.getSession().setAttribute("r_id", Integer.parseInt(request.getParameter("requesterId")));	
 				} catch (NumberFormatException e) {}
 				request.getRequestDispatcher("reimbursement_manager.html").forward(request, response);
-				//request.getRequestDispatcher("home_manager.html").forward(request, response);
 			} else if (uri.endsWith("insertReimbursement")) {
 				request.getRequestDispatcher("reimbursement_employee.html").forward(request, response);
-				//request.getRequestDispatcher("home_employee.html").forward(request, response);
 			} else if (uri.endsWith("updateReimbursement")) {
 				request.getRequestDispatcher("reimbursement_manager.html").forward(request, response);
-				//request.getRequestDispatcher("home_manager.html").forward(request, response);
 			} else if (uri.endsWith("Personal")) {
 				response.setContentType("text/html");
 				request.getRequestDispatcher("personal.html").forward(request, response);
