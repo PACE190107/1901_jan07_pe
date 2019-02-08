@@ -17,8 +17,9 @@ private RequestDispatcher reqD = new RequestDispatcher();
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getRequestURI().substring(req.getContextPath().length())
-				.startsWith("/static/")) {
+		System.out.println(req.getRequestURI());
+		
+		if((req.getRequestURI().equals("/ERS/") )|| (req.getRequestURI().contains("/static/"))) {
 			System.out.println("INSIDE DOGET IF");
 			super.doGet(req, resp);
 		} else {

@@ -12,7 +12,7 @@ import com.revature.services.UserService;
 
 public class LoginDelegate {
 	
-	public void login(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public void goodLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		//HAVE to be the same as the name in the form.
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
@@ -21,6 +21,7 @@ public class LoginDelegate {
 		System.out.println("Password: " + password );
 		
 		User tempUser = UserService.getUserService().goodLogin(email, password);
+		
 		System.out.println(tempUser);
 		
 		if(tempUser == null) {
@@ -45,12 +46,12 @@ public class LoginDelegate {
 	}
 
 	public void getPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		HttpSession session = req.getSession();
-//		if(session.getAttribute("user")==null) {
-//			req.getRequestDispatcher("static/login.html").forward(req,resp);
-//		} else {
-//			resp.sendRedirect("home");
-//		}
+		HttpSession session = req.getSession();
+		if(session.getAttribute("user")==null) {
+			req.getRequestDispatcher("index.jsp").forward(req,resp);
+		} else {
+			resp.sendRedirect("home");
+		}
 	}
 
 	public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {

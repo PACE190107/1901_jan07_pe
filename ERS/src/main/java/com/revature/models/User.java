@@ -7,6 +7,8 @@ public class User {
 	private String email;
 	private String password;
 	private int manager;
+	
+	
 	public User() {
 		super();
 	}
@@ -18,6 +20,18 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.manager = manager;
+		
+		
+		
+		
+		
+	}
+	public User(int e_id, String firstName, String lastName, String email) {
+		super();
+		this.e_id = e_id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 	}
 	public int getE_id() {
 		return e_id;
