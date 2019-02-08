@@ -1,0 +1,33 @@
+package com.revature.projectzero.dao;
+
+import java.util.List;
+
+import com.revature.projectzero.models.User;
+
+public class UserDaoImplementation implements UserDao {
+
+	@Override
+	public boolean insertCustomerProcedure(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public User getUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean registerUser(User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+}

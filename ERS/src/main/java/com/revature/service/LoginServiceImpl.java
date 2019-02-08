@@ -1,0 +1,39 @@
+package com.revature.service;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.revature.data.DataSource;
+import com.revature.models.Employee;
+import com.revature.util.ERSConnectionUtil;
+
+public class LoginServiceImpl implements LoginService {
+	
+	private final DataSource dataSource = DataSource.getInstance();
+	
+	@Override
+	public Employee attemptAuthentication(String username, String password) {
+		for (Employee employee : dataSource.getEmployeeTable())
+			if (employee.getUsername().equals(username) && getHashedPassword(employee.getUsername(), employee.getPassword()).equals(password))
+				return employee;
+		return null;
+	}	
+	
+	private String getHashedPassword(String username, String password) {
+		try (Connection conn = ERSConnectionUtil.getConnection()){
+			String sql = "call RETURN_BANK_CUST_HASH(?,?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setString(1, username);
+			cs.setString(2, password);
+			cs.registerOutParameter(3, java.sql.Types.VARCHAR);
+			cs.executeUpdate();
+			String hashedpwd = cs.getString(3);
+			return hashedpwd;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+}

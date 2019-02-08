@@ -1,0 +1,44 @@
+<html>
+    </html>
+<head></head>
+<body>
+    <h2>Wanna be a weeb?</h2>
+    <h3>Based on precise scientific methods</h3>
+    <h3>we will use your name to determine which anime is the best for you.</h3>
+    <label for="search">Enter your name: </label>
+    <input type="text" id="search">
+    <button onclick="getAnime()"> WEEB IT UP</button>
+    <h1 id= "reply"></h1> 
+    <h5>For example: Type in "Quinn"</h5>
+        <Script>
+
+            hashCode = function (s) {
+                    var h = 0, l = s.length, i = 0;
+                    if (l > 0)
+                        while (i < l)
+                            h = (h << 5) - h + s.charCodeAt(i++) | 0;
+                    return h;
+                };
+            function getAnime(){
+                let name = document.getElementById("search").value;
+                if(name === "Quinn") {
+                    window.location.href = "levin.html";
+                } else {
+                    let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            let title = JSON.parse(this.responseText).title;
+                            document.getElementById("reply").innerHTML = "GO WATCH " + title;
+                        }
+                    };
+                    //console.log(document.getElementById("search").value);
+                    let link = "https://api.jikan.moe/anime/" + Math.abs(hashCode(name) % 2000);
+                    //console.log(link);
+                    xhttp.open("GET", link, true);
+                    xhttp.send(); 
+                }
+                
+            }
+        </Script>
+    
+</body>

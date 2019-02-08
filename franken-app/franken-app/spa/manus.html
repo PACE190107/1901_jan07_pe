@@ -1,0 +1,87 @@
+<html>
+        <head></head>
+
+        <body>
+        
+        
+            <h1>AJAX Demonstration</h1>
+        
+            <button onclick = "doAJAX()">Do AJAX</button>
+            <button onclick = "picture()">Do Picture</button>
+            <p id= "reply"></p> 
+            <img id="image" src=""/>
+                <Script>
+                    function doAJAX(){
+                        let xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    let text = JSON.parse(this.responseText);
+                                   document.getElementById("reply").innerHTML = text.message;
+                               }
+                            };
+
+                            xhttp.open("GET", "https://api.myjson.com/bins/cxvjm", true);
+                            xhttp.send(); 
+                        }
+
+                        function picture() {
+                            let xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    let image = document.getElementById("image");
+                                    image.src = "data:image/gif;base64," + this.responseText;
+                               }
+                            };
+
+                            xhttp.open("GET", "http://digitalspyuk.cdnds.net/17/31/980x490/landscape-1501685894-it-pennywise.jpg", true);
+                            xhttp.send(); 
+                        }
+
+                    //     function encode64(inputStr){
+                    //         var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+                    //         var outputStr = "";
+                    //         var i = 0;
+       
+                    //         while (i> 2)
+                    //         var enc2 = ((byte1 & 3) << 4) | (byte2 >> 4);
+                    //             var enc3, enc4;
+                    //             if (isNaN(byte2)){
+                    //                 enc3 = enc4 = 64;
+                    //             } else{
+                    //                 enc3 = ((byte2 & 15) << 2) | (byte3 >> 6);
+                    //                 if (isNaN(byte3)){
+                    //              enc4 = 64;
+                    //             } else {
+                    //              enc4 = byte3 & 63;
+                    //         }
+                    // }
+                    //     outputStr +=  b64.charAt(enc1) + b64.charAt(enc2) + b64.charAt(enc3) + b64.charAt(enc4);
+
+                    //     return outputStr;
+                    //  } 
+                     
+                        
+        
+                        document.getElementById("reply").style.color = "blue";
+
+        
+                        
+                        </Script>
+            
+        </body>
+</html>
+
+
+
+
+
+
+Collapse 
+
+Message Input
+
+
+Message #important
+
+Thread
+#important

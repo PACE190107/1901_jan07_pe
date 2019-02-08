@@ -1,0 +1,22 @@
+package com.revature;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class MasterServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+	
+	//object responsible for marshalling/unmarshalling pojos to json
+	private final ObjectMapper mapper = new ObjectMapper();
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.getWriter().append(mapper.writeValueAsString(MasterDispatcher.process(request, response)));
+	}
+}

@@ -1,0 +1,73 @@
+package dao;
+
+import java.util.List;
+
+import com.revature.data.DataSource;
+import com.revature.exception.TodoNotFoundException;
+import com.revature.model.Employee;
+
+public class ERSDaoImpl implements ERSDao {
+
+	private final DataSource dataSource = DataSource.getInstance();
+	
+	// SELECT * FROM EMPLOYEES WHERE EMP_ISMRGR = 0;
+	@Override
+	public List<Employee> getAllEmployees() {
+		return dataSource.getEmployeeTable();
+	}
+
+	// SELECT * FROM EMPLOYEES WHERE ID = ? AND EMP_ISMGR = 0;
+	@Override
+	public Employee getEmployeeById(int id) {
+		
+		/*
+		 * for (Employee Employee: dataSource.getEmployeeTable()) 
+		 * 		if (employee.getId() == id)
+		 * 			return employee;
+		 * throw new EmployeeNotFoundException(id);
+		 */
+		
+		return dataSource.getEmployeeTable().stream()
+					.filter(employee -> employee.getId() == id)
+					.findFirst().orElseThrow(() -> new EmployeeNotFoundException(id));
+	}
+
+	@Override
+	public Employee createEmployee(Employee employee) {
+		if (dataSource.getEmployeeTable().add(employee)) {
+			return employee;
+		}
+		return null;
+	}
+
+	@Override
+	public Todo updateTodo(Todo todo) {
+		// Get a reference to existing todo
+		Todo updated = getTodoById(todo.getId());
+		
+		// Update the todo's state
+		updated.setBody(todo.getBody());
+		updated.setTitle(todo.getTitle());
+		
+		// Store the updated version
+		for (int i = 0; i < dataSource.getTodoTable().size(); i++) {
+			if (dataSource.getTodoTable().get(i).getId() == todo.getId()) {
+				dataSource.getTodoTable().set(i, updated);
+				return updated;
+			}
+		}
+		return null;
+	}
+
+	
+	@Override
+	public Todo deleteTodo(int id) {
+		// Reference existing id
+		Todo toBeRemoved = getTodoById(id);
+		
+		// For every todo in our table, remove if the todo's id equals the parameter
+		dataSource.getTodoTable().removeIf(anything -> anything.getId() == id);
+		return toBeRemoved;
+	}
+
+}

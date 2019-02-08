@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ribbit</title>
+</head>
+<body>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        button {
+            padding: 1rem;
+            font-size: 1rem;
+            background: green;
+            border: none;
+            border-radius: 25%;
+        }
+    </style>
+    <img src="#"/ id="img">
+
+    <p>
+        <button id="btn">New!</button></p>
+
+    <script>
+
+(function getFrog(){
+    const xhr = new XMLHttpRequest();
+    const api = '563492ad6f91700001000001a18a911f57534219b450081c318c192f';
+    xhr.open('get', 'https://api.pexels.com/v1/search?query=frogs+query&per_page=15&page=1', true);
+    xhr.setRequestHeader("Authorization", api);
+    xhr.send();
+    xhr.onreadystatechange = function() {
+        if(this.readyState == 4 && this.status == 200) {
+            const photos = JSON.parse(this.response);
+            const url = photos.photos[Math.floor(Math.random() * photos.photos.length-1)].src.medium
+            console.log(url);
+            document.getElementById('img').src = url;
+        }
+    }
+
+document.getElementById('btn').addEventListener('click', getFrog);
+})();
+
+        
+    </script>
+
+</body>
+</html>

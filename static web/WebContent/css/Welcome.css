@@ -1,0 +1,32 @@
+/* this is how to do css comments */
+
+/* element selector example */
+ol{
+	background-color: red;
+	color: blue;
+	font-size: 30;
+	font-family: monospace;
+	font-style: italic;
+}
+	
+	p, h3, h5 {
+		font-size:  10;
+		color:	black;
+		background-color: fuchsia;
+	}
+	/* colors can be names, RGB, or Hex */
+	body{
+		color:	purple;
+		background-color: white;
+	}
+	
+/* attribute selector example */
+	input#user{
+		border: dotted;
+		size: 1px;
+		color: red;
+	}
+	form.classPropertyForLoginPage{
+		border: dotted;
+		border-left-color: lime;
+	}

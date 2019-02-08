@@ -1,0 +1,96 @@
+package com.revature.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import oracle.jdbc.*;
+
+import com.revature.data.DataSource;
+import com.revature.exception.EmployeeNotFoundException;
+import com.revature.model.Todo;
+import com.revature.models.Employee;
+import com.revature.util.ERSConnectionUtil;
+
+import oracle.jdbc.OracleTypes;
+
+public class EmployeeDaoImpl implements EmployeeDao {
+
+	final static Logger log = Logger.getLogger(EmployeeDaoImpl.class);
+	private final DataSource dataSource = DataSource.getInstance();
+	
+	// SELECT * FROM EMPLOYEE;
+	@Override
+	public List<Employee> getAllEmployees() {
+		return dataSource.getEmployeeTable();
+	}
+
+	// SELECT * FROM EMPLOYEE WHERE ID = ?;
+	@Override
+	public Employee getEmployeeById(int id) {
+		
+		return dataSource.getEmployeeTable().stream()
+					.filter(todo -> todo.getId() == id)
+					.findFirst().orElseThrow(() -> new EmployeeNotFoundException(id));
+	}
+	
+	@Override
+	public Employee createEmployee(Employee employee) {
+		if (dataSource.getEmployeeTable().add(employee)) {
+			return employee;
+		}
+		return null;
+	}
+	
+	@Override
+	public Employee updateEmployee(Employee employee) {
+		// Get a reference to existing Employee
+		Employee updated = getEmployeeById(employee.getId());
+		
+		// Update the todo's state
+		updated.setFirstname(employee.getFirstname());
+		updated.setLastname(employee.getLastname());
+		updated.setAddress(employee.getAddress());
+		updated.setEmail(employee.getEmail());
+		updated.setUsername(updated.getUsername());
+		updated.setPassword(employee.getPassword());
+		// Store the updated version
+		for (int i = 0; i < dataSource.getEmployeeTable().size(); i++) {
+			if (dataSource.getEmployeeTable().get(i).getId() == employee.getId()) {
+				dataSource.getEmployeeTable().set(i, updated);
+				return updated;
+			}
+		}
+		return null;
+	}
+
+
+	
+	@Override
+	public Employee deleteEmployee(int id) {
+		Employee toBeRemoved = getEmployeeById(id);
+		try (Connection conn = ERSConnectionUtil.getConnection()) {	
+			int deleteSuccessful = 0;
+			String sql = "call DELETE_BANK_CHECK(?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt(1, id);
+			cs.registerOutParameter(2, java.sql.Types.NUMERIC);
+			cs.executeUpdate();
+			deleteSuccessful = deleteSuccessful + cs.getInt(2);
+			sql = "call DELETE_BANK_SAVE(?,?)";
+			cs = conn.prepareCall(sql);
+			cs.setInt(1, id);
+			cs.registerOutParameter(2, java.sql.Types.NUMERIC);
+			cs.executeUpdate();
+			deleteSuccessful = deleteSuccessful + cs.getInt(2);
+		return toBeRemoved;
+		} catch (SQLException e) {
+			log.error("error occured in deleteemployee method");
+		}
+		return null;
+	}
+
+}

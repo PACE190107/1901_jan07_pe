@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BACON</title>
+</head>
+    <body>
+        <h2>Want some Bacon? </h2>
+        <h4>Or even better, some Bacon Ipsum?</h4>
+        
+        <button onclick = "baconIpsum()">#BACON </button>
+        <p id="reply"></p>
+        <br>
+        <img id="img"/>
+        <br>
+        <button onclick = "moreBacon()">#MORE_BACON </button>
+
+        <Script>
+            /** gets bacon text */
+            function baconIpsum(){
+                let xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200)
+                    { document.getElementById("reply").innerHTML = this.responseText; }
+                };
+                xhttp.open("GET", "https://baconipsum.com/api/?type=all-meat&paras=2&start-with-lorem=1", true);
+                xhttp.send();
+            }//end function
+
+            /** Loads bacon images */
+            function moreBacon() {
+                let xhttp = new XMLHttpRequest();
+                let auth = '563492ad6f91700001000001a18a911f57534219b450081c318c192f';
+                xhttp.open('get', 'https://api.pexels.com/v1/search?query=bacon+query&per_page=15&page=1', true);
+                xhttp.setRequestHeader("Authorization", auth)
+                xhttp.send();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const photos = JSON.parse(this.response);
+                        const url = photos.photos[Math.floor(Math.random() * photos.photos.length - 1)].src.medium;
+                        console.log(url);
+                        document.getElementById('img').src = url;
+                    }//end if
+                }//end if
+            }//end function
+        </Script>
+    </body>
+</html>

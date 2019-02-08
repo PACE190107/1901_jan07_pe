@@ -1,0 +1,33 @@
+<html>
+</html>
+<head></head>
+
+<body>
+
+
+    <h1>It Works, That's What Counts</h1>
+
+    <button onclick = "doAJAX()">Brazilian Vehicles and Prices</button>
+    <p id= "reply"></p> 
+
+
+
+
+
+
+        <Script>
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                           document.getElementById("reply").innerHTML = this.responseText;
+                       }
+                    };
+                    xhttp.open("GET", "https://parallelum.com.br/fipe/api/v1/carros/marcas/59/modelos/5940/anos/2014-3", true);
+                    xhttp.send(); 
+                }
+
+                
+                </Script>
+    
+</body>

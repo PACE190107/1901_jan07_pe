@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>One Piece</title>
+</head>
+<body>
+	<div>
+		<img src="https://i.imgur.com/9fDtfGr.jpg" alt="One Piece logo">
+		<form>
+			<button id="addImg" type = button>Assemble the crew!</button>
+		</form>
+	</div>
+	<div id="images">
+	</div>
+	<script>
+		window.onload = function(){
+		var button = document.getElementById("addImg"),
+		  count = 0;
+		button.onclick = function() {
+		  count += 1;
+			switch (count){
+			case 1:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/ciMDbuW.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 2:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/eung2dO.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 3:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/0yYUrkr.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 4:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/7ZrJhp2.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 5:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/cOrrbQx.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 6:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/AxDL4Dt.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 7:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/mwvzcok.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 8:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/ehEoCid.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			case 9:
+				var newImage = document.createElement("IMG");
+				newImage.setAttribute('src',"https://i.imgur.com/BMQbnm9.png");
+				document.getElementById("images").appendChild(newImage);
+				break;
+			};
+		}
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+INDEX VERSION 1.131
+C:\Users\joshu\Documents\workspace-sts-3.9.7.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\880797487.index
+\PaceServletExamples\src\main\resources
+C:\Users\joshu\Documents\workspace-sts-3.9.7.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2675945576.index
+\ERS\src\main\java
+C:\Users\joshu\Documents\workspace-sts-3.9.7.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2802427338.index
+\1901_js\src\main\resources
+C:\Users\joshu\Documents\workspace-sts-3.9.7.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\863923690.index
+\Deploy\src\main\java
+C:\Users\joshu\Documents\workspace-sts-3.9.7.RELEASE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1769604460.index
+\1901_Javascript\src\main\resources

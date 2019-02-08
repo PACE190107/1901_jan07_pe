@@ -1,0 +1,61 @@
+package com.revature.dao;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.revature.data.DataSource;
+import com.revature.exception.RequestNotFoundException;
+import com.revature.models.Request;
+
+public class RequestDaoImpl implements RequestDao {
+
+	final static Logger log = Logger.getLogger(EmployeeDaoImpl.class);
+	private final DataSource dataSource = DataSource.getInstance();
+	
+	@Override
+	public List<Request> getResquestsPendingById(int id) {
+		for (Request request: dataSource.getRequestTable()) 
+			if (todo.getId() == id)
+				return todo;
+			throw new RequestNotFoundException(id);
+		return null;
+	}
+
+	@Override
+	public List<Request> getResquestsCompleteById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Request> getAllResquestsPending() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Request> getAllResquestsComplete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request createRequest(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request updateRequestApprove(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request updateRequestDeny(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

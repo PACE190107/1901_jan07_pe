@@ -1,0 +1,32 @@
+<html>
+</html>
+<head></head>
+<style>body{background-color : whitesmoke; text-align: center}
+        button{color: gray}</style>
+<body>
+
+
+    <h1> Random D&D Encounter Generator </h1>
+
+    <button onclick = "doAJAX()"> Get the monsters! </button>
+
+    <p id= "reply"></p> 
+        <Script>
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var tarrasque = JSON.parse(this.responseText);
+                            
+                           document.getElementById("reply").innerHTML = count + "x " + tarrasque.name;
+                       }
+                    };
+                    number = Math.round(Math.random() * 325);
+                    count = Math.round(Math.random() * 20);
+                    let theString = "http://www.dnd5eapi.co/api/monsters/" + number;
+                    xhttp.open("GET",  theString, true);
+                    xhttp.send();
+                   
+                }
+                </Script>
+</body>

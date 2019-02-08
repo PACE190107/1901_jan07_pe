@@ -1,0 +1,46 @@
+<html>
+<head></head>
+
+<body>
+<style>
+    body{
+        background-color: black;
+        color:aliceblue;
+    }
+</style>
+    
+    <h1>Harry Potter Characters</h1>
+    <button onclick = "doAJAX()">Show characters</button>
+    <p id= "reply"></p> 
+    <button id = "btn">Show image</button>
+
+
+    <img alt="" id="image">
+
+        <Script>
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                xhttp.open("GET", "http://hp-api.herokuapp.com/api/characters/house/gryffindor", true);
+                    
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                           document.getElementById("reply").innerHTML = this.responseText;
+                       }
+
+                    };
+                    xhttp.send(); 
+
+                }
+                
+                document.getElementById('btn').addEventListener('click', async() =>{
+                    const picture = document.getElementById('image');
+                    picture.setAttribute("src", "https://nerdist.com/wp-content/uploads/2015/06/Wizarding-World-of-Harry-Potter.jpg");
+
+                    });
+
+
+
+        </Script>
+    
+</body>
+</html>

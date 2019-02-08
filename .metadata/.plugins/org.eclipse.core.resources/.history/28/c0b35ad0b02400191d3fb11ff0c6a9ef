@@ -1,0 +1,18 @@
+package com.revature.dao;
+
+public interface TodoDao {
+	//read all
+	List<Todo> getAllTodos();
+	
+	//read one
+	Todo getTodoById(int id);
+	
+	//create
+	Todo createTodo(Todo todo);
+	
+	//update
+	Todo updateTodo(Todo todo);
+	
+	//delete
+	Todo deleteTodo(int id);
+}

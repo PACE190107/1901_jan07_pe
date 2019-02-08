@@ -1,0 +1,7 @@
+package com.revature.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+//use @JsonIgnore to keep a field from being included in Json
+
+public class User {
+	
+}

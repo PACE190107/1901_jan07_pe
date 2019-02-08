@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+</html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h1 id="header"> Response Text  </h1>
+
+    <button onclick="doAJAX()">Do AJAX </button>
+    <p id="reply"></p>
+
+    <Script>
+        function doAJAX(){
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("reply").innerHTML = this.responseText;
+                }
+            };
+            document.getElementById("reply").style.color = 'blue'
+            document.getElementById("reply").style.fontFamily = 'cursive'
+            document.getElementById("header").style.color = 'yellow'
+            document.getElementById("header").style.fontFamily = 'Arial'
+            document.getElementById("header").innerHTML = "What do you think?"
+            document.body.style.background = 'grey'
+            xhttp.open("GET", "https://api.myjson.com/bins/14x8z6", true);
+            xhttp.send();
+        }
+    </Script>
+</body>

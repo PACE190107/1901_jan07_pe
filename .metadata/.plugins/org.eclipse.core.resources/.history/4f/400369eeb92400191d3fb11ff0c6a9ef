@@ -1,0 +1,42 @@
+package com.revature.dao;
+
+import java.util.List;
+
+import com.revature.model.Todo;
+
+public class TodoDaoImpl implements TodoDao {
+
+	//select * from todos
+	public List<Todo> getAllTodos() {
+		return dataSource.getTodoTable();
+	}
+
+	//select * from todos where id = id
+	public Todo getTodoById(int id) {
+//		for (Todo todo: dataSource.getTodoTable())
+//			if (todo.getId() == id)
+//				return todo;
+//			throw new Todo?NotFoundException(id);
+		return dataSource.getTodoTable().stream().
+				filter(todo -> todo.getId() == id).findFirst()
+				.orElseThrow(() -> new TodoNotFoundException(id));
+	}
+
+	public Todo createTodo(Todo todo) {
+		if (dataSource.getTodoTable().add(todo)) {
+			return todo;
+		}
+		return null;
+	}
+
+	public Todo updateTodo(Todo todo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Todo deleteTodo(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

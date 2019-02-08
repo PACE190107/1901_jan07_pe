@@ -1,0 +1,10 @@
+package com.revature.fileio;
+
+import java.util.Date;
+
+public class Person {
+	private String name;
+	private Date dateOfBirth;
+	private int ssn;
+	private String occupation;
+}

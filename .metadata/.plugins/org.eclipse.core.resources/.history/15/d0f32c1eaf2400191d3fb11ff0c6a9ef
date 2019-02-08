@@ -1,0 +1,30 @@
+package com.revature.dao;
+
+public class TodoDaoImpl implements TodoDao {
+
+	public List<Todo> getAllTodos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Todo getTodoById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Todo createTodo(Todo todo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Todo updateTodo(Todo todo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Todo deleteTodo(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

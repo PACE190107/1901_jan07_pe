@@ -1,0 +1,20 @@
+package com.revature.service;
+
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class LoginServiceImpl implements LoginService{
+
+	@Override
+	public Object process(HttpServletRequest request, HttpServletResponse response) {
+		Enumeration<String> params = request.getParameterNames();
+		while (params.hasMoreElements()) {
+			String param = params.nextElement();
+			System.out.println(param + ":");
+		}
+		return null;
+	}
+
+}

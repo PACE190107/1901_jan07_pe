@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1> ISBN Lookup  </h1>
+
+	<input type="text" id="input" placeholder="enter isbn">
+    <button onclick = "doAJAX()">Do AJAX </button>
+    <p id= "reply"></p> 
+
+
+
+
+
+
+        <Script>
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                           document.getElementById("reply").innerHTML = this.responseText;
+                       }
+                    };
+                    let x = document.getElementById("input").value;
+                    let str = "https://openlibrary.org/api/books?bibkeys=ISBN:" + x + "&jscmd=data&format=json";
+                    xhttp.open("GET", str, true);
+                    xhttp.send(); 
+                }
+
+                
+       </Script>
+
+
+</body>
+</html>

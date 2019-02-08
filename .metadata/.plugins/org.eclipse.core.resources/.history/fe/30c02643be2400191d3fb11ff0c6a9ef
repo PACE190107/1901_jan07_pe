@@ -1,0 +1,17 @@
+package com.revature;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class MasterDispatcher {
+
+	private MasterDispatcher() {}
+	
+	public static Object process(HttpServletRequest request, HttpServletResponse response) {
+		switch(request.getRequestURI()) {
+		
+		default:
+			return "Not yet implemented";
+		}
+	}
+}

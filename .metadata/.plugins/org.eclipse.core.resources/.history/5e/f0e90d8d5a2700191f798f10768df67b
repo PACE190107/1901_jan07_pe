@@ -1,0 +1,30 @@
+package com.revature.dao;
+
+import java.util.List;
+
+import com.revature.models.Employee;
+import com.revature.models.Request;
+
+public interface RequestDao {
+	// Read some
+	List<Request> getResquestsPending();
+	
+	// Read some
+	List<Request> getResquestsComplete();
+	
+	// Read some
+	List<Request> getAllResquestsPending();
+		
+	// Read some
+	List<Request> getAllResquestsComplete();
+	
+	// Create
+	Request createRequest(Request request);
+	
+	// Update
+	Request updateRequestApprove(Request request);
+	
+	// Update
+	Request updateRequestDeny(Request request);
+
+}

@@ -1,0 +1,133 @@
+package com.revature.dao;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import org.apache.log4j.Logger;
+import oracle.jdbc.*;
+
+import com.revature.exception.EmployeeNotFoundException;
+import com.revature.models.Employee;
+import com.revature.util.ERSConnectionUtil;
+
+import oracle.jdbc.OracleTypes;
+
+public class EmployeeDaoImpl implements EmployeeDao {
+
+	final static Logger log = Logger.getLogger(EmployeeDaoImpl.class);
+	Scanner scanner = new Scanner(System.in);
+	NumberFormat formatter = NumberFormat.getCurrencyInstance();
+	
+	// SELECT * FROM EMPLOYEES WHERE EMP_ISMRGR = 0;
+	@Override
+	public List<Employee> getAllEmployees() {
+		try (Connection conn = ERSConnectionUtil.getConnection()) {
+			String sql = "call GET_ALL_EMP_INFO(?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.registerOutParameter(1, OracleTypes.CURSOR);
+			cs.execute();
+			ResultSet rs = ((OracleCallableStatement)cs).getCursor(1);
+			List<Employee> empList = new ArrayList<Employee>();
+			while (rs.next()) {
+				empList.add(new Employee(
+						rs.getInt("EMP_ID"),
+						rs.getString("EMP_FNAME"),
+						rs.getString("EMP_LNAME"),
+						rs.getString("EMP_ADDR"),
+						rs.getString("EMP_EMAIL"),
+						rs.getString("EMP_UNAME"),
+						rs.getString("EMP_PASS"),
+						rs.getInt("EMP_ISMGR")));
+			}
+			return empList;
+		} catch (SQLException e) {
+			log.error("error occured in getallcustomers method");
+		}
+		return null;
+	}
+
+	// SELECT * FROM EMPLOYEES WHERE ID = ? AND EMP_ISMGR = 0;
+	@Override
+	public Employee getEmployeeById(int id) {
+		try (Connection conn = ERSConnectionUtil.getConnection()) {
+			String sql = "call GET_EMP_INFO(?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt(1, id);
+			cs.registerOutParameter(2, OracleTypes.CURSOR);
+			cs.execute();
+			ResultSet rs = ((OracleCallableStatement)cs).getCursor(2);
+			if (rs.next() == false) {
+				throw new EmployeeNotFoundException(id);
+			} else {
+				Employee employee = new Employee(
+					rs.getInt("EMP_ID"),
+					rs.getString("EMP_FNAME"),
+					rs.getString("EMP_LNAME"),
+					rs.getString("EMP_ADDR"),
+					rs.getString("EMP_EMAIL"),
+					rs.getString("EMP_UNAME"),
+					rs.getString("EMP_PASS"),
+					rs.getInt("EMP_ISMGR"));
+				return employee;
+			}
+		} catch (SQLException e) {
+			log.error("error occured in getemployeebyid method");
+		}
+		return null;
+	}
+	
+	@Override
+	public Employee createEmployee(Employee employee) {
+		return employee;
+	}
+
+	@Override
+	public Employee updateEmployee(int id) {
+		Employee updated = getEmployeeById(id);
+		try (Connection conn = ERSConnectionUtil.getConnection()) {	
+			String sql = "call GET_EMP_INFO(?,?)";
+			CallableStatement cs = conn.prepareCall(sql);
+			cs.setInt(1, id);
+			cs.registerOutParameter(2, OracleTypes.CURSOR);
+			cs.execute();
+			ResultSet rs = ((OracleCallableStatement)cs).getCursor(2);
+			if (rs.next() == false) {
+				throw new EmployeeNotFoundException(id);
+			} else {
+				updated.setId(rs.getInt("EMP_ID"));
+				updated.setFirstname(rs.getString("EMP_FNAME"));
+				updated.setLastname(rs.getString("EMP_LNAME"));
+				updated.setAddress(rs.getString("EMP_ADDR"));
+				updated.setEmail(rs.getString("EMP_EMAIL"));
+				updated.setUsername(rs.getString("EMP_UNAME"));
+				updated.setPassword(rs.getString("EMP_PASS"));
+				updated.setIsManager(rs.getInt("EMP_ISMGR"));
+				return updated;
+			}
+		} catch (SQLException e) {
+			log.error("error occured in updateemployee method");
+		}
+		return null;
+	}
+	
+	@Override
+	public Employee deleteEmployee(int id) {
+		Employee toBeRemoved = getEmployeeById(id);
+		try (Connection conn = ERSConnectionUtil.getConnection()) {	
+		
+		// For every employee in our table, remove if the employee's id equals the parameter
+		dataSource.getEmployeeTable().removeIf(anything -> anything.getId() == id);
+		return toBeRemoved;
+		} catch (SQLException e) {
+			log.error("error occured in deleteemployee method");
+		}
+		return null;
+	}
+
+}

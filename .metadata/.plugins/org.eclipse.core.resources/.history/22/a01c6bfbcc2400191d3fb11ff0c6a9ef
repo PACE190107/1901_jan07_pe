@@ -1,0 +1,29 @@
+package com.revature.service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.revature.data.DataSource;
+import com.revature.model.User;
+
+public class LoginServiceImpl implements LoginService{
+	
+	private final DataSource dataSource = DataSource.getInstance();
+
+	@Override
+	public Object process(HttpServletRequest request, HttpServletResponse response) {
+		final String username = request.getParameter("username");
+		final String password = request.getParameter("password");
+		
+		//login logic
+		User existing = dataSource.getUserTable().stream().filter(user -> user.getUserName.equals(username) && user.getPassword.equals(password))
+				.findFirst().orEleseThrow(() -> new RuntimeException("Invalid Credentials"));
+				
+				if (existing != null) {
+					request.getSession().setAttribute("username", existing.getUsername());
+					request.getSession().setAttribute("email", existing.getEmail());
+				}
+		return null;
+	}
+
+}

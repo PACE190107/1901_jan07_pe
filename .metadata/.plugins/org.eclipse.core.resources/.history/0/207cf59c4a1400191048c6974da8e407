@@ -1,0 +1,38 @@
+package com.revature.fileio;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class FileIOStreamExample {
+
+	static FileInputStream fis = null;
+	FileOutputStream fos = null;
+	
+	public static void main(String[] args)  {
+		try {
+			readBytes();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+
+		} catch (Exception e) {
+			System.out.println("Something bad happened");
+		} finally {
+			System.out.println("this will always print");
+		}
+	}
+	
+	static void readBytes() throws IOException, FileNotFoundException {
+				fis = new FileInputStream("src\\main\\resources\\input.txt");
+		while ((fis.read()) != (-1)) {
+			System.out.println(fis.read());
+		}
+	}
+	
+	static void writeBytes() {
+		
+	}
+}

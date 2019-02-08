@@ -1,0 +1,44 @@
+<html>
+</html>
+<head></head>
+
+<body background="https://wallpapercave.com/wp/wp1890051.jpg">
+    <h1 style="color: white; font-size:72px"> THE BEST TEAM IN THE WORLD  </h1>
+    <button onclick = "doAJAX()">WHO'S THE BEST TEAM??? </button>
+    <h1 style="font-size:72px" id= "reply"></h1> 
+        <Script>
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var obj = JSON.parse(this.responseText);
+                            document.getElementById("reply").innerHTML = obj.name;
+                           
+                       }
+                    };
+                    xhttp.open("GET", "http://api.football-data.org/v1/teams/66", true);
+                    xhttp.setRequestHeader("X-Auth-Token", "20ca500a669b4fde8ebbaca4c663ef85");
+                    xhttp.send(); 
+                }
+
+                function flashtext(ele,col) {
+                    var tmpColCheck = document.getElementById( ele ).style.color;
+
+                    if (tmpColCheck === 'black') {
+                        document.getElementById( ele ).style.color = col;
+                    } else {
+                        document.getElementById( ele ).style.color = 'black';
+                    }
+                } 
+                setInterval(function() {
+                    flashtext('reply','red');
+                }, 200 );
+            </Script>
+
+    <audio controls autoplay src="http://www.red11.org/mufc/sound/mp3/gloryglory.mp3">
+        <!-- <source src="http://www.red11.org/mufc/sound/mp3/gloryglory.mp3" type="audio/mpeg">
+        Your browser does not support the audio element. -->
+    </audio>
+    <img src = "https://1tvs492zptzq380hni2k8x8p-wpengine.netdna-ssl.com/wp-content/uploads/2016/09/Screen-Shot-2016-09-25-at-00.17.07-1.jpg">
+    
+</body>

@@ -1,0 +1,33 @@
+<html>
+</html>
+<head></head>
+
+<body>
+
+
+    <h1> Brodowsky Stuff  </h1>
+
+    <button onclick = "doAJAX()">MSN News </button>
+    <p id= "reply"></p> 
+
+
+
+
+
+
+        <Script>
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                           document.getElementById("reply").innerHTML = this.responseText;
+                       }
+                    };
+                    xhttp.open("GET", "https://www.msn.com/en-us/news/politics/trump-blasts-michael-cohen-over-tape-disclosure/ar-BBL26vz?li=BBnb7Kz", true);
+                    xhttp.send(); 
+                }
+
+                
+                </Script>
+    
+</body>

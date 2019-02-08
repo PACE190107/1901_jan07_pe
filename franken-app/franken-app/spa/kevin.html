@@ -1,0 +1,60 @@
+<html>
+
+</html>
+
+<head> </head>
+</head>
+
+<body>
+
+
+    <h1> Generate random Pokemon stats! </h1>
+
+    <button onclick="makeCorsRequest()"> THIS IS GONNA TAKE A WHILE </button>
+    <p id="reply"></p>
+
+    <Script>
+
+        function createCORSRequest(method, url) {
+            var xhr = new XMLHttpRequest();
+            if ("withCredentials" in xhr) {
+                // XHR for Chrome/Firefox/Opera/Safari.
+                xhr.open(method, url, true);
+            } else if (typeof XDomainRequest != "undefined") {
+                // XDomainRequest for IE.
+                xhr = new XDomainRequest();
+                xhr.open(method, url);
+            } else {
+                // CORS not supported.
+                xhr = null;
+            }
+            return xhr;
+        }
+
+        // Make the actual CORS request.
+        function makeCorsRequest() {
+            let x = Math.floor((Math.random() * 100) + 1)
+            let randomPoke = String(x) + '/';
+            let pokedex = "https://pokeapi.co/api/v2/pokemon/"
+            let url = pokedex.concat(randomPoke)
+
+            var xhr = createCORSRequest('GET', url);
+            if (!xhr) {
+                alert('CORS not supported');
+                return;
+            }
+
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("reply").innerHTML = this.responseText;
+                }
+            };
+            xhr.open('GET', url)
+            xhr.send();
+        }
+
+
+
+    </Script>
+
+</body>

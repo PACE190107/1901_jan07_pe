@@ -1,0 +1,29 @@
+<html>
+</html>
+<head></head>
+
+<body>
+
+
+    <h1> Yoda Translator </h1>
+
+    <button onclick = "doAJAX()" id=>Translate</button>
+    <p id= "reply"></p> 
+
+</body>
+
+            <Script>
+                function doAJAX(){
+                    var text = prompt("Please enter some text", "Hello World");
+                    var newText = text.replace(new RegExp(' ', 'g'), "%20");
+                    let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                           translation = JSON.parse(this.responseText);
+                           document.getElementById('reply').innerHTML = translation.contents.translated;
+                       }
+                    };
+                    translation = xhttp.open("GET", "http://api.funtranslations.com/translate/yoda.json?text="+newText, true);
+                    xhttp.send();
+                }
+            </Script>

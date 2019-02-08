@@ -1,0 +1,23 @@
+package com.revature.service;
+
+import com.revature.data.DataSource;
+import com.revature.models.Employee;
+
+public class LoginServiceImpl implements LoginService {
+	
+	private final DataSource dataSource = DataSource.getInstance();
+	
+	@Override
+	public Employee attemptAuthentication(String username, String password) {
+		for (Employee employee : dataSource.getEmployeeTable())
+			if (employee.getUsername().equals(username) && getHashedPassword(employee.getPassword()).equals(password))
+				return employee;
+		return null;
+	}	
+	
+	private String getHashedPassword(String password) {
+		// invoke a Stored Procedure to perform the one-way hash of your password
+		return null;
+	}
+
+}

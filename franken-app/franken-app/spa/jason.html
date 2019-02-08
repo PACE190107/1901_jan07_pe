@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+ 	<style type="text/css">
+		#jason_starWarsTable {
+			font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		#jason_starWarsTable td, #jason_starWarsTable th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+
+		#jason_starWarsTable tr:nth-child(even){background-color: #f2f2f2;}
+
+		#jason_starWarsTable tr:hover {background-color: #ddd;}
+
+		#jason_starWarsTable th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #4CAF50;
+			color: white;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div class="container">
+
+		<button class="btn btn-primary btn-lg" onclick="loadDoc('https://swapi.co/api/people/'); page.pageNum=0">Load Star Wars Data</button>
+
+		<table class="table table-striped table-hover" id="jason_starWarsTable">
+			<tr class="success">
+				<th>Name</th>
+				<th>Height</th>
+				<th>Mass</th>
+				<th>Hair</th>
+				<th>Skin</th>
+				<th>Eyes</th>
+				<th>Birth Year</th>
+				<th>Gender</th>
+			</tr>
+		</table>
+
+		<script
+		src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			let page = {pageNum: 0};
+
+			function loadDoc(urlParam) {
+				$.ajax({
+					url: urlParam,
+					dataType: 'json',
+					success: function(data) {
+						let result = data["results"];
+						let nextPage = data["next"];					
+						let count = Object.keys(result).length;
+						for (let x = 0 ; x < count ; ++x) {
+							let keysbyindex = Object.keys(result[x]);
+							let tableRow = document.createElement("tr");
+
+							for (let i = 0 ; i < 8 ; ++i) {
+								let tableData = document.createElement("td");
+								
+								if (i == 0) {
+									let tableLink = document.createElement("a");
+									$(tableLink).attr({
+										href: "https://swapi.co/api/people/?search=" + result[x][keysbyindex[i]],
+										target: '_blank'
+									});
+									$(tableLink).html(result[x][keysbyindex[i]]);
+									tableData.appendChild(tableLink);
+								} else {
+									$(tableData).html(result[x][keysbyindex[i]]);
+								}
+								
+								
+								tableRow.appendChild(tableData);
+							}					
+							$("#jason_starWarsTable").append(tableRow);
+						}
+
+						if (nextPage != null) {
+							page.pageNum += 1;
+							loadDoc(nextPage);
+						}
+					}
+				})			
+			};
+
+		</script>
+
+	</div>
+
+</body>
+</html>

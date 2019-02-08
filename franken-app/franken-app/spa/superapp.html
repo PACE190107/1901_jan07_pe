@@ -1,0 +1,52 @@
+
+<html>
+<head>
+<title>Super App</title>
+</head>
+<body>
+
+<h1>Franken-App</h1>
+
+<span>
+    <button onclick="load_subAPP('josh')">Josh</button>
+    <button onclick="load_subAPP('levin')" >Levin</button>
+    <button onclick="load_subAPP('chris')">Chris</button>
+    <button onclick="load_subAPP('kevin')" >Kevin</button>
+    <button onclick="load_subAPP('tim')">Tim</button>
+    <button onclick="load_subAPP('paul')" >Paul</button>
+    <button onclick="load_subAPP('mohamed')">Mohamed</button>
+    <button onclick="load_subAPP('mustapha')" >Mustapha</button>
+    <button onclick="load_subAPP('vivi')">Vivi</button>
+    <button onclick="load_subAPP('joshua')" >Joshua</button>
+    <button onclick="load_subAPP('brian')">Brian</button>
+    <button onclick="load_subAPP('taylor')" >Taylor</button>
+    <button onclick="load_subAPP('jason')">Jason</button>
+    <button onclick="load_subAPP('jacob')" >Jacob</button>
+    <button onclick="load_subAPP('manus')">Manus</button>
+    <button onclick="load_subAPP('henry')" >Henry</button>
+    <button onclick="load_subAPP('martin')">Martin</button>
+    <button onclick="load_subAPP('steve')" >Steve</button>
+    <button onclick="load_subAPP('charles')">Charles</button>
+    <button onclick="load_subAPP('john')" >John</button>
+    <button onclick="load_subAPP('quinn')" >Quinn</button>
+    <button onclick="load_subAPP('emmanuel')" >Emmanuel</button>
+</span>
+
+<div id="superAPP" >
+
+    <h1>Absolutely Awesome super app</h1>
+
+
+</div>
+
+
+
+<script>
+    function load_subAPP(name) {
+     document.getElementById("superAPP").innerHTML='<object width="1500" height="1700" type="text/html" data="'+name+'.html" ></object>';
+}
+
+</script>
+
+</body>
+</html>

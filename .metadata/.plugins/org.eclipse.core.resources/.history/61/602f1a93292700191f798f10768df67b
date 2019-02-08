@@ -1,0 +1,12 @@
+package com.revature.data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class EmployeeDataSource {
+
+	private static final EmployeeDataSource instance = new EmployeeDataSource();
+	private final List<Employee> todos = new ArrayList<>();
+	private final List<Request> users = new ArrayList<>();
+	
+}

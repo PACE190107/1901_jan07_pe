@@ -1,0 +1,24 @@
+package com.revature.service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.revature.dao.TodoDao;
+import com.revature.dao.TodoDaoImpl;
+
+public class TodoServiceImpl implements TodoService {
+
+	private final TodoDao dao = new TodoDaoImpl();
+	@Override
+	public Object process(HttpServletRequest request, HttpServletResponse response) {
+		if (request.getMethod().equals("GET")) {
+			String[] path = request.getRequestURI().split("/");
+			for (String p : path)
+				System.out.println("Context Path Segment: " + p);
+			return dao.getAllTodos();
+		}
+	
+		return null;
+	}
+
+}

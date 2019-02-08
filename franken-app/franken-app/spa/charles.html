@@ -1,0 +1,56 @@
+<html>
+
+<head></head>
+
+<body>
+
+
+    <h1> College Football Jokes! </h1>
+
+    <form action=""> 
+            <select name="jokes" onchange="getJokes(this.value)">
+            <option value="">Select a website:</option>
+            <option value="A">Some jokes</option>
+            <option value="B">More jokes</option>
+            </select>
+    </form>
+    <br>
+    <p id= "reply">The N on a Nebraska's football player's helmet stands for "Knowledge".</p>
+
+
+        <Script>
+                function getJokes(str){
+                let xhttp = new XMLHttpRequest();
+                if (str == ""){
+                    document.getElementById("reply").innerHTML = "";
+                    return;
+                }
+                else if (str == "A"){
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                           document.getElementById("reply").innerHTML = this.responseText;
+                           // this.getAllResponseHeaders();
+                       }
+                    };
+                    xhttp.open("GET", "http://www.turfsports.net/page/page/3752659.htm", true);
+                    xhttp.send(); 
+                }
+                else {
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                           document.getElementById("reply").innerHTML = this.responseText;
+                           // this.getAllResponseHeaders();
+                       }
+                    };
+                    xhttp.open("GET", "http://www.poi-factory.com/node/29019", true);
+                    xhttp.send(); 
+                }
+                    
+                }
+
+                
+        </Script>
+    
+</body>
+
+</html>

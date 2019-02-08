@@ -1,0 +1,20 @@
+package com.revature.fileio;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
+public class ObjectIOStreamExample {
+	
+	ObjectInputStream ois;
+	ObjectOutputStream oos;
+	void performSerialization(Person p, String s) throws FileNotFoundException, IOException, ClassNotFoundException {
+		ois = new ObjectInputStream(new FileInputStream(s));
+		ois.readObject();
+	}
+	public static void main(String[] args) {
+		
+	}
+}

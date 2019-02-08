@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Mustapha's Webpage - AJAX included</title>
+</head>
+<style>
+* {
+	font-size: 20px;
+	text-transform: uppercase;
+}
+</style>
+<body>
+	<h1>My name is Mustapha</h1>
+	<h2>I'm just a great guy</h2>
+	<h3>Yes, I am</h3>
+	<h4>Want to hear something cool?</h4>
+	<h5 id="link" style="color: red; cursor: pointer;"> Go here</h5>
+	<h6 id="something"> </h6>
+	
+	<script >
+		function DoAjax() {
+			
+			let xhttp = new XMLHttpRequest(); 
+			xhttp.onreadystatechange = function() {
+				if(this.readystate == 4 && this.status == 200)
+					document.getElementById("something").textContent = this.response;
+				
+			}
+			xhttp.open("GET", "https://swapi.co/api/people/1",true);
+			xhttp.send();
+		}
+
+		//let x = document.getElementById('link')
+		document.getElementById("link").addEventListener("click", DoAjax());
+	</script>
+</body>
+</html>

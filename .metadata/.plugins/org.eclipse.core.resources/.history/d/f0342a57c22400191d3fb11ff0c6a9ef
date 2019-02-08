@@ -1,0 +1,70 @@
+package com.revature.service;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.revature.dao.TodoDao;
+import com.revature.dao.TodoDaoImpl;
+import com.revature.exception.TodoNotFoundException;
+import com.revature.model.Todo;
+
+public class TodoServiceImpl implements TodoService {
+	
+	private final ObjectMapper mapper = new ObjectMapper();
+	private final TodoDao dao = new TodoDaoImpl();
+	@Override
+	public Object process(HttpServletRequest request, HttpServletResponse response) {
+		if (request.getMethod().equals("GET")) {
+			String[] path = request.getRequestURI().split("/");
+			if (path.length == 4) {	//execute if the request is /PaceServletExample/rest/todos
+				for (String p : path)
+					System.out.println("Context Path Segment: " + p);
+				return dao.getAllTodos();
+			}
+			if (path.length == 5) { //execute if request looks like /PaceServletExamples/rest/todos/id
+				try {
+					int todoId = Integer.valueOf(path[4]);
+					return dao.getTodoById(todoId);
+				} catch (NumberFormatException e) {
+					return "Cannot convert " + path[4] + " into a number";
+				} catch (TodoNotFoundException e) {
+					return e.getMessage();
+				}
+			}
+		}
+		
+		if (request.getMethod().equals("POST")) {
+			//logic
+			if (request.getHeader("Content-Type").equals("application/json")) {
+				Todo todo;
+				try {
+					todo = mapper.readValue(request.getReader(), Todo.class);
+				} catch (JsonParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JsonMappingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return dao.createTodo(todo);
+			}
+			try {
+				//415 = unsupported media type
+				response.sendError(415, "Please create using application/json");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+}

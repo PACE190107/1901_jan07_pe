@@ -1,0 +1,18 @@
+1548982077719	Delete element
+1548984330761	Delete element
+1548986647525	Rename package 'com.revature.ERS'
+1548986686873	Delete element
+1548986701207	Rename package 'dao'
+1548986714141	Rename package 'data'
+1548986726048	Rename package 'ers'
+1548986736061	Rename package 'exception'
+1548986749820	Rename package 'models'
+1548986759630	Rename package 'service'
+1548986774265	Rename package 'util'
+1548987432871	Rename type 'ERSDao'
+1548987446032	Rename type 'ERSDaoImpl'
+1548987555151	Rename type 'EmploeeDaoImpl'
+1548987562586	Rename type 'EmploeeDaoImp'
+1548987630310	Rename type 'EmploeeDaoImpl'
+1549125382392	Delete element
+1549139512720	Rename type 'EmployeeDataSource'

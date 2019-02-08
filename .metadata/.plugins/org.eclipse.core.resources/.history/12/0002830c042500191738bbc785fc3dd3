@@ -1,0 +1,28 @@
+package com.revature;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.revature.service.LoginService;
+import com.revature.service.LoginServiceImpl;
+import com.revature.service.TodoService;
+import com.revature.service.TodoServiceImpl;
+
+public class MasterDispatcher {
+
+	private MasterDispatcher() {}
+	
+	private static final TodoService todoService = new TodoServiceImpl();
+	private static final LoginService loginService = new LoginServiceImpl();
+	
+	public static Object process(HttpServletRequest request, HttpServletResponse response) {
+		// getRequestURI() => /PaceServletExamples/rest/todos
+		if(request.getRequestURI().contains("todos"))
+			return todoService.process(request, response);
+//		else if (request.getRequestURI().contains("login")) {
+//			return loginService.process(request, response);
+		}
+		else
+			return "Not yet implemented";
+	}
+}

@@ -1,0 +1,64 @@
+<html>
+<style>
+body {
+    background-color: rgb(228, 206, 10);
+}
+
+    button {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 25px;
+    background-color: rgb(24, 24, 24);
+    color: white;
+    border: 2px solid rgb(24, 24, 24); 
+    height:50px;
+    width:200px;
+    border-radius: 12px;
+    position: absolute;
+    left: 50%;
+
+}
+h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 70px; font-weight: bold; letter-spacing: -1px; line-height: 1; }
+p { color: #685206; font-family: 'Helvetica Neue', sans-serif; font-size: 40px; line-height: 24px; margin: 0 0 24px; text-align: justify; text-justify: inter-word; }
+
+button:hover {
+    background-color: rgb(20, 20, 20);
+    border: 2px solid rgb(20, 20, 20); 
+    color: white;
+    border-radius: 12px;
+}
+</style>
+<head></head>
+
+<body>
+
+
+    <h1> Random Star Wars Character's height </h1>
+
+    <button onclick = "doAJAX()">Generate</button>
+    <p id= "reply"></p> 
+   
+
+<Script>
+
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var things =  JSON.parse(this.responseText);
+                            document.getElementById("reply").innerHTML = things.name + " is "+things.height+" cm tall." ;
+                            
+                        }
+                    }
+                    var randomNum = Math.floor(Math.random() * (30 - 1 + 1)) + 1;
+                    var link = "https://swapi.co/api/people/"+ randomNum +"/";
+                    xhttp.open("GET", link, true);
+                    xhttp.send(); 
+
+                }
+                  
+                </Script> 
+    
+</body>
+
+
+</html>

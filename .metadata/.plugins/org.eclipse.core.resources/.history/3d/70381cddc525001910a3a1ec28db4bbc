@@ -1,0 +1,74 @@
+package com.revature.dao;
+
+import java.util.List;
+
+import com.revature.data.DataSource;
+
+import exception.EmployeeNotFoundException;
+import models.Employee;
+
+public class ERSDaoImpl implements ERSDao {
+
+	private final DataSource dataSource = DataSource.getInstance();
+	
+	// SELECT * FROM EMPLOYEES WHERE EMP_ISMRGR = 0;
+	@Override
+	public List<Employee> getAllEmployees() {
+		return dataSource.getEmployeeTable();
+	}
+
+	// SELECT * FROM EMPLOYEES WHERE ID = ? AND EMP_ISMGR = 0;
+	@Override
+	public Employee getEmployeeById(int id) {
+		
+		/*
+		 * for (Employee Employee: dataSource.getEmployeeTable()) 
+		 * 		if (employee.getId() == id)
+		 * 			return employee;
+		 * throw new EmployeeNotFoundException(id);
+		 */
+		
+		return dataSource.getEmployeeTable().stream()
+					.filter(employee -> employee.getId() == id)
+					.findFirst().orElseThrow(() -> new EmployeeNotFoundException(id));
+	}
+
+	@Override
+	public Employee createEmployee(Employee employee) {
+		if (dataSource.getEmployeeTable().add(employee)) {
+			return employee;
+		}
+		return null;
+	}
+
+	@Override
+	public Employee updateEmployee(Employee employee) {
+		// Get a reference to existing employee
+		Employee updated = getEmployeeById(employee.getId());
+		
+		// Update the employee's state
+//		updated.setBody(employee.getBody());
+//		updated.setTitle(employee.getTitle());
+		
+		// Store the updated version
+		for (int i = 0; i < dataSource.getEmployeeTable().size(); i++) {
+			if (dataSource.getEmployeeTable().get(i).getId() == employee.getId()) {
+				dataSource.getEmployeeTable().set(i, updated);
+				return updated;
+			}
+		}
+		return null;
+	}
+
+	
+	@Override
+	public Employee deleteEmployee(int id) {
+		// Reference existing id
+		Employee toBeRemoved = getEmployeeById(id);
+		
+		// For every employee in our table, remove if the employee's id equals the parameter
+		dataSource.getEmployeeTable().removeIf(anything -> anything.getId() == id);
+		return toBeRemoved;
+	}
+
+}

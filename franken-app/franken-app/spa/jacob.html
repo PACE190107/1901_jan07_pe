@@ -1,0 +1,50 @@
+<html>
+</html>
+<head></head>
+
+<body id="random" onclick="whataTwist()">
+
+
+    <h1>Bad Chuck Noris jokes</h1>
+
+    <button onclick = "doAJAX()">Really</button>
+    <p id= "reply"></p>
+
+
+        <Script>
+                function doAJAX(){
+                let xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                          var obj = this.responseText;
+                          var obj2 = JSON.parse(obj);
+                          if(obj2.value.categories[0] == "explicit"){
+                              document.getElementById("reply").innerHTML = "Naugty Joke skipping";
+                          }else{
+                              document.getElementById("reply").innerHTML = obj2.value.joke;
+                          }
+
+
+                       }
+                    };
+                    xhttp.open("GET", "http://api.icndb.com/jokes/random?firstName=John&amp;lastName=Doe/", true);
+                    xhttp.send();
+                }
+                function getRandomInt(max) {
+                    return Math.floor(Math.random() * Math.floor(max));
+                }
+
+                function randomChange() {
+                  document.getElementById("random").style.background= '#'+Math.floor(Math.random()*16777215).toString(16);
+                  document.body.style.background= '#'+Math.floor(Math.random()*16777215).toString(16);
+                };
+
+                function whataTwist(){
+                  if( getRandomInt(11) > 5){
+                    randomChange()
+                  }
+                };
+
+        </Script>
+
+</body>

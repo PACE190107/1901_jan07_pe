@@ -1,0 +1,51 @@
+package com.revature.dao;
+
+import java.util.List;
+
+import com.revature.models.Request;
+
+public class RequestDaoImpl implements RequestDao {
+
+	@Override
+	public List<Request> getResquestsPendingById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Request> getResquestsCompleteById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Request> getAllResquestsPending() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Request> getAllResquestsComplete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request createRequest(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request updateRequestApprove(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request updateRequestDeny(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

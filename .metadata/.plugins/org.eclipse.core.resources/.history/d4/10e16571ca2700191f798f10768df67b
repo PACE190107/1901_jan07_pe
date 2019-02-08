@@ -1,0 +1,77 @@
+package com.revature.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.revature.data.DataSource;
+import com.revature.exception.RequestNotFoundException;
+import com.revature.models.Request;
+
+public class RequestDaoImpl implements RequestDao {
+
+	final static Logger log = Logger.getLogger(EmployeeDaoImpl.class);
+	private final DataSource dataSource = DataSource.getInstance();
+	
+	// SELECT * FROM TODOS;
+	@Override
+	public List<Request> getAllRequests() {
+		return dataSource.getRequestTable();
+	}
+	
+	public Request getRequestById(int id) {
+		return null;
+		
+	}
+	
+	@Override
+	public List<Request> getRequestsPendingById(int id) {
+		List<Request> pendingRequests = new ArrayList<Request>();
+		for (int i = 0; i < dataSource.getRequestTable().size(); i++) {
+			if (dataSource.getRequestTable().get(i).getId() == id)
+				if (dataSource.getRequestTable().get(i).getPending() == 0);
+					pendingRequests.add(getRequestById(i));
+			throw new RequestNotFoundException(id);
+		
+		}
+		return null;
+	}
+
+	@Override
+	public List<Request> getRequestsCompleteById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Request> getAllRequestsPending() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Request> getAllRequestsComplete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request createRequest(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request updateRequestApprove(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Request updateRequestDeny(Request request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
