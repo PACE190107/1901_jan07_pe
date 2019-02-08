@@ -1,5 +1,7 @@
 package com.ers.services;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -16,6 +18,9 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import com.ers.dao.EmployeeDAO;
 import com.ers.dao.ReimbursementRequestDAO;
@@ -47,6 +52,85 @@ public class EmployeeService {
 				((Employee) req.getSession().getAttribute("user")).geteID(), request.getRrDescription(),
 				request.getRrAmount());
 	}
+	
+	public static void saveReceipt(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException, SQLException {
+		try {
+            // Gets absolute path to root directory of web app.
+            String appPath = System.getProperty("user.home");
+            appPath = appPath.replace('\\', '/');
+ 
+            // The directory to save uploaded file
+            String fullSavePath = null;
+            if (appPath.endsWith("/")) {
+                fullSavePath = appPath + "Receipts";
+            } else {
+                fullSavePath = appPath + "/Receipts";
+            }
+ 
+            // Creates the save directory if it does not exists
+            File fileSaveDir = new File(fullSavePath);
+            if (!fileSaveDir.exists()) {
+                fileSaveDir.mkdir();
+            }
+ 
+            // Part list (multi files).
+            for (Part part : req.getParts()) {
+                String fileName = extractFileName(part);
+                if (fileName != null && fileName.length() > 0) {
+                    String filePath = fullSavePath + "/" + fileName;
+                    part.write(filePath);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+	}
+	public static void loadReceipt(HttpServletRequest req, HttpServletResponse resp)
+			throws IOException, ServletException, SQLException {
+        String appPath = System.getProperty("user.home");
+        appPath = appPath.replace('\\', '/');
+
+        // The directory to save uploaded file
+        String fullLoadPath = null;
+        if (appPath.endsWith("/")) {
+        	fullLoadPath = appPath + "Receipts";
+        } else {
+        	fullLoadPath = appPath + "/Receipts";
+        }
+        
+        File f = new File(fullLoadPath + "/" + req.getParameter("reqID") + ".png");
+		byte image[] = new byte[(int)f.length()];
+		
+		FileInputStream fis = new FileInputStream(fullLoadPath + "/" + req.getParameter("reqID") + ".png");  
+		fis.read(image);
+		image = Base64.encodeBase64(image);
+        
+		resp.setHeader("Content-Type", "image/jpeg");
+		for (byte bt : image)
+			resp.getWriter().write(bt);
+		
+		fis.close();
+	}
+	private static String extractFileName(Part part) {
+        // form-data; name="file"; filename="C:\file1.zip"
+        // form-data; name="file"; filename="C:\Note\file2.zip"
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                // C:\file1.zip
+                // C:\Note\file2.zip
+                String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
+                clientFileName = clientFileName.replace("\\", "/");
+                int i = clientFileName.lastIndexOf('/');
+                // file1.zip
+                // file2.zip
+                return clientFileName.substring(i + 1);
+            }
+        }
+        return null;
+    }
 
 	public static void getUsername(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {

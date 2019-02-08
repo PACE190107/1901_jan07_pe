@@ -143,7 +143,41 @@ if (!loadRequests)
 							requestRecords_Pending.appendChild(record);
 						}
 						record.appendChild(approved);
+						
+						if (isManager) {
+							let receipt = document.createElement("td");
+							let receiptBtn = document.createElement("button");
+							receiptBtn.innerHTML = "Load";
+							receiptBtn.setAttribute("class", "btn btn-secondary");
+							receiptBtn.addEventListener("click", () => { loadReceipt(data[i].rrID); });
+							receipt.appendChild(receiptBtn);
+							record.appendChild(receipt);
+						} else if (!data[i].mID) {
+							let receipt = document.createElement("td");
+							let receiptBtn = document.createElement("button");
+							receiptBtn.innerHTML = "Upload";
+							receiptBtn.setAttribute("class", "btn btn-secondary");
+							receiptBtn.addEventListener("click", () => { saveReceipt(data[i].rrID); });
+							receipt.appendChild(receiptBtn);
+							record.appendChild(receipt);
+						}
 					}
+				}
+			});
+	}
+
+if (!saveReceipt)
+	saveReceipt = function(requestID) {
+		fetch('http://' + location.host + '/ERS/receiptForm/')
+			.then(response => {
+				if (response.ok) {
+					return response.text();
+				}
+			})
+			.then(data => {
+				if (data) {
+					loadContent(data, true);
+					document.getElementById("receiptValue").innerHTML = requestID.toString();
 				}
 			});
 	}

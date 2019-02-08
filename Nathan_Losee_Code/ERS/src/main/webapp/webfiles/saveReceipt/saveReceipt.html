@@ -1,0 +1,29 @@
+<div class="popup-form">
+	<form class="container was-validated">
+		<fieldset>
+			<h2 class="row justify-content-center">Reimbursement Receipt:&nbsp;<span id="receiptValue"></span></h2>
+			
+			<br>
+
+			<fieldset>
+				<legend>Receipt</legend>
+				<div class="form-row form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Receipt</span>
+						</div>
+						<input id="receipt" type="file" accept="image/png" required>
+					</div>
+				</div>
+			</fieldset>
+			
+			<br>
+			
+			<button id="submit" type="button" class="btn-success col-12">Send Receipt</button>
+			<button id="cancel" type="button" class="btn-danger col-12">Cancel</button>
+		</fieldset>
+	</form>
+</div>
+
+
+<span id="loadTarget">saveReceipt</span>

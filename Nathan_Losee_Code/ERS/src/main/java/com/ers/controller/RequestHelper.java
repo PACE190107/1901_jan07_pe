@@ -31,6 +31,9 @@ public class RequestHelper {
 		case "request":
 			EmployeeService.makeRequest(req, resp);
 			break;
+		case "receipt":
+			EmployeeService.saveReceipt(req, resp);
+			break;
 		case "requestsSingle":
 			if (((Employee) req.getSession().getAttribute("user")).isManager())
 				ManagerService.getReimbursementsSingle(req, resp);
@@ -89,6 +92,15 @@ public class RequestHelper {
 			break;
 		case "request":
 			req.getRequestDispatcher("/webfiles/request/request.html").forward(req, resp);
+			break;
+		case "receipt":
+			req.getRequestDispatcher("/webfiles/loadReceipt/loadReceipt.html").forward(req, resp);
+			break;
+		case "receiptForm":
+			req.getRequestDispatcher("/webfiles/saveReceipt/saveReceipt.html").forward(req, resp);
+			break;
+		case "receiptPath":
+			EmployeeService.loadReceipt(req, resp);
 			break;
 		case "employees":
 			ManagerService.getEmployees(req, resp);

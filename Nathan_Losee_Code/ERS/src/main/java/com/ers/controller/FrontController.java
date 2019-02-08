@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +13,10 @@ import org.apache.catalina.servlets.DefaultServlet;
 
 import com.ers.util.ConnectionManager;
 
+@WebServlet("/ERS")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50) // 50MB
 public class FrontController extends DefaultServlet {
 	private static final long serialVersionUID = 3479236907455377769L;
 	
@@ -35,11 +41,11 @@ public class FrontController extends DefaultServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	    System.out.println("Host = " + req.getServerName());
-	    System.out.println("Port = " + req.getServerPort());
 		if (req.getRequestURI().endsWith(".html") ||
 			req.getRequestURI().endsWith(".js") ||
 			req.getRequestURI().endsWith(".css") ||
+			req.getRequestURI().endsWith(".png") ||
+			req.getRequestURI().endsWith(".jpg") ||
 			req.getRequestURI().equals("/ERS/")) {
 			if (req.getParameter("temp") != null) {
 				req.getSession().invalidate();

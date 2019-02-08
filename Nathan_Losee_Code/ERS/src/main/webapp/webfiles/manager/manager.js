@@ -236,6 +236,24 @@ if (!loadRequests)
 							requestRecords_Pending.appendChild(record);
 						}
 						record.appendChild(approved);
+						
+						if (isManager) {
+							let receipt = document.createElement("td");
+							let receiptBtn = document.createElement("button");
+							receiptBtn.innerHTML = "Load";
+							receiptBtn.setAttribute("class", "btn btn-secondary");
+							receiptBtn.addEventListener("click", () => { loadReceipt(data[i].rrID); });
+							receipt.appendChild(receiptBtn);
+							record.appendChild(receipt);
+						} else if (!data[i].mID) {
+							let receipt = document.createElement("td");
+							let receiptBtn = document.createElement("button");
+							receiptBtn.innerHTML = "Upload";
+							receiptBtn.setAttribute("class", "btn btn-secondary");
+							receiptBtn.addEventListener("click", () => { saveReceipt(data[i].rrID); });
+							receipt.appendChild(receiptBtn);
+							record.appendChild(receipt);
+						}
 					}
 				}
 			});
@@ -328,7 +346,16 @@ if (!loadRequestsSingle)
 							record.setAttribute("class", "table-warning");
 							requestRecords_Pending.appendChild(record);
 						}
+						
 						record.appendChild(approved);
+						
+						let receipt = document.createElement("td");
+						let receiptBtn = document.createElement("button");
+						receiptBtn.innerHTML = "Load";
+						receiptBtn.seAttribute("class", "btn btn-secondary");
+						receiptBtn.addEventListener("click", () => { loadReceipt(data[i].rrID); });
+						receipt.appendChild(receiptBtn);
+						record.appendChild(receipt);
 					}
 				}
 			});
@@ -390,6 +417,22 @@ if (!unfocus)
 		document.getElementById("focusID").innerHTML = "";
 		loadEmployees();
 		loadRequests(true);
+	}
+
+if (!loadReceipt)
+	loadReceipt = function(requestID) {
+		fetch('http://' + location.host + '/ERS/receipt')
+			.then(response => {
+				if (response.ok) {
+					return response.text();
+				}
+			})
+			.then(data => {
+				if (data) {
+					loadContent(data, true);
+					document.getElementById("receiptValue").innerHTML = requestID.toString();
+				}
+			});
 	}
 
 document.getElementById("logout").addEventListener("click", logout);

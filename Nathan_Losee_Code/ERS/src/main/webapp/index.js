@@ -33,7 +33,7 @@ let loadContent = function(htmlContent, isPopup = false) {
 
 let login, logout, closePopup,
 	loadUsername, loadEmail, confirm, changeEmail,
-	alter, loadSettings, changeSetting,
+	alter, loadSettings, changeSetting, loadReceipt, fetchReceipt, saveReceipt, submitReceipt,
 	loadRequests, loadRequestsSingle, makeRequest, submitRequest, stampRequest,
 	loadEmployees, loadEmployee, registerEmployee, submitRegistration;
 
