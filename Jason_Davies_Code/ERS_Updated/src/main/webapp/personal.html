@@ -11,10 +11,14 @@
 <title>ERS | Personal</title>
 </head>
 <body class="container">
-	<h1 id="title">Personal Information</h1>
 	<form action="/ERS_Updated/Home" method="POST">
-		<div class="col-sm-2">
-			<input type="submit" value="Back" name="btn">
+		<div class="form-group row" style="background: lightgrey">
+			<div class="col-sm-6">
+				<h1 id="title">Personal Information</h1>
+			</div>
+			<div class="col-sm-6 text-right">
+				<input type="submit" value="Back" name="btn" >
+			</div>
 		</div>
 	</form>
 	<div class="well">
@@ -89,7 +93,7 @@
 				<div class="input-group mb-3">
 					<input type="text" class="form-control"
 						placeholder="Updated Password..." aria-label="Updated Password..."
-						aria-describedby="basic-addon2" name="passwordUpdate">
+						aria-describedby="basic-addon2" name="passwordUpdate" required>
 					<div class="input-group-append">
 						<input type="submit" value="Update" name="btn">
 					</div>

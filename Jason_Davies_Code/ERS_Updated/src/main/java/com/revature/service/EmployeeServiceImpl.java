@@ -90,21 +90,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 		String lastName = request.getParameter("lastNameUpdate");
 		Employee exists = dao.getEmployee(username);
 		if (exists != null) {
-			if (!password.equals("")) {
+			if (!password.equals("") && password != null) {
 				exists.setPassword(password);
 			} 
-			if (!email.equals("")) {
+			if (!email.equals("") && email != null) {
 				exists.setEmail(email);
 			}
-			if (!firstName.equals("")) {
+			if (!firstName.equals("") && firstName != null) {
 				exists.setFirstName(firstName);
 			}
-			if (!lastName.equals("")) {
+			if (!lastName.equals("") && lastName != null) {
 				exists.setLastName(lastName);
 			}
 			ConnectionUtil.defaultCredentials();
 			exists = dao.updateEmployee(exists);
-			if (!password.equals("")) {
+			if (!password.equals("") && password != null) {
 				dao.updateCredentials(username, password);
 				ConnectionUtil.setCredentials(username, password);
 			} else {
