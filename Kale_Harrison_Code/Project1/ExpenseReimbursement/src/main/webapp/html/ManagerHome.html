@@ -20,6 +20,7 @@ crossorigin="anonymous">
 		font-size: 20;
 		color: Black;
 		font-style: bold;
+		background-color: white;
 	} 
 .btn {
   border: none;
@@ -45,7 +46,7 @@ crossorigin="anonymous">
 </style>
 <title>Employee Reimbursement Manager</title>
 </head>
-<body class="col-md-8 offset-md-2">
+<body class="col-md-10 offset-md-1" onload="noBack();" onpageshow="if (event.persisted) noBack();">
 	<div id="btn-group">
 		<button id="getAllUsersBtn"class="btn" onclick="toggleAllUsers()">View All Employees</button>
 		<button id="getAllPendingBtn" class="btn" onclick="toggleAllPending()" >View All Pending Requests </button>
@@ -55,7 +56,7 @@ crossorigin="anonymous">
 		<button id="logout" class="btn btn-primary">Logout</button>
 	</div>
 	<div id="allUsersDIV" style="display: none">
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered">
 			<tbody id="employeeTable">
 				<th>ID</th>
 				<th>Username</th>
@@ -67,7 +68,7 @@ crossorigin="anonymous">
 		</table>
 	</div>
 	<div id="allPendingDIV" style="display: none">
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered">
 			<tbody id="pendingRebTable">
 				<th>Employee ID</th>
 				<th>Reimbursement ID</th>
@@ -78,7 +79,7 @@ crossorigin="anonymous">
 		</table>
 	</div>
 	<div id="allApprovedDIV" style="display: none">
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered">
 			<tbody id="approvedRebTable">
 				<th>Employee ID</th>
 				<th>Reimbursement ID</th>
@@ -94,7 +95,7 @@ crossorigin="anonymous">
 		<button  onclick="toggleAllRebEmp()" id="getAllRebEmpBtn"class="btn">Submit</button>
 	</div>
 	<div id="allRebEmp" style="display: none" >
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered">
 			<tbody id="allRebEmpTable">
 				<th>Employee ID</th>
 				<th>Reimbursement ID</th>

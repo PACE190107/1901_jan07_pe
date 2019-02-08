@@ -1,13 +1,23 @@
 window.onload = function(){
 	document.getElementById("getSingleUserBtn").addEventListener("click", getSingleUser);
 	document.getElementById("changeUsernameBtn").addEventListener("click", changeUsername);
-	document.getElementById("changePasswordBtn").addEventListener("click", changePassword);
 	document.getElementById("changeEmailBtn").addEventListener("click", changeEmail);
 	document.getElementById("viewResolvedBtn").addEventListener("click", viewResolved);
 	document.getElementById("viewPendingBtn").addEventListener("click", viewPending);
 	document.getElementById("submitReb").addEventListener("click", submitRequest);
 	document.getElementById("logout").addEventListener("click", logout);
 }
+
+/*
+ * the window.history code snippet is from
+ * https://stackoverflow.com/questions/5806860/how-can-i-prevent-user-to-access-the-previous-jsp-page-using-browsers-back-butt
+ */
+window.history.forward();
+
+function noBack() {
+  window.history.forward();
+}
+
 
 function getSingleUser(){
 	for(var i = 1;i<document.getElementById("employeeDetails").rows.length;){
@@ -17,8 +27,6 @@ function getSingleUser(){
 	xhr.onreadystatechange  = function(){
 		if ((xhr.status == 200) && (xhr.readyState == 4)){
 			var data = JSON.parse(this.responseText);
-			console.log(xhr.responseText);
-			console.log(data.e_id);
 				let employeeRow = document.createElement("tr");
 				let employeeId = document.createElement("td");
 				let employeeUsername = document.createElement("td");
@@ -51,11 +59,6 @@ function changeUsername(){
 	const jsonNewUsername = JSON.stringify(newUsername);
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange  = function(){
-		if ((xhr.status == 200) && (xhr.readyState == 4)){
-			if (xhr.responseText == 'true'){
-				document.getElementById("usernameStatus").innerHTML = "Username Changed!";
-			}		
-		}
 	};
 	xhr.open("PUT", "http://localhost:8080/ExpenseReimbursement/rest/employee/Username");
 	xhr.setRequestHeader("Content-Type", "application/json");
@@ -67,13 +70,6 @@ function changePassword(){
 	};
 	const jsonNewPassword = JSON.stringify(newPassword);
 	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange  = function(){
-		if ((xhr.status == 200) && (xhr.readyState == 4)){
-			if (xhr.responseText == 'true'){
-				document.getElementById("passwordStatus").innerHTML = "Password Changed!";
-			}		
-		}
-	};
 	xhr.open("PUT", "http://localhost:8080/ExpenseReimbursement/rest/employee/Password");
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.send(jsonNewPassword);
@@ -84,13 +80,6 @@ function changeEmail(){
 	};
 	const jsonNewEmail = JSON.stringify(newEmail);
 	var xhr = new XMLHttpRequest();
-	xhr.onreadystatechange  = function(){
-		if ((xhr.status == 200) && (xhr.readyState == 4)){
-			if (xhr.responseText == 'true'){
-				document.getElementById("emailStatus").innerHTML = "Email Changed!";
-			}		
-		}
-	};
 	xhr.open("PUT", "http://localhost:8080/ExpenseReimbursement/rest/employee/Email");
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.send(jsonNewEmail);
@@ -179,12 +168,6 @@ function submitRequest(){
 	const jsonRebDetails = JSON.stringify(rebDetails);
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange  = function(){
-		if ((xhr.status == 200) && (xhr.readyState == 4)){
-			if (xhr.responseText == 'true'){
-				document.getElementById("rebStatus").innerHTML = "Request Submitted";
-			}	
-				
-		}
 	};
 	xhr.open("POST", "http://localhost:8080/ExpenseReimbursement/rest/reimbursement");
 	xhr.setRequestHeader("Content-Type", "application/json");
@@ -203,16 +186,6 @@ function logout(){
 	};
 	xhr.open("POST", "http://localhost:8080/ExpenseReimbursement/rest/employee/logout");
 	xhr.send();
-}
-
-var header = document.getElementById("btn-group");
-var btns = header.getElementsByClassName("btn");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-  var current = document.getElementsByClassName("active");
-  current[0].className = current[0].className.replace(" active", "");
-  this.className += " active";
-  });
 }
 
 

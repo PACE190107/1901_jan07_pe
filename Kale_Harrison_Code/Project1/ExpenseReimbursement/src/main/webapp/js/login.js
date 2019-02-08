@@ -22,6 +22,7 @@ function login(){
 				
 		}
 	};
+	
 	xhr.open("POST", "http://localhost:8080/ExpenseReimbursement/rest/employee");
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.send(jsonLoginCred);

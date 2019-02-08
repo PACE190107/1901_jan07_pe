@@ -147,7 +147,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1,username);
-			pstmt.setString(2, getHashedPassword(username, password));
+			pstmt.setString(2, getHashedPassword(password));
 			
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -170,18 +170,18 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	
 	public void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		req.getSession().invalidate();
+
 	}
 	
-	private String getHashedPassword(String username, String password) {
+	private String getHashedPassword(String password) {
 		// invoke a Stored Procedure to perform the one-way hash of your password
 		Connection conn = null;
 		conn = cu.getConnection();
-		String sql = "{? = call GET_EMPLOYEE_HASH(?,?)}";
+		String sql = "{? = call GET_EMPLOYEE_HASH(?)}";
 		try {
 			CallableStatement cs = conn.prepareCall(sql);
 			cs.registerOutParameter(1, Types.VARCHAR);
-			cs.setString(2, username);
-			cs.setString(3, password);
+			cs.setString(2, password);
 			cs.execute();
 			return cs.getString(1);
 		} catch (SQLException e) {

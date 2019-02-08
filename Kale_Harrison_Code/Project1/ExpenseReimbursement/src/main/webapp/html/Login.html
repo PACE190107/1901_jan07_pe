@@ -7,8 +7,7 @@ rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4
 crossorigin="anonymous">
 <style>
 	body{
-		/* color : purple; */
-		background-color: white;
+		background-color: #39b5c0 ;
 	}
 	th{
 		font-size: 20;
@@ -24,17 +23,29 @@ crossorigin="anonymous">
 		font-style: bold;
 		/* background-color: fuchsia; */
 	} 
+	.btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #cce0f0;
+  cursor: pointer;
+  font-size: 18px;
+  color: black;
+}
+	
 	
 	
 </style>
 <title>Employee Reimbursement Login</title>
 </head>
-<body>
-	<div>
+<body class="col-md-8 offset-md-2">
+	<div style="text-align: center;" >
 		<h1>Please Log In</h1>
 		<input type="text" id="username" placeholder="Enter Username">
-		<input type="password" id="password" placeholder="Enter Password">
-		<button id="loginBtn"class="btn btn-primary">Login</button>
+		<input type="password" id="password" placeholder="Enter Password"  >
+		<div >
+		<button id="loginBtn"class="btn col-sm-3" >Login</button>
+		</div>
 		<h3 id="loginAttempt"></h3>
 	</div>
 	<script type="text/javascript" src="../js/login.js"></script>

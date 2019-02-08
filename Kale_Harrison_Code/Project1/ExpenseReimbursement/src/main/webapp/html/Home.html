@@ -20,6 +20,7 @@ crossorigin="anonymous">
 		font-size: 20;
 		color: Black;
 		font-style: bold;
+		background-color: white;
 	} 
 .btn {
   border: none;
@@ -31,12 +32,10 @@ crossorigin="anonymous">
   color: black;
 }
 
-/* Style the active class, and buttons on mouse-over */
 .active, .btn:hover {
   background-color: #666;
   color: white;
 }
-
 .mystyle {
  
  background-color: black ;
@@ -46,7 +45,7 @@ crossorigin="anonymous">
 <title>Expense Reimbursement</title>
 </head>
 
-<body class="col-md-8 offset-md-2">
+<body class="col-md-8 offset-md-2" onload="noBack();" onpageshow="if (event.persisted) noBack();">
 
 <div id="btn-group">
   <button id="getSingleUserBtn"  class="btn" onclick="toggleSingleUser()">Employee Details</button>
@@ -57,7 +56,7 @@ crossorigin="anonymous">
 </div>
 <div>
 <div id="singleUserDiv" style="display: none">
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered">
 			<tbody id="employeeDetails">
 				<th>ID</th>
 				<th>Username</th>
@@ -76,7 +75,7 @@ crossorigin="anonymous">
 		</div>	
 	</div>
 	<div id="resolvedRebDIV" style="display: none">
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered">
 			<tbody id="resolvedRebTable">
 				<th>Employee ID</th>
 				<th>Reimbursement ID</th>
@@ -88,7 +87,7 @@ crossorigin="anonymous">
 		</table>
 	</div>
 	<div id="pendingRebDIV" style="display: none">
-		<table class="table table-bordered table-striped">
+		<table class="table table-bordered">
 			<tbody id="pendingRebTable">
 				<th>Employee ID</th>
 				<th>Reimbursement ID</th>
@@ -106,58 +105,8 @@ crossorigin="anonymous">
 		</div>
 		<button id="submitReb" class="btn">Submit Request</button>
 	</div>
-	<div>
-		<p id="rebStatus"></p>
-	</div>
 </div>
-<!-- ----------------------------------------------------------------------------------- -->
-
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-	<div>
-		<p id="usernameStatus"></p>
-	</div>
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-	<div>
-		<p id="passwordStatus"></p>
-	</div>
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-	<div>
-		<p id="emailStatus"></p>
-	</div>
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
-
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
 
 	<script type="text/javascript" src="../js/employee.js"></script>
-	<!-- ----------------------------------------------------------------------------------- -->
-	<!-- ----------------------------------------------------------------------------------- -->
 </body>
 </html>
-
-
-
-
-
-
-
-

@@ -7,6 +7,17 @@ window.onload = function(){
 	document.getElementById("denyRequest").addEventListener("click",denial);
 	document.getElementById("logout").addEventListener("click", logout);
 }
+
+/*
+ * the window.history code snippet is from
+ * https://stackoverflow.com/questions/5806860/how-can-i-prevent-user-to-access-the-previous-jsp-page-using-browsers-back-butt
+ */
+window.history.forward();
+
+function noBack() {
+  window.history.forward();
+}
+
 function getAllUsers(){
 	for(var i = 1;i<document.getElementById("employeeTable").rows.length;){
         document.getElementById("employeeTable").deleteRow(i);
@@ -207,15 +218,7 @@ function logout(){
 	xhr.open("POST", "http://localhost:8080/ExpenseReimbursement/rest/employee/logout");
 	xhr.send();
 }
-var header = document.getElementById("btn-group");
-var btns = header.getElementsByClassName("btn");
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener("click", function() {
-  var current = document.getElementsByClassName("active");
-  current[0].className = current[0].className.replace(" active", "");
-  this.className += " active";
-  });
-}
+
 function toggleAllUsers() {
 	  var x = document.getElementById("allUsersDIV");
 	  var btn = document.getElementById("getAllUsersBtn");
@@ -248,6 +251,7 @@ function toggleAllApproved() {
 	}
 
 function toggleAllRebEmpForm() {
+	toggleAllRebEmp();
 	  var x = document.getElementById("allRebEmpForm");
 	  var btn = document.getElementById("getSingle");
 	  btn.classList.toggle("mystyle");
