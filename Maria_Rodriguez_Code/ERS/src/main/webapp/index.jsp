@@ -5,18 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ERS Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!--Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="static/ERS_CSScss.css">
+</head>
 
-</head><body>
+
+
+<body class="normal">
+
     
-    
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-                <div>
-                        <h1>ItsMyMoneyAndIWantItNow!</h1>
+<div class="container py-4">
+	<div class= "card border-success">
+    	<div class="row justify-content-center">
+       		 <div class="col-md-4">
+                	<div class="card-body">
+                            <span style="font-size: 48px; color: Dodgerblue;">
+                                    
+                                    <i class="fas fa-money-bill-wave"></i>
+                                   <h1>Employee Portal</h1>
+                                  </span>
+                       
+                       
                         </div>
                 <form action="login" method="POST">
                         <div class="form-group">
@@ -32,7 +44,7 @@
                         </div>
                     
                         <div>
-                        <button type="submit" class="btn btn-outline-primary">Login</button>
+                        <button type="submit" class="btn btn-outline-success">Login</button>
                         </div>     
                     
                     
@@ -43,6 +55,6 @@
     
 
 
-   
+</div>   
 </body>
 </html>

@@ -9,8 +9,9 @@
   	<servlet-name>FrontController</servlet-name>
   	<servlet-class>com.revature.controller.FrontController</servlet-class>
   
+</servlet>
   
-  </servlet>
+  
   <servlet-mapping>
   	<servlet-name>FrontController</servlet-name>
   	<url-pattern>/</url-pattern>
