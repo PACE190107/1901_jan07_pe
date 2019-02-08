@@ -1,0 +1,524 @@
+.outer {
+  width: 100%;
+  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#login_main_cont {
+  background-color: transparent;
+
+  margin: auto;
+}
+#loging_main_cont .row {
+  background-color: transparent;
+}
+
+/* Buttons */
+
+#login-btn {
+  background-color: #262c35;
+  color: white;
+  padding: 10px;
+  width: 125px;
+  font-size: 18px;
+  transition: all 0.1s;
+}
+
+#login-btn:hover {
+  background-color: #adbbce;
+  color: white;
+  width: 125px;
+  border: 1px solid black;
+  transform: translateY(-3px);
+}
+
+
+.manager-main-bottom-btn{
+	background-color:#262c35;
+	border:1px solid white;
+	color:white;
+}
+/********************************************************************************
+Employee Homepage
+*/
+
+.outerContainer {
+  margin-top: 45px;
+
+  min-height: 650px;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+.sidebar_Cont {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  border-right: 1px solid black;
+  padding: 0;
+}
+
+.employee_info_cont {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #262c35;
+  color: white;
+  justify-content: center;
+  height: 60%;
+}
+
+.user_icon_container {
+  color: white;
+  border: 5px solid white;
+  border-radius: 50%;
+  padding: 30px;
+  margin: 10px 20px 10px 20px;
+  font-family: "Playball", cursive;
+}
+
+#login-title {
+  color: black;
+  padding: 15px;
+  font-size: 25px;
+}
+
+#user_icon_login {
+  transition: all 0.2s;
+  border: 5px solid #262c35;
+  border-radius: 30px;
+  padding: 20px;
+}
+
+#user_icon_login:hover {
+  transform: scale(1.1);
+}
+
+#user_icon {
+  transition: all 0.2s;
+}
+
+#user_icon:hover {
+  transform: scale(1.1);
+}
+
+.employee_links_cont {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  background-color: #494f59;
+  height: 100%;
+}
+
+.employee_link_item {
+  color: white;
+  font-size: 20px;
+  border-bottom: 1px solid black;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  transition: all 0.2s;
+  background-color: #494f59;
+}
+
+.btn_form {
+  width: 100%;
+  border-style: none;
+  border: 0px solid white;
+  margin: 0;
+  padding: 0;
+}
+
+.employee_link_item:hover {
+  transform: scale(1.1);
+}
+
+.main_content_container {
+  width: 100%;
+
+  background-color: #494f59;
+}
+
+.pending_req_cont {
+  height: 37.5%;
+  border: 1px solid white;
+  padding: 0 !important;
+  overflow-y: scroll;
+}
+
+.man-pending_req_cont {
+  height: 50%;
+  border: 1px solid white;
+  padding: 0 !important;
+  overflow-y: scroll;
+}
+
+.submit_req_cont {
+  height: 28.1%;
+  border: 1px solid black;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+
+  background-color: blueviolet;
+}
+
+.submit_form_cont {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  background-color: #262c35;
+}
+
+#submit_custom_form {
+  width: 100%;
+  background-color: white;
+  padding: 20px;
+}
+
+.submit_form_element {
+  padding: 5px;
+  margin: 10px;
+}
+
+#submit_req_btn {
+  background-color: #262c35;
+  color: white;
+}
+
+
+#id-filter-btn {
+	background-color: #262c35;
+  color: white;
+  border:1px solid white;
+}
+
+.resolved_req_cont {
+  height: 49%;
+  border: 1px solid white;
+  padding: 0 !important;
+  overflow-y: auto;
+}
+
+.custom_heading {
+  width: 100%;
+  text-align: center;
+  color: black;
+  background-color: #adbbce;
+  padding: 2px 0px 2px 0px;
+  margin: 0;
+  border: 1px solid white;
+}
+.table_cont {
+}
+
+.custom_table {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.custom_thead {
+  background-color: #262c35;
+  color: white;
+}
+
+@media screen and (max-width: 990px) {
+  #user_icon {
+    display: none;
+  }
+  .outerContainer {
+    flex-direction: column;
+  }
+
+  .sidebar_Cont {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .employee_info_cont {
+    flex-direction: column;
+    font-size: 15px;
+    padding: 0px;
+  }
+
+  .employee_links_cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #494f59;
+  }
+
+  .employee_link_item {
+    color: white;
+    font-size: 15px;
+    border-bottom: 1px solid black;
+    height: 120px;
+
+    padding: px;
+    transition: all 0.2s;
+    background-color: #494f59;
+  }
+}
+/******************************************
+Employee View Profile
+
+*/
+
+.employee_profile_info_container {
+  height: 100%;
+  width: 100%;
+  background-color: #262c35;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.employee_profile_info_inner {
+  height: 65%;
+  width: 75%;
+  background-color: #262c35;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.employee_profile_info_inner_item {
+  display: flex;
+  height: 20%;
+  border: 1px solid white;
+  font-size: 20px;
+  padding-left: 15px;
+  align-items: center;
+}
+
+
+#view-all-pending-btn {
+	background-color:#262c35;
+	color:white;
+	border:1px solid white;
+}
+
+.modal_form_cont {
+  border: 5px solid white;
+  background-color: #262c35;
+  color: white;
+}
+.modal_input_item {
+  width: 200px;
+}
+
+#profile_modal_form {
+  padding: 20px;
+}
+
+#profile-modal-submit-btn {
+  border: 1px solid white;
+  background-color: #262c35;
+}
+
+#submit_req_btn {
+  width: 70%;
+  height: 100%;
+  font-size: 20px;
+}
+
+#submit_req_btn:hover {
+  width: 100%;
+}
+
+.form_fa_icon {
+  padding: 5px;
+  margin: 5px;
+}
+
+#newReq-modal-form {
+  padding: 15px;
+}
+
+.newReq-check-box {
+  border: 2px solid white;
+  padding: 5px;
+}
+
+#newReq-modal-form h5 {
+  margin-bottom: 20px;
+  font-family: "Playball", cursive;
+}
+
+#all-Table {
+  background-color: #262c35;
+  color: white;
+}
+
+.manager-main-form-cont {
+  background-color: white;
+
+  height: 100px;
+  text-align: center;
+  padding: 0px !important;
+}
+#id-Filter {
+  margin: 20px;
+
+  width: 300px;
+}
+#idfilter-cont {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+.manager-main-form-cont {
+  width: 100%;
+}
+
+.manager-main-form-cont h5 {
+  background-color: #262c35;
+  color: white;
+  padding: 0px;
+}
+
+#man-main-bottom-container {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.manager-main-resolve-container {
+  height: 39%;
+}
+
+.manager-main-resolve-container h4 {
+  background-color: #262c35;
+  color: white;
+
+  padding: 0px;
+  padding-bottom: 20px;
+}
+
+.manager_link_item {
+  background-color: #262c35;
+  color: white;
+  padding: 5px;
+  width: 100px;
+  border: 1px solid white;
+}
+
+.approveForm {
+  width: 100%;
+}
+.man-table-btn-cont {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+}
+
+.man-table-btn {
+  color: white;
+  font-size: 20px;
+  border-bottom: 1px solid black;
+  width: 100%;
+  text-align: center;
+
+  transition: all 0.2s;
+  background-color: #494f59;
+}
+
+#req-filter {
+  margin: 20px;
+
+  width: 300px;
+}
+
+#mobile-nav {
+  margin-bottom: 100px;
+}
+
+#manager-sidebar {
+}
+/***************************************************************************************/
+
+/**********unauthorized****/
+
+#unauth-return-btn {
+  width: 45%;
+}
+
+
+
+@media screen and (max-width: 990px) {
+  #user_icon {
+    display: none;
+  }
+  .outerContainer {
+    flex-direction: column;
+  }
+
+  .sidebar_Cont {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .employee_info_cont {
+    flex-direction: column;
+    font-size: 15px;
+    padding: 0px;
+  }
+
+  .employee_links_cont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #494f59;
+  }
+
+  #man-main-bottom-container {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .manager-main-form-cont {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  #mobile-nav {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .sidebar_Cont {
+    display: none;
+  }
+  
+  .employee_link_item {
+    color: white;
+    font-size: 15px;
+    border-bottom: 1px solid black;
+    height: 60px;
+
+    padding: px;
+    transition: all 0.2s;
+    background-color: #494f59;
+  }
+}
