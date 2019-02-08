@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<p>Enter Your Git Username</p>
+	<input id="un" type = "text">
+	<button id="getRepos">See your Repos!</button>
+	<p id="responseText">Your Repos</p>
+	<div>
+		<ul id="repos">
+		
+		
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+	window.onload = () => {
+		let btn = document.getElementById("getRepos");
+		btn.addEventListener("click",() => {
+			while(document.getElementById("repos").firstChild)
+				{
+				document.getElementById("repos").removeChild(document.getElementById("repos").firstChild);
+				}
+			var x = new XMLHttpRequest();
+			x.onreadystatechange = () => {
+				if((x.readyState == 4) && (x.status ==200)){
+					let rt = document.getElementById("responseText");
+					var ex = JSON.parse(x.responseText);
+					
+					
+					for(var i = 0; i< ex.length; i++)
+						{
+						
+							
+							var listItem = document.createElement("li");
+							var textNode = document.createTextNode(ex[i].name);
+							
+							listItem.appendChild(textNode);
+							repos.appendChild(listItem);
+						}
+				}
+			};
+			x.open("get","https://api.github.com/users/"+document.getElementById("un").value +"/repos");
+			x.send();
+		});
+	}
+	
+	</script>
+</body>
+</html>
