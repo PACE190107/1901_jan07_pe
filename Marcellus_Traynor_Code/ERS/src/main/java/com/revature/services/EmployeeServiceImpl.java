@@ -1,6 +1,8 @@
 package com.revature.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,14 +13,70 @@ import org.apache.log4j.Logger;
 
 import com.revature.dao.EmployeeDao;
 import com.revature.dao.EmployeeDaoImpl;
+import com.revature.models.Employee;
 
 public class EmployeeServiceImpl implements EmployeeService
 {
-	private final EmployeeDao employeeDao = new EmployeeDaoImpl();
+	private final static EmployeeDao employeeDao = new EmployeeDaoImpl();
 	final static Logger log = Logger.getLogger(EmployeeServiceImpl.class);
 	
+//	public Object process(HttpServletRequest request, HttpServletResponse response)
+//	{
+//		List<Employee> employee = new ArrayList<Employee>();
+//		
+//		 if(request.getRequestURI().endsWith("/getEmployeeInfo"))
+//		 {
+//			 log.info("employee process");
+//			 HttpSession session = request.getSession();
+//			final String username = (String)session.getAttribute("username");
+//				
+//			employee = employeeDao.getEmployeeInfo(username);
+//
+//			try 
+//			{
+//				request.getRequestDispatcher("employee_home.html").forward(request, response);
+//			} 
+//			catch (ServletException e) 
+//			{
+//				log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
+//				log.error(e.getMessage());
+//				log.error(e.getStackTrace());
+//			} 
+//			catch (IOException e) 
+//			{
+//				log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
+//				log.error(e.getMessage());
+//				log.error(e.getStackTrace());
+//			}
+//		 }
+//		 
+//		 if(request.getRequestURI().endsWith("/getAllEmployeeInfo"))
+//		 {
+//			 log.info("all employee process");
+//			employee = employeeDao.getAllEmployeeInfo();
+//
+//			try 
+//			{
+//				request.getRequestDispatcher("employee_home.html").forward(request, response);
+//			} 
+//			catch (ServletException e) 
+//			{
+//				log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
+//				log.error(e.getMessage());
+//				log.error(e.getStackTrace());
+//			} 
+//			catch (IOException e) 
+//			{
+//				log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
+//				log.error(e.getMessage());
+//				log.error(e.getStackTrace());
+//			}
+//		 }
+//		 return employee;
+//	}
+	
 	@Override
-	public void updateInfo(HttpServletRequest request, HttpServletResponse response) 
+	public Employee updateInfo(HttpServletRequest request, HttpServletResponse response) 
 	{
 		HttpSession session = request.getSession();
 		final String username = (String)session.getAttribute("username");
@@ -27,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService
 		final String newLname = request.getParameter("newLname");
 		final String newPassword = request.getParameter("newPassword");
 		
-		employeeDao.updateEmployee(username, newFname, newLname, newPassword);
+		Employee employeeInfo = employeeDao.updateEmployee(username, newFname, newLname, newPassword);
 
 		try 
 		{
@@ -45,31 +103,58 @@ public class EmployeeServiceImpl implements EmployeeService
 			log.error(e.getMessage());
 			log.error(e.getStackTrace());
 		}
+		return employeeInfo;
 	}
 
 	@Override
-	public void getEmployeeInfo(HttpServletRequest request, HttpServletResponse response) 
+	public List<Employee> getEmployeeInfo(HttpServletRequest request, HttpServletResponse response) 
 	{
+		List<Employee> employee = new ArrayList<Employee>();
 		HttpSession session = request.getSession();
 		final String username = (String)session.getAttribute("username");
 		
-		employeeDao.getEmployeeInfo(username);
+		employee = employeeDao.getEmployeeInfo(username);
 
-		try 
-		{
-			request.getRequestDispatcher("employee_home.html").forward(request, response);
-		} 
-		catch (ServletException e) 
-		{
-			log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
-			log.error(e.getMessage());
-			log.error(e.getStackTrace());
-		} 
-		catch (IOException e) 
-		{
-			log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
-			log.error(e.getMessage());
-			log.error(e.getStackTrace());
-		}
+//		try 
+//		{
+//			request.getRequestDispatcher("employee_home.html").forward(request, response);
+//		} 
+//		catch (ServletException e) 
+//		{
+//			log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
+//			log.error(e.getMessage());
+//			log.error(e.getStackTrace());
+//		} 
+//		catch (IOException e) 
+//		{
+//			log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
+//			log.error(e.getMessage());
+//			log.error(e.getStackTrace());
+//		}
+		return employee;
+	}
+	
+	@Override
+	public List<Employee> getAllEmployeeInfo(HttpServletRequest request, HttpServletResponse response) 
+	{	
+		List<Employee> employees = employeeDao.getAllEmployeeInfo();
+
+//		try 
+//		{
+//			request.getRequestDispatcher("employee_home.html").forward(request, response);
+//		} 
+//		catch (ServletException e) 
+//		{
+//			log.error("error occured in ServletException catch block in EmployeeServiceImpl getEmployeeInfo");
+//			log.error(e.getMessage());
+//			log.error(e.getStackTrace());
+//		} 
+//		catch (IOException e) 
+//		{
+//			log.error("error occured in IOException catch block in EmployeeServiceImpl getEmployeeInfo");
+//			log.error(e.getMessage());
+//			log.error(e.getStackTrace());
+//		}
+		return employees;
 	}
 }

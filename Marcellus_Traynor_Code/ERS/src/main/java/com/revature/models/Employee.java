@@ -13,15 +13,15 @@ public class Employee
 		super();
 	}
 	
-	public Employee(String fName, String lName, String job, String pWord) 
+	public Employee(String fName, String lName, String job, String uName) 
 	{
 		super();
 		this.fName = fName;
 		this.lName = lName;
 		this.job = job;
-		this.pWord = pWord;
+		this.uName = uName;
 	}
-	
+
 	public Employee(String fName, String lName, String job, String uName, String pWord) 
 	{
 		super();

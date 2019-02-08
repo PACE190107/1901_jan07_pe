@@ -19,12 +19,13 @@
 	
 		<div>
 			<table class = "table table-bordered table-striped">
-				<tbody id = "manEmpTable">
+				<thead>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>Job Description</th>
 					<th>Username</th>
-				</tbody>
+				</thead>
+				<tbody id = "manEmpTable"></tbody>
 			</table>
 			<br>
 		</div>
@@ -33,38 +34,39 @@
 			<h4>Filter employee reimbursements</h4>
 			<p>Enter the Username of the employee you would like to view reimbursements for (only for a single employee):</p>
 			<div class = "row justify-content-center">
-				<form action="/ERS/home" method = "GET">
-					<input type = "text" name = "empUsername" class = "form-control" placeholder = "Enter an employee username">
+				<form class = "form-group" action="/ERS/home" method = "POST">
+					<input type = "text" name = "empUsername" class = "form-control" placeholder = "Enter an employee username" required>
 					<input type = "submit" id = "singleEmp" class = "btn btn-outline-success" name = "btn" value = "SingleEmployee">
 				</form>
 			</div>
-			<form action="/ERS/home" method = "GET">
-				<input type = "submit" id = "allEmp" class = "btn btn-outline-info" name = "btn" value = "AllEmployees">
-				</form>
+			
+				<button type = "submit" id = "allEmp" class = "btn btn-outline-info" name = "btn">AllEmployees</button>
+				
 			<br>
 		</div>
 		
 		<div>
 		<h3>Reimbursements</h3>
 			<table class = "table table-bordered table-striped">
-				<tbody id = "manReTable">
+				<thead>
 					<th>Username</th>
 					<th>Reimbursement ID</th>
 					<th>Reason</th>
 					<th>Amount</th>
 					<th>Status</th>
-					<th>Resolving Manager
-				</tbody>
+					<th>Resolving Manager</th>
+				</thead>
+				<tbody id = "manReTable"></tbody>
 			</table>
 			
 		</div>
 		
 		<div class = "row justify-content-center text-center">
 			<h5>Filter Reimbursements --></h5>
-			<form action="/ERS/home" method = "GET">
-				<input type = "submit" id = "manPendingBtn" class = "btn btn-outline-success" name = "btn" value = "PendingRequests">
-				<input type = "submit" id = "manResolvedBtn" class = "btn btn-outline-success" name = "btn" value = "ResolvedRequests">
-			</form>
+			
+				<button type = "submit" id = "manPendingBtn" class = "btn btn-outline-success" name = "btn">PendingRequests</button>
+				<button type = "submit" id = "manResolvedBtn" class = "btn btn-outline-success" name = "btn">ResolvedRequests</button>
+			
 		</div>
 		
 		<br>
@@ -73,8 +75,8 @@
 			<h4>Resolve pending reimbursements</h4>
 			<p>Enter the Reimbursement ID you would like to resolve:</p>
 			<div class = "row justify-content-center">
-				<form action="/ERS/home" method = "POST">
-					<input type = "number" id = "rId" name = "rId" class = "form-control" placeholder = "Reimbursement ID">
+				<form class = "form-group" action = "/ERS/home" method = "POST">
+					<input type = "number" id = "rId" name = "rId" class = "form-control" placeholder = "Reimbursement ID" required>
 					<input type = "submit" id = "approveReim" class = "btn btn-outline-success" name = "btn" value = "Approve">
 					<input type = "submit" id = "denyReim" class = "btn btn-outline-danger" name = "btn" value = "Deny">
 				</form>
@@ -82,7 +84,6 @@
 			<br>
 		</div>
 		
-		<br>
 		<form class = "form-group" action="/ERS/home" id = "logout" method = "POST">
 		<input type = "submit" class = "btn btn-danger" name = "btn" value = "Logout">
 		</form>

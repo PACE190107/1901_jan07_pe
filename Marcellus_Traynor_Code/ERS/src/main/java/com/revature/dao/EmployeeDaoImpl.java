@@ -18,13 +18,12 @@ public class EmployeeDaoImpl implements EmployeeDao
 	final static Logger log = Logger.getLogger(EmployeeDaoImpl.class);
 	
 	@Override
-	public Employee employeeLogin(String username, String password) 
+	public String employeeLogin(String username, String password) 
 	{
-		Employee employee = null;
-		
+		String job;
 		try(Connection conn = ConnectionUtil.getConnection())
 		{
-			String sql = "Select * from Employee_Info "
+			String sql = "Select job_description from Employee_Info "
 					+ "where user_name = ? AND user_password = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -32,20 +31,19 @@ public class EmployeeDaoImpl implements EmployeeDao
 			pstmt.setString(2,password);
 			
 			ResultSet rs = pstmt.executeQuery();
-			if(rs.next()) 
-			{
-				employee = new Employee(rs.getString("first_name"), rs.getString("last_name"), rs.getString("job_description"),
-						rs.getString("user_name"), rs.getString("user_password"));
-			}
+			rs.next();
+			job = rs.getString("job_description");
 			conn.close();
+			return job;
 		} 
 		catch (SQLException e1) 
 		{
 			log.error("error occured in catch block in EmployeeDaoImpl employeeLogin method");
 			log.error(e1.getMessage());
 			log.error(e1.getStackTrace());
+			return null;
 		}
-		return employee;
+		
 	}
 	
 	@Override
@@ -80,9 +78,10 @@ public class EmployeeDaoImpl implements EmployeeDao
 	}
 
 	@Override
-	public void updateEmployee(String username, String newFname, String newLname, String newPassword)
+	public Employee updateEmployee(String username, String newFname, String newLname, String newPassword)
 	{
-		System.out.println(username + " " + newFname + " " + newLname);
+		Employee employeeInfo = null;
+		
 		log.info("updating employee info");
 		try(Connection conn = ConnectionUtil.getConnection())
 		{
@@ -104,6 +103,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 			log.error(e.getMessage());
 			log.error(e.getStackTrace());
 		}
+		return employeeInfo;
 	}
 
 	@Override
@@ -113,15 +113,16 @@ public class EmployeeDaoImpl implements EmployeeDao
 		
 		try(Connection conn = ConnectionUtil.getConnection())
 		{
-			String sql = "SELECT first_name, last_name, job_description, user_name FROM Employee_Info";
+			//String sql = "SELECT first_name, last_name, job_description, user_name FROM Employee_Info";
+			String sql = "SELECT * FROM Employee_Info";
 			
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				allEmployeeInfo.add(new Employee(rs.getString("first_name"), rs.getString("last_name"),
-						rs.getString("job_description"), rs.getString("user_name")));
+						rs.getString("job_description"), rs.getString("user_name"), rs.getString("user_password")));
 			}
 			conn.close();
 		} 
@@ -131,6 +132,7 @@ public class EmployeeDaoImpl implements EmployeeDao
 			log.error(e.getMessage());
 			log.error(e.getStackTrace());
 		}
+		System.out.println(allEmployeeInfo.toString());
 		return allEmployeeInfo;
 	}
 }

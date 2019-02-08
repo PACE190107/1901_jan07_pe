@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import com.revature.dao.EmployeeDao;
 import com.revature.dao.EmployeeDaoImpl;
-import com.revature.models.Employee;
 
 public class LoginServiceImpl implements LoginService
 {
@@ -26,10 +25,10 @@ public class LoginServiceImpl implements LoginService
 		final String password = request.getParameter("password");
 			
 		log.info("authenticating employee");
-		Employee attempting = employeeDao.employeeLogin(username, password);
+		String attempting = employeeDao.employeeLogin(username, password);
 		
 			
-		if ((attempting != null) && (attempting.getJob().equalsIgnoreCase("Employee"))) 
+		if ((attempting != null) && (attempting.equalsIgnoreCase("Employee"))) 
 		{
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
@@ -51,7 +50,7 @@ public class LoginServiceImpl implements LoginService
 				log.error(e.getStackTrace());
 			}
 		}
-		else if ((attempting != null) && (attempting.getJob().equalsIgnoreCase("Manager"))) 
+		else if ((attempting != null) && (attempting.equalsIgnoreCase("Manager"))) 
 		{
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);

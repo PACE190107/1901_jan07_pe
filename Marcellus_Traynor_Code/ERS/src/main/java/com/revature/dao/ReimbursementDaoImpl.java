@@ -55,7 +55,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				allReimbursementInfo.add(new Reimbursement(rs.getString("u_name"), rs.getInt("reimbursement_id"),
 						rs.getString("reason"), rs.getDouble("amount"), rs.getString("reimbursement_status"),
@@ -85,7 +85,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				reimbursementInfo.add(new Reimbursement(rs.getString("u_name"), rs.getInt("reimbursement_id"),
 						rs.getString("reason"), rs.getDouble("amount"), rs.getString("reimbursement_status"),
@@ -150,7 +150,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao
 			ps.setString(2, "Denied");
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				resolvedReimbursementInfo.add(new Reimbursement(rs.getString("u_name"), rs.getInt("reimbursement_id"),
 						rs.getString("reason"), rs.getDouble("amount"), rs.getString("reimbursement_status"),
@@ -180,7 +180,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao
 			ps.setString(1, "Pending");
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				pendingReimbursementInfo.add(new Reimbursement(rs.getString("u_name"), rs.getInt("reimbursement_id"),
 						rs.getString("reason"), rs.getDouble("amount"), rs.getString("reimbursement_status"),
@@ -211,7 +211,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				reimbursementInfo.add(new Reimbursement(rs.getString("u_name"), rs.getInt("reimbursement_id"),
 						rs.getString("reason"), rs.getDouble("amount"), rs.getString("reimbursement_status")));
@@ -243,7 +243,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao
 			ps.setString(3, "Denied");
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				resolvedReimbursementInfo.add(new Reimbursement(rs.getString("u_name"), rs.getInt("reimbursement_id"),
 						rs.getString("reason"), rs.getDouble("amount"), rs.getString("reimbursement_status")));
@@ -274,7 +274,7 @@ public class ReimbursementDaoImpl implements ReimbursementDao
 			ps.setString(2, "Pending");
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next())
+			while(rs.next())
 			{
 				pendingReimbursementInfo.add(new Reimbursement(rs.getString("u_name"), rs.getInt("reimbursement_id"),
 						rs.getString("reason"), rs.getDouble("amount"), rs.getString("reimbursement_status")));
