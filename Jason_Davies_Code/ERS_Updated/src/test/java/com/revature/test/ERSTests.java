@@ -1,3 +1,4 @@
+package com.revature.test;
 import static org.junit.Assert.*;
 
 import org.junit.AfterClass;
@@ -13,15 +14,14 @@ import com.revature.model.ReimbursementType;
 
 public class ERSTests {
 
-	private static Employee e = new Employee(-1, "testUserr", "testUser", "empty", "empty", "empty", false);
+	private static Employee e = new Employee(-1, "testUser", "testUser", "empty", "empty", "empty", false);
 	private static Reimbursement r = new Reimbursement(-1, 0, -1, ReimbursementType.BUSINESS, ReimbursementStatus.PENDING, 10, "date");
 	
 	@BeforeClass
 	public static void initialize() {
 		e = EmployeeDAOImplementation.getEmployeeDAO().insertEmployee(e);
 		ReimbursementDAOImplementation.getReimbursementDAO().insertReimbursement(r);
-		r = (Reimbursement)(ReimbursementDAOImplementation.getReimbursementDAO().getAllReimbursements(
-																					r.getRequesterId(), r.getStatus()).toArray()[0]);
+		r = (Reimbursement)(ReimbursementDAOImplementation.getReimbursementDAO().getAllReimbursements(r.getRequesterId(), r.getStatus()).toArray()[0]);
 	}
 	
 	@Test

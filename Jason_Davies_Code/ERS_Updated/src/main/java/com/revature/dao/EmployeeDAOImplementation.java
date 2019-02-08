@@ -231,12 +231,10 @@ public class EmployeeDAOImplementation implements EmployeeDAO {
 		try (Connection connection = ConnectionUtil.getConnection()) {
 			String sql = "SELECT GET_EMPLOYEE_HASH(?, ?) FROM dual";
 			try (CallableStatement cs = connection.prepareCall(sql)) {
-				//cs.registerOutParameter(1, Types.VARCHAR);
 				cs.setString(1, username);
 				cs.setString(2, password);
 				ResultSet rs = cs.executeQuery();
 				if (rs.next()) {
-					System.out.println(rs.getString(1));
 					return rs.getString(1);	
 				}
 			}
