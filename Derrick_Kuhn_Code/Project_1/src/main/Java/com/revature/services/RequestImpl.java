@@ -72,15 +72,20 @@ public class RequestImpl implements RequestService {
                     // execute if request looks like /Project1/Manager*/Request/Pending or Resolved
                     if(path[4].equals("pending")){
                         return managerService.getAllPendingRequests();
-                    } else if(path[4] == "resolved"){
+                    } else if(path[4].equals("resolved")){
+                        System.out.print("get all resolved requests");
                         return managerService.getAllResolvedRequests();
-                    } else return "Cannot process request.";
+                    } else {
+                        // execute if request looks like /Project1/Manager*/Request/E_ID
+                        Employee viewEmp = new Employee(Long.parseLong(path[4]));
+                        return employeeService.getEmployeeRequests(viewEmp);
+                    }
                 } else {
                     System.out.println("Request for Employee");
                     // execute if request looks like /Project1/Employee*/Request/Pending or Resolved
-                    if(path[4] == "pending"){
+                    if(path[4].equals("pending")){
                         return employeeService.getEmployeePendingRequests(currentUser);
-                    } else if(path[4] == "resolved"){
+                    } else if(path[4].equals("resolved")){
                         return employeeService.getEmployeeResolvedRequests(currentUser);
                     } else return "Cannot process request.";
                 }
@@ -90,13 +95,14 @@ public class RequestImpl implements RequestService {
 
         if (req.getMethod().equals("POST")) {
             // CREATE LOGIC
+            System.out.println("Received POST request at: "+req.getRequestURI());
             if (req.getHeader("Content-Type").equals("application/json")) {
                 Request input = null;
                 if(req.getHeader("Content-Type").equals("application/json")){
                     try{
                         input = mapper.readValue(req.getReader(), Request.class);
                         final long e_id = currentUser.getE_id();
-                        final String subject = input.getSubject();
+                        final String subject = input.getsubject();
                         final String description = input.getDescription();
                         final double amount = input.getAmount();
                         input = new Request(e_id, subject, description, amount);
@@ -125,24 +131,28 @@ public class RequestImpl implements RequestService {
 
         if (req.getMethod().equals("PUT")){
             if(currentUser.isManager()){
+                System.out.println("Received Manager Approval Request");
                 if (req.getHeader("Content-Type").equals("application/json")) {
                     Request input = null;
                     try{
                         input = mapper.readValue(req.getReader(), Request.class);
                         final long r_id = input.getR_id();
                         final long approver_id = currentUser.getE_id();
-                        final Status status = input.getStatus();
+                        final String status = input.getStatus();
                         input = new Request(r_id, approver_id, status);
-
+                        System.out.println("Attempted to update Request: " + input);
                         return managerService.updateRequest(input, currentUser);
 
                     } catch (JsonParseException e){
+                        System.out.println("JsonParse error in login");
                         log.error("JsonParse error in login", e);
                         return "Error in parse";
                     } catch (JsonMappingException e){
+                        System.out.println("JsonMapping error in login");
                         log.error("JsonMapping error in login", e);
                         return "Error in mapping";
                     } catch (IOException e) {
+                        System.out.println("JsonMapping error in login");
                         log.error("IOException in login", e);
                         return "IO error";
                     }} else {

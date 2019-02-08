@@ -29,25 +29,27 @@
     <!--WELCOME SECTION-->
 
     <div class="row" id="welcome">
-        <div class="col-md-4 offset-md-4">
-            <h3>Manager login, successful!</h3>
+        <div class="col-md-4 offset-md-4 text-center">
+            <h5 id="message">Manager login, successful!</h5>
+            <p id="actionFeedback"></p>
         </div>
     </div>
 
     <!--EMPLOYEE AREA-->
 
-    <div class="row" id="employeeList" style="display: block">
+    <div class="row" id="employeeList" style="display: none">
         <div class="row">
-            <div class="col-md-4 offset-md-4">
+            <div class="col-md-8 offset-md-2">
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Requests</th>
-                    </tr>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Requests</th>
+                        </tr>
                     </thead>
                     <tbody id="employeeTableBody">
                     </tbody>
@@ -59,25 +61,23 @@
 
     <!--EMPLOYEE REQUESTS-->
 
-    <div class="row" id="employeeRequests">
+    <div class="row" id="employeeRequests" style="display: none">
         <div class="row">
-            <div class="col-md-4 offset-md-4">
-                <div class="text-center">
-                    <button type="button" id="exitEmployeeRequests" class="btn btn-dark btn-lg">Return to Employees</button>
-                </div>
+            <div class="col-md-8 offset-md-2">
+                <button type="button" id="exitEmployeeRequests" class="btn btn-dark btn-lg">Return to Employees</button>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 offset-md-4">
+            <div class="col-md-8 offset-md-2">
                 <table class="table table-bordered">
                     <thead>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Approver</th>
-                    </tr>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Approver</th>
+                        </tr>
                     </thead>
                     <tbody id="employeeRequestBody">
                     </tbody>
@@ -89,24 +89,26 @@
 
     <!--REQUESTS AREA-->
 
-    <div class="row" id="requests" style="display:block">
+    <div class="row" id="requests" style="display: none">
         <div class="row">
-            <div class="col-md-4 offset-md-4">
+            <div class="col-md-8 offset-md-2 text-center">
                 <button type="button" id="newRequestBtn" class="btn btn-success">Create new Request</button>
                 <button type="button" id="pendingRequestBtn" class="btn btn-primary">View Pending Requests</button>
                 <button type="button" id="resolvedRequestBtn" class="btn btn-warning">View Resolved Requests</button>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4 offset-md-4">
+            <div class="col-md-8 offset-md-2">
                 <table class="table table-bordered">
                     <thead>
                     <tr>
+                        <th>Employee ID</th>
+                        <th>Request ID</th>
                         <th>Subject</th>
                         <th>Description</th>
                         <th>Amount</th>
                         <th>Status</th>
-                        <th>Approver</th>
+                        <th>Approver ID</th>
                     </tr>
                     </thead>
                     <tbody id="requestTableBody">
@@ -119,11 +121,11 @@
 
     <!--CREATE REQUEST AREA-->
 
-    <div class="row" id="createRequest" style="display : block">
+    <div class="row" id="createRequest" style="display: none">
         <div class="row">
             <div class="col-md-4 offset-md-4">
-                <div class="input-group input-group-lg">
-                    <h5 style="align-content: center">Create Request</h5>
+                <div class="input-group input-group-lg text-center">
+                    <h5 style="align-content: center" id="createRequestHeader">Create Request</h5>
                 </div>
             </div>
         </div>
@@ -151,16 +153,17 @@
             <div class="col-md-4 offset-md-4">
                 <div class="input-group input-group-lg">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="username-label">Subject</span>
+                        <span class="input-group-text" id="username-label">Amount</span>
                     </div>
-                    <input type="number" class="form-control" id="amount" placeholder="Enter subject...">
+                    <input type="number" class="form-control" id="amount" placeholder="Enter subject..." step="0.01" value=0.00>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 offset-md-4">
                 <div class="text-center">
-                    <button type="button" id="submitNewRequest" class="btn btn-dark btn-lg">Submit Request</button>
+                    <button type="button" id="cancelNewRequest" class="btn btn-danger btn-lg">Cancel Request</button>
+                    <button type="button" id="submitNewRequest" class="btn btn-success btn-lg">Submit Request</button>
                 </div>
             </div>
         </div>
@@ -168,7 +171,7 @@
 
     <!--Profile Information Section-->
 
-    <div class="row" id="profileInfo" style="display : block">
+    <div class="row" id="profileInfo" style="display: none">
         <div class="row">
             <div class="col-md-4 offset-md-4">
                 <table class="table table-bordered">
@@ -212,24 +215,837 @@
     </div>
 
 </div>
-<script type="text/javascript" src="../javascript/managerhome.js"></script>
-<!--<script type="text/javascript">
+<!--<script type="text/javascript" src="../javascript/managerhome.js"></script>-->
+<script type="text/javascript">
     window.onload = () => {
-        document.getElementById("logout").addEventListener("click", logout);
-    }
+        console.log("js loaded");
+        //Hide all functionality on load
+        document.getElementById("profileInfo").style.display = "none";
+        document.getElementById("createRequest").style.display = "none";
+        document.getElementById("requests").style.display = "none";
+        document.getElementById("employeeList").style.display = "none";
+        document.getElementById("employeeRequests").style.display = "none";
 
-    function logout(){
+        //Assign event listeners to page buttons
+        //Navbar buttons
+        document.getElementById("logout").addEventListener("click", logoutButton);
+        document.getElementById("employee").addEventListener("click", employeeButton);
+        document.getElementById("request").addEventListener("click", requestButton);
+        document.getElementById("profile").addEventListener("click", profileButton);
+        //DOM buttons
+        //Profile
+        document.getElementById("updateProfile").addEventListener("click", updateProfileButton);
+        //Requests
+        document.getElementById("newRequestBtn").addEventListener("click", createNewRequestButton);
+        document.getElementById("cancelNewRequest").addEventListener("click", cancelNewRequestButton);
+        document.getElementById("submitNewRequest").addEventListener("click", submitNewRequestButton);
+        document.getElementById("pendingRequestBtn").addEventListener("click", pendingRequests);
+        document.getElementById("resolvedRequestBtn").addEventListener("click", resolvedRequests);
+        //Employees
+        document.getElementById("exitEmployeeRequests").addEventListener("click", returnFromEmployeeRequests);
+    }
+    let d = document;
+
+
+    /* NAVBAR LINKS */
+    /*let employee = d.getElementById("employee");
+    let request = d.getElementById("request");
+    let profile = d.getElementById("profile");
+    let logout = d.getElementById("logout");*/
+    let welcome = d.getElementById("welcome");
+    let message = d.getElementById("message");
+    let actionFeedback = d.getElementById("actionFeedback");
+
+    /* ---------------------------- */
+
+    /* PROFILE INFORMATION VARIABLES */
+
+    // DIV
+    let profileInfo = d.getElementById("profileInfo");
+
+    // TABLE VALUES
+    let currentUsername = d.getElementById("currentUsername");
+    let newUsername = d.getElementById("newUsername");
+    let currentFname = d.getElementById("currentFname");
+    let newFname = d.getElementById("newFname");
+    let currentLname = d.getElementById("currentLname");
+    let newLname = d.getElementById("newLname");
+    let currentEmail = d.getElementById("currentEmail");
+    let newEmail = d.getElementById("newEmail");
+
+    // BUTTON VALUES
+    let updateProfile = d.getElementById("updateProfile");
+    /* ---------------------------- */
+
+    /* CREATE NEW REQUEST */
+
+    // DIV
+    let createRequest = d.getElementById("createRequest");
+
+    // TABLE VALUES
+    let subject = d.getElementById("subject");
+    let description = d.getElementById("description");
+    let amount = d.getElementById("amount");
+
+    // BUTTON
+    let submitNewRequest = d.getElementById("submitNewRequest");
+    let cancelNewRequest = d.getElementById("cancelNewRequest");
+    /* ---------------------------- */
+
+    /* REQUESTS TABLE */
+
+    // DIV
+    let requests = d.getElementById("requests");
+
+    // TABLE VALUES
+    let requestTableBody = d.getElementById("requestTableBody");
+
+    // BUTTON
+    let newRequestBtn = d.getElementById("newRequestBtn");
+    let pendingRequestBtn = d.getElementById("pendingRequestBtn");
+    let resolvedRequestBtn = d.getElementById("resolvedRequestBtn");
+    /* ---------------------------- */
+
+    /* EMPLOYEES LIST */
+
+    // DIV
+    let employeeList = d.getElementById("employeeList");
+
+    // TABLE VALUES
+    let employeeTableBody = d.getElementById("employeeTableBody");
+    /* ---------------------------- */
+
+    /* EMPLOYEE REQUESTS LIST */
+
+    // DIV
+    let employeeRequests = d.getElementById("employeeRequests");
+
+    // TABLE VALUES
+    let employeeRequestBody = d.getElementById("employeeRequestBody");
+
+    // BUTTON
+    let exitEmployeeRequests = d.getElementById("exitEmployeeRequests");
+
+    let createRequestHeader = d.getElementById("createRequestHeader");
+
+    function logoutButton(){
+        console.log("Logout pressed");
         let logoutReq = new XMLHttpRequest();
         logoutReq.onreadystatechange = () => {
             if((logoutReq.readyState == 4) && (logoutReq.status == 200)){
                 if(logoutReq.responseText == 'true'){
-                    window.location.href="http://localhost:8080/Project_1_war/static/login.html";
+                    window.location ="http://localhost:8080/Project_1_war/static/login.html";
+                } else {
+                    console.log("Logout request failed");
                 }
             }
         };
         logoutReq.open("get", "http://localhost:8080/Project_1_war/login");
         logoutReq.send();
     }
-</script>-->
+
+    function employeeButton(){
+        profileInfo.style.display = "none";
+        createRequest.style.display = "none";
+        requests.style.display = "none";
+        employeeRequests.style.display = "none";
+        message.innerHTML = "List of All Employees";
+        actionFeedback.innerHTML = "";
+
+        employeeList.style.display = "block";
+        getEmployeeList();
+    }
+
+    function returnFromEmployeeRequests(){
+        employeeList.style.display = "block";
+        employeeRequests.style.display = "none";
+        message.innerHTML = "List of All Employees";
+    }
+
+    function clearEmployeeTable(){
+        while(employeeTableBody.rows.length > 0){
+            employeeTableBody.deleteRow(0);
+        }
+    }
+
+    function clearEmployeeRequests() {
+        while(employeeRequestBody.rows.length > 0){
+            employeeRequestBody.deleteRow(0);
+        }
+    }
+
+    function getEmployeeList(){
+        clearEmployeeTable();
+        let getAllRequests = new XMLHttpRequest();
+        getAllRequests.onreadystatechange = () =>{
+            console.log(getAllRequests.readyState + " ");
+            if ((getAllRequests.readyState == 4) && (getAllRequests.status == 200)){
+                console.log(getAllRequests.responseText);
+                let allRequests = JSON.parse(getAllRequests.responseText);
+                let counter = 0;
+                while(counter < (allRequests.length)){
+                    let newRow = d.createElement("tr");
+                    let newEmployeeID = d.createElement("td");
+                    let newUsername = d.createElement("td");
+                    let newFname = d.createElement("td");
+                    let newLname = d.createElement("td");
+                    let newEmail = d.createElement("td");
+                    let newRequestsBtn = d.createElement("td");
+                    newEmployeeID.innerHTML = allRequests[counter].e_id;
+                    newUsername.innerHTML = allRequests[counter].username;
+                    newFname.innerHTML = allRequests[counter].first_name;
+                    newLname.innerHTML = allRequests[counter].last_name;
+                    newEmail.innerHTML = allRequests[counter].email;
+
+                    let generateRequestButton = d.createElement("button");
+                    generateRequestButton.className = "btn btn-primary";
+                    generateRequestButton.innerHTML = "View Requests";
+                    generateRequestButton.id = allRequests[counter].e_id;
+                    generateRequestButton.addEventListener("click", () => {
+                        employeeList.style.display = "none";
+                        employeeRequests.style.display = "block";
+                        getEmployeeRequests(event.target.id);
+                    });
+                    newRequestsBtn.appendChild(generateRequestButton);
+                    newRow.appendChild(newEmployeeID);
+                    newRow.appendChild(newUsername);
+                    newRow.appendChild(newFname);
+                    newRow.appendChild(newLname);
+                    newRow.appendChild(newEmail);
+                    newRow.appendChild(newRequestsBtn);
+                    employeeTableBody.appendChild(newRow);
+                    counter++;
+                }
+            }
+        };
+        getAllRequests.open("get", "http://localhost:8080/Project_1_war/manager/employee");
+        getAllRequests.send();
+    }
+
+    function getEmployeeRequests(x){
+        clearEmployeeRequests();
+        message.innerHTML = "List of Employee ID " + x + "'s Requests";
+        let url = "http://localhost:8080/Project_1_war/manager/request/" + x;
+        console.log("Attempting URL: " + url);
+        let getAllRequests = new XMLHttpRequest();
+        getAllRequests.onreadystatechange = () =>{
+            console.log(getAllRequests.readyState + " ");
+            if ((getAllRequests.readyState == 4) && (getAllRequests.status == 200)){
+                let allRequests = JSON.parse(getAllRequests.responseText);
+                let counter = 0;
+                while(counter < (allRequests.length)){
+                    let newRow = d.createElement("tr");
+                    let newSubject = d.createElement("td");
+                    let newDescription = d.createElement("td");
+                    let newAmount = d.createElement("td");
+                    let newStatus = d.createElement("td");
+                    let newApprover = d.createElement("td");
+                    newSubject.innerHTML = allRequests[counter].subject;
+                    newDescription.innerHTML = allRequests[counter].description;
+                    newAmount.innerHTML = allRequests[counter].amount;
+                    if(allRequests[counter].approver_id == 0){
+                        newApprover.innerHTML = 'N/A';
+                    } else {
+                        newApprover.innerHTML = allRequests[counter].approver_id;
+                    }
+                    if(allRequests[counter].status !== 'PENDING'){
+                        let generateDisabledButton = d.createElement("button");
+                        generateDisabledButton.className = "btn btn-warning";
+                        generateDisabledButton.disabled = true;
+                        if(allRequests[counter].status == 'APPROVED'){
+                            generateDisabledButton.innerHTML = "APPROVED";
+                        } else {
+                            generateDisabledButton.innerHTML = "DENIED";
+                        }
+                        newStatus.appendChild(generateDisabledButton);
+                    } else {
+                        /*let generateDisabledButton = d.createElement("button");
+                        generateDisabledButton.className = "btn btn-warning";
+                        generateDisabledButton.disabled = true;
+                        generateDisabledButton.innerHTML = "PENDING";
+                        newStatus.appendChild(generateDisabledButton);*/
+                        let generateApproveButton = d.createElement("button");
+                        let generateDenyButton = d.createElement("button");
+                        generateApproveButton.className = "btn btn-success";
+                        generateDenyButton.className = "btn btn-danger";
+                        generateApproveButton.innerHTML = "APPROVE";
+                        generateDenyButton.innerHTML = "DENY";
+                        generateApproveButton.id = allRequests[counter].r_id;
+                        generateDenyButton.id = allRequests[counter].r_id;
+                        generateApproveButton.setAttribute("r_id", allRequests[counter].r_id);
+                        generateDenyButton.setAttribute("r_id", allRequests[counter].r_id);
+
+                        generateApproveButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "APPROVED"
+                            }
+                            let sendMsg = JSON.stringify(msg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    if(approveReq.responseText == 'true'){
+                                        actionFeedback.innerHTML = "Request ID " + btnId + ", Approved";
+                                        pendingRequests();
+                                    } else{
+                                        actionFeedback.innerHTML = "Request ID " + btnId + " was not updated.";
+                                        pendingRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        generateDenyButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "DENIED"
+                            };
+                            let sendMsg = JSON.stringify(msg);
+                            console.log(msg);
+                            console.log(sendMsg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    console.log(approveReq.responseText);
+                                    if(approveReq.responseText == 'true'){
+                                        actionFeedback.innerHTML = "Request ID " + btnId + ", Denied";
+                                        pendingRequests();
+                                    } else{
+                                        actionFeedback.innerHTML = "Request ID " + btnId + " was not updated.";
+                                        pendingRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        newStatus.appendChild(generateApproveButton);
+                        newStatus.appendChild(generateDenyButton);
+                    }
+                    newRow.appendChild(newSubject);
+                    newRow.appendChild(newDescription);
+                    newRow.appendChild(newAmount);
+                    newRow.appendChild(newStatus);
+                    newRow.appendChild(newApprover);
+                    employeeRequestBody.appendChild(newRow);
+                    counter++;
+                }
+            }
+        };
+        getAllRequests.open("get", url);
+        getAllRequests.send();
+    }
+
+    function requestButton(){
+        profileInfo.style.display = "none";
+        createRequest.style.display = "none";
+        employeeList.style.display = "none";
+        employeeRequests.style.display = "none";
+        message.innerHTML = "List of all Requests";
+        actionFeedback.innerHTML = "";
+
+        requests.style.display = "block";
+        allRequests();
+    }
+
+    function allRequests() {
+        clearRequestTable();
+        console.log("Attempted to get all requests");
+        let getAllRequests = new XMLHttpRequest();
+        getAllRequests.onreadystatechange = () =>{
+            console.log(getAllRequests.readyState + " ");
+            if ((getAllRequests.readyState == 4) && (getAllRequests.status == 200)){
+                let allRequests = JSON.parse(getAllRequests.responseText);
+                let counter = 0;
+                while(counter < (allRequests.length)){
+                    let newRow = d.createElement("tr");
+                    let newEmployeeID = d.createElement("td");
+                    let newSubject = d.createElement("td");
+                    let newDescription = d.createElement("td");
+                    let newAmount = d.createElement("td");
+                    let newStatus = d.createElement("td");
+                    let newApprover = d.createElement("td");
+                    newEmployeeID.innerHTML = allRequests[counter].e_id;
+                    newSubject.innerHTML = allRequests[counter].subject;
+                    newDescription.innerHTML = allRequests[counter].description;
+                    newAmount.innerHTML = allRequests[counter].amount;
+                    if(allRequests[counter].approver_id == 0){
+                        newApprover.innerHTML = 'N/A';
+                    } else {
+                        newApprover.innerHTML = allRequests[counter].approver_id;
+                    }
+                    if(allRequests[counter].status !== 'PENDING'){
+                        let generateDisabledButton = d.createElement("button");
+                        generateDisabledButton.className = "btn btn-warning";
+                        generateDisabledButton.disabled = true;
+                        if(allRequests[counter].status == 'APPROVED'){
+                            generateDisabledButton.innerHTML = "APPROVED";
+                        } else {
+                            generateDisabledButton.innerHTML = "DENIED";
+                        }
+                        newStatus.appendChild(generateDisabledButton);
+                    } else {
+                        let generateApproveButton = d.createElement("button");
+                        let generateDenyButton = d.createElement("button");
+                        generateApproveButton.className = "btn btn-success";
+                        generateDenyButton.className = "btn btn-danger";
+                        generateApproveButton.innerHTML = "APPROVE";
+                        generateDenyButton.innerHTML = "DENY";
+                        generateApproveButton.id = allRequests[counter].r_id;
+                        generateDenyButton.id = allRequests[counter].r_id;
+                        generateApproveButton.setAttribute("r_id", allRequests[counter].r_id);
+                        generateDenyButton.setAttribute("r_id", allRequests[counter].r_id);
+
+                        generateApproveButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "APPROVED"
+                            }
+                            let sendMsg = JSON.stringify(msg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    if(approveReq.responseText == 'true'){
+                                        actionFeedback.innerHTML = "Request ID " + btnId + ", Approved";
+                                        this.allRequests();
+                                    } else{
+                                        actionFeedback.innerHTML = "Request ID " + btnId + " was not updated.";
+                                        this.allRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        generateDenyButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "DENIED"
+                            };
+                            let sendMsg = JSON.stringify(msg);
+                            console.log(msg);
+                            console.log(sendMsg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    console.log(approveReq.responseText);
+                                    if(approveReq.responseText == 'true'){
+                                        actionFeedback.innerHTML = "Request ID " + btnId + ", Denied";
+                                        this.allRequests();
+                                    } else{
+                                        actionFeedback.innerHTML = "Request ID " + btnId + " was not updated.";
+                                        this.allRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        newStatus.appendChild(generateApproveButton);
+                        newStatus.appendChild(generateDenyButton);
+                    }
+                    newRow.appendChild(newEmployeeID);
+                    let newRequestID = d.createElement("td");
+                    newRequestID.innerHTML = allRequests[counter].r_id;
+                    newRow.appendChild(newRequestID);
+                    newRow.appendChild(newSubject);
+                    newRow.appendChild(newDescription);
+                    newRow.appendChild(newAmount);
+                    newRow.appendChild(newStatus);
+                    newRow.appendChild(newApprover);
+                    requestTableBody.appendChild(newRow);
+                    counter++;
+                }
+            }
+        };
+        getAllRequests.open("get", "http://localhost:8080/Project_1_war/manager/request");
+        getAllRequests.send();
+    }
+    
+    function pendingRequests() {
+        message.innerHTML = "List of all pending Requests";
+        clearRequestTable();
+        console.log("Attempted to get all requests");
+        let getAllRequests = new XMLHttpRequest();
+        getAllRequests.onreadystatechange = () =>{
+            console.log(getAllRequests.readyState + " ");
+            if ((getAllRequests.readyState == 4) && (getAllRequests.status == 200)){
+                let allRequests = JSON.parse(getAllRequests.responseText);
+                let counter = 0;
+                while(counter < (allRequests.length)){
+                    let newRow = d.createElement("tr");
+                    let newEmployeeID = d.createElement("td");
+                    let newSubject = d.createElement("td");
+                    let newDescription = d.createElement("td");
+                    let newAmount = d.createElement("td");
+                    let newStatus = d.createElement("td");
+                    let newApprover = d.createElement("td");
+                    newEmployeeID.innerHTML = allRequests[counter].e_id;
+                    newSubject.innerHTML = allRequests[counter].subject;
+                    newDescription.innerHTML = allRequests[counter].description;
+                    newAmount.innerHTML = allRequests[counter].amount;
+                    if(allRequests[counter].approver_id == 0){
+                        newApprover.innerHTML = 'N/A';
+                    } else {
+                        newApprover.innerHTML = allRequests[counter].approver_id;
+                    }
+                    if(allRequests[counter].status !== 'PENDING'){
+                        let generateDisabledButton = d.createElement("button");
+                        generateDisabledButton.className = "btn btn-warning";
+                        generateDisabledButton.disabled = true;
+                        if(allRequests[counter].status == 'APPROVED'){
+                            generateDisabledButton.innerHTML = "APPROVED";
+                        } else {
+                            generateDisabledButton.innerHTML = "DENIED";
+                        }
+                        newStatus.appendChild(generateDisabledButton);
+                    } else {
+                        let generateApproveButton = d.createElement("button");
+                        let generateDenyButton = d.createElement("button");
+                        generateApproveButton.className = "btn btn-success";
+                        generateDenyButton.className = "btn btn-danger";
+                        generateApproveButton.innerHTML = "APPROVE";
+                        generateDenyButton.innerHTML = "DENY";
+                        generateApproveButton.id = allRequests[counter].r_id;
+                        generateDenyButton.id = allRequests[counter].r_id;
+                        generateApproveButton.setAttribute("r_id", allRequests[counter].r_id);
+                        generateDenyButton.setAttribute("r_id", allRequests[counter].r_id);
+
+                        generateApproveButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "APPROVED"
+                            }
+                            let sendMsg = JSON.stringify(msg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    if(approveReq.responseText == 'true'){
+                                        actionFeedback.innerHTML = "Request ID " + btnId + ", Approved";
+                                        pendingRequests();
+                                    } else{
+                                        actionFeedback.innerHTML = "Request ID " + btnId + " was not updated.";
+                                        pendingRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        generateDenyButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "DENIED"
+                            };
+                            let sendMsg = JSON.stringify(msg);
+                            console.log(msg);
+                            console.log(sendMsg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    console.log(approveReq.responseText);
+                                    if(approveReq.responseText == 'true'){
+                                        actionFeedback.innerHTML = "Request ID " + btnId + ", Denied";
+                                        pendingRequests();
+                                    } else{
+                                        actionFeedback.innerHTML = "Request ID " + btnId + " was not updated.";
+                                        pendingRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        newStatus.appendChild(generateApproveButton);
+                        newStatus.appendChild(generateDenyButton);
+                    }
+                    newRow.appendChild(newEmployeeID);
+                    let newRequestID = d.createElement("td");
+                    newRequestID.innerHTML = allRequests[counter].r_id;
+                    newRow.appendChild(newRequestID);
+                    newRow.appendChild(newSubject);
+                    newRow.appendChild(newDescription);
+                    newRow.appendChild(newAmount);
+                    newRow.appendChild(newStatus);
+                    newRow.appendChild(newApprover);
+                    requestTableBody.appendChild(newRow);
+                    counter++;
+                }
+            }
+        };
+        getAllRequests.open("get", "http://localhost:8080/Project_1_war/manager/request/pending");
+        getAllRequests.send();
+    }
+    
+    function resolvedRequests() {
+        message.innerHTML = "List of all Resolved Requests";
+        clearRequestTable();
+        console.log("Attempted to get all requests");
+        let getAllRequests = new XMLHttpRequest();
+        getAllRequests.onreadystatechange = () =>{
+            console.log(getAllRequests.readyState + " ");
+            if ((getAllRequests.readyState == 4) && (getAllRequests.status == 200)){
+                console.log("Received: " + getAllRequests.responseText);
+                let allRequests = JSON.parse(getAllRequests.responseText);
+                let counter = 0;
+                while(counter < (allRequests.length)){
+                    let newRow = d.createElement("tr");
+                    let newEmployeeID = d.createElement("td");
+                    let newSubject = d.createElement("td");
+                    let newDescription = d.createElement("td");
+                    let newAmount = d.createElement("td");
+                    let newStatus = d.createElement("td");
+                    let newApprover = d.createElement("td");
+                    newEmployeeID.innerHTML = allRequests[counter].e_id;
+                    newSubject.innerHTML = allRequests[counter].subject;
+                    newDescription.innerHTML = allRequests[counter].description;
+                    newAmount.innerHTML = allRequests[counter].amount;
+                    if(allRequests[counter].approver_id == 0){
+                        newApprover.innerHTML = 'N/A';
+                    } else {
+                        newApprover.innerHTML = allRequests[counter].approver_id;
+                    }
+                    if(allRequests[counter].status !== 'PENDING'){
+                        let generateDisabledButton = d.createElement("button");
+                        generateDisabledButton.className = "btn btn-warning";
+                        generateDisabledButton.disabled = true;
+                        if(allRequests[counter].status == 'APPROVED'){
+                            generateDisabledButton.innerHTML = "APPROVED";
+                        } else {
+                            generateDisabledButton.innerHTML = "DENIED";
+                        }
+                        newStatus.appendChild(generateDisabledButton);
+                    } else {
+                        let generateApproveButton = d.createElement("button");
+                        let generateDenyButton = d.createElement("button");
+                        generateApproveButton.className = "btn btn-success";
+                        generateDenyButton.className = "btn btn-danger";
+                        generateApproveButton.innerHTML = "APPROVE";
+                        generateDenyButton.innerHTML = "DENY";
+                        generateApproveButton.id = allRequests[counter].r_id;
+                        generateDenyButton.id = allRequests[counter].r_id;
+                        generateApproveButton.setAttribute("r_id", allRequests[counter].r_id);
+                        generateDenyButton.setAttribute("r_id", allRequests[counter].r_id);
+
+                        generateApproveButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "APPROVED"
+                            }
+                            let sendMsg = JSON.stringify(msg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    if(approveReq.responseText == 'true'){
+                                        console.log('Request Approved');
+                                        this.allRequests();
+                                    } else{
+                                        console.log('Request not updated');
+                                        this.allRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        generateDenyButton.addEventListener("click", () => {
+                            let btnId = parseInt(event.target.id);
+                            let msg = {
+                                "r_id" : btnId,
+                                "status" : "DENIED"
+                            };
+                            let sendMsg = JSON.stringify(msg);
+                            console.log(msg);
+                            console.log(sendMsg);
+                            let approveReq = new XMLHttpRequest();
+                            approveReq.onreadystatechange = () => {
+                                if ((approveReq.readyState == 4) && (approveReq.status == 200)){
+                                    console.log(approveReq.responseText);
+                                    if(approveReq.responseText == 'true'){
+                                        console.log('Request Approved');
+                                        resolvedRequests();
+                                    } else{
+                                        console.log('Request not updated');
+                                        resolvedRequests();
+                                    }
+                                }
+                            };
+                            approveReq.open("put", "http://localhost:8080/Project_1_war/request");
+                            approveReq.setRequestHeader("Content-Type", "application/json");
+                            approveReq.send(sendMsg);
+                        });
+
+                        newStatus.appendChild(generateApproveButton);
+                        newStatus.appendChild(generateDenyButton);
+                    }
+                    newRow.appendChild(newEmployeeID);
+                    let newRequestID = d.createElement("td");
+                    newRequestID.innerHTML = allRequests[counter].r_id;
+                    newRow.appendChild(newRequestID);
+                    newRow.appendChild(newSubject);
+                    newRow.appendChild(newDescription);
+                    newRow.appendChild(newAmount);
+                    newRow.appendChild(newStatus);
+                    newRow.appendChild(newApprover);
+                    requestTableBody.appendChild(newRow);
+                    counter++;
+                }
+            }
+        };
+        getAllRequests.open("get", "http://localhost:8080/Project_1_war/manager/request/resolved");
+        getAllRequests.send();
+    }
+
+    function clearRequestTable() {
+        while(requestTableBody.rows.length > 0){
+            requestTableBody.deleteRow(0);
+        }
+    }
+
+    function profileButton(){
+        requests.style.display = "none";
+        createRequest.style.display = "none";
+        employeeList.style.display = "none";
+        employeeRequests.style.display = "none";
+        message.innerHTML = "Edit Your Profile";
+        if((actionFeedback.innerHTML != "Profile Updated Successfully") && (actionFeedback.innerHTML != "Profile Update Failed, Try Again")){
+            actionFeedback.innerHTML = "";
+        }
+
+        profileInfo.style.display = "block";
+
+        let profileRequest = new XMLHttpRequest();
+        profileRequest.onreadystatechange = () => {
+            if ((profileRequest.readyState == 4) && (profileRequest.status == 200)){
+                let profileResponse = JSON.parse(profileRequest.responseText);
+                currentUsername.innerText = profileResponse.username;
+                newUsername.value = profileResponse.username;
+                currentFname.innerText = profileResponse.first_name;
+                newFname.value = profileResponse.first_name;
+                currentLname.innerText = profileResponse.last_name;
+                newLname.value = profileResponse.last_name;
+                currentEmail.innerText = profileResponse.email;
+                newEmail.value = profileResponse.email;
+            }
+        };
+        profileRequest.open("get", "http://localhost:8080/Project_1_war/employee/profile");
+        profileRequest.send();
+    }
+
+    function updateProfileButton(){
+        let profileUpdateRequest = new XMLHttpRequest();
+        let usernameInput = newUsername.value;
+        let fnameInput = newFname.value;
+        let lnameInput = newLname.value;
+        let emailInput = newEmail.value;
+        let inputProfile = {
+            "username": usernameInput,
+            "first_name": fnameInput,
+            "last_name": lnameInput,
+            "email": emailInput
+        }
+        const jsonMsg = JSON.stringify(inputProfile);
+        profileUpdateRequest.onreadystatechange = () => {
+            console.log(" " + profileUpdateRequest.readyState);
+            if ((profileUpdateRequest.readyState == 4) && (profileUpdateRequest.status == 200)) {
+                console.log("response: " + profileUpdateRequest.responseText);
+                if (profileUpdateRequest.responseText == 'true') {
+                    actionFeedback.innerHTML = "Profile Updated Successfully";
+                    profileButton();
+                } else {
+                    actionFeedback.innerHTML = "Profile Update Failed, Try Again";
+                    profileButton();
+                }
+            }
+        };
+        profileUpdateRequest.open("post", "http://localhost:8080/Project_1_war/employee/profile");
+        profileUpdateRequest.setRequestHeader("Content-Type", "application/json");
+        profileUpdateRequest.send(jsonMsg);
+    }
+    
+    function createNewRequestButton() {
+        profileInfo.style.display = "none";
+        employeeList.style.display = "none";
+        requests.style.display = "none";
+        employeeRequests.style.display = "none";
+        welcome.style.display = "none";
+        createRequestHeader.innerHTML = "Create Request";
+
+
+        createRequest.style.display = "block";
+    }
+
+    function cancelNewRequestButton(){
+        profileInfo.style.display = "none";
+        createRequest.style.display = "none";
+        employeeList.style.display = "none";
+        employeeRequests.style.display = "none";
+        welcome.style.display = "block";
+
+        requests.style.display = "block";
+    }
+
+    function submitNewRequestButton() {
+        let submitNewRequest = new XMLHttpRequest();
+        let subjectInput = subject.value;
+        let descInput = description.value;
+        let amountInput = amount.value;
+        console.log("Amount requested: " + amount.value);
+        let inputRequest = {
+            "subject": subjectInput,
+            "description": descInput,
+            "amount": amountInput
+        }
+        const jsonMsg = JSON.stringify(inputRequest);
+        submitNewRequest.onreadystatechange = () => {
+            console.log(" " + submitNewRequest.readyState);
+            if ((submitNewRequest.readyState == 4) && (submitNewRequest.status == 200)) {
+                console.log("response: " + submitNewRequest.responseText);
+                if (submitNewRequest.responseText == 'true') {
+                    console.log("Created new Request");
+                    createRequest.style.display = "none";
+                    requests.style.display = "block";
+                    welcome.style.display = "block";
+                    actionFeedback.innerHTML = "Created Request Successfully";
+                    subject.value = "";
+                    description.value = "";
+                    amount.value = 0;
+                    pendingRequests();
+                } else {
+                    console.log("Failed to create Request");
+                    subject.value = "";
+                    description.value = "";
+                    amount.value = 0;
+                    createRequestHeader.innerHTML = "Failed To Create Request";
+                }
+            }
+        };
+        submitNewRequest.open("post", "http://localhost:8080/Project_1_war/manager/request");
+        submitNewRequest.setRequestHeader("Content-Type", "application/json");
+        submitNewRequest.send(jsonMsg);
+    }
+</script>
 </body>
 </html>

@@ -30,12 +30,14 @@ public class SinisterSpongeController extends DefaultServlet {
             if(req.getRequestURI().contains("home")){
                 if(sessionService.retreiveInstanceEmployee(req, resp) != null){
                     if(sessionService.retreiveInstanceEmployee(req, resp).isManager()){
+                        System.out.println("Rerouted to manager: is manager : " + sessionService.retreiveInstanceEmployee(req, resp).isManager());
                         if(req.getRequestURI().contains("managerhome.html")){
                             super.doGet(req, resp);
                         } else {
                             req.getRequestDispatcher("managerhome.html").forward(req,resp);
                         }
                     } else {
+                        System.out.println("Rerouted to employee: is manager : " + sessionService.retreiveInstanceEmployee(req, resp).isManager());
                         if(req.getRequestURI().contains("employeehome.html")){
                             super.doGet(req, resp);
                         } else {
@@ -49,6 +51,9 @@ public class SinisterSpongeController extends DefaultServlet {
             if(sessionService.retreiveInstanceEmployee(req, resp) != null){
                 req.getRequestDispatcher("home.html");
             } else {
+                if(req.getRequestURI().equals("/Project_1_war/login.html")){
+                    super.doGet(req, resp);
+                }
                 if(req.getRequestURI().contains("login.html")){
                     super.doGet(req, resp);
                 } else {

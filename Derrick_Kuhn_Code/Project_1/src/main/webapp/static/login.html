@@ -8,26 +8,8 @@
 <body>
 
 <div class="container-fluid">
-    <div class="row justify-content-md-center">
-        <div class="col-lg">
-            <ul class="nav nav-fill">
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Requests</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </div>
     <div class="row justify-content-center">
-        <p class="h5">Login to access site.</p>
+        <p class="h5" id="message">Login to access site.</p>
     </div>
     <div class="row">
         <div class="col-md-4 offset-md-4">
@@ -58,9 +40,10 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="../javascript/login.js"></script>
-<!--<script type="text/javascript">
+<!--<script type="text/javascript" src="../javascript/login.js"></script>-->
+<script type="text/javascript">
     window.onload = () => {
+        console.log("js loaded");
         let loginBtn = document.getElementById("loginBtn");
         loginBtn.addEventListener("click", () => {
             console.log("login button pressed");
@@ -78,10 +61,12 @@
                     console.log("response: " + loginRequest.responseText);
                     if(loginRequest.responseText == 'true'){
                         console.log("Login successful");
-                        window.location.href="http://localhost:8080/Project_1_war/static/home.html";
+                        window.location ="http://localhost:8080/Project_1_war/static/home.html";
                     } else {
                         console.log("Login failed.");
-                        window.location.href="http://localhost:8080/Project_1_war/static/login.html";
+                        document.getElementById("message").innerHTML = "Login Failed, Try Again.";
+                        document.getElementById("password").value = "";
+                        document.getElementById("username").value;
                     }
                 }
             };
@@ -90,6 +75,6 @@
             loginRequest.send(jsonMsg);
         });
     }
-</script>-->
+</script>
 </body>
 </html>

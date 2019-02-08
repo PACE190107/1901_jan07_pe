@@ -52,7 +52,7 @@ public class ManagerService {
         return dao.getProfileInformation(emp);
     }
 
-    public Employee updateProfileInformation(Employee emp){
+    public boolean updateProfileInformation(Employee emp){
         return dao.updateProfileInformation(emp);
     }
 

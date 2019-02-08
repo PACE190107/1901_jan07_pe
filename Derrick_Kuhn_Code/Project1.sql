@@ -4,8 +4,8 @@
 
 
 --Remove all database objects
-drop table EMPLOYEE;
 drop table REQUEST;
+drop table EMPLOYEE;
 drop sequence ASSIGN_E_ID;
 drop sequence ASSIGN_R_ID;
 commit;
@@ -29,11 +29,9 @@ create table REQUEST(
     E_ID number(20) not null,
     R_SUBJECT varchar(50) not null,
     R_DESCRIPTION varchar(1000) not null,
-    R_AMOUNT number(20) not null,
+    R_AMOUNT number(20,2) not null,
     R_STATUS varchar(8) default 'PENDING', --APPROVED, DENIED
     R_APPROVER number(20) default null,
-    R_DATE_REQUESTED date,
-    R_DATE_APPROVED date,
     constraint fk_e_id
     foreign key (E_ID)
     references EMPLOYEE(E_ID)
@@ -44,25 +42,25 @@ commit;
 
 -- Sequences for EMPLOYEE ID and REQUEST ID
 create sequence ASSIGN_E_ID
-    minvalue 0
+    minvalue 1
     maxvalue 99999999999999999999
-    start with 0
+    start with 1
     increment by 1;
     
 create sequence ASSIGN_R_ID
-    minvalue 0
+    minvalue 1
     maxvalue 99999999999999999999
-    start with 0
+    start with 1
     increment by 1;
 
 --Password hash function
-create or replace function GET_PASS_HASH(USERNAME VARCHAR2, PASS VARCHAR2)
+create or replace function GET_PASS_HASH(PASS VARCHAR2)
     return VARCHAR2
 is
     HASH_VALUE VARCHAR(10) := 'SEA3PE40H';  --C3P0
 begin
     return TO_CHAR(DBMS_OBFUSCATION_TOOLKIT.MD5(
-    input => UTL_I18N.STRING_TO_RAW(DATA => USERNAME || PASS || HASH_VALUE)));
+    input => UTL_I18N.STRING_TO_RAW(DATA => PASS || HASH_VALUE)));
 end;
 /
 
@@ -75,7 +73,7 @@ begin
             select ASSIGN_E_ID.nextval into :NEW.E_ID from DUAL;
         end if;
         
-        select GET_PASS_HASH(:NEW.E_UNAME, :NEW.E_PASS)
+        select GET_PASS_HASH(:NEW.E_PASS)
             into :NEW.E_PASS from DUAL;
 end;
 /
@@ -108,16 +106,39 @@ create or replace procedure
 as
 begin
     insert into REQUEST values (null, E_ID, R_SUBJECT, R_DESCRIPTION, R_AMOUNT,
-        R_STATUS, null, null, null);
+        R_STATUS, null);
     commit;
 end;
 /
 
+select * from EMPLOYEE;
+select * from REQUEST;
 
+EXEC REGISTER_EMPLOYEE('test@test.com', 'manager', 'bossman', 'Marcus', 'Anager');
+update EMPLOYEE SET E_MANAGER = 1 WHERE E_UNAME = 'manager';
+EXEC REGISTER_EMPLOYEE('edward@test.com', 'employee', 'norman', 'Edward', 'Mployee');
 
+EXEC REGISTER_EMPLOYEE('nip@test.com', 'GeTRiGhT', 'PaSsWoRd', 'Christopher', 'Alesund');
+EXEC REGISTER_EMPLOYEE('vpro@test.com', 'Pashabiceps', 'Papabiceps', 'Jaroslaw ', 'Jarz?bkowski');
+EXEC REGISTER_EMPLOYEE('peanutbrain@test.com', 'Tarik', 'Tarik', 'Tarik', 'Celek');
+EXEC REGISTER_EMPLOYEE('summit1g@test.com', 'Summit', 'Summit', 'Jaryd', 'Lazar');
+EXEC REGISTER_EMPLOYEE('Morgs@test.com', 'thundamentals', 'ilovesongs', 'Jeswon', 'Tuka');
+EXEC REGISTER_EMPLOYEE('aqua@barbie.girl', 'aqua', 'barbiegirl', 'Aqua', 'BarbieGirl');
+INSERT INTO EMPLOYEE VALUES (null, 'test', 'test', 'test', 'test', 'test@test.test', 1);
+update EMPLOYEE SET E_MANAGER = 1 WHERE E_UNAME = 'thundamentals';
 
+EXEC CREATE_REQUEST(1, 'First Request', 'Give me money back', 350, 'PENDING');
+EXEC CREATE_REQUEST(1, 'Approved Request', 'Need to borrow tree fitty', 350, 'APPROVED');
+EXEC CREATE_REQUEST(1, 'Denied Request', 'Not the Lochness monster', 350, 'DENIED');
+EXEC CREATE_REQUEST(2, 'Deny this Request', 'Keep the change', 99, 'PENDING');
+EXEC CREATE_REQUEST(2, 'Deny this Request', 'Keep the change', 99, 'DENIED');
+EXEC CREATE_REQUEST(3, 'Help', 'Need my money', 777, 'PENDING');
+EXEC CREATE_REQUEST(3, 'Elite', 'The best request', 1337, 'APPROVED');
+EXEC CREATE_REQUEST(4, 'Elite', 'The best request', 1337, 'PENDING');
+EXEC CREATE_REQUEST(5, 'Only Request', 'No rush', 55555, 'APPROVED');
+update REQUEST SET R_APPROVER = 1 WHERE R_STATUS != 'PENDING';
+commit;
 
-
-
-
-
+SELECT * FROM REQUEST WHERE R_STATUS = 'PENDING';
+SELECT * FROM REQUEST WHERE R_STATUS != 'PENDING';
+SELECT * FROM REQUEST WHERE E_ID = 4 AND R_STATUS = 'PENDING';

@@ -72,18 +72,17 @@ public class LoginImpl implements LoginService {
                 input = mapper.readValue(req.getReader(), Employee.class);*/
                 //Employee input = new Employee(req.getParameter("username"), req.getParameter("password"));
                 if(employeeService.login(input)){
-                    input = employeeService.getProfileInformation(input);
+                    input = employeeService.getProfileInformationUname(input);
                     HttpSession session = req.getSession();
                     session.setAttribute("SESSION_ID", input.getE_id());
                     session.setAttribute("MANAGER", input.isManager());
                     log.info("Login successful for: " + input.getUsername());
-                    if(input.isManager()){
-                        System.out.println("Manager logged in");
-                        return true;
+                    return true;
+                    /*if(input.isManager()){
+                        //req.getRequestDispatcher("managerhome.html").forward(req, resp);
                     } else{
-                        System.out.println("Employee logged in");
-                        return true;
-                    }
+                        //req.getRequestDispatcher("employee.html").forward(req, resp);
+                    }*/
                     /*if(input.isManager()){
                         return "Manager login successful";
                         //resp.sendRedirect("managerHome");
@@ -93,7 +92,7 @@ public class LoginImpl implements LoginService {
                     }*/
                 } else {
                     log.info("Login failed for: " + input.getUsername());
-                    return "Login failed for username " +input.getUsername();
+                    return false;
                     //resp.sendRedirect("home");
                 }
             }
@@ -102,8 +101,13 @@ public class LoginImpl implements LoginService {
             HttpSession session = req.getSession();
             session.invalidate();
             session = req.getSession(false);
-            System.out.println("Logout attempt.  Session = "+ session);
-            return true;
+            if(session == null){
+                return true;
+            } else {
+                return false;
+            }
+            //System.out.println("Logout attempt.  Session = "+ session);
+            //req.getRequestDispatcher("login.html").forward(req, resp);
             /*req.getSession().invalidate();
             resp.sendRedirect("home");*/
         } else {

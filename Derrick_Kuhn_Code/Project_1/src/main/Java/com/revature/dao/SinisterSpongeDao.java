@@ -16,9 +16,10 @@ public interface SinisterSpongeDao {
     public List<Request> getAllResolvedRequests();
     public List<Employee> getAllEmployees();
     public Employee getProfileInformation(Employee emp);
-    public Employee updateProfileInformation(Employee emp);
+    public boolean updateProfileInformation(Employee emp);
     public Employee registerNewEmployee(Employee emp);
     public boolean createNewRequest(Request req, Employee emp);
     public boolean updateRequest(Request req, Employee emp);
     public String getPassword(Employee emp);
+    public Employee getProfileInformationUname(Employee emp);
 }

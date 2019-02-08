@@ -17,9 +17,21 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
+    public Employee(Long e_id){
+        this.e_id = e_id;
+    }
+
     public Employee(Long e_id, boolean manager){
         this.e_id = e_id;
         this.manager = manager;
+    }
+
+    public Employee(Long e_id, String username, String first_name, String last_name, String email){
+        this.e_id = e_id;
+        this.username = username;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
     }
 
     public Employee(String username, String password){

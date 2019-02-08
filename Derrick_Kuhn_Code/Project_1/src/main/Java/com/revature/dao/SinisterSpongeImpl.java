@@ -32,10 +32,9 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
     @Override
     public boolean login(Employee emp) {
         try(Connection conn = dbs.getConnection()){
-            CallableStatement call = conn.prepareCall("{ ? = call GET_PASS_HASH(?,?) }");
+            CallableStatement call = conn.prepareCall("{ ? = call GET_PASS_HASH(?) }");
             call.registerOutParameter(1, Types.VARCHAR);
-            call.setString(2, emp.getUsername());
-            call.setString(3, emp.getPassword());
+            call.setString(2, emp.getPassword());
             call.execute();
             if(getPassword(emp).equals(call.getString(1))) return true;
             else return false;
@@ -75,7 +74,7 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
             while(result.next()){
                 requests.add(new Request(result.getLong("R_ID"), result.getLong("E_ID"), result.getString("R_SUBJECT"),
                         result.getString("R_DESCRIPTION"), result.getDouble("R_AMOUNT"),
-                        result.getLong("R_APPROVER"), Status.PENDING));
+                        result.getLong("R_APPROVER"), "PENDING"));
             }
             return requests;
         } catch (SQLException e){
@@ -153,6 +152,26 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
     @Override
     public Employee getProfileInformation(Employee emp) {
         try(Connection conn = dbs.getConnection()){
+            PreparedStatement prep = conn.prepareStatement("SELECT * FROM EMPLOYEE WHERE E_ID = ?");
+            prep.setLong(1, emp.getE_id());
+            ResultSet result = prep.executeQuery();
+            Employee employee = null;
+            while(result.next()){
+                employee = new Employee(result.getLong("E_ID"), result.getString("E_PASS"),
+                        result.getString("E_UNAME"), result.getString("E_FNAME"), result.getString("E_LNAME"),
+                        result.getString("E_EMAIL"), isManager(result.getInt("E_MANAGER")));
+            }
+            System.out.println(employee);
+            return employee;
+        } catch (SQLException e){
+            log.error("Error in DAO getProfileInformation", e);
+            return null;
+        }
+    }
+
+    @Override
+    public Employee getProfileInformationUname(Employee emp) {
+        try(Connection conn = dbs.getConnection()){
             PreparedStatement prep = conn.prepareStatement("SELECT * FROM EMPLOYEE WHERE E_UNAME = ?");
             prep.setString(1, emp.getUsername());
             ResultSet result = prep.executeQuery();
@@ -171,7 +190,7 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
     }
 
     @Override
-    public Employee updateProfileInformation(Employee emp) {
+    public boolean updateProfileInformation(Employee emp) {
         try(Connection conn = dbs.getConnection()){
             PreparedStatement prep = conn.prepareStatement("UPDATE EMPLOYEE SET E_UNAME = ?, E_FNAME = ?, E_LNAME = ?," +
                     " E_EMAIL = ? WHERE E_ID = ?");
@@ -182,10 +201,10 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
             prep.setLong(5, emp.getE_id());
             prep.executeUpdate();
             commitQuery(conn.createStatement());
-            return emp;
+            return true;
         } catch (SQLException e){
             log.error("Error in DAO updateProfileInformation", e);
-            return null;
+            return false;
         }
     }
 
@@ -215,10 +234,10 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
             //(E_ID, R_SUBJECT, R_DESCRIPTION, R_AMOUNT, R_STATUS
             CallableStatement call = conn.prepareCall("call CREATE_REQUEST(?,?,?,?,?)");
             call.setLong(1, emp.getE_id());
-            call.setString(2, req.getSubject());
+            call.setString(2, req.getsubject());
             call.setString(3, req.getDescription());
             call.setDouble(4, req.getAmount());
-            call.setString(5, convertEnum(req.getStatus()));
+            call.setString(5, req.getStatus());
             call.executeUpdate();
             commitQuery(conn.createStatement());
             return true;
@@ -232,7 +251,7 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
     public boolean updateRequest(Request req, Employee emp) {
         try(Connection conn = dbs.getConnection()){
             PreparedStatement prep = conn.prepareCall("UPDATE REQUEST SET R_STATUS = ?, R_APPROVER = ? WHERE R_ID = ?");
-            prep.setString(1, convertEnum(req.getStatus()));
+            prep.setString(1, req.getStatus());
             prep.setLong(2, emp.getE_id());
             prep.setLong(3, req.getR_id());
             prep.executeUpdate();
@@ -289,10 +308,9 @@ public class SinisterSpongeImpl implements SinisterSpongeDao {
     public List<Request> createRequestList(ResultSet result) throws SQLException{
         ArrayList<Request> requests = new ArrayList<>();
         while(result.next()){
-            Status status = setEnum(result.getString("R_STATUS"));
             requests.add(new Request(result.getLong("R_ID"), result.getLong("E_ID"), result.getString("R_SUBJECT"),
                     result.getString("R_DESCRIPTION"), result.getDouble("R_AMOUNT"),
-                    result.getLong("R_APPROVER"), status));
+                    result.getLong("R_APPROVER"), result.getString("R_STATUS")));
         }
         return requests;
     }

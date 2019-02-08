@@ -11,12 +11,12 @@ public class Request {
     private String description;
     private double amount;
     private long approver_id;
-    private Status status;
+    private String status;
 
     public Request() {
     }
 
-    public Request(long r_id, long approver_id, Status status){
+    public Request(long r_id, long approver_id, String status){
         this.r_id = r_id;
         this.approver_id = approver_id;
         this.status = status;
@@ -27,10 +27,10 @@ public class Request {
         this.subject = subject;
         this.description = description;
         this.amount = amount;
-        this.status = Status.PENDING;
+        this.status = "PENDING";
     }
 
-    public Request(long id, long e_id, String subject, String description, double amount, long approver_id, Status status) {
+    public Request(long id, long e_id, String subject, String description, double amount, long approver_id, String status) {
         this.r_id = id;
         this.e_id = e_id;
         this.subject = subject;
@@ -56,11 +56,11 @@ public class Request {
         this.e_id = e_id;
     }
 
-    public String getSubject() {
+    public String getsubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setsubject(String subject) {
         this.subject = subject;
     }
 
@@ -88,11 +88,11 @@ public class Request {
         this.approver_id = approver_id;
     }
 
-    public Status getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

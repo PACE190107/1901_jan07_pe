@@ -44,7 +44,11 @@ public class EmployeeService {
         return dao.getProfileInformation(emp);
     }
 
-    public Employee updateProfileInformation(Employee emp){
+    public Employee getProfileInformationUname(Employee emp){
+        return dao.getProfileInformationUname(emp);
+    }
+
+    public boolean updateProfileInformation(Employee emp){
         return dao.updateProfileInformation(emp);
     }
 
