@@ -374,6 +374,7 @@ window.onload = () => {
 	document.getElementById("viewEmployeesBtn").addEventListener("click",clearRows3);
 	document.getElementById("viewAllRequestsBtn").addEventListener("click",clearRows4);
 	document.getElementById("filterRequestsBtn").addEventListener("click",clearRows4);
+	document.getElementById("approveDenyBtn").addEventListener("click",clearSelect);
 }
 
 function clearRows1(){
@@ -423,6 +424,28 @@ function clearRows4(){
 	
 	while (count >= 0){
 		table.deleteRow(count);
+		count = count - 1;
+		
+	}
+	
+	let selector = document.getElementById("filter");
+
+	count = selector.length - 1;
+	while (count >= 0){
+		selector.remove(count);
+		count = count - 1;
+
+	}	
+	
+}
+
+function clearSelect(){
+	
+	let selector = document.getElementById("reimbursementSelector");
+	
+	let count = selector.length - 1;
+	while (count >= 0){
+		selector.remove(count);
 		count = count - 1;
 		
 	}	
