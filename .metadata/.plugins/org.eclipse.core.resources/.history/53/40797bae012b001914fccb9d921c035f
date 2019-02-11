@@ -1,0 +1,16 @@
+package com.revature;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.revature.dao.EmployeeDaoImpl;
+import com.revature.models.Employee;
+
+public class app {
+
+	public static void main(String[] args) {
+		ArrayList<Employee> emplist = (ArrayList<Employee>) EmployeeDaoImpl.getAllEmployees();
+		System.out.println(emplist);
+	}
+
+}
