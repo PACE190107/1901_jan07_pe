@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Employee Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../CSS/ERS_CSS.css">
+</head>
+<body class="normal">
+	<div >
+	
+	<!-- top navbar -->
+    <div class="container-fluid bg-primary">
+            <ul class="nav nav-pills">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Active</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Disabled</a>
+                    </li>
+                  </ul>
+    </div>
+
+
+
+
+
+    <!--Card with Reimbursement Form-->
+    <div class="container py-5">
+    
+        <div class = "card border-success">
+                <div class="card-header">New Request</div>
+
+            <div class="card-body">
+                <h5>Make a Request</h5>
+             
+               
+
+                <form method="POST" action="newRequest">
+                        <div class="form-group">
+                          <label for="DateInput">Date</label>
+                          <input type="date" class="form-control" id="date_received"  placeholder="Date" name="date_received">
+                    
+                        </div>
+                       
+                        <div class="form-group">
+                          <label for="Type">Type</label>
+                         
+                          <select class="form-control" name = "type">
+
+                            <option selected disabled >Select Reimbursement Type</option>
+
+                            
+ 
+                                <option value="travel">Travel</option>
+                                 
+                                <option value="food">Food</option>
+                                 
+                                <option value="relocation">Relocation</option>
+                                 
+                                <option value="education">Education</option>
+                                 
+                                <option value="client">Client Expense</option>
+                                 
+                                <option value="misc">Misc</option>
+                                 
+                          </select>
+                        </div>
+                       
+                        <div class="form-group">
+                                <label for="Type">Amount</label>
+                                <input type="number" class="form-control" id="amount" placeholder="$" name="amount">
+                                
+                              </div>
+                    <div class="form-group">
+                          <label for="Type">Description</label>
+                          <input type="text" class="form-control" id="description" placeholder="Add a brief description" name="description">
+                        </div> 
+                      
+                        <button type="submit" class="btn btn-outline-success">Submit</button>
+                      </form>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+<!--Card for employee reimbursements table-->
+<div class="container py-5">
+        <div class = "card border-success">
+                <div class="card-header">View Requests</div>
+
+            		<div class="card-body">
+
+                    <table class="table table-striped" id="viewRequests">
+                            <thead>
+                              <tr>
+                                <th scope="col">Employee Id</th>
+                                <th scope="col">Date Received</th>
+                                <th scope="col">Request Type</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">Type</th>                           
+                                <th scope="col">Description</th>
+                                  <th scope="col">Status</th>
+                              </tr>
+                            </thead>
+                       		<tbody>
+                            </tbody>
+                          </table>
+
+
+
+
+</div>
+</div>
+</div>
+
+ </div>               
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>  
+
+<script src= "static/viewrequestsajax.js"  ></script>
+</body>
+</html>
