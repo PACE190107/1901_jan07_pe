@@ -38,7 +38,7 @@ public class ReimbursementDaoImplementation implements ReimbursementDao {
 			
 //works!!
 //Method to make a new reimbursement///////////////////////////////////////////////////////////////////			
-			public Reimbursement newRequest( int seq_id,int e_id, String date_received, String type, double amount, String description) {
+			public Reimbursement newRequest( int e_id, String date_received, String type, double amount, String description) {
 				
 				System.out.println("inside dao implementation");
 				Reimbursement request = new Reimbursement();
@@ -47,27 +47,35 @@ public class ReimbursementDaoImplementation implements ReimbursementDao {
 		try (Connection conn = JDBCConnectionUtil.getConnection() ){
 			String sql= ("INSERT INTO REIMBURSEMENTS (REQ_ID, E_ID, DATE_RECEIVED, REQ_TYPE, AMOUNT, REQ_DESCRIPTION) VALUES (REQ_ID_SEQ.NEXTVAL,?,?,?,?,?)");
 			PreparedStatement ps = conn.prepareStatement(sql);		
-			System.out.println("INSIDE TRY BLOCK");
 			
+			System.out.println("INSIDE TRY BLOCK");
+			//System.out.println(seq_id);
 			System.out.println(e_id);
 			System.out.println(date_received);
 			System.out.println(type);
 			System.out.println(amount);
 			System.out.println(description);
-			System.out.println(ps.toString());
+		
 
 			
 					
-					ps.setInt(1, seq_id);
-					ps.setInt(2, e_id);
-					ps.setString(3, date_received);
-					ps.setString(4, type);
-					ps.setDouble(5, amount);
-					ps.setString(6, description);
+					//ps.setInt(1, seq_id);
+					ps.setInt(1, e_id);
+					ps.setString(2, date_received);
+					ps.setString(3, type);
+					ps.setDouble(4, amount);
+					ps.setString(5, description);
 					
 					
 					
 					
+					//System.out.println(seq_id);
+					System.out.println(e_id);
+					System.out.println(date_received);
+					System.out.println(type);
+					System.out.println(amount);
+					System.out.println(description);
+				
 			
 					
 					
@@ -108,7 +116,7 @@ public class ReimbursementDaoImplementation implements ReimbursementDao {
 			}
 
 			
-
+//WORKS
 //Employee Method to view all employees' reimbursements ///////////////////////////////////////////////////////////////////////////////////			
 			
 	public List<Reimbursement> viewEmployeeRequests(int e_id) {

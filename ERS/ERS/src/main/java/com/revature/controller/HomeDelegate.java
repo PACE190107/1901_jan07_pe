@@ -44,18 +44,19 @@ final static Logger requestLogger = Logger.getLogger(HomeDelegate.class);
 		//HAVE to be the same as the name in the form.
 			
 				
-				int seq_id = 0;
+				//int seq_id = 0;
 				int e_id = tempUser.getE_id();
+				System.out.println(e_id);
 				String date_received = req.getParameter("date_received");
 				String type = req.getParameter("type");
 				double amount = (Double.parseDouble(req.getParameter("amount"))) ;
 				String description = req.getParameter("description");
 			
 			
-				System.out.println(e_id);
+		
 				
 				
-				Reimbursement request = RequestService.getRequestService().newRequest( e_id,seq_id,  date_received, type,  amount, description); 
+				Reimbursement request = RequestService.getRequestService().newRequest( e_id,  date_received, type,  amount, description); 
 				
 				
 				

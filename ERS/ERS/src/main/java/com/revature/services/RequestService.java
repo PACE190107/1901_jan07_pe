@@ -24,8 +24,8 @@ public class RequestService {
 	
 	
 //Methods I'm working with in ReimbursementDaoImplementation.getreimbDao//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-	public Reimbursement newRequest(int seq_id,int e_id, String date_received, String type, double amount, String description) {
-		return ReimbursementDaoImplementation.getreimbDao().newRequest( seq_id,e_id, date_received, type, amount, description);
+	public Reimbursement newRequest(int e_id, String date_received, String type, double amount, String description) {
+		return ReimbursementDaoImplementation.getreimbDao().newRequest(e_id, date_received, type, amount, description);
 	}
 	
 	
